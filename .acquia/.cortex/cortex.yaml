@@ -1,0 +1,8 @@
+openapi: 3.0.1
+info:
+  title: Demo_eudaimonia_dept
+  description: Demo_eudaimonia_dept service
+  x-cortex-tag: acquia/demo_eudaimonia_dept
+  x-cortex-git:
+    github:
+      repository: acquia/demo_eudaimonia_dept
