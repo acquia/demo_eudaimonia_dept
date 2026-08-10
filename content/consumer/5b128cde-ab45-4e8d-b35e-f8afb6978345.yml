@@ -20,11 +20,6 @@ default:
   is_default:
     -
       value: false
-  secret:
-    -
-      value: $2y$10$ptV.4nNGz.X7GbaqA5wO7uynFr3kuyUKjD.uvIK0e4FsdhBZPmCUK
-      existing: ''
-      pre_hashed: false
   grant_types:
     -
       value: client_credentials

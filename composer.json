@@ -1,9 +1,8 @@
 {
-    "name": "drupal/department_of_eudaimonia",
+    "name": "acquia/department_of_eudaimonia",
     "type": "drupal-recipe",
     "description": "Site template for a U.S. government department, featuring a library of USWDS (U.S. Web Design System) Canvas JS code components, content types, media, and editorial workflow.",
     "license": "GPL-2.0-or-later",
-    "version": "1.0.0",
     "require": {
         "drupal/core": "^11.4",
         "drupal/canvas": "^1.8",
