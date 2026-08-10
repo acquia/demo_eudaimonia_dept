@@ -1,0 +1,70 @@
+uuid: 7bd8f614-87d8-4e17-8129-28528ef844a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_table
+_core:
+  default_config_hash: vvg7rGoJj9eZJRIqCJLxLjN4Qef2XzCmu6rseh3hBWQ
+label: '(Eud-Kit) USWDS Table'
+id: js.uswds_table
+source: js
+source_local_id: uswds_table
+provider: null
+active_version: 8b3adb77b98ef161
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        caption:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        striped:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        bordered:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        compact:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        stacked:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions:
+        rows:
+          title: Rows

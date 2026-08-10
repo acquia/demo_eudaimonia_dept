@@ -1,0 +1,79 @@
+uuid: 42abe76e-2a46-4e27-8752-d8239496863e
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_site_alert
+    - filter.format.canvas_html_block
+  module:
+    - options
+    - text
+_core:
+  default_config_hash: 50g7HXOSdvRqmJTcI9Tj9-WNpNZd0uLkaYKOpryAjxU
+label: '(Eud-Kit) USWDS Site Alert'
+id: js.uswds_site_alert
+source: js
+source_local_id: uswds_site_alert
+provider: null
+active_version: 3563ef2a7f2c6093
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        variant:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: info
+          expression: ℹ︎list_string␟value
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Short alert message'
+          expression: ℹ︎string␟value
+        body:
+          required: false
+          field_type: text_long
+          field_storage_settings: {  }
+          field_instance_settings:
+            allowed_formats:
+              - canvas_html_block
+          field_widget: text_textarea
+          default_value:
+            -
+              value: 'Optional site-wide alert body text.'
+              format: canvas_html_block
+          expression: ℹ︎text_long␟processed
+        slim:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        width:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: full
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

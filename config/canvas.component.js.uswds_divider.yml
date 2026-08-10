@@ -1,0 +1,55 @@
+uuid: 6132f5de-011f-4a40-97fc-8d3021a48395
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_divider
+  module:
+    - options
+_core:
+  default_config_hash: VmOTFy-Oq3aNDQv9G1XMaUSIAz4YNncf1H6_a4rpaCk
+label: '(Eud-Kit) USWDS Divider'
+id: js.uswds_divider
+source: js
+source_local_id: uswds_divider
+provider: null
+active_version: 9639eab564033fd6
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        color:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: default
+          expression: ℹ︎list_string␟value
+        thickness:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: thin
+          expression: ℹ︎list_string␟value
+        verticalSpacing:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: md
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

@@ -1,0 +1,193 @@
+uuid: 8626dd64-5a9e-42a9-a09f-49f102caa0a6
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 2LkoYiMAT1mGzXw3B2B2zO78Ivdgz9hbmnkcBbQj4Mc
+machineName: uswds_checkbox
+name: '(Eud-Kit) USWDS Checkbox'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'Option A'
+  name:
+    type: string
+    title: Name
+    examples:
+      - options
+  value:
+    type: string
+    title: Value
+    examples:
+      - option-a
+  description:
+    type: string
+    title: Description
+    examples:
+      - 'Helpful description text'
+  checked:
+    type: boolean
+    title: Checked
+    examples:
+      - false
+  disabled:
+    type: boolean
+    title: Disabled
+    examples:
+      - false
+  tile:
+    type: boolean
+    title: Tile
+    examples:
+      - false
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsCheckbox = ({
+      label = '',
+      name = '',
+      value = '',
+      description = '',
+      checked = false,
+      disabled = false,
+      tile = false,
+      className = '',
+    }) => {
+      const id = `checkbox-${name}-${value}`;
+      const descId = description ? `${id}-desc` : undefined;
+
+      return (
+        <div
+          className={cn(
+            'usa-checkbox flex items-start gap-2 font-sans',
+            tile &&
+              cn(
+                'usa-checkbox--tile rounded border-2 px-4 py-3',
+                disabled
+                  ? 'border-(--color-uswds-disabled-light)'
+                  : 'border-(--color-uswds-disabled) has-[:checked]:border-(--color-uswds-primary) has-[:checked]:bg-(--color-uswds-primary-lighter)',
+              ),
+            className,
+          )}
+        >
+          <input
+            id={id}
+            type="checkbox"
+            name={name}
+            value={value}
+            defaultChecked={checked}
+            disabled={disabled}
+            aria-describedby={descId}
+            className="usa-checkbox__input mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-(--color-uswds-primary) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color) disabled:cursor-not-allowed"
+          />
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor={id}
+              className={cn(
+                'usa-checkbox__label cursor-pointer text-base leading-[1.3]',
+                disabled
+                  ? 'cursor-not-allowed text-(--color-uswds-disabled-medium)'
+                  : 'text-(--color-uswds-base-ink)',
+              )}
+            >
+              {label}
+            </label>
+            {description && (
+              <span
+                id={descId}
+                className={cn(
+                  'usa-checkbox__label-description text-[14px] leading-[1.3]',
+                  disabled
+                    ? 'text-(--color-uswds-disabled-medium)'
+                    : 'text-(--color-uswds-base-ink)',
+                )}
+              >
+                {description}
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsCheckbox;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsCheckbox = ({
+      label = "",
+      name = "",
+      value = "",
+      description = "",
+      checked = false,
+      disabled = false,
+      tile = false,
+      className = ""
+    }) => {
+      const id = `checkbox-${name}-${value}`;
+      const descId = description ? `${id}-desc` : void 0;
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-checkbox flex items-start gap-2 font-sans",
+            tile && cn(
+              "usa-checkbox--tile rounded border-2 px-4 py-3",
+              disabled ? "border-(--color-uswds-disabled-light)" : "border-(--color-uswds-disabled) has-[:checked]:border-(--color-uswds-primary) has-[:checked]:bg-(--color-uswds-primary-lighter)"
+            ),
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                id,
+                type: "checkbox",
+                name,
+                value,
+                defaultChecked: checked,
+                disabled,
+                "aria-describedby": descId,
+                className: "usa-checkbox__input mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-(--color-uswds-primary) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color) disabled:cursor-not-allowed"
+              }
+            ),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2", children: [
+              /* @__PURE__ */ jsx(
+                "label",
+                {
+                  htmlFor: id,
+                  className: cn(
+                    "usa-checkbox__label cursor-pointer text-base leading-[1.3]",
+                    disabled ? "cursor-not-allowed text-(--color-uswds-disabled-medium)" : "text-(--color-uswds-base-ink)"
+                  ),
+                  children: label
+                }
+              ),
+              description && /* @__PURE__ */ jsx(
+                "span",
+                {
+                  id: descId,
+                  className: cn(
+                    "usa-checkbox__label-description text-[14px] leading-[1.3]",
+                    disabled ? "text-(--color-uswds-disabled-medium)" : "text-(--color-uswds-base-ink)"
+                  ),
+                  children: description
+                }
+              )
+            ] })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsCheckbox as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

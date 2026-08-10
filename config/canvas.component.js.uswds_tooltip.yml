@@ -1,0 +1,45 @@
+uuid: 313efa50-34cc-4079-8242-4defb78c84a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_tooltip
+  module:
+    - options
+_core:
+  default_config_hash: Sv5hhelN6JrAplaPUKCRibgKBZT3pX6xFPgfrrr7vxA
+label: '(Eud-Kit) USWDS Tooltip'
+id: js.uswds_tooltip
+source: js
+source_local_id: uswds_tooltip
+provider: null
+active_version: b96e1fcc1a104ed6
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        tooltipText:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Helpful context'
+          expression: ℹ︎string␟value
+        position:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: top
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions:
+        children:
+          title: Trigger

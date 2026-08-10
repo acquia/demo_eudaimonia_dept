@@ -1,0 +1,142 @@
+uuid: 644da8d3-4309-4043-b29d-672ce36e9023
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: niqWYvUmARX6wcncPoP8KLuZgniLJrV-bOZPjAJADKg
+machineName: uswds_label
+name: '(Eud-Kit) USWDS Label'
+required:
+  - labelText
+props:
+  labelText:
+    type: string
+    title: 'Label Text'
+    examples:
+      - 'First name'
+  htmlFor:
+    type: string
+    title: 'HTML For'
+    examples:
+      - first-name
+  required:
+    type: boolean
+    title: Required
+    examples:
+      - false
+  hintText:
+    type: string
+    title: 'Hint Text'
+    examples:
+      - 'Enter your legal first name'
+  state:
+    type: string
+    title: State
+    examples:
+      - default
+      - error
+  errorText:
+    type: string
+    title: 'Error Text'
+    examples:
+      - 'This field is required'
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsLabel = ({
+      labelText = '',
+      htmlFor = '',
+      required = false,
+      hintText = '',
+      errorText = '',
+      state = 'default',
+      className = '',
+    }) => {
+      const isError = state === 'error';
+
+      return (
+        <div
+          className={cn(
+            'flex flex-col gap-(--spacing-uswds-1) font-sans',
+            className,
+          )}
+        >
+          <label
+            htmlFor={htmlFor}
+            className={cn(
+              'usa-label text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base-ink)',
+              isError ? 'font-bold' : 'font-normal',
+            )}
+          >
+            {labelText}
+            {required && (
+              <span className="text-(--color-uswds-error-dark)" aria-hidden="true">
+                *
+              </span>
+            )}
+          </label>
+          {hintText && (
+            <span className="usa-hint text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base)">
+              {hintText}
+            </span>
+          )}
+          {isError && errorText && (
+            <span className="usa-error-message text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-error-dark)">
+              {errorText}
+            </span>
+          )}
+        </div>
+      );
+    };
+
+    export default UswdsLabel;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsLabel = ({
+      labelText = "",
+      htmlFor = "",
+      required = false,
+      hintText = "",
+      errorText = "",
+      state = "default",
+      className = ""
+    }) => {
+      const isError = state === "error";
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "flex flex-col gap-(--spacing-uswds-1) font-sans",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsxs(
+              "label",
+              {
+                htmlFor,
+                className: cn(
+                  "usa-label text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base-ink)",
+                  isError ? "font-bold" : "font-normal"
+                ),
+                children: [
+                  labelText,
+                  required && /* @__PURE__ */ jsx("span", { className: "text-(--color-uswds-error-dark)", "aria-hidden": "true", children: "*" })
+                ]
+              }
+            ),
+            hintText && /* @__PURE__ */ jsx("span", { className: "usa-hint text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base)", children: hintText }),
+            isError && errorText && /* @__PURE__ */ jsx("span", { className: "usa-error-message text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-error-dark)", children: errorText })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsLabel as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

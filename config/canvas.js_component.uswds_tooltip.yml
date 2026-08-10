@@ -1,0 +1,265 @@
+uuid: 76d60bf4-4a9f-4c75-abef-bad81f281aae
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 8aLQSpsC82VzLo_oA3FsPHW3ChG1qGWgVU1usaANs8M
+machineName: uswds_tooltip
+name: '(Eud-Kit) USWDS Tooltip'
+required:
+  - tooltipText
+props:
+  tooltipText:
+    type: string
+    title: 'Tooltip Text'
+    examples:
+      - 'Helpful context'
+  position:
+    type: string
+    enum:
+      - top
+      - bottom
+      - left
+      - right
+    'meta:enum':
+      top: Top
+      bottom: Bottom
+      left: Left
+      right: Right
+    title: Position
+    examples:
+      - top
+slots:
+  children:
+    title: Trigger
+js:
+  original: |
+    import { useId, useState } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Tooltip
+    // Figma: dark bg (var(--color-uswds-base-ink) = base-ink), light text (#f0f0f0 = base-lightest), 8px padding, rounded-[4px].
+    // Has a triangular pointer that points toward the trigger element.
+    // Positions: top, bottom, left, right — pointer faces the trigger.
+    // Font size: 15px (xs).
+
+    // Inline CSS triangle using borders
+    const Pointer = ({ position }) => {
+      // The triangle always points toward the anchor (trigger), away from the tooltip surface.
+      // top tooltip => pointer points DOWN (triangle at bottom of surface)
+      // bottom tooltip => pointer points UP (triangle at top of surface)
+      // left tooltip => pointer points RIGHT
+      // right tooltip => pointer points LEFT
+      const pointerStyles = {
+        top: {
+          borderLeft: '5px solid transparent',
+          borderRight: '5px solid transparent',
+          borderTop: '5px solid var(--color-uswds-base-ink)',
+        },
+        bottom: {
+          borderLeft: '5px solid transparent',
+          borderRight: '5px solid transparent',
+          borderBottom: '5px solid var(--color-uswds-base-ink)',
+        },
+        left: {
+          borderTop: '5px solid transparent',
+          borderBottom: '5px solid transparent',
+          borderLeft: '5px solid var(--color-uswds-base-ink)',
+        },
+        right: {
+          borderTop: '5px solid transparent',
+          borderBottom: '5px solid transparent',
+          borderRight: '5px solid var(--color-uswds-base-ink)',
+        },
+      };
+
+      return (
+        <span
+          aria-hidden="true"
+          style={pointerStyles[position] ?? pointerStyles.top}
+          className="block h-0 w-0 shrink-0"
+        />
+      );
+    };
+
+    const TooltipSurface = ({ tooltipText, id }) => (
+      <span
+        id={id}
+        role="tooltip"
+        className="usa-tooltip__body rounded bg-(--color-uswds-base-ink) px-2 py-2 text-[length:var(--font-size-uswds-xs)] whitespace-nowrap text-(--color-uswds-base-lightest)"
+      >
+        {tooltipText}
+      </span>
+    );
+
+    const UswdsTooltip = ({
+      tooltipText = '',
+      position = 'top',
+      children,
+      className = '',
+    }) => {
+      const [visible, setVisible] = useState(false);
+      const id = useId();
+      const tooltipId = `tooltip-${id.replace(/:/g, '')}`;
+
+      const isVertical = position === 'top' || position === 'bottom';
+
+      return (
+        <span
+          className={cn('usa-tooltip relative inline-flex font-sans', className)}
+          onMouseEnter={() => setVisible(true)}
+          onMouseLeave={() => setVisible(false)}
+          onFocusCapture={() => setVisible(true)}
+          onBlurCapture={() => setVisible(false)}
+        >
+          {/* Tooltip rendered above/left of children with pointer facing down/right */}
+          {visible &&
+            tooltipText &&
+            (position === 'top' || position === 'left') && (
+              <span
+                className={cn(
+                  'pointer-events-none absolute z-50 flex',
+                  isVertical ? 'flex-col items-center' : 'flex-row items-center',
+                  position === 'top' &&
+                    'bottom-full left-1/2 -translate-x-1/2 pb-0',
+                  position === 'left' && 'top-1/2 right-full -translate-y-1/2 pr-0',
+                )}
+              >
+                <TooltipSurface tooltipText={tooltipText} id={tooltipId} />
+                <Pointer position={position} />
+              </span>
+            )}
+
+          {/* Trigger */}
+          <span aria-describedby={visible && tooltipText ? tooltipId : undefined}>
+            {children}
+          </span>
+
+          {/* Tooltip rendered below/right of children with pointer facing up/left */}
+          {visible &&
+            tooltipText &&
+            (position === 'bottom' || position === 'right') && (
+              <span
+                className={cn(
+                  'pointer-events-none absolute z-50 flex',
+                  isVertical ? 'flex-col items-center' : 'flex-row items-center',
+                  position === 'bottom' && 'top-full left-1/2 -translate-x-1/2',
+                  position === 'right' && 'top-1/2 left-full -translate-y-1/2',
+                )}
+              >
+                <Pointer position={position} />
+                <TooltipSurface tooltipText={tooltipText} id={tooltipId} />
+              </span>
+            )}
+        </span>
+      );
+    };
+
+    export default UswdsTooltip;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { useState, useId } from "react";
+    import { cn } from "drupal-canvas";
+    const Pointer = ({ position }) => {
+      var _a;
+      const pointerStyles = {
+        top: {
+          borderLeft: "5px solid transparent",
+          borderRight: "5px solid transparent",
+          borderTop: "5px solid var(--color-uswds-base-ink)"
+        },
+        bottom: {
+          borderLeft: "5px solid transparent",
+          borderRight: "5px solid transparent",
+          borderBottom: "5px solid var(--color-uswds-base-ink)"
+        },
+        left: {
+          borderTop: "5px solid transparent",
+          borderBottom: "5px solid transparent",
+          borderLeft: "5px solid var(--color-uswds-base-ink)"
+        },
+        right: {
+          borderTop: "5px solid transparent",
+          borderBottom: "5px solid transparent",
+          borderRight: "5px solid var(--color-uswds-base-ink)"
+        }
+      };
+      return /* @__PURE__ */ jsx(
+        "span",
+        {
+          "aria-hidden": "true",
+          style: (_a = pointerStyles[position]) != null ? _a : pointerStyles.top,
+          className: "block h-0 w-0 shrink-0"
+        }
+      );
+    };
+    const TooltipSurface = ({ tooltipText, id }) => /* @__PURE__ */ jsx(
+      "span",
+      {
+        id,
+        role: "tooltip",
+        className: "usa-tooltip__body rounded bg-(--color-uswds-base-ink) px-2 py-2 text-[length:var(--font-size-uswds-xs)] whitespace-nowrap text-(--color-uswds-base-lightest)",
+        children: tooltipText
+      }
+    );
+    const UswdsTooltip = ({
+      tooltipText = "",
+      position = "top",
+      children,
+      className = ""
+    }) => {
+      const [visible, setVisible] = useState(false);
+      const id = useId();
+      const tooltipId = `tooltip-${id.replace(/:/g, "")}`;
+      const isVertical = position === "top" || position === "bottom";
+      return /* @__PURE__ */ jsxs(
+        "span",
+        {
+          className: cn("usa-tooltip relative inline-flex font-sans", className),
+          onMouseEnter: () => setVisible(true),
+          onMouseLeave: () => setVisible(false),
+          onFocusCapture: () => setVisible(true),
+          onBlurCapture: () => setVisible(false),
+          children: [
+            visible && tooltipText && (position === "top" || position === "left") && /* @__PURE__ */ jsxs(
+              "span",
+              {
+                className: cn(
+                  "pointer-events-none absolute z-50 flex",
+                  isVertical ? "flex-col items-center" : "flex-row items-center",
+                  position === "top" && "bottom-full left-1/2 -translate-x-1/2 pb-0",
+                  position === "left" && "top-1/2 right-full -translate-y-1/2 pr-0"
+                ),
+                children: [
+                  /* @__PURE__ */ jsx(TooltipSurface, { tooltipText, id: tooltipId }),
+                  /* @__PURE__ */ jsx(Pointer, { position })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsx("span", { "aria-describedby": visible && tooltipText ? tooltipId : void 0, children }),
+            visible && tooltipText && (position === "bottom" || position === "right") && /* @__PURE__ */ jsxs(
+              "span",
+              {
+                className: cn(
+                  "pointer-events-none absolute z-50 flex",
+                  isVertical ? "flex-col items-center" : "flex-row items-center",
+                  position === "bottom" && "top-full left-1/2 -translate-x-1/2",
+                  position === "right" && "top-1/2 left-full -translate-y-1/2"
+                ),
+                children: [
+                  /* @__PURE__ */ jsx(Pointer, { position }),
+                  /* @__PURE__ */ jsx(TooltipSurface, { tooltipText, id: tooltipId })
+                ]
+              }
+            )
+          ]
+        }
+      );
+    };
+    export {
+      UswdsTooltip as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

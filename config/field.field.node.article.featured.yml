@@ -1,0 +1,21 @@
+uuid: 799325c2-e7ca-48fc-a858-5e084c03e0a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.featured
+    - node.type.article
+id: node.article.featured
+field_name: featured
+entity_type: node
+bundle: article
+label: Featured
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

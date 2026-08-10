@@ -1,0 +1,48 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 9a9272c6-8e2d-4722-b5b2-8d0767313d38
+  bundle: article
+  default_langcode: en
+  depends:
+    5a2dd9a7-7d65-41d9-9d3d-8fb292125439: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Eudaimonia opens 120 new service centers in rural and tribal communities'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      alias: /articles/2026/5/eudaimonia-opens-120-new-service-centers-rural-and-tribal-communities
+      langcode: en
+  body:
+    -
+      value: 'The new locations bring in-person assistance to communities that previously had no local access point, cutting average travel time to a service center from 94 minutes to under 20 minutes.'
+      format: filtered_html
+      summary: 'The new locations bring in-person assistance to communities that previously had no local access point, cutting average travel time to a service center from 94 minutes to under 20 minutes.'
+  featured:
+    -
+      value: false
+  tags:
+    -
+      entity: 5a2dd9a7-7d65-41d9-9d3d-8fb292125439

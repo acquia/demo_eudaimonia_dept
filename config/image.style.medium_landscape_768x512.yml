@@ -1,0 +1,23 @@
+uuid: a7a51472-29dc-4f63-8b70-b459297d6139
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: medium_landscape_768x512
+label: 'Medium landscape (768x512)'
+effects:
+  8b270e6c-6a6a-45a8-90aa-0e179b9b74f9:
+    uuid: 8b270e6c-6a6a-45a8-90aa-0e179b9b74f9
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 768
+      height: 512
+      crop_type: focal_point
+  0df87bae-8afb-4c01-9fae-5385e5c3eb57:
+    uuid: 0df87bae-8afb-4c01-9fae-5385e5c3eb57
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

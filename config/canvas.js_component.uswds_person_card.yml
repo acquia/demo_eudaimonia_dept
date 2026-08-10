@@ -1,0 +1,141 @@
+uuid: 4479b419-82de-403b-afed-dd0e931884bf
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HjbXnPXQwa0nN54GqcufraMzwgMQPsJeMiQQpaS6D5I
+machineName: uswds_person_card
+name: '(Eud-Kit) USWDS Person Card'
+required:
+  - name
+props:
+  initials:
+    type: string
+    title: Initials
+    examples:
+      - MH
+  roleLabel:
+    type: string
+    title: 'Role label'
+    examples:
+      - Secretary
+  name:
+    type: string
+    title: Name
+    examples:
+      - 'Maya Hawthorne'
+  title:
+    type: string
+    title: Title
+    examples:
+      - 'Secretary of Eudaimonia'
+  bio:
+    type: string
+    title: Bio
+    examples:
+      - "Former director of the Harvard Kennedy School's Center for Human Flourishing."
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Person Card — leadership card with initials avatar, role, name, title, bio.
+
+    const UswdsPersonCard = ({
+      initials = '',
+      roleLabel = '',
+      name = '',
+      title = '',
+      bio = '',
+      className = '',
+    }) => {
+      return (
+        <div
+          className={cn(
+            'usa-card flex flex-col gap-4 rounded-sm border border-(--color-uswds-base-lighter) p-6 font-sans',
+            className,
+          )}
+        >
+          <div className="flex items-start gap-4">
+            {/* Avatar */}
+            <div
+              className="flex h-[68px] w-[68px] shrink-0 items-center justify-center rounded-full bg-(--color-uswds-primary-lightest) text-xl font-bold text-(--color-uswds-primary-darker)"
+              aria-hidden="true"
+            >
+              {initials}
+            </div>
+            {/* Role + name + title */}
+            <div>
+              {roleLabel && (
+                <p className="mb-1 text-xs font-bold tracking-wider text-(--color-uswds-primary) uppercase">
+                  {roleLabel}
+                </p>
+              )}
+              {name && (
+                <h3 className="font-serif text-2xl leading-tight font-bold text-(--color-uswds-primary-darker)">
+                  {name}
+                </h3>
+              )}
+              {title && (
+                <p className="mt-0.5 text-sm text-(--color-uswds-base-dark) italic">
+                  {title}
+                </p>
+              )}
+            </div>
+          </div>
+          {bio && (
+            <p className="text-sm leading-relaxed text-(--color-uswds-base-ink)">
+              {bio}
+            </p>
+          )}
+        </div>
+      );
+    };
+
+    export default UswdsPersonCard;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsPersonCard = ({
+      initials = "",
+      roleLabel = "",
+      name = "",
+      title = "",
+      bio = "",
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-card flex flex-col gap-4 rounded-sm border border-(--color-uswds-base-lighter) p-6 font-sans",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4", children: [
+              /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: "flex h-[68px] w-[68px] shrink-0 items-center justify-center rounded-full bg-(--color-uswds-primary-lightest) text-xl font-bold text-(--color-uswds-primary-darker)",
+                  "aria-hidden": "true",
+                  children: initials
+                }
+              ),
+              /* @__PURE__ */ jsxs("div", { children: [
+                roleLabel && /* @__PURE__ */ jsx("p", { className: "mb-1 text-xs font-bold tracking-wider text-(--color-uswds-primary) uppercase", children: roleLabel }),
+                name && /* @__PURE__ */ jsx("h3", { className: "font-serif text-2xl leading-tight font-bold text-(--color-uswds-primary-darker)", children: name }),
+                title && /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-sm text-(--color-uswds-base-dark) italic", children: title })
+              ] })
+            ] }),
+            bio && /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-(--color-uswds-base-ink)", children: bio })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsPersonCard as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

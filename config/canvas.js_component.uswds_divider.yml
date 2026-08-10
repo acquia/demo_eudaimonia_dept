@@ -1,0 +1,155 @@
+uuid: 5bef19b7-ce4d-4a2c-8add-647c08d1326a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 18we2yWu35d4UN4IBHIb_6jLEhto5n5PahuVx1n4-0g
+machineName: uswds_divider
+name: '(Eud-Kit) USWDS Divider'
+required: {  }
+props:
+  color:
+    type: string
+    enum:
+      - default
+      - strong
+      - muted
+      - primary
+      - accent-cool
+      - accent-warm
+      - inverse
+    'meta:enum':
+      default: 'Default (Base Lighter)'
+      strong: 'Strong (Base Light)'
+      muted: 'Muted (Base Lightest)'
+      primary: Primary
+      accent-cool: 'Accent Cool'
+      accent-warm: 'Accent Warm'
+      inverse: 'Inverse (White, for dark backgrounds)'
+    title: Color
+    examples:
+      - default
+  thickness:
+    type: string
+    enum:
+      - thin
+      - medium
+      - thick
+    'meta:enum':
+      thin: 'Thin (1px, default)'
+      medium: 'Medium (2px)'
+      thick: 'Thick (4px)'
+    title: Thickness
+    examples:
+      - thin
+  verticalSpacing:
+    type: string
+    enum:
+      - none
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      none: None
+      sm: 'Small (1rem)'
+      md: 'Medium (2rem, default)'
+      lg: 'Large (3rem)'
+      xl: 'Extra Large (4rem)'
+    title: 'Vertical Spacing'
+    examples:
+      - md
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn } from 'drupal-canvas';
+
+    const dividerVariants = cva('usa-divider w-full border-0 border-t', {
+      variants: {
+        color: {
+          default: 'border-(--color-uswds-base-lighter)',
+          strong: 'border-(--color-uswds-base-light)',
+          muted: 'border-(--color-uswds-base-lightest)',
+          primary: 'border-(--color-uswds-primary)',
+          'accent-cool': 'border-(--color-uswds-accent-cool)',
+          'accent-warm': 'border-(--color-uswds-accent-warm)',
+          inverse: 'border-white/30',
+        },
+        thickness: {
+          thin: 'border-t',
+          medium: 'border-t-2',
+          thick: 'border-t-4',
+        },
+        verticalSpacing: {
+          none: 'my-0',
+          sm: 'my-4',
+          md: 'my-8',
+          lg: 'my-12',
+          xl: 'my-16',
+        },
+      },
+      defaultVariants: {
+        color: 'default',
+        thickness: 'thin',
+        verticalSpacing: 'md',
+      },
+    });
+
+    const UswdsDivider = ({
+      color = 'default',
+      thickness = 'thin',
+      verticalSpacing = 'md',
+      className = '',
+    }) => (
+      <hr className={cn(dividerVariants({ color, thickness, verticalSpacing }), className)} />
+    );
+
+    export default UswdsDivider;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
+    const dividerVariants = cva("usa-divider w-full border-0 border-t", {
+      variants: {
+        color: {
+          default: "border-(--color-uswds-base-lighter)",
+          strong: "border-(--color-uswds-base-light)",
+          muted: "border-(--color-uswds-base-lightest)",
+          primary: "border-(--color-uswds-primary)",
+          "accent-cool": "border-(--color-uswds-accent-cool)",
+          "accent-warm": "border-(--color-uswds-accent-warm)",
+          inverse: "border-white/30"
+        },
+        thickness: {
+          thin: "border-t",
+          medium: "border-t-2",
+          thick: "border-t-4"
+        },
+        verticalSpacing: {
+          none: "my-0",
+          sm: "my-4",
+          md: "my-8",
+          lg: "my-12",
+          xl: "my-16"
+        }
+      },
+      defaultVariants: {
+        color: "default",
+        thickness: "thin",
+        verticalSpacing: "md"
+      }
+    });
+    const UswdsDivider = ({
+      color = "default",
+      thickness = "thin",
+      verticalSpacing = "md",
+      className = ""
+    }) => /* @__PURE__ */ jsx("hr", { className: cn(dividerVariants({ color, thickness, verticalSpacing }), className) });
+    export {
+      UswdsDivider as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

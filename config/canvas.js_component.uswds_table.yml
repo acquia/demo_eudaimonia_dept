@@ -1,0 +1,141 @@
+uuid: fc4de6ba-818c-4c19-b698-2c42084bf8d5
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: LYYkXk49iprn_XRU9SvA7mXEojr780ej7f5YELGjV1A
+machineName: uswds_table
+name: '(Eud-Kit) USWDS Table'
+required: {  }
+props:
+  caption:
+    type: string
+    title: Caption
+  striped:
+    type: boolean
+    title: Striped
+    examples:
+      - false
+  bordered:
+    type: boolean
+    title: Bordered
+    examples:
+      - false
+  compact:
+    type: boolean
+    title: Compact
+    examples:
+      - false
+  stacked:
+    type: boolean
+    title: Stacked
+    examples:
+      - false
+slots:
+  rows:
+    title: Rows
+js:
+  original: |
+    import { Children, cloneElement } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsTable = ({
+      rows,
+      caption = '',
+      striped = false,
+      bordered = false,
+      compact = false,
+      stacked = false,
+      className = '',
+    }) => {
+      // Extract header labels from the header row child for stacked data-label support
+      const kids = Children.toArray(rows);
+      const headerRow = kids.find((child) => child?.props?.isHeader);
+      const headerLabels = headerRow?.props?.cells ?? [];
+
+      // Inject table config into each row child via cloneElement
+      const tableCtx = { bordered, compact, stacked, headerLabels };
+      const inject = (child) => (child ? cloneElement(child, { _tableCtx: tableCtx }) : child);
+
+      const headerRows = kids.filter((c) => c?.props?.isHeader).map(inject);
+      const bodyRows = kids.filter((c) => !c?.props?.isHeader).map(inject);
+
+      return (
+        <div className={cn('w-full overflow-x-auto font-sans', className)}>
+          <table
+            className={cn(
+              'usa-table w-full border-collapse text-sm text-(--color-uswds-base-ink)',
+              bordered && 'usa-table--bordered border border-(--color-uswds-base-ink)',
+              striped && 'usa-table--striped [&>tbody>tr:nth-child(even)]:bg-(--color-uswds-base-lightest)',
+              compact && 'usa-table--compact',
+              stacked && 'usa-table--stacked',
+            )}
+          >
+            {caption && (
+              <caption className="caption-top pb-2 text-left text-sm font-bold text-(--color-uswds-base-ink)">
+                {caption}
+              </caption>
+            )}
+            {headerRows.length > 0 && <thead>{headerRows}</thead>}
+            {bodyRows.length > 0 && <tbody>{bodyRows}</tbody>}
+          </table>
+        </div>
+      );
+    };
+
+    export default UswdsTable;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { Children, cloneElement } from "react";
+    import { cn } from "drupal-canvas";
+    const UswdsTable = ({
+      rows,
+      caption = "",
+      striped = false,
+      bordered = false,
+      compact = false,
+      stacked = false,
+      className = ""
+    }) => {
+      var _a, _b;
+      const kids = Children.toArray(rows);
+      const headerRow = kids.find((child) => {
+        var _a2;
+        return (_a2 = child == null ? void 0 : child.props) == null ? void 0 : _a2.isHeader;
+      });
+      const headerLabels = (_b = (_a = headerRow == null ? void 0 : headerRow.props) == null ? void 0 : _a.cells) != null ? _b : [];
+      const tableCtx = { bordered, compact, stacked, headerLabels };
+      const inject = (child) => child ? cloneElement(child, { _tableCtx: tableCtx }) : child;
+      const headerRows = kids.filter((c) => {
+        var _a2;
+        return (_a2 = c == null ? void 0 : c.props) == null ? void 0 : _a2.isHeader;
+      }).map(inject);
+      const bodyRows = kids.filter((c) => {
+        var _a2;
+        return !((_a2 = c == null ? void 0 : c.props) == null ? void 0 : _a2.isHeader);
+      }).map(inject);
+      return /* @__PURE__ */ jsx("div", { className: cn("w-full overflow-x-auto font-sans", className), children: /* @__PURE__ */ jsxs(
+        "table",
+        {
+          className: cn(
+            "usa-table w-full border-collapse text-sm text-(--color-uswds-base-ink)",
+            bordered && "usa-table--bordered border border-(--color-uswds-base-ink)",
+            striped && "usa-table--striped [&>tbody>tr:nth-child(even)]:bg-(--color-uswds-base-lightest)",
+            compact && "usa-table--compact",
+            stacked && "usa-table--stacked"
+          ),
+          children: [
+            caption && /* @__PURE__ */ jsx("caption", { className: "caption-top pb-2 text-left text-sm font-bold text-(--color-uswds-base-ink)", children: caption }),
+            headerRows.length > 0 && /* @__PURE__ */ jsx("thead", { children: headerRows }),
+            bodyRows.length > 0 && /* @__PURE__ */ jsx("tbody", { children: bodyRows })
+          ]
+        }
+      ) });
+    };
+    export {
+      UswdsTable as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

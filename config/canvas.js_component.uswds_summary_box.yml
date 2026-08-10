@@ -1,0 +1,93 @@
+uuid: c10d102d-7352-4ceb-af65-1e791d8ff92d
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: _68uLlYmH-33iQiNy9yGkl2UjgL3H7NXJnQigy5Lmfs
+machineName: uswds_summary_box
+name: '(Eud-Kit) USWDS Summary Box'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Key information'
+  body:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Body
+    examples:
+      - 'Summary of key takeaways from this content.'
+slots:
+  items:
+    title: Items
+js:
+  original: |
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    // USWDS Summary Box
+    // Figma: bg = accent-cool-lightest (#e7f6f8), border = 1px solid info (#5dbbcc → accent-cool-light),
+    // rounded-[4px], heading = 22px bold (#1b1b1b), body = 16px normal (#1b1b1b), padding = 24px.
+
+    const UswdsSummaryBox = ({
+      heading = 'Key information',
+      body = '',
+      items,
+      className = '',
+    }) => {
+      return (
+        <div
+          className={cn(
+            'usa-summary-box rounded border border-(--color-uswds-accent-cool-light) bg-(--color-uswds-accent-cool-lightest) p-6 font-sans text-(--color-uswds-base-ink)',
+            className,
+          )}
+        >
+          {heading && (
+            <h3 className="usa-summary-box__heading mb-2 font-serif text-[length:var(--font-size-uswds-lg)] leading-snug font-bold text-(--color-uswds-primary-darker)">
+              {heading}
+            </h3>
+          )}
+          {body && (
+            <FormattedText className="usa-summary-box__body text-[length:var(--font-size-uswds-sm)] leading-relaxed [&_li]:mb-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5">
+              {body}
+            </FormattedText>
+          )}
+          {items && <div className="mt-2">{items}</div>}
+        </div>
+      );
+    };
+
+    export default UswdsSummaryBox;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { FormattedText, cn } from "drupal-canvas";
+    const UswdsSummaryBox = ({
+      heading = "Key information",
+      body = "",
+      items,
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-summary-box rounded border border-(--color-uswds-accent-cool-light) bg-(--color-uswds-accent-cool-lightest) p-6 font-sans text-(--color-uswds-base-ink)",
+            className
+          ),
+          children: [
+            heading && /* @__PURE__ */ jsx("h3", { className: "usa-summary-box__heading mb-2 font-serif text-[length:var(--font-size-uswds-lg)] leading-snug font-bold text-(--color-uswds-primary-darker)", children: heading }),
+            body && /* @__PURE__ */ jsx(FormattedText, { className: "usa-summary-box__body text-[length:var(--font-size-uswds-sm)] leading-relaxed [&_li]:mb-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5", children: body }),
+            items && /* @__PURE__ */ jsx("div", { className: "mt-2", children: items })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsSummaryBox as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

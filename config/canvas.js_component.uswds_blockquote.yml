@@ -1,0 +1,223 @@
+uuid: 175bf6da-2cc8-49d7-9382-950ad7a07dc6
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: TYmoFvLxViOrNwavs6moy-dlN_lJBZL_fRiECGpCvwc
+machineName: uswds_blockquote
+name: '(Eud-Kit) USWDS Blockquote'
+required: {  }
+props:
+  quoteText:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: 'Quote Text'
+    examples:
+      - "Programs like this changed my family's trajectory. The support was real, and the team genuinely cared."
+  name:
+    type: string
+    title: Name
+    examples:
+      - 'Maria Gutierrez'
+  roleAttribution:
+    type: string
+    title: 'Role / Attribution'
+    examples:
+      - 'Program Participant, 2023'
+  accentBarColor:
+    type: string
+    enum:
+      - default
+      - accent-cool
+      - accent-warm
+      - success
+      - base
+    'meta:enum':
+      default: 'Default (Primary)'
+      accent-cool: 'Accent Cool'
+      accent-warm: 'Accent Warm'
+      success: Success
+      base: Base
+    title: 'Accent Bar Color'
+    examples:
+      - default
+  textColor:
+    type: string
+    enum:
+      - dark
+      - light
+    'meta:enum':
+      dark: 'Dark (default)'
+      light: 'Light (for dark backgrounds)'
+    title: 'Text Color'
+    examples:
+      - dark
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    // USWDS Blockquote
+    // Pull quote / testimonial component with a left accent bar.
+    // variant controls the bar color; textColor flips content for dark backgrounds.
+    // Figma equivalent: Testimonial / Pull Quote pattern.
+    // Accent bar colors match existing USWDS token palette.
+
+    const barVariants = cva('w-1 shrink-0 self-stretch rounded-full', {
+      variants: {
+        variant: {
+          default: 'bg-(--color-uswds-primary)',
+          'accent-cool': 'bg-(--color-uswds-accent-cool)',
+          'accent-warm': 'bg-(--color-uswds-accent-warm)',
+          success: 'bg-(--color-uswds-success)',
+          base: 'bg-(--color-uswds-base-light)',
+        },
+      },
+      defaultVariants: { variant: 'default' },
+    });
+
+    const UswdsBlockquote = ({
+      quoteText = '',
+      name = '',
+      roleAttribution = '',
+      accentBarColor = 'default',
+      textColor = 'dark',
+      className = '',
+    }) => {
+      if (!quoteText) return null;
+      const isLight = textColor === 'light';
+
+      return (
+        <figure
+          className={cn('usa-blockquote m-0 flex gap-5 py-2 font-sans', className)}
+        >
+          {/* Accent bar */}
+          <div className={barVariants({ variant: accentBarColor })} aria-hidden="true" />
+
+          {/* Content */}
+          <div className="flex flex-col gap-3">
+            <blockquote className="m-0 p-0">
+              <FormattedText
+                className={cn(
+                  'text-xl leading-relaxed font-medium italic',
+                  isLight ? 'text-white' : 'text-(--color-uswds-base-ink)',
+                )}
+              >
+                {quoteText}
+              </FormattedText>
+            </blockquote>
+
+            {(name || roleAttribution) && (
+              <figcaption className="flex flex-col gap-0.5">
+                {name && (
+                  <span
+                    className={cn(
+                      'text-base font-bold not-italic',
+                      isLight ? 'text-white' : 'text-(--color-uswds-base-ink)',
+                    )}
+                  >
+                    — {name}
+                  </span>
+                )}
+                {roleAttribution && (
+                  <span
+                    className={cn(
+                      'text-sm not-italic',
+                      isLight
+                        ? 'text-white/70'
+                        : 'text-(--color-uswds-base-dark)',
+                    )}
+                  >
+                    {roleAttribution}
+                  </span>
+                )}
+              </figcaption>
+            )}
+          </div>
+        </figure>
+      );
+    };
+
+    export default UswdsBlockquote;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { FormattedText, cn } from "drupal-canvas";
+    const barVariants = cva("w-1 shrink-0 self-stretch rounded-full", {
+      variants: {
+        variant: {
+          default: "bg-(--color-uswds-primary)",
+          "accent-cool": "bg-(--color-uswds-accent-cool)",
+          "accent-warm": "bg-(--color-uswds-accent-warm)",
+          success: "bg-(--color-uswds-success)",
+          base: "bg-(--color-uswds-base-light)"
+        }
+      },
+      defaultVariants: { variant: "default" }
+    });
+    const UswdsBlockquote = ({
+      quoteText = "",
+      name = "",
+      roleAttribution = "",
+      accentBarColor = "default",
+      textColor = "dark",
+      className = ""
+    }) => {
+      if (!quoteText) return null;
+      const isLight = textColor === "light";
+      return /* @__PURE__ */ jsxs(
+        "figure",
+        {
+          className: cn("usa-blockquote m-0 flex gap-5 py-2 font-sans", className),
+          children: [
+            /* @__PURE__ */ jsx("div", { className: barVariants({ variant: accentBarColor }), "aria-hidden": "true" }),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3", children: [
+              /* @__PURE__ */ jsx("blockquote", { className: "m-0 p-0", children: /* @__PURE__ */ jsx(
+                FormattedText,
+                {
+                  className: cn(
+                    "text-xl leading-relaxed font-medium italic",
+                    isLight ? "text-white" : "text-(--color-uswds-base-ink)"
+                  ),
+                  children: quoteText
+                }
+              ) }),
+              (name || roleAttribution) && /* @__PURE__ */ jsxs("figcaption", { className: "flex flex-col gap-0.5", children: [
+                name && /* @__PURE__ */ jsxs(
+                  "span",
+                  {
+                    className: cn(
+                      "text-base font-bold not-italic",
+                      isLight ? "text-white" : "text-(--color-uswds-base-ink)"
+                    ),
+                    children: [
+                      "— ",
+                      name
+                    ]
+                  }
+                ),
+                roleAttribution && /* @__PURE__ */ jsx(
+                  "span",
+                  {
+                    className: cn(
+                      "text-sm not-italic",
+                      isLight ? "text-white/70" : "text-(--color-uswds-base-dark)"
+                    ),
+                    children: roleAttribution
+                  }
+                )
+              ] })
+            ] })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsBlockquote as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

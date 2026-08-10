@@ -1,0 +1,45 @@
+uuid: 512f02d4-929c-49c3-b99a-b49a0e89946b
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_collection
+  module:
+    - options
+_core:
+  default_config_hash: yr4iLHDFrC-YBUZjWmIpLFl2RomtflZyTKChvBKFRIk
+label: '(Eud-Kit) USWDS Collection'
+id: js.uswds_collection
+source: js
+source_local_id: uswds_collection
+provider: null
+active_version: de167f56e41cab6f
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Latest articles'
+          expression: ℹ︎string␟value
+        spacing:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: default
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items

@@ -1,0 +1,60 @@
+uuid: 3f6324b1-8da5-4569-9c12-be2e2759fc3d
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_process_list_item
+_core:
+  default_config_hash: O7EJm2vcSM3vonWU4w32pEqh0CWbEDnsPRaGkczyUec
+label: '(Eud-Kit) USWDS Process List Item'
+id: js.uswds_process_list_item
+source: js
+source_local_id: uswds_process_list_item
+provider: null
+active_version: 2818a071ef1234ea
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Step heading text'
+          expression: ℹ︎string␟value
+        body:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Step description or instructions go here.'
+          expression: ℹ︎string␟value
+        last:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        number:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '1'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

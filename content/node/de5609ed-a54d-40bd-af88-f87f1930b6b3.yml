@@ -1,0 +1,51 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: de5609ed-a54d-40bd-af88-f87f1930b6b3
+  bundle: program
+  default_langcode: en
+  depends:
+    996cf345-58d7-4f36-bde6-78ab0c8d0c1d: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Career Re-entry Grants'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Direct grants and paid apprenticeships for adults returning to work after caregiving, extended leave, or career transitions.'
+      format: filtered_html
+      summary: 'Direct grants and paid apprenticeships for adults returning to work after caregiving, extended leave, or career transitions.'
+  field_categories:
+    -
+      entity: 996cf345-58d7-4f36-bde6-78ab0c8d0c1d
+  field_decision_timeline:
+    -
+      value: '21 days'
+  field_enrollment_status:
+    -
+      value: closed
+  field_max_amount:
+    -
+      value: 'Up to $8,000'

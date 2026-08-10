@@ -1,0 +1,19 @@
+uuid: fd9603c6-d2ec-4246-a57d-c5ab2c56dae1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_max_amount
+    - node.type.program
+id: node.program.field_max_amount
+field_name: field_max_amount
+entity_type: node
+bundle: program
+label: 'Maximum Benefit Amount'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

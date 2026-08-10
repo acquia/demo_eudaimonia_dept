@@ -1,0 +1,129 @@
+uuid: d593a60d-1653-4128-bac4-0bcd972aaade
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HQ9agWT2ztFMJupG1jOWKREzMTm3Dx5sqG0uPrLSrE8
+machineName: uswds_quick_access_item
+name: '(Eud-Kit) USWDS Quick Access Item'
+required:
+  - label
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'Check claim status'
+  ctaText:
+    type: string
+    title: 'CTA Text'
+    examples:
+      - Open
+  ctaLink:
+    type: string
+    format: uri-reference
+    title: 'CTA Link'
+    examples:
+      - /claims
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Quick Access Item
+    // Row in a Quick Access widget: label on left, small CTA link on right.
+    // Separated by a subtle bottom border.
+
+    const UswdsQuickAccessItem = ({
+      label = '',
+      ctaText = 'Open',
+      ctaLink = '#',
+      className = '',
+    }) => {
+      return (
+        <li
+          className={cn(
+            'flex items-center justify-between border-b border-(--color-uswds-base-lighter) py-[11px] font-sans text-sm last:border-b-0',
+            className,
+          )}
+        >
+          <span className="text-(--color-uswds-base-ink)">{label}</span>
+          <a
+            href={ctaLink}
+            className="flex items-center gap-1 font-bold text-(--color-uswds-primary) no-underline hover:underline"
+          >
+            {ctaText}
+            <svg
+              viewBox="0 0 24 24"
+              className="h-3 w-3 shrink-0"
+              aria-hidden="true"
+            >
+              <path
+                d="M9 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                fill="none"
+              />
+            </svg>
+          </a>
+        </li>
+      );
+    };
+
+    export default UswdsQuickAccessItem;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsQuickAccessItem = ({
+      label = "",
+      ctaText = "Open",
+      ctaLink = "#",
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs(
+        "li",
+        {
+          className: cn(
+            "flex items-center justify-between border-b border-(--color-uswds-base-lighter) py-[11px] font-sans text-sm last:border-b-0",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx("span", { className: "text-(--color-uswds-base-ink)", children: label }),
+            /* @__PURE__ */ jsxs(
+              "a",
+              {
+                href: ctaLink,
+                className: "flex items-center gap-1 font-bold text-(--color-uswds-primary) no-underline hover:underline",
+                children: [
+                  ctaText,
+                  /* @__PURE__ */ jsx(
+                    "svg",
+                    {
+                      viewBox: "0 0 24 24",
+                      className: "h-3 w-3 shrink-0",
+                      "aria-hidden": "true",
+                      children: /* @__PURE__ */ jsx(
+                        "path",
+                        {
+                          d: "M9 6l6 6-6 6",
+                          stroke: "currentColor",
+                          strokeWidth: "2.5",
+                          fill: "none"
+                        }
+                      )
+                    }
+                  )
+                ]
+              }
+            )
+          ]
+        }
+      );
+    };
+    export {
+      UswdsQuickAccessItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

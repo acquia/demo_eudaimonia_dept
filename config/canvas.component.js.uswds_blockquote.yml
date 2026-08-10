@@ -1,0 +1,79 @@
+uuid: d2c8caec-de8e-4111-9e2d-1a029b5d043b
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_blockquote
+    - filter.format.canvas_html_block
+  module:
+    - options
+    - text
+_core:
+  default_config_hash: rWZONFO7Q_QtOdqXS-RbUp4e4UD6QQY7JBJ_9IB-6CA
+label: '(Eud-Kit) USWDS Blockquote'
+id: js.uswds_blockquote
+source: js
+source_local_id: uswds_blockquote
+provider: null
+active_version: 69a786e3f8531d0d
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        quoteText:
+          required: false
+          field_type: text_long
+          field_storage_settings: {  }
+          field_instance_settings:
+            allowed_formats:
+              - canvas_html_block
+          field_widget: text_textarea
+          default_value:
+            -
+              value: "Programs like this changed my family's trajectory. The support was real, and the team genuinely cared."
+              format: canvas_html_block
+          expression: ℹ︎text_long␟processed
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Maria Gutierrez'
+          expression: ℹ︎string␟value
+        roleAttribution:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Program Participant, 2023'
+          expression: ℹ︎string␟value
+        accentBarColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: default
+          expression: ℹ︎list_string␟value
+        textColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: dark
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

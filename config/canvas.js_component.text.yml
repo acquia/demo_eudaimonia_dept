@@ -1,0 +1,35 @@
+uuid: 18fb99d3-1bf8-4fc4-94af-8c810bff0467
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: URMU8YQTayJdm7W3rm7wiA18Dm4DlZ7UchQ70OaBW7s
+machineName: text
+name: Text
+required: {  }
+props:
+  text:
+    type: string
+    title: Text
+    examples:
+      - 'Hello world'
+slots: {  }
+js:
+  original: |
+    const Text = ({ text = '' }) => {
+      return <span>{text}</span>;
+    };
+
+    export default Text;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    const Text = ({ text = "" }) => {
+      return /* @__PURE__ */ jsx("span", { children: text });
+    };
+    export {
+      Text as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

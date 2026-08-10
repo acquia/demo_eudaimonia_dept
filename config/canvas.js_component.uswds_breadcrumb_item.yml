@@ -1,0 +1,152 @@
+uuid: c91424f1-ece4-41aa-a4a2-3c63e1df7ef8
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: wZnAmBIQRprqlOUf4Cq2faZIRYIsm4bPFtW6qa_24nY
+machineName: uswds_breadcrumb_item
+name: '(Eud-Kit) USWDS Breadcrumb Item'
+required: {  }
+props:
+  text:
+    type: string
+    title: Text
+    examples:
+      - Home
+  href:
+    type: string
+    format: uri-reference
+    title: Href
+    examples:
+      - /
+  context:
+    type: string
+    enum:
+      - on-light
+      - on-dark
+    'meta:enum':
+      on-light: 'On light'
+      on-dark: 'On dark'
+    title: Context
+    examples:
+      - on-light
+  isLast:
+    type: boolean
+    title: 'Is Last'
+    examples:
+      - false
+  showSeparator:
+    type: boolean
+    title: 'Show Separator'
+    examples:
+      - false
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsBreadcrumbItem = ({
+      text = '',
+      href = '/',
+      context = 'on-light',
+      isLast = false,
+      showSeparator = false,
+    }) => {
+      const isDark = context === 'on-dark';
+
+      const separator = showSeparator ? (
+        <span
+          className={isDark ? 'text-white/70' : 'text-(--color-uswds-base)'}
+          aria-hidden="true"
+        >
+          /
+        </span>
+      ) : null;
+
+      if (isLast) {
+        return (
+          <>
+            {separator}
+            <span
+              className={cn('usa-breadcrumb__text', isDark ? 'text-white' : 'text-(--color-uswds-base-ink)')}
+              aria-current="page"
+            >
+              {text}
+            </span>
+          </>
+        );
+      }
+
+      return (
+        <>
+          {separator}
+          <a
+            href={href}
+            className={cn(
+              'usa-breadcrumb__link underline focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)',
+              isDark
+                ? 'text-white/70 no-underline hover:text-white hover:underline'
+                : 'text-(--color-uswds-primary) hover:text-(--color-uswds-primary-dark)',
+            )}
+          >
+            {text}
+          </a>
+        </>
+      );
+    };
+
+    export default UswdsBreadcrumbItem;
+  compiled: |
+    import { jsxs, Fragment, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsBreadcrumbItem = ({
+      text = "",
+      href = "/",
+      context = "on-light",
+      isLast = false,
+      showSeparator = false
+    }) => {
+      const isDark = context === "on-dark";
+      const separator = showSeparator ? /* @__PURE__ */ jsx(
+        "span",
+        {
+          className: isDark ? "text-white/70" : "text-(--color-uswds-base)",
+          "aria-hidden": "true",
+          children: "/"
+        }
+      ) : null;
+      if (isLast) {
+        return /* @__PURE__ */ jsxs(Fragment, { children: [
+          separator,
+          /* @__PURE__ */ jsx(
+            "span",
+            {
+              className: cn("usa-breadcrumb__text", isDark ? "text-white" : "text-(--color-uswds-base-ink)"),
+              "aria-current": "page",
+              children: text
+            }
+          )
+        ] });
+      }
+      return /* @__PURE__ */ jsxs(Fragment, { children: [
+        separator,
+        /* @__PURE__ */ jsx(
+          "a",
+          {
+            href,
+            className: cn(
+              "usa-breadcrumb__link underline focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)",
+              isDark ? "text-white/70 no-underline hover:text-white hover:underline" : "text-(--color-uswds-primary) hover:text-(--color-uswds-primary-dark)"
+            ),
+            children: text
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsBreadcrumbItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

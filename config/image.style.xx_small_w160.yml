@@ -1,0 +1,21 @@
+uuid: cf9cd738-e41d-4031-ac51-d207e4dadec7
+langcode: en
+status: true
+dependencies: {  }
+name: xx_small_w160
+label: 'XX Small (W160)'
+effects:
+  bc1d6884-56d0-420b-8cbf-27d0276f9a09:
+    uuid: bc1d6884-56d0-420b-8cbf-27d0276f9a09
+    id: image_scale
+    weight: 1
+    data:
+      width: 160
+      height: null
+      upscale: true
+  10c3b1ec-df82-4abb-9018-285abe4163a5:
+    uuid: 10c3b1ec-df82-4abb-9018-285abe4163a5
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

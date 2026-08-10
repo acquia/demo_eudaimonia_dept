@@ -1,0 +1,73 @@
+uuid: 4903cbca-31b2-4a5e-acab-3166d09e7afc
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_table_row
+  module:
+    - options
+_core:
+  default_config_hash: LnS00sHfZdjil2Qq89aqdxNWe-IZGVHAwlM0b53KSn8
+label: '(Eud-Kit) USWDS Table Row'
+id: js.uswds_table_row
+source: js
+source_local_id: uswds_table_row
+provider: null
+active_version: c79dab487500837e
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        cells:
+          required: false
+          field_type: string
+          cardinality: -1
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Program
+            -
+              value: 'Who qualifies'
+            -
+              value: 'Benefit type'
+            -
+              value: 'Max amount'
+            -
+              value: Decision
+          expression: ℹ︎string␟value
+        isHeader:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        backgroundColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: primary-lightest
+          expression: ℹ︎list_string␟value
+        textColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: dark
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

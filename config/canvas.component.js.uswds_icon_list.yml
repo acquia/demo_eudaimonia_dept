@@ -1,0 +1,22 @@
+uuid: 4b0347bd-3e43-48e6-a7f2-9bb9be15f33f
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_icon_list
+_core:
+  default_config_hash: ukFk9Dd-mup2RitqgbA0sXcSutwgbp4SrsYRl6SQOYw
+label: '(Eud-Kit) USWDS Icon List'
+id: js.uswds_icon_list
+source: js
+source_local_id: uswds_icon_list
+provider: null
+active_version: 95702e45488525d1
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions: {  }
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items

@@ -1,0 +1,23 @@
+uuid: 5bc35af5-b245-491b-8038-745503a1f3ad
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: x_small_landscape_480x298
+label: 'X Small landscape (480x298) '
+effects:
+  9a1d89d7-0462-4ac0-9b21-c10c3b2628f8:
+    uuid: 9a1d89d7-0462-4ac0-9b21-c10c3b2628f8
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 480
+      height: 298
+      crop_type: focal_point
+  f347fc18-5e27-4a02-9cd1-944b01022622:
+    uuid: f347fc18-5e27-4a02-9cd1-944b01022622
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

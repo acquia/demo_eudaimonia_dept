@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 7c74844d-c75f-4617-b9a9-1ae91e9697ff
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: card-icon-2-work.png
+  uri:
+    -
+      value: 'public://2026-05/card-icon-2-work.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 1360
+  status:
+    -
+      value: true

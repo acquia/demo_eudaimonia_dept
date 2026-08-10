@@ -1,0 +1,80 @@
+uuid: c347d290-dded-41be-8d6f-a78e25db51e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_date_range_picker
+_core:
+  default_config_hash: gKJAfzTnkwiP2AgcUaDZ5kAkgZ_R-tj9oWBr-7VvUe8
+label: '(Eud-Kit) USWDS Date Range Picker'
+id: js.uswds_date_range_picker
+source: js
+source_local_id: uswds_date_range_picker
+provider: null
+active_version: 3ea2987f43fe65e2
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        startLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Start date'
+          expression: ℹ︎string␟value
+        endLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'End date'
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: travel-dates
+          expression: ℹ︎string␟value
+        hint:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: mm/dd/yyyy
+          expression: ℹ︎string␟value
+        minDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 01/01/2024
+          expression: ℹ︎string␟value
+        maxDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 12/31/2025
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

@@ -1,0 +1,467 @@
+uuid: 2e48c671-7aff-4918-a091-c18bd6ff10c1
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: IoX-6PQHaBkjSiw5cExSP4psSqdDkcOSe8ZxS6AVdWY
+machineName: uswds_step_indicator
+name: '(Eud-Kit) USWDS Step Indicator'
+required: {  }
+props:
+  steps:
+    type: array
+    items:
+      type: string
+    title: Steps
+    examples:
+      -
+        - 'Personal information'
+        - 'Household status'
+        - 'Supporting documents'
+        - Signature
+  currentStep:
+    type: integer
+    title: 'Current Step'
+    examples:
+      - 1
+  counters:
+    type: boolean
+    title: Counters
+    examples:
+      - false
+  smallCounters:
+    type: boolean
+    title: 'Small Counters'
+    examples:
+      - false
+  center:
+    type: boolean
+    title: Center
+    examples:
+      - false
+  noLabels:
+    type: boolean
+    title: 'No Labels'
+    examples:
+      - false
+  headingTitle:
+    type: string
+    title: 'Heading Title'
+    examples:
+      - 'Personal information'
+  backgroundColor:
+    type: string
+    enum:
+      - white
+      - gray
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      gray: Gray
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: 'Background Color'
+    examples:
+      - gray
+  paddingTop:
+    type: string
+    enum:
+      - none
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      none: None
+      sm: 'Small (16px)'
+      md: 'Medium (32px)'
+      lg: 'Large (48px)'
+      xl: 'Extra Large (80px)'
+    title: 'Padding Top'
+    examples:
+      - none
+  paddingBottom:
+    type: string
+    enum:
+      - none
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      none: None
+      sm: 'Small (16px)'
+      md: 'Medium (32px)'
+      lg: 'Large (48px)'
+      xl: 'Extra Large (80px)'
+    title: 'Padding Bottom'
+    examples:
+      - none
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Step Indicator
+    // Counter variant: centered circles connected by a thin horizontal line
+    // Bar variant: thick colored bars above labels
+    // Colors (USWDS standard):
+    //   complete:  primary-darker bg, white text
+    //   current:   primary bg, white text
+    //   pending:   white bg, base-light border, base-darker text
+
+    const BG_MAP = {
+      white: 'white',
+      gray: 'var(--color-uswds-base-lightest)',
+      'primary-lightest': 'var(--color-uswds-primary-lightest)',
+      'primary-lighter': 'var(--color-uswds-primary-lighter)',
+      primary: 'var(--color-uswds-primary)',
+      'primary-dark': 'var(--color-uswds-primary-dark)',
+      'primary-darker': 'var(--color-uswds-primary-darker)',
+      'base-lighter': 'var(--color-uswds-base-lighter)',
+      'base-dark': 'var(--color-uswds-base-dark)',
+      'base-darkest': 'var(--color-uswds-base-darkest)',
+    };
+
+    const PT_MAP = { none: '', sm: 'pt-4', md: 'pt-8', lg: 'pt-12', xl: 'pt-20' };
+    const PB_MAP = { none: '', sm: 'pb-4', md: 'pb-8', lg: 'pb-12', xl: 'pb-20' };
+
+    const UswdsStepIndicator = ({
+      steps: rawSteps = [],
+      counters = false,
+      smallCounters = false,
+      center = false,
+      noLabels = false,
+      headingTitle = '',
+      currentStep = null,
+      backgroundColor = '',
+      paddingTop = 'none',
+      paddingBottom = 'none',
+      className = '',
+    }) => {
+      const steps = rawSteps.map((s) => (typeof s === 'string' ? { label: s } : s));
+      const useCounters = counters || smallCounters;
+      const isSmall = smallCounters;
+
+      // Resolve current index (0-based)
+      const currentIndex =
+        currentStep !== null
+          ? currentStep - 1
+          : steps.findIndex((s) => s.status === 'current' || s.status === 'active');
+
+      const getState = (step, index) => {
+        if (step.status === 'complete') return 'complete';
+        if (step.status === 'current' || step.status === 'active') return 'current';
+        if (currentIndex >= 0) {
+          if (index < currentIndex) return 'complete';
+          if (index === currentIndex) return 'current';
+        }
+        return 'pending';
+      };
+
+      const circleSize = isSmall ? 'h-6 w-6 text-[11px]' : 'h-8 w-8 text-sm';
+      const lineTop = isSmall ? 'top-3' : 'top-4';
+
+      const bgStyle = backgroundColor ? { backgroundColor: BG_MAP[backgroundColor] } : undefined;
+
+      return (
+        <div
+          className={cn(
+            'usa-step-indicator flex flex-col gap-4 font-sans',
+            PT_MAP[paddingTop],
+            PB_MAP[paddingBottom],
+            className,
+          )}
+          style={bgStyle}
+        >
+          {/* Steps row */}
+          <ol className="usa-step-indicator__segments relative m-0 flex list-none gap-0 p-0" aria-label="progress">
+            {useCounters ? (
+              <>
+                {/* Connecting line between circle centres — clipped so it doesn't overhang the first or last step */}
+                <div
+                  className={cn(
+                    'absolute h-0.5 bg-(--color-uswds-base-light)',
+                    lineTop,
+                  )}
+                  style={{
+                    left: `${100 / (steps.length * 2)}%`,
+                    right: `${100 / (steps.length * 2)}%`,
+                  }}
+                />
+                {steps.map((step, index) => {
+                  const state = getState(step, index);
+                  const isComplete = state === 'complete';
+                  const isCurrent = state === 'current';
+
+                  const circleStyle = isComplete
+                    ? 'bg-(--color-uswds-primary-darker) border-transparent text-white'
+                    : isCurrent
+                      ? 'bg-(--color-uswds-primary) border-transparent text-white'
+                      : 'border-(--color-uswds-base-light) bg-white text-(--color-uswds-base-darker)';
+
+                  const labelColor = isComplete
+                    ? 'text-(--color-uswds-primary-darker)'
+                    : isCurrent
+                      ? 'font-bold text-(--color-uswds-primary)'
+                      : 'text-(--color-uswds-base-darker)';
+
+                  return (
+                    <li
+                      key={index}
+                      className="relative z-10 flex flex-1 flex-col items-center gap-2"
+                      aria-current={isCurrent ? 'step' : undefined}
+                    >
+                      <div
+                        className={cn(
+                          'flex shrink-0 items-center justify-center rounded-full border-2 font-bold',
+                          circleSize,
+                          circleStyle,
+                        )}
+                      >
+                        {index + 1}
+                      </div>
+                      {!noLabels && (
+                        <span className={cn('text-center text-xs leading-tight', labelColor)}>
+                          {step.label}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </>
+            ) : (
+              /* Bar variant */
+              steps.map((step, index) => {
+                const state = getState(step, index);
+                const isComplete = state === 'complete';
+                const isCurrent = state === 'current';
+
+                const barBg = isComplete
+                  ? 'bg-(--color-uswds-primary-darker)'
+                  : isCurrent
+                    ? 'bg-(--color-uswds-primary)'
+                    : 'bg-(--color-uswds-base-light)';
+
+                const labelColor = isComplete
+                  ? 'text-(--color-uswds-primary-darker)'
+                  : isCurrent
+                    ? 'font-bold text-(--color-uswds-primary)'
+                    : 'text-(--color-uswds-base-dark)';
+
+                return (
+                  <li
+                    key={index}
+                    className={cn(
+                      'flex flex-1 flex-col gap-2',
+                      center ? 'items-center' : 'items-start',
+                    )}
+                    aria-current={isCurrent ? 'step' : undefined}
+                  >
+                    <div className={cn('h-2 w-full', barBg)} />
+                    {!noLabels && (
+                      <span
+                        className={cn(
+                          'text-sm leading-tight',
+                          center && 'text-center',
+                          labelColor,
+                        )}
+                      >
+                        {step.label}
+                      </span>
+                    )}
+                  </li>
+                );
+              })
+            )}
+          </ol>
+
+          {/* Optional heading: "N of Total: Title" */}
+          {headingTitle && (
+            <div className="flex items-center gap-2">
+              {currentIndex >= 0 && (
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[20px] bg-(--color-uswds-primary) text-lg text-white">
+                  {currentIndex + 1}
+                </div>
+              )}
+              <div className="flex items-center gap-1 text-lg text-(--color-uswds-primary)">
+                <span>of</span>
+                <span>{steps.length}</span>
+              </div>
+              <p className="flex-1 text-lg font-bold text-(--color-uswds-base-ink)">
+                {headingTitle}
+              </p>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    export default UswdsStepIndicator;
+  compiled: |
+    import { jsxs, jsx, Fragment } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const BG_MAP = {
+      white: "white",
+      gray: "var(--color-uswds-base-lightest)",
+      "primary-lightest": "var(--color-uswds-primary-lightest)",
+      "primary-lighter": "var(--color-uswds-primary-lighter)",
+      primary: "var(--color-uswds-primary)",
+      "primary-dark": "var(--color-uswds-primary-dark)",
+      "primary-darker": "var(--color-uswds-primary-darker)",
+      "base-lighter": "var(--color-uswds-base-lighter)",
+      "base-dark": "var(--color-uswds-base-dark)",
+      "base-darkest": "var(--color-uswds-base-darkest)"
+    };
+    const PT_MAP = { none: "", sm: "pt-4", md: "pt-8", lg: "pt-12", xl: "pt-20" };
+    const PB_MAP = { none: "", sm: "pb-4", md: "pb-8", lg: "pb-12", xl: "pb-20" };
+    const UswdsStepIndicator = ({
+      steps: rawSteps = [],
+      counters = false,
+      smallCounters = false,
+      center = false,
+      noLabels = false,
+      headingTitle = "",
+      currentStep = null,
+      backgroundColor = "",
+      paddingTop = "none",
+      paddingBottom = "none",
+      className = ""
+    }) => {
+      const steps = rawSteps.map((s) => typeof s === "string" ? { label: s } : s);
+      const useCounters = counters || smallCounters;
+      const isSmall = smallCounters;
+      const currentIndex = currentStep !== null ? currentStep - 1 : steps.findIndex((s) => s.status === "current" || s.status === "active");
+      const getState = (step, index) => {
+        if (step.status === "complete") return "complete";
+        if (step.status === "current" || step.status === "active") return "current";
+        if (currentIndex >= 0) {
+          if (index < currentIndex) return "complete";
+          if (index === currentIndex) return "current";
+        }
+        return "pending";
+      };
+      const circleSize = isSmall ? "h-6 w-6 text-[11px]" : "h-8 w-8 text-sm";
+      const lineTop = isSmall ? "top-3" : "top-4";
+      const bgStyle = backgroundColor ? { backgroundColor: BG_MAP[backgroundColor] } : void 0;
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-step-indicator flex flex-col gap-4 font-sans",
+            PT_MAP[paddingTop],
+            PB_MAP[paddingBottom],
+            className
+          ),
+          style: bgStyle,
+          children: [
+            /* @__PURE__ */ jsx("ol", { className: "usa-step-indicator__segments relative m-0 flex list-none gap-0 p-0", "aria-label": "progress", children: useCounters ? /* @__PURE__ */ jsxs(Fragment, { children: [
+              /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: cn(
+                    "absolute h-0.5 bg-(--color-uswds-base-light)",
+                    lineTop
+                  ),
+                  style: {
+                    left: `${100 / (steps.length * 2)}%`,
+                    right: `${100 / (steps.length * 2)}%`
+                  }
+                }
+              ),
+              steps.map((step, index) => {
+                const state = getState(step, index);
+                const isComplete = state === "complete";
+                const isCurrent = state === "current";
+                const circleStyle = isComplete ? "bg-(--color-uswds-primary-darker) border-transparent text-white" : isCurrent ? "bg-(--color-uswds-primary) border-transparent text-white" : "border-(--color-uswds-base-light) bg-white text-(--color-uswds-base-darker)";
+                const labelColor = isComplete ? "text-(--color-uswds-primary-darker)" : isCurrent ? "font-bold text-(--color-uswds-primary)" : "text-(--color-uswds-base-darker)";
+                return /* @__PURE__ */ jsxs(
+                  "li",
+                  {
+                    className: "relative z-10 flex flex-1 flex-col items-center gap-2",
+                    "aria-current": isCurrent ? "step" : void 0,
+                    children: [
+                      /* @__PURE__ */ jsx(
+                        "div",
+                        {
+                          className: cn(
+                            "flex shrink-0 items-center justify-center rounded-full border-2 font-bold",
+                            circleSize,
+                            circleStyle
+                          ),
+                          children: index + 1
+                        }
+                      ),
+                      !noLabels && /* @__PURE__ */ jsx("span", { className: cn("text-center text-xs leading-tight", labelColor), children: step.label })
+                    ]
+                  },
+                  index
+                );
+              })
+            ] }) : (
+              /* Bar variant */
+              steps.map((step, index) => {
+                const state = getState(step, index);
+                const isComplete = state === "complete";
+                const isCurrent = state === "current";
+                const barBg = isComplete ? "bg-(--color-uswds-primary-darker)" : isCurrent ? "bg-(--color-uswds-primary)" : "bg-(--color-uswds-base-light)";
+                const labelColor = isComplete ? "text-(--color-uswds-primary-darker)" : isCurrent ? "font-bold text-(--color-uswds-primary)" : "text-(--color-uswds-base-dark)";
+                return /* @__PURE__ */ jsxs(
+                  "li",
+                  {
+                    className: cn(
+                      "flex flex-1 flex-col gap-2",
+                      center ? "items-center" : "items-start"
+                    ),
+                    "aria-current": isCurrent ? "step" : void 0,
+                    children: [
+                      /* @__PURE__ */ jsx("div", { className: cn("h-2 w-full", barBg) }),
+                      !noLabels && /* @__PURE__ */ jsx(
+                        "span",
+                        {
+                          className: cn(
+                            "text-sm leading-tight",
+                            center && "text-center",
+                            labelColor
+                          ),
+                          children: step.label
+                        }
+                      )
+                    ]
+                  },
+                  index
+                );
+              })
+            ) }),
+            headingTitle && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+              currentIndex >= 0 && /* @__PURE__ */ jsx("div", { className: "flex h-10 w-10 shrink-0 items-center justify-center rounded-[20px] bg-(--color-uswds-primary) text-lg text-white", children: currentIndex + 1 }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1 text-lg text-(--color-uswds-primary)", children: [
+                /* @__PURE__ */ jsx("span", { children: "of" }),
+                /* @__PURE__ */ jsx("span", { children: steps.length })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "flex-1 text-lg font-bold text-(--color-uswds-base-ink)", children: headingTitle })
+            ] })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsStepIndicator as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

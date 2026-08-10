@@ -1,0 +1,697 @@
+uuid: fafa896b-d82b-4c40-84eb-9a0ea78fe240
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_label
+_core:
+  default_config_hash: CkzvSxLIMBYcpzqCUG-unzir9Inm8wTQCrT1ayFqaTk
+machineName: uswds_date_picker
+name: '(Eud-Kit) USWDS Date Picker'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'Date of birth'
+  name:
+    type: string
+    title: Name
+    examples:
+      - dob
+  hint:
+    type: string
+    title: Hint
+    examples:
+      - mm/dd/yyyy
+  minDate:
+    type: string
+    title: 'Min Date'
+  maxDate:
+    type: string
+    title: 'Max Date'
+slots: {  }
+js:
+  original: |
+    import { useEffect, useRef, useState } from 'react';
+    import UswdsLabel from '@/components/uswds_label';
+    import { cn } from 'drupal-canvas';
+
+    const MONTH_NAMES = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    const DAY_HEADERS = ['S', 'M', 'T', 'W', 'Th', 'F', 'S'];
+
+    const CalendarIcon = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        viewBox="0 0 24 24"
+        className="h-6 w-6 fill-current"
+      >
+        <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+      </svg>
+    );
+
+    const PrevYearIcon = () => (
+      <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+        <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
+      </svg>
+    );
+    const PrevMonthIcon = () => (
+      <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      </svg>
+    );
+    const NextMonthIcon = () => (
+      <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+      </svg>
+    );
+    const NextYearIcon = () => (
+      <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+        <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
+      </svg>
+    );
+
+    function formatDisplay(date) {
+      if (!date) return '';
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${m}/${d}/${date.getFullYear()}`;
+    }
+
+    function parseInput(str) {
+      const match = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (!match) return null;
+      const d = new Date(+match[3], +match[1] - 1, +match[2]);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function buildCalendarCells(year, month) {
+      const firstDow = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const daysInPrev = new Date(year, month, 0).getDate();
+      const cells = [];
+      for (let i = firstDow - 1; i >= 0; i--)
+        cells.push({ day: daysInPrev - i, current: false });
+      for (let d = 1; d <= daysInMonth; d++) cells.push({ day: d, current: true });
+      const tail = 7 - (cells.length % 7);
+      if (tail < 7)
+        for (let d = 1; d <= tail; d++) cells.push({ day: d, current: false });
+      return cells;
+    }
+
+    const navBtnClass =
+      'flex size-10 shrink-0 items-center justify-center text-(--color-uswds-base-ink) hover:bg-(--color-uswds-base-lighter) focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color)';
+
+    const UswdsDatePicker = ({
+      label = '',
+      name = '',
+      hint = '',
+      minDate = '',
+      maxDate = '',
+      onDateChange = null,
+      rangeStart = null,
+      rangeEnd = null,
+      className = '',
+    }) => {
+      const id = `date-${name}`;
+      const today = new Date();
+
+      const [isOpen, setIsOpen] = useState(false);
+      const [inputValue, setInputValue] = useState('');
+      const [selected, setSelected] = useState(null);
+      const [viewYear, setViewYear] = useState(today.getFullYear());
+      const [viewMonth, setViewMonth] = useState(today.getMonth());
+      const containerRef = useRef(null);
+
+      const minD = minDate ? parseInput(minDate) : null;
+      const maxD = maxDate ? parseInput(maxDate) : null;
+
+      useEffect(() => {
+        if (!isOpen) return;
+        const handler = (e) => {
+          if (containerRef.current && !containerRef.current.contains(e.target)) {
+            setIsOpen(false);
+          }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+      }, [isOpen]);
+
+      const getCellDate = (day) => new Date(viewYear, viewMonth, day);
+
+      const isCellDisabled = (day, isCurrent) => {
+        if (!isCurrent) return true;
+        const d = getCellDate(day);
+        if (minD) {
+          const minNorm = new Date(
+            minD.getFullYear(),
+            minD.getMonth(),
+            minD.getDate(),
+          );
+          if (d < minNorm) return true;
+        }
+        if (maxD) {
+          const maxNorm = new Date(
+            maxD.getFullYear(),
+            maxD.getMonth(),
+            maxD.getDate(),
+          );
+          if (d > maxNorm) return true;
+        }
+        return false;
+      };
+
+      const isCellInRange = (day) => {
+        if (!rangeStart || !rangeEnd) return false;
+        const d = getCellDate(day);
+        const s = new Date(
+          rangeStart.getFullYear(),
+          rangeStart.getMonth(),
+          rangeStart.getDate(),
+        );
+        const e = new Date(
+          rangeEnd.getFullYear(),
+          rangeEnd.getMonth(),
+          rangeEnd.getDate(),
+        );
+        return d > s && d < e;
+      };
+
+      const isCellRangeStart = (day) => {
+        if (!rangeStart) return false;
+        return getCellDate(day).toDateString() === rangeStart.toDateString();
+      };
+
+      const isCellRangeEnd = (day) => {
+        if (!rangeEnd) return false;
+        return getCellDate(day).toDateString() === rangeEnd.toDateString();
+      };
+
+      const selectDay = (day, isCurrent) => {
+        if (isCellDisabled(day, isCurrent)) return;
+        const date = getCellDate(day);
+        setSelected(date);
+        setInputValue(formatDisplay(date));
+        setIsOpen(false);
+        if (onDateChange) onDateChange(date);
+      };
+
+      const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+        const parsed = parseInput(e.target.value);
+        if (parsed) {
+          setSelected(parsed);
+          setViewYear(parsed.getFullYear());
+          setViewMonth(parsed.getMonth());
+          if (onDateChange) onDateChange(parsed);
+        }
+      };
+
+      const prevYear = () => setViewYear((y) => y - 1);
+      const nextYear = () => setViewYear((y) => y + 1);
+      const prevMonth = () => {
+        if (viewMonth === 0) {
+          setViewMonth(11);
+          setViewYear((y) => y - 1);
+        } else setViewMonth((m) => m - 1);
+      };
+      const nextMonth = () => {
+        if (viewMonth === 11) {
+          setViewMonth(0);
+          setViewYear((y) => y + 1);
+        } else setViewMonth((m) => m + 1);
+      };
+
+      const cells = buildCalendarCells(viewYear, viewMonth);
+      const rows = [];
+      for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
+
+      const isSelected = (day) =>
+        selected &&
+        selected.getFullYear() === viewYear &&
+        selected.getMonth() === viewMonth &&
+        selected.getDate() === day;
+
+      return (
+        <div className={cn('usa-date-picker flex flex-col gap-1 font-sans', className)}>
+          {label && <UswdsLabel labelText={label} htmlFor={id} hintText={hint} />}
+          <div className="relative" ref={containerRef}>
+            {/* Input + toggle button — border only on the input, button has gray bg */}
+            <div className="flex h-10">
+              <input
+                id={id}
+                type="text"
+                name={name}
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="mm/dd/yyyy"
+                autoComplete="off"
+                className="min-w-0 flex-1 border border-(--color-uswds-base-ink) bg-white px-2 text-base text-(--color-uswds-base-ink) outline-none placeholder:text-(--color-uswds-base) focus:border-(--uswds-focus-color) focus:outline-[4px] focus:outline-offset-0 focus:outline-(--uswds-focus-color)"
+              />
+              <button
+                type="button"
+                onClick={() => setIsOpen((o) => !o)}
+                aria-label="Toggle calendar"
+                aria-expanded={isOpen}
+                className="flex h-10 w-12 shrink-0 items-center justify-center bg-(--color-uswds-base-lightest) text-(--color-uswds-base-ink)"
+              >
+                <CalendarIcon />
+              </button>
+            </div>
+
+            {/* Calendar dropdown */}
+            {isOpen && (
+              <div className="absolute top-full right-0 left-0 z-50 bg-(--color-uswds-base-lightest)">
+                {/* Header */}
+                <div className="flex items-center justify-between bg-(--color-uswds-base-lightest)">
+                  <div className="flex">
+                    <button
+                      type="button"
+                      onClick={prevYear}
+                      aria-label="Previous year"
+                      className={navBtnClass}
+                    >
+                      <PrevYearIcon />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={prevMonth}
+                      aria-label="Previous month"
+                      className={navBtnClass}
+                    >
+                      <PrevMonthIcon />
+                    </button>
+                  </div>
+                  <div className="flex">
+                    <span className="flex h-10 items-center px-1 text-base text-(--color-uswds-base-ink)">
+                      {MONTH_NAMES[viewMonth]}
+                    </span>
+                    <span className="flex h-10 items-center px-1 text-base text-(--color-uswds-base-ink)">
+                      {viewYear}
+                    </span>
+                  </div>
+                  <div className="flex">
+                    <button
+                      type="button"
+                      onClick={nextMonth}
+                      aria-label="Next month"
+                      className={navBtnClass}
+                    >
+                      <NextMonthIcon />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={nextYear}
+                      aria-label="Next year"
+                      className={navBtnClass}
+                    >
+                      <NextYearIcon />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Day-of-week headers */}
+                <div className="flex bg-(--color-uswds-base-lightest)">
+                  {DAY_HEADERS.map((d, i) => (
+                    <div
+                      key={i}
+                      className="flex h-10 flex-1 items-center justify-center px-[4px] py-[6px] text-base font-normal text-(--color-uswds-base-ink)"
+                    >
+                      {d}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Calendar grid */}
+                {rows.map((row, ri) => (
+                  <div key={ri} className="flex bg-(--color-uswds-base-lightest)">
+                    {row.map((cell, ci) => {
+                      const disabled = isCellDisabled(cell.day, cell.current);
+                      const inRange = cell.current && isCellInRange(cell.day);
+                      const isStart = cell.current && isCellRangeStart(cell.day);
+                      const isEnd = cell.current && isCellRangeEnd(cell.day);
+                      const showSelected =
+                        cell.current &&
+                        isSelected(cell.day) &&
+                        !rangeStart &&
+                        !rangeEnd;
+
+                      return (
+                        <button
+                          key={ci}
+                          type="button"
+                          onClick={() => selectDay(cell.day, cell.current)}
+                          tabIndex={disabled ? -1 : 0}
+                          className={cn(
+                            'flex h-10 flex-1 items-center justify-center px-[4px] py-[6px] text-base font-normal',
+                            disabled && 'cursor-default opacity-40',
+                            inRange &&
+                              !isStart &&
+                              !isEnd &&
+                              'bg-(--color-uswds-primary-lightest) text-(--color-uswds-base-ink)',
+                            isStart &&
+                              !isEnd &&
+                              'rounded-tl-[8px] rounded-bl-[8px] bg-(--color-uswds-primary) text-white',
+                            isEnd &&
+                              !isStart &&
+                              'rounded-tr-[8px] rounded-br-[8px] bg-(--color-uswds-primary) text-white',
+                            isStart &&
+                              isEnd &&
+                              'bg-(--color-uswds-primary) text-white',
+                            showSelected && 'bg-(--color-uswds-primary) text-white',
+                            !disabled &&
+                              !inRange &&
+                              !isStart &&
+                              !isEnd &&
+                              !showSelected &&
+                              'hover:bg-(--color-uswds-base-lighter) focus-visible:outline-[4px] focus-visible:outline-offset-0 focus-visible:outline-(--uswds-focus-color)',
+                          )}
+                        >
+                          {cell.day}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsDatePicker;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { useState, useRef, useEffect } from "react";
+    import UswdsLabel from "@/components/uswds_label";
+    import { cn } from "drupal-canvas";
+    const MONTH_NAMES = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    const DAY_HEADERS = ["S", "M", "T", "W", "Th", "F", "S"];
+    const CalendarIcon = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        viewBox: "0 0 24 24",
+        className: "h-6 w-6 fill-current",
+        children: /* @__PURE__ */ jsx("path", { d: "M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" })
+      }
+    );
+    const PrevYearIcon = () => /* @__PURE__ */ jsx("svg", { viewBox: "0 0 24 24", className: "h-6 w-6 fill-current", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" }) });
+    const PrevMonthIcon = () => /* @__PURE__ */ jsx("svg", { viewBox: "0 0 24 24", className: "h-6 w-6 fill-current", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" }) });
+    const NextMonthIcon = () => /* @__PURE__ */ jsx("svg", { viewBox: "0 0 24 24", className: "h-6 w-6 fill-current", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" }) });
+    const NextYearIcon = () => /* @__PURE__ */ jsx("svg", { viewBox: "0 0 24 24", className: "h-6 w-6 fill-current", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" }) });
+    function formatDisplay(date) {
+      if (!date) return "";
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${m}/${d}/${date.getFullYear()}`;
+    }
+    function parseInput(str) {
+      const match = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (!match) return null;
+      const d = new Date(+match[3], +match[1] - 1, +match[2]);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    function buildCalendarCells(year, month) {
+      const firstDow = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const daysInPrev = new Date(year, month, 0).getDate();
+      const cells = [];
+      for (let i = firstDow - 1; i >= 0; i--)
+        cells.push({ day: daysInPrev - i, current: false });
+      for (let d = 1; d <= daysInMonth; d++) cells.push({ day: d, current: true });
+      const tail = 7 - cells.length % 7;
+      if (tail < 7)
+        for (let d = 1; d <= tail; d++) cells.push({ day: d, current: false });
+      return cells;
+    }
+    const navBtnClass = "flex size-10 shrink-0 items-center justify-center text-(--color-uswds-base-ink) hover:bg-(--color-uswds-base-lighter) focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color)";
+    const UswdsDatePicker = ({
+      label = "",
+      name = "",
+      hint = "",
+      minDate = "",
+      maxDate = "",
+      onDateChange = null,
+      rangeStart = null,
+      rangeEnd = null,
+      className = ""
+    }) => {
+      const id = `date-${name}`;
+      const today = /* @__PURE__ */ new Date();
+      const [isOpen, setIsOpen] = useState(false);
+      const [inputValue, setInputValue] = useState("");
+      const [selected, setSelected] = useState(null);
+      const [viewYear, setViewYear] = useState(today.getFullYear());
+      const [viewMonth, setViewMonth] = useState(today.getMonth());
+      const containerRef = useRef(null);
+      const minD = minDate ? parseInput(minDate) : null;
+      const maxD = maxDate ? parseInput(maxDate) : null;
+      useEffect(() => {
+        if (!isOpen) return;
+        const handler = (e) => {
+          if (containerRef.current && !containerRef.current.contains(e.target)) {
+            setIsOpen(false);
+          }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => document.removeEventListener("mousedown", handler);
+      }, [isOpen]);
+      const getCellDate = (day) => new Date(viewYear, viewMonth, day);
+      const isCellDisabled = (day, isCurrent) => {
+        if (!isCurrent) return true;
+        const d = getCellDate(day);
+        if (minD) {
+          const minNorm = new Date(
+            minD.getFullYear(),
+            minD.getMonth(),
+            minD.getDate()
+          );
+          if (d < minNorm) return true;
+        }
+        if (maxD) {
+          const maxNorm = new Date(
+            maxD.getFullYear(),
+            maxD.getMonth(),
+            maxD.getDate()
+          );
+          if (d > maxNorm) return true;
+        }
+        return false;
+      };
+      const isCellInRange = (day) => {
+        if (!rangeStart || !rangeEnd) return false;
+        const d = getCellDate(day);
+        const s = new Date(
+          rangeStart.getFullYear(),
+          rangeStart.getMonth(),
+          rangeStart.getDate()
+        );
+        const e = new Date(
+          rangeEnd.getFullYear(),
+          rangeEnd.getMonth(),
+          rangeEnd.getDate()
+        );
+        return d > s && d < e;
+      };
+      const isCellRangeStart = (day) => {
+        if (!rangeStart) return false;
+        return getCellDate(day).toDateString() === rangeStart.toDateString();
+      };
+      const isCellRangeEnd = (day) => {
+        if (!rangeEnd) return false;
+        return getCellDate(day).toDateString() === rangeEnd.toDateString();
+      };
+      const selectDay = (day, isCurrent) => {
+        if (isCellDisabled(day, isCurrent)) return;
+        const date = getCellDate(day);
+        setSelected(date);
+        setInputValue(formatDisplay(date));
+        setIsOpen(false);
+        if (onDateChange) onDateChange(date);
+      };
+      const handleInputChange = (e) => {
+        setInputValue(e.target.value);
+        const parsed = parseInput(e.target.value);
+        if (parsed) {
+          setSelected(parsed);
+          setViewYear(parsed.getFullYear());
+          setViewMonth(parsed.getMonth());
+          if (onDateChange) onDateChange(parsed);
+        }
+      };
+      const prevYear = () => setViewYear((y) => y - 1);
+      const nextYear = () => setViewYear((y) => y + 1);
+      const prevMonth = () => {
+        if (viewMonth === 0) {
+          setViewMonth(11);
+          setViewYear((y) => y - 1);
+        } else setViewMonth((m) => m - 1);
+      };
+      const nextMonth = () => {
+        if (viewMonth === 11) {
+          setViewMonth(0);
+          setViewYear((y) => y + 1);
+        } else setViewMonth((m) => m + 1);
+      };
+      const cells = buildCalendarCells(viewYear, viewMonth);
+      const rows = [];
+      for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
+      const isSelected = (day) => selected && selected.getFullYear() === viewYear && selected.getMonth() === viewMonth && selected.getDate() === day;
+      return /* @__PURE__ */ jsxs("div", { className: cn("usa-date-picker flex flex-col gap-1 font-sans", className), children: [
+        label && /* @__PURE__ */ jsx(UswdsLabel, { labelText: label, htmlFor: id, hintText: hint }),
+        /* @__PURE__ */ jsxs("div", { className: "relative", ref: containerRef, children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex h-10", children: [
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                id,
+                type: "text",
+                name,
+                value: inputValue,
+                onChange: handleInputChange,
+                placeholder: "mm/dd/yyyy",
+                autoComplete: "off",
+                className: "min-w-0 flex-1 border border-(--color-uswds-base-ink) bg-white px-2 text-base text-(--color-uswds-base-ink) outline-none placeholder:text-(--color-uswds-base) focus:border-(--uswds-focus-color) focus:outline-[4px] focus:outline-offset-0 focus:outline-(--uswds-focus-color)"
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "button",
+              {
+                type: "button",
+                onClick: () => setIsOpen((o) => !o),
+                "aria-label": "Toggle calendar",
+                "aria-expanded": isOpen,
+                className: "flex h-10 w-12 shrink-0 items-center justify-center bg-(--color-uswds-base-lightest) text-(--color-uswds-base-ink)",
+                children: /* @__PURE__ */ jsx(CalendarIcon, {})
+              }
+            )
+          ] }),
+          isOpen && /* @__PURE__ */ jsxs("div", { className: "absolute top-full right-0 left-0 z-50 bg-(--color-uswds-base-lightest)", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between bg-(--color-uswds-base-lightest)", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex", children: [
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: prevYear,
+                    "aria-label": "Previous year",
+                    className: navBtnClass,
+                    children: /* @__PURE__ */ jsx(PrevYearIcon, {})
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: prevMonth,
+                    "aria-label": "Previous month",
+                    className: navBtnClass,
+                    children: /* @__PURE__ */ jsx(PrevMonthIcon, {})
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex h-10 items-center px-1 text-base text-(--color-uswds-base-ink)", children: MONTH_NAMES[viewMonth] }),
+                /* @__PURE__ */ jsx("span", { className: "flex h-10 items-center px-1 text-base text-(--color-uswds-base-ink)", children: viewYear })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex", children: [
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: nextMonth,
+                    "aria-label": "Next month",
+                    className: navBtnClass,
+                    children: /* @__PURE__ */ jsx(NextMonthIcon, {})
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: nextYear,
+                    "aria-label": "Next year",
+                    className: navBtnClass,
+                    children: /* @__PURE__ */ jsx(NextYearIcon, {})
+                  }
+                )
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "flex bg-(--color-uswds-base-lightest)", children: DAY_HEADERS.map((d, i) => /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "flex h-10 flex-1 items-center justify-center px-[4px] py-[6px] text-base font-normal text-(--color-uswds-base-ink)",
+                children: d
+              },
+              i
+            )) }),
+            rows.map((row, ri) => /* @__PURE__ */ jsx("div", { className: "flex bg-(--color-uswds-base-lightest)", children: row.map((cell, ci) => {
+              const disabled = isCellDisabled(cell.day, cell.current);
+              const inRange = cell.current && isCellInRange(cell.day);
+              const isStart = cell.current && isCellRangeStart(cell.day);
+              const isEnd = cell.current && isCellRangeEnd(cell.day);
+              const showSelected = cell.current && isSelected(cell.day) && !rangeStart && !rangeEnd;
+              return /* @__PURE__ */ jsx(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => selectDay(cell.day, cell.current),
+                  tabIndex: disabled ? -1 : 0,
+                  className: cn(
+                    "flex h-10 flex-1 items-center justify-center px-[4px] py-[6px] text-base font-normal",
+                    disabled && "cursor-default opacity-40",
+                    inRange && !isStart && !isEnd && "bg-(--color-uswds-primary-lightest) text-(--color-uswds-base-ink)",
+                    isStart && !isEnd && "rounded-tl-[8px] rounded-bl-[8px] bg-(--color-uswds-primary) text-white",
+                    isEnd && !isStart && "rounded-tr-[8px] rounded-br-[8px] bg-(--color-uswds-primary) text-white",
+                    isStart && isEnd && "bg-(--color-uswds-primary) text-white",
+                    showSelected && "bg-(--color-uswds-primary) text-white",
+                    !disabled && !inRange && !isStart && !isEnd && !showSelected && "hover:bg-(--color-uswds-base-lighter) focus-visible:outline-[4px] focus-visible:outline-offset-0 focus-visible:outline-(--uswds-focus-color)"
+                  ),
+                  children: cell.day
+                },
+                ci
+              );
+            }) }, ri))
+          ] })
+        ] })
+      ] });
+    };
+    export {
+      UswdsDatePicker as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

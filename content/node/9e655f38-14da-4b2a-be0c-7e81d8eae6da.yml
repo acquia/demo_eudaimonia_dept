@@ -1,0 +1,51 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 9e655f38-14da-4b2a-be0c-7e81d8eae6da
+  bundle: program
+  default_langcode: en
+  depends:
+    2ba6c29f-823a-4509-9e9b-be3a922e9903: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Dignity Floor Income'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Guaranteed minimum income for adults experiencing housing insecurity, chronic disability, or sustained unemployment. Paid monthly, no work requirements.'
+      format: filtered_html
+      summary: 'Guaranteed minimum income for adults experiencing housing insecurity, chronic disability, or sustained unemployment. Paid monthly, no work requirements.'
+  field_categories:
+    -
+      entity: 2ba6c29f-823a-4509-9e9b-be3a922e9903
+  field_decision_timeline:
+    -
+      value: '30 days'
+  field_enrollment_status:
+    -
+      value: open
+  field_max_amount:
+    -
+      value: 'Up to $250,000'

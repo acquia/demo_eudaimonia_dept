@@ -1,0 +1,89 @@
+uuid: 852c5cdd-6197-4452-a587-29eb2d491d49
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: lcPMLqpZNjpyQxoZ1JYXlsy5qRQOtxXoc_Lh1eP3jVs
+machineName: uswds_quick_access
+name: '(Eud-Kit) USWDS Quick Access'
+required: {  }
+props:
+  title:
+    type: string
+    title: Title
+    examples:
+      - 'Quick Access'
+  subtitle:
+    type: string
+    title: Subtitle
+    examples:
+      - 'Top services for residents and families'
+slots:
+  content:
+    title: Content
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Quick Access
+    // Container card used in the hero. Gold top accent border, title, subtitle.
+    // Content slot accepts any children — typically a uswds_tab component.
+
+    const UswdsQuickAccess = ({
+      title = 'Quick Access',
+      subtitle = '',
+      content,
+      className = '',
+    }) => {
+      return (
+        <div
+          className={cn(
+            'rounded-sm border-t-[6px] border-(--color-eud-gold) bg-white p-7 font-sans shadow-[0_12px_40px_rgba(0,0,0,.22)]',
+            className,
+          )}
+        >
+          <p className="mb-1 text-lg font-extrabold tracking-[.5px] text-(--color-uswds-primary-darker) uppercase">
+            {title}
+          </p>
+          {subtitle && (
+            <p className="mb-4 text-[13px] text-(--color-uswds-base-dark)">
+              {subtitle}
+            </p>
+          )}
+          {content}
+        </div>
+      );
+    };
+
+    export default UswdsQuickAccess;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsQuickAccess = ({
+      title = "Quick Access",
+      subtitle = "",
+      content,
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "rounded-sm border-t-[6px] border-(--color-eud-gold) bg-white p-7 font-sans shadow-[0_12px_40px_rgba(0,0,0,.22)]",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-1 text-lg font-extrabold tracking-[.5px] text-(--color-uswds-primary-darker) uppercase", children: title }),
+            subtitle && /* @__PURE__ */ jsx("p", { className: "mb-4 text-[13px] text-(--color-uswds-base-dark)", children: subtitle }),
+            content
+          ]
+        }
+      );
+    };
+    export {
+      UswdsQuickAccess as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

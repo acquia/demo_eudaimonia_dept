@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: fa413e8f-cdcd-4eef-8481-ebe04ad54145
+  bundle: image
+  default_langcode: en
+  depends:
+    5f91ddeb-802d-40cc-8797-380a4dae0f30: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: card-icon-6-creativity
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Blue circle with three horizontal white lines, resembling a menu icon.'
+      title: ''
+      width: 128
+      height: 128
+      entity: 5f91ddeb-802d-40cc-8797-380a4dae0f30

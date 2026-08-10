@@ -1,0 +1,42 @@
+uuid: 7e0de2d7-c230-44c5-952b-80b891e0dc74
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: WWSD5h3pwDUhHqysZVcVkciiaSOxqvDpsPtstQ21Qyo
+machineName: uswds_process_list
+name: '(Eud-Kit) USWDS Process List'
+required: {  }
+props: {  }
+slots:
+  items:
+    title: Items
+    description: 'One or more uswds_process_list_item components'
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    /**
+     * UswdsProcessList wraps a list of UswdsProcessListItem slots.
+     * The `items` slot should contain ProcessListItem children.
+     */
+    const UswdsProcessList = ({ items, className = '' }) => {
+      return (
+        <ol className={cn('usa-process-list m-0 list-none p-0 font-sans', className)}>{items}</ol>
+      );
+    };
+
+    export default UswdsProcessList;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsProcessList = ({ items, className = "" }) => {
+      return /* @__PURE__ */ jsx("ol", { className: cn("usa-process-list m-0 list-none p-0 font-sans", className), children: items });
+    };
+    export {
+      UswdsProcessList as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

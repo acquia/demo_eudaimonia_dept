@@ -1,0 +1,184 @@
+uuid: 3905fe75-31d8-4d2c-bce5-dd384cfdca62
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: MxGFBHeELq5sOhY_ed5AWnpYejbqIV2Uwhx46cFJXOs
+machineName: uswds_accordion_item
+name: '(Eud-Kit) USWDS Accordion Item'
+required:
+  - heading
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'First item'
+  body:
+    type: string
+    title: Body
+    examples:
+      - 'Item body text.'
+  expanded:
+    type: boolean
+    title: Expanded
+    examples:
+      - false
+  variant:
+    type: string
+    enum:
+      - default
+      - dark
+    'meta:enum':
+      default: Default
+      dark: Dark
+    title: Variant
+    examples:
+      - default
+slots:
+  content:
+    title: Content
+js:
+  original: |
+    import { useState } from 'react';
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    const UswdsAccordionItem = ({
+      heading = '',
+      content,
+      body = '',
+      expanded: defaultExpanded = false,
+      bordered = false,
+      variant = 'default',
+      className = '',
+    }) => {
+      const [expanded, setExpanded] = useState(defaultExpanded);
+      const id = heading
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+
+      const isDark = variant === 'dark';
+
+      return (
+        <div className={cn('usa-accordion w-full font-sans', className)}>
+          <h4 className="usa-accordion__heading m-0">
+            <button
+              type="button"
+              aria-expanded={expanded}
+              aria-controls={`accordion-content-${id}`}
+              id={`accordion-btn-${id}`}
+              className={cn(
+                'usa-accordion__button flex w-full items-center justify-between gap-5 px-5 py-4 text-left text-[18px] leading-none font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-(--uswds-focus-color)',
+                isDark
+                  ? 'bg-transparent text-white hover:bg-white/10'
+                  : 'bg-(--color-uswds-base-lightest) text-(--color-uswds-base-ink) hover:bg-(--color-uswds-base-lighter)',
+              )}
+              onClick={() => setExpanded(!expanded)}
+            >
+              <span>{heading}</span>
+              <span
+                className={cn(
+                  'shrink-0 text-2xl leading-none font-light',
+                  isDark ? 'text-(--color-eud-gold)' : 'text-(--color-uswds-base-ink)',
+                )}
+                aria-hidden="true"
+              >
+                {expanded ? '−' : '+'}
+              </span>
+            </button>
+          </h4>
+
+          <div
+            hidden={!expanded}
+            id={`accordion-content-${id}`}
+            role="region"
+            aria-labelledby={`accordion-btn-${id}`}
+            className={cn(
+              'usa-accordion__content px-5 pt-4 pb-5 text-base leading-relaxed',
+              isDark
+                ? 'bg-transparent text-white/85'
+                : 'bg-white text-(--color-uswds-base-ink)',
+              bordered &&
+                !isDark &&
+                'border-r border-b border-l border-(--color-uswds-base-lighter)',
+            )}
+          >
+            {body
+              ? <FormattedText className="m-0">{body}</FormattedText>
+              : content}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsAccordionItem;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { useState } from "react";
+    import { cn, FormattedText } from "drupal-canvas";
+    const UswdsAccordionItem = ({
+      heading = "",
+      content,
+      body = "",
+      expanded: defaultExpanded = false,
+      bordered = false,
+      variant = "default",
+      className = ""
+    }) => {
+      const [expanded, setExpanded] = useState(defaultExpanded);
+      const id = heading.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+      const isDark = variant === "dark";
+      return /* @__PURE__ */ jsxs("div", { className: cn("usa-accordion w-full font-sans", className), children: [
+        /* @__PURE__ */ jsx("h4", { className: "usa-accordion__heading m-0", children: /* @__PURE__ */ jsxs(
+          "button",
+          {
+            type: "button",
+            "aria-expanded": expanded,
+            "aria-controls": `accordion-content-${id}`,
+            id: `accordion-btn-${id}`,
+            className: cn(
+              "usa-accordion__button flex w-full items-center justify-between gap-5 px-5 py-4 text-left text-[18px] leading-none font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-(--uswds-focus-color)",
+              isDark ? "bg-transparent text-white hover:bg-white/10" : "bg-(--color-uswds-base-lightest) text-(--color-uswds-base-ink) hover:bg-(--color-uswds-base-lighter)"
+            ),
+            onClick: () => setExpanded(!expanded),
+            children: [
+              /* @__PURE__ */ jsx("span", { children: heading }),
+              /* @__PURE__ */ jsx(
+                "span",
+                {
+                  className: cn(
+                    "shrink-0 text-2xl leading-none font-light",
+                    isDark ? "text-(--color-eud-gold)" : "text-(--color-uswds-base-ink)"
+                  ),
+                  "aria-hidden": "true",
+                  children: expanded ? "−" : "+"
+                }
+              )
+            ]
+          }
+        ) }),
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            hidden: !expanded,
+            id: `accordion-content-${id}`,
+            role: "region",
+            "aria-labelledby": `accordion-btn-${id}`,
+            className: cn(
+              "usa-accordion__content px-5 pt-4 pb-5 text-base leading-relaxed",
+              isDark ? "bg-transparent text-white/85" : "bg-white text-(--color-uswds-base-ink)",
+              bordered && !isDark && "border-r border-b border-l border-(--color-uswds-base-lighter)"
+            ),
+            children: body ? /* @__PURE__ */ jsx(FormattedText, { className: "m-0", children: body }) : content
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsAccordionItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

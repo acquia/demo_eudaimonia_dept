@@ -1,0 +1,66 @@
+uuid: da7c04d1-7cd4-4df5-b4e2-437ebdfa8c18
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_date_picker
+_core:
+  default_config_hash: bBKzxWPDZ_9X5mDP1Onetfdp0u4PXwClR7pus8wpkWE
+label: '(Eud-Kit) USWDS Date Picker'
+id: js.uswds_date_picker
+source: js
+source_local_id: uswds_date_picker
+provider: null
+active_version: 9b584febfcd92f3f
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Date of birth'
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: dob
+          expression: ℹ︎string␟value
+        hint:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: mm/dd/yyyy
+          expression: ℹ︎string␟value
+        minDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        maxDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

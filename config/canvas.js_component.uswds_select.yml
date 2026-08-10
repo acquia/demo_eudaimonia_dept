@@ -1,0 +1,153 @@
+uuid: 6171b866-0200-40c7-9321-25c506834daf
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_label
+_core:
+  default_config_hash: Sbjt42HPeX5d9MdsF6i3n0IcfZghUGYqWu-f87OglKo
+machineName: uswds_select
+name: '(Eud-Kit) USWDS Select'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - State
+  name:
+    type: string
+    title: Name
+    examples:
+      - state
+  hint:
+    type: string
+    title: Hint
+  error:
+    type: string
+    title: Error
+  required:
+    type: boolean
+    title: Required
+    examples:
+      - false
+  disabled:
+    type: boolean
+    title: Disabled
+    examples:
+      - false
+slots: {  }
+js:
+  original: |
+    import UswdsLabel from '@/components/uswds_label';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsSelect = ({
+      label = '',
+      name = '',
+      options = [],
+      hint = '',
+      error = '',
+      required = false,
+      disabled = false,
+      className = '',
+    }) => {
+      const id = `select-${name}`;
+      return (
+        <div className={cn('usa-form-group flex flex-col gap-1 font-sans', className)}>
+          {label && (
+            <UswdsLabel
+              labelText={label}
+              htmlFor={id}
+              required={required}
+              hintText={hint}
+            />
+          )}
+          {error && (
+            <span className="usa-error-message text-sm font-bold text-(--color-uswds-error)">
+              {error}
+            </span>
+          )}
+          <select
+            id={id}
+            name={name}
+            required={required}
+            disabled={disabled}
+            className={cn(
+              'usa-select w-full border border-(--color-uswds-base-ink) bg-white px-2 py-2 font-sans text-base text-(--color-uswds-base-ink)',
+              'focus:ring-2 focus:ring-(--uswds-focus-color) focus:outline-none',
+              error && 'border-l-4 border-(--color-uswds-error)',
+              disabled &&
+                'cursor-not-allowed bg-(--color-uswds-disabled-medium) text-(--color-uswds-base-ink) opacity-100',
+            )}
+          >
+            <option value="">- Select -</option>
+            {options.map((opt, i) => (
+              <option key={i} value={opt.value ?? opt}>
+                {opt.label ?? opt}
+              </option>
+            ))}
+          </select>
+        </div>
+      );
+    };
+
+    export default UswdsSelect;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import UswdsLabel from "@/components/uswds_label";
+    import { cn } from "drupal-canvas";
+    const UswdsSelect = ({
+      label = "",
+      name = "",
+      options = [],
+      hint = "",
+      error = "",
+      required = false,
+      disabled = false,
+      className = ""
+    }) => {
+      const id = `select-${name}`;
+      return /* @__PURE__ */ jsxs("div", { className: cn("usa-form-group flex flex-col gap-1 font-sans", className), children: [
+        label && /* @__PURE__ */ jsx(
+          UswdsLabel,
+          {
+            labelText: label,
+            htmlFor: id,
+            required,
+            hintText: hint
+          }
+        ),
+        error && /* @__PURE__ */ jsx("span", { className: "usa-error-message text-sm font-bold text-(--color-uswds-error)", children: error }),
+        /* @__PURE__ */ jsxs(
+          "select",
+          {
+            id,
+            name,
+            required,
+            disabled,
+            className: cn(
+              "usa-select w-full border border-(--color-uswds-base-ink) bg-white px-2 py-2 font-sans text-base text-(--color-uswds-base-ink)",
+              "focus:ring-2 focus:ring-(--uswds-focus-color) focus:outline-none",
+              error && "border-l-4 border-(--color-uswds-error)",
+              disabled && "cursor-not-allowed bg-(--color-uswds-disabled-medium) text-(--color-uswds-base-ink) opacity-100"
+            ),
+            children: [
+              /* @__PURE__ */ jsx("option", { value: "", children: "- Select -" }),
+              options.map((opt, i) => {
+                var _a, _b;
+                return /* @__PURE__ */ jsx("option", { value: (_a = opt.value) != null ? _a : opt, children: (_b = opt.label) != null ? _b : opt }, i);
+              })
+            ]
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsSelect as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

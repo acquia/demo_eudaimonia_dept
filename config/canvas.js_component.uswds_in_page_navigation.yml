@@ -1,0 +1,132 @@
+uuid: 6166f19a-165f-4a55-bef5-233fb8fd5c3a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: '-a_rsDQmlVECfcBBIz9FzhfzCZAmow-PV4oCyH6Q1qo'
+machineName: uswds_in_page_navigation
+name: '(Eud-Kit) USWDS In-Page Navigation'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'On this page'
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsInPageNavigation = ({
+      heading = 'On this page',
+      items = [],
+      className = '',
+    }) => {
+      return (
+        <nav
+          aria-label={heading}
+          className={cn(
+            'usa-in-page-nav flex flex-col gap-4 rounded-lg bg-white p-4 font-sans',
+            className,
+          )}
+        >
+          <h4 className="text-[length:--font-size-uswds-2xs] leading-snug font-bold text-(--color-uswds-base-darkest)">
+            {heading}
+          </h4>
+          <div className="flex flex-col">
+            {items.map((item, i) => {
+              const isCurrent = item.current === true;
+              const isSubsection = item.level === 'subsection';
+              return (
+                <div
+                  key={i}
+                  className={cn(
+                    'border-l border-solid',
+                    isCurrent
+                      ? 'border-l-[4px] border-(--color-uswds-base-darkest)'
+                      : 'border-(--color-uswds-base-lighter)',
+                  )}
+                >
+                  <a
+                    href={item.href}
+                    aria-current={isCurrent ? 'true' : undefined}
+                    className={cn(
+                      'block px-4 py-2 text-[length:--font-size-uswds-3xs] leading-normal transition-colors focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)',
+                      isCurrent
+                        ? 'font-bold text-(--color-uswds-base-ink)'
+                        : cn(
+                            'text-(--color-uswds-primary) hover:text-(--color-uswds-primary-dark)',
+                            isSubsection ? 'font-normal' : 'font-bold',
+                          ),
+                    )}
+                  >
+                    {item.text}
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </nav>
+      );
+    };
+
+    export default UswdsInPageNavigation;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsInPageNavigation = ({
+      heading = "On this page",
+      items = [],
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs(
+        "nav",
+        {
+          "aria-label": heading,
+          className: cn(
+            "usa-in-page-nav flex flex-col gap-4 rounded-lg bg-white p-4 font-sans",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx("h4", { className: "text-[length:--font-size-uswds-2xs] leading-snug font-bold text-(--color-uswds-base-darkest)", children: heading }),
+            /* @__PURE__ */ jsx("div", { className: "flex flex-col", children: items.map((item, i) => {
+              const isCurrent = item.current === true;
+              const isSubsection = item.level === "subsection";
+              return /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: cn(
+                    "border-l border-solid",
+                    isCurrent ? "border-l-[4px] border-(--color-uswds-base-darkest)" : "border-(--color-uswds-base-lighter)"
+                  ),
+                  children: /* @__PURE__ */ jsx(
+                    "a",
+                    {
+                      href: item.href,
+                      "aria-current": isCurrent ? "true" : void 0,
+                      className: cn(
+                        "block px-4 py-2 text-[length:--font-size-uswds-3xs] leading-normal transition-colors focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)",
+                        isCurrent ? "font-bold text-(--color-uswds-base-ink)" : cn(
+                          "text-(--color-uswds-primary) hover:text-(--color-uswds-primary-dark)",
+                          isSubsection ? "font-normal" : "font-bold"
+                        )
+                      ),
+                      children: item.text
+                    }
+                  )
+                },
+                i
+              );
+            }) })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsInPageNavigation as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

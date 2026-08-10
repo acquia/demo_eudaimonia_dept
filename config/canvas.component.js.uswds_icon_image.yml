@@ -1,0 +1,62 @@
+uuid: ecca9c35-f71b-4d43-86a9-175375a85745
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_icon_image
+    - field.field.media.image.media_image
+    - image.style.canvas_parametrized_width
+    - media.type.image
+  module:
+    - file
+    - media
+    - media_library
+    - options
+_core:
+  default_config_hash: 9YwdDfLCUwvMHD6Gb2AJtcJh72Mkg3_1212jfmmiyFA
+label: '(Eud-Kit) USWDS Icon Image'
+id: js.uswds_icon_image
+source: js
+source_local_id: uswds_icon_image
+provider: null
+active_version: 09be9d0a634b4bfe
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        iconImage:
+          required: true
+          field_type: entity_reference
+          field_storage_settings:
+            target_type: media
+          field_instance_settings:
+            handler: 'default:media'
+            handler_settings:
+              target_bundles:
+                image: image
+          field_widget: media_library_widget
+          default_value: {  }
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+        size:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: md
+          expression: ℹ︎list_string␟value
+        showIconTile:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: true
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions: {  }

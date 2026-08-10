@@ -1,0 +1,265 @@
+uuid: a46fa69a-a294-4569-ba1e-913a8538ed81
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_label
+_core:
+  default_config_hash: VZm2rywiYqiq_FboYKwgVVFK1h8RmvZdH9iD7kjJFzg
+machineName: uswds_time_picker
+name: '(Eud-Kit) USWDS Time Picker'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'Appointment time'
+  name:
+    type: string
+    title: Name
+    examples:
+      - appointment
+  minTime:
+    type: string
+    title: 'Min Time'
+  maxTime:
+    type: string
+    title: 'Max Time'
+  hint:
+    type: string
+    title: Hint
+  error:
+    type: string
+    title: Error
+  success:
+    type: boolean
+    title: Success
+    examples:
+      - false
+  disabled:
+    type: boolean
+    title: Disabled
+    examples:
+      - false
+  stepMinutes:
+    type: integer
+    title: 'Step Minutes'
+    examples:
+      - 30
+slots: {  }
+js:
+  original: |
+    import UswdsLabel from '@/components/uswds_label';
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Time Picker
+    // Figma: styled combobox with an expand chevron icon on the right.
+    // States: default (1px border base-ink), error (4px border error-dark), success (4px border success-dark), disabled (bg disabled-medium).
+    // The USWDS time picker renders as a text input with a dropdown — we approximate with a <select> for a11y.
+
+    const generateTimeOptions = (stepMinutes = 30) => {
+      const options = [];
+      for (let h = 0; h < 24; h++) {
+        for (let m = 0; m < 60; m += stepMinutes) {
+          const hour12 = h % 12 === 0 ? 12 : h % 12;
+          const period = h < 12 ? 'am' : 'pm';
+          const mm = String(m).padStart(2, '0');
+          const hh = String(h).padStart(2, '0');
+          options.push({ value: `${hh}:${mm}`, label: `${hour12}:${mm}${period}` });
+        }
+      }
+      return options;
+    };
+
+    const UswdsTimePicker = ({
+      label = '',
+      name = '',
+      hint = '',
+      error = '',
+      success = false,
+      disabled = false,
+      minTime = '',
+      maxTime = '',
+      stepMinutes = 30,
+      className = '',
+    }) => {
+      const id = `time-${name}`;
+      const hasError = Boolean(error);
+      const options = generateTimeOptions(stepMinutes);
+
+      return (
+        <div className={cn('usa-time-picker flex flex-col gap-2 font-sans', className)}>
+          {label && <UswdsLabel labelText={label} htmlFor={id} hintText={hint} />}
+          {hasError && (
+            <span
+              id={`${id}-error`}
+              className="usa-error-message text-[length:var(--font-size-uswds-sm)] font-bold text-(--color-uswds-error-dark)"
+            >
+              {error}
+            </span>
+          )}
+          <div className="relative">
+            <select
+              id={id}
+              name={name}
+              disabled={disabled}
+              aria-describedby={hasError ? `${id}-error` : undefined}
+              aria-invalid={hasError ? 'true' : undefined}
+              className={cn(
+                'usa-select h-10 w-full appearance-none px-(--spacing-uswds-1) pr-10 font-sans text-[length:var(--font-size-uswds-sm)] text-(--color-uswds-base-ink)',
+                'focus:ring-4 focus:ring-(--uswds-focus-color) focus:ring-offset-0 focus:outline-none',
+                // Default
+                !hasError &&
+                  !success &&
+                  !disabled &&
+                  'border border-(--color-uswds-base-ink) bg-white',
+                // Error: 4px border
+                hasError && 'border-4 border-(--color-uswds-error-dark) bg-white',
+                // Success: 4px border
+                success &&
+                  !hasError &&
+                  'border-4 border-(--color-uswds-success-dark) bg-white',
+                // Disabled
+                disabled &&
+                  'cursor-not-allowed border border-(--color-uswds-base-ink) bg-(--color-uswds-disabled-medium)',
+              )}
+            >
+              <option value="">--:-- --</option>
+              {options.map((opt) => {
+                if (minTime && opt.value < minTime) return null;
+                if (maxTime && opt.value > maxTime) return null;
+                return (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                );
+              })}
+            </select>
+            {/* Chevron icon */}
+            <div
+              className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-(--color-uswds-base-ink)"
+              aria-hidden="true"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsTimePicker;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import UswdsLabel from "@/components/uswds_label";
+    import { cn } from "drupal-canvas";
+    const generateTimeOptions = (stepMinutes = 30) => {
+      const options = [];
+      for (let h = 0; h < 24; h++) {
+        for (let m = 0; m < 60; m += stepMinutes) {
+          const hour12 = h % 12 === 0 ? 12 : h % 12;
+          const period = h < 12 ? "am" : "pm";
+          const mm = String(m).padStart(2, "0");
+          const hh = String(h).padStart(2, "0");
+          options.push({ value: `${hh}:${mm}`, label: `${hour12}:${mm}${period}` });
+        }
+      }
+      return options;
+    };
+    const UswdsTimePicker = ({
+      label = "",
+      name = "",
+      hint = "",
+      error = "",
+      success = false,
+      disabled = false,
+      minTime = "",
+      maxTime = "",
+      stepMinutes = 30,
+      className = ""
+    }) => {
+      const id = `time-${name}`;
+      const hasError = Boolean(error);
+      const options = generateTimeOptions(stepMinutes);
+      return /* @__PURE__ */ jsxs("div", { className: cn("usa-time-picker flex flex-col gap-2 font-sans", className), children: [
+        label && /* @__PURE__ */ jsx(UswdsLabel, { labelText: label, htmlFor: id, hintText: hint }),
+        hasError && /* @__PURE__ */ jsx(
+          "span",
+          {
+            id: `${id}-error`,
+            className: "usa-error-message text-[length:var(--font-size-uswds-sm)] font-bold text-(--color-uswds-error-dark)",
+            children: error
+          }
+        ),
+        /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+          /* @__PURE__ */ jsxs(
+            "select",
+            {
+              id,
+              name,
+              disabled,
+              "aria-describedby": hasError ? `${id}-error` : void 0,
+              "aria-invalid": hasError ? "true" : void 0,
+              className: cn(
+                "usa-select h-10 w-full appearance-none px-(--spacing-uswds-1) pr-10 font-sans text-[length:var(--font-size-uswds-sm)] text-(--color-uswds-base-ink)",
+                "focus:ring-4 focus:ring-(--uswds-focus-color) focus:ring-offset-0 focus:outline-none",
+                // Default
+                !hasError && !success && !disabled && "border border-(--color-uswds-base-ink) bg-white",
+                // Error: 4px border
+                hasError && "border-4 border-(--color-uswds-error-dark) bg-white",
+                // Success: 4px border
+                success && !hasError && "border-4 border-(--color-uswds-success-dark) bg-white",
+                // Disabled
+                disabled && "cursor-not-allowed border border-(--color-uswds-base-ink) bg-(--color-uswds-disabled-medium)"
+              ),
+              children: [
+                /* @__PURE__ */ jsx("option", { value: "", children: "--:-- --" }),
+                options.map((opt) => {
+                  if (minTime && opt.value < minTime) return null;
+                  if (maxTime && opt.value > maxTime) return null;
+                  return /* @__PURE__ */ jsx("option", { value: opt.value, children: opt.label }, opt.value);
+                })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "div",
+            {
+              className: "pointer-events-none absolute inset-y-0 right-2 flex items-center text-(--color-uswds-base-ink)",
+              "aria-hidden": "true",
+              children: /* @__PURE__ */ jsx(
+                "svg",
+                {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  width: "24",
+                  height: "24",
+                  viewBox: "0 0 24 24",
+                  fill: "currentColor",
+                  "aria-hidden": "true",
+                  focusable: "false",
+                  children: /* @__PURE__ */ jsx("path", { d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z" })
+                }
+              )
+            }
+          )
+        ] })
+      ] });
+    };
+    export {
+      UswdsTimePicker as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

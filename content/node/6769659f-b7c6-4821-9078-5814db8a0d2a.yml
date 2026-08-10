@@ -1,0 +1,51 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 6769659f-b7c6-4821-9078-5814db8a0d2a
+  bundle: program
+  default_langcode: en
+  depends:
+    d834929f-606f-4b17-a5c0-2fd7a6262fe9: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Public Arts Stipend'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Two-year stipends for working artists, musicians, writers, and craftspeople contributing to their local communities through public work or teaching.'
+      format: filtered_html
+      summary: 'Two-year stipends for working artists, musicians, writers, and craftspeople contributing to their local communities through public work or teaching.'
+  field_categories:
+    -
+      entity: d834929f-606f-4b17-a5c0-2fd7a6262fe9
+  field_decision_timeline:
+    -
+      value: '90 days'
+  field_enrollment_status:
+    -
+      value: coming_soon
+  field_max_amount:
+    -
+      value: '$28,000/year'

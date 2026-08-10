@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 98267b0f-67d1-4dba-a8b1-60355b4190d6
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: banner-icon-dotgov.png
+  uri:
+    -
+      value: 'public://2026-05/banner-icon-dotgov.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 4473
+  status:
+    -
+      value: true

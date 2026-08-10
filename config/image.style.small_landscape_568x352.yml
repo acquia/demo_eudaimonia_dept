@@ -1,0 +1,23 @@
+uuid: 6567a34b-30b1-4298-b372-bcf1de2b67a8
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: small_landscape_568x352
+label: 'Small landscape (568x352)'
+effects:
+  0c67c6c5-1cd3-4da1-b783-abf6ba6c7e35:
+    uuid: 0c67c6c5-1cd3-4da1-b783-abf6ba6c7e35
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 568
+      height: 352
+      crop_type: focal_point
+  7c47e1d4-6369-4abb-9a7c-b89b16afa4e0:
+    uuid: 7c47e1d4-6369-4abb-9a7c-b89b16afa4e0
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

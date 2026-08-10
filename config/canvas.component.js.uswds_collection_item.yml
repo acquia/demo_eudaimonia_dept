@@ -1,0 +1,94 @@
+uuid: f86bae5f-9ba8-45de-87d1-133002afd22e
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_collection_item
+    - filter.format.canvas_html_block
+  module:
+    - link
+    - text
+_core:
+  default_config_hash: qccSMaUIeoCrDBZHFxVie0N3tDUnFHg87zMVvcgB3eQ
+label: '(Eud-Kit) USWDS Collection Item'
+id: js.uswds_collection_item
+source: js
+source_local_id: uswds_collection_item
+provider: null
+active_version: 49d2d18f7be93cce
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        title:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Article title goes here'
+          expression: ℹ︎string␟value
+        link:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /articles/example
+              options: {  }
+          expression: ℹ︎link␟url
+        description:
+          required: false
+          field_type: text_long
+          field_storage_settings: {  }
+          field_instance_settings:
+            allowed_formats:
+              - canvas_html_block
+          field_widget: text_textarea
+          default_value:
+            -
+              value: '<p>A short description or excerpt for this collection item.</p>'
+              format: canvas_html_block
+          expression: ℹ︎text_long␟processed
+        categoryLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Health
+          expression: ℹ︎string␟value
+        calendarMonthShort:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Apr
+          expression: ℹ︎string␟value
+        calendarDay:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '28'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions:
+        meta:
+          title: Meta
+        topics:
+          title: Topics

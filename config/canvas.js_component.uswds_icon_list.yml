@@ -1,0 +1,55 @@
+uuid: 33d13be7-d549-435b-a4d9-412ad64fa18f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: eDMTc0Pu5UJ-28UFh1lN9FFEVAgK9Cl1_O6TQldL-eE
+machineName: uswds_icon_list
+name: '(Eud-Kit) USWDS Icon List'
+required: {  }
+props: {  }
+slots:
+  items:
+    title: Items
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // Figma: USA Icon List uses gap-3 (12px) between items, text at 16px body size.
+    // Items are flex rows with an 8px gap between the 24px icon and text.
+    const UswdsIconList = ({ items, className = '' }) => {
+      return (
+        <ul
+          className={cn(
+            'usa-icon-list m-0 flex list-none flex-col gap-3 p-0 font-sans',
+            className,
+          )}
+        >
+          {items}
+        </ul>
+      );
+    };
+
+    export default UswdsIconList;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsIconList = ({ items, className = "" }) => {
+      return /* @__PURE__ */ jsx(
+        "ul",
+        {
+          className: cn(
+            "usa-icon-list m-0 flex list-none flex-col gap-3 p-0 font-sans",
+            className
+          ),
+          children: items
+        }
+      );
+    };
+    export {
+      UswdsIconList as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

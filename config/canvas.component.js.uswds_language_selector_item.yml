@@ -1,0 +1,65 @@
+uuid: 55ce326d-5eb0-44c5-99e8-6ef8993d71a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_language_selector_item
+  module:
+    - link
+_core:
+  default_config_hash: p-_Nxp5XdzLn5sfPM2NM3wC4OcLL1Pb0QjyhqgZWzYg
+label: '(Eud-Kit) USWDS Language Selector Item'
+id: js.uswds_language_selector_item
+source: js
+source_local_id: uswds_language_selector_item
+provider: null
+active_version: 3403e505c0bc8ed0
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        nativeName:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Español
+          expression: ℹ︎string␟value
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: (Spanish)
+          expression: ℹ︎string␟value
+        url:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /es
+              options: {  }
+          expression: ℹ︎link␟url
+        languageCode:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: es
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

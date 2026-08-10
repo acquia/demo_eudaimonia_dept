@@ -1,0 +1,81 @@
+uuid: ea71fcbe-12d2-4f0c-92f0-c2788e881006
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HwuIlwGzrw6_eXiHu4Cw2ohB6IZWEH4X1r8p8wvGD2A
+machineName: uswds_breadcrumb
+name: '(Eud-Kit) USWDS Breadcrumb'
+required: {  }
+props:
+  context:
+    type: string
+    enum:
+      - on-light
+      - on-dark
+    'meta:enum':
+      on-light: 'On light'
+      on-dark: 'On dark'
+    title: Context
+    examples:
+      - on-light
+  wrap:
+    type: boolean
+    title: Wrap
+    examples:
+      - false
+slots:
+  items:
+    title: Items
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsBreadcrumb = ({ items, wrap = false, className = '' }) => {
+      return (
+        <nav
+          className={cn('usa-breadcrumb font-sans text-[15px]', className)}
+          aria-label="Breadcrumb"
+        >
+          <ol
+            className={cn(
+              'usa-breadcrumb__list m-0 flex list-none flex-wrap items-center gap-1 p-0 py-4',
+              wrap && 'flex-wrap',
+            )}
+          >
+            {items}
+          </ol>
+        </nav>
+      );
+    };
+
+    export default UswdsBreadcrumb;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsBreadcrumb = ({ items, wrap = false, className = "" }) => {
+      return /* @__PURE__ */ jsx(
+        "nav",
+        {
+          className: cn("usa-breadcrumb font-sans text-[15px]", className),
+          "aria-label": "Breadcrumb",
+          children: /* @__PURE__ */ jsx(
+            "ol",
+            {
+              className: cn(
+                "usa-breadcrumb__list m-0 flex list-none flex-wrap items-center gap-1 p-0 py-4",
+                wrap && "flex-wrap"
+              ),
+              children: items
+            }
+          )
+        }
+      );
+    };
+    export {
+      UswdsBreadcrumb as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

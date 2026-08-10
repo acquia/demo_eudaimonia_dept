@@ -1,0 +1,45 @@
+uuid: 034bcf06-1dd9-4052-95c7-9d56072fdaea
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: wDpjfXTSAiyYcDh0DMBiCy0EdDwQULO8sRAO-wW7wCk
+machineName: uswds_tab_item
+name: '(Eud-Kit) USWDS Tab Item'
+required:
+  - tabLabel
+props:
+  tabLabel:
+    type: string
+    title: 'Tab label'
+    examples:
+      - Individuals
+slots:
+  items:
+    title: 'Panel items (uswds_quick_access_item)'
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsTabItem = ({ tabLabel = '', items, className = '' }) => {
+      return (
+        <div className={cn('tab-item-content', className)} data-tab-label={tabLabel}>
+          <ul className="m-0 list-none p-0">{items}</ul>
+        </div>
+      );
+    };
+
+    export default UswdsTabItem;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsTabItem = ({ tabLabel = "", items, className = "" }) => {
+      return /* @__PURE__ */ jsx("div", { className: cn("tab-item-content", className), "data-tab-label": tabLabel, children: /* @__PURE__ */ jsx("ul", { className: "m-0 list-none p-0", children: items }) });
+    };
+    export {
+      UswdsTabItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

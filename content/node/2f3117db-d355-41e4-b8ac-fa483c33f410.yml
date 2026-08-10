@@ -1,0 +1,48 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 2f3117db-d355-41e4-b8ac-fa483c33f410
+  bundle: article
+  default_langcode: en
+  depends:
+    af88692b-8741-40f8-993f-afde09629367: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Field offices in 14 states will offer Saturday hours starting June 1'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      alias: /articles/2026/5/field-offices-14-states-will-offer-saturday-hours-starting-june-1
+      langcode: en
+  body:
+    -
+      value: 'Extended Saturday service hours will help residents who cannot visit during weekday business hours complete in-person applications and benefit reviews.'
+      format: filtered_html
+      summary: 'Extended Saturday service hours will help residents who cannot visit during weekday business hours complete in-person applications and benefit reviews.'
+  featured:
+    -
+      value: false
+  tags:
+    -
+      entity: af88692b-8741-40f8-993f-afde09629367

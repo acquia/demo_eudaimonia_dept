@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 1c042040-934e-4a82-821f-0fdc72983b65
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: card-icon-1-health.png
+  uri:
+    -
+      value: 'public://2026-05/card-icon-1-health.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 1970
+  status:
+    -
+      value: true

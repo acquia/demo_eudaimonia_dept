@@ -1,0 +1,35 @@
+uuid: 62b8f6dc-32e2-4d14-a041-fe1eb41aaf74
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_stat_bar
+  module:
+    - options
+_core:
+  default_config_hash: CIy5Pkakg6TFigJiJnrHbU49wTklqWl2RmgJaJhbu6o
+label: '(Eud-Kit) USWDS Stat Bar'
+id: js.uswds_stat_bar
+source: js
+source_local_id: uswds_stat_bar
+provider: null
+active_version: 8266cd9799e27594
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        background:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: primary-darker
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: 'Stat items'

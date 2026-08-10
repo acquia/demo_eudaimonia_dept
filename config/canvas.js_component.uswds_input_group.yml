@@ -1,0 +1,220 @@
+uuid: 7c98bdc7-0221-434d-a336-9fae1f056ca2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: z9oE2e9AKdTWQhvHaIP6afH-wXkejq_wzl3QHIRx4n4
+machineName: uswds_input_group
+name: '(Eud-Kit) USWDS Input Group'
+required: {  }
+props:
+  labelText:
+    type: string
+    title: 'Label Text'
+    examples:
+      - 'First name'
+  htmlFor:
+    type: string
+    title: 'HTML For'
+    examples:
+      - first-name
+  required:
+    type: boolean
+    title: Required
+    examples:
+      - false
+  hintText:
+    type: string
+    title: 'Hint Text'
+    examples:
+      - 'Enter your legal first name'
+  errorText:
+    type: string
+    title: 'Error Text'
+    examples:
+      - 'This field is required'
+  state:
+    type: string
+    title: State
+    examples:
+      - default
+      - error
+  marginTopSpacingForErrorWithOffset:
+    type: boolean
+    title: 'Margin Top Spacing For Error With Offset'
+    examples:
+      - false
+slots:
+  children:
+    title: Input
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsInputGroup = ({
+      labelText = '',
+      htmlFor = '',
+      required = false,
+      hintText = '',
+      errorText = '',
+      state = 'default',
+      marginTopSpacingForErrorWithOffset = false,
+      children,
+      className = '',
+    }) => {
+      const isError = state === 'error';
+
+      return (
+        <div
+          className={cn(
+            'usa-form-group relative flex flex-col font-sans',
+            isError ? 'gap-0' : 'gap-(--spacing-uswds-1)',
+            marginTopSpacingForErrorWithOffset &&
+              isError &&
+              'pt-(--spacing-uswds-3)',
+            marginTopSpacingForErrorWithOffset &&
+              !isError &&
+              'gap-(--spacing-uswds-1)',
+            className,
+          )}
+        >
+          {/* Error indicator bar */}
+          {isError && (
+            <div
+              className={cn(
+                'absolute left-[-20px] w-1 bg-(--color-uswds-error-dark)',
+                marginTopSpacingForErrorWithOffset
+                  ? 'top-(--spacing-uswds-3) bottom-0'
+                  : 'top-0 bottom-0',
+              )}
+              aria-hidden="true"
+            />
+          )}
+
+          {/* Label area */}
+          <div
+            className={cn(
+              'flex flex-col gap-(--spacing-uswds-1)',
+              isError ? 'gap-(--spacing-uswds-1)' : '',
+            )}
+          >
+            {labelText && (
+              <label
+                htmlFor={htmlFor}
+                className={cn(
+                  'usa-label text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base-ink)',
+                  isError ? 'font-bold' : 'font-normal',
+                )}
+              >
+                {labelText}
+                {required && (
+                  <span
+                    className="text-(--color-uswds-error-dark)"
+                    aria-hidden="true"
+                  >
+                    *
+                  </span>
+                )}
+              </label>
+            )}
+            {hintText && (
+              <span className="usa-hint text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base)">
+                {hintText}
+              </span>
+            )}
+            {isError && errorText && (
+              <span className="usa-error-message text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-error-dark)">
+                {errorText}
+              </span>
+            )}
+          </div>
+
+          {/* Input slot */}
+          {children}
+        </div>
+      );
+    };
+
+    export default UswdsInputGroup;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsInputGroup = ({
+      labelText = "",
+      htmlFor = "",
+      required = false,
+      hintText = "",
+      errorText = "",
+      state = "default",
+      marginTopSpacingForErrorWithOffset = false,
+      children,
+      className = ""
+    }) => {
+      const isError = state === "error";
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-form-group relative flex flex-col font-sans",
+            isError ? "gap-0" : "gap-(--spacing-uswds-1)",
+            marginTopSpacingForErrorWithOffset && isError && "pt-(--spacing-uswds-3)",
+            marginTopSpacingForErrorWithOffset && !isError && "gap-(--spacing-uswds-1)",
+            className
+          ),
+          children: [
+            isError && /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: cn(
+                  "absolute left-[-20px] w-1 bg-(--color-uswds-error-dark)",
+                  marginTopSpacingForErrorWithOffset ? "top-(--spacing-uswds-3) bottom-0" : "top-0 bottom-0"
+                ),
+                "aria-hidden": "true"
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              "div",
+              {
+                className: cn(
+                  "flex flex-col gap-(--spacing-uswds-1)",
+                  isError ? "gap-(--spacing-uswds-1)" : ""
+                ),
+                children: [
+                  labelText && /* @__PURE__ */ jsxs(
+                    "label",
+                    {
+                      htmlFor,
+                      className: cn(
+                        "usa-label text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base-ink)",
+                        isError ? "font-bold" : "font-normal"
+                      ),
+                      children: [
+                        labelText,
+                        required && /* @__PURE__ */ jsx(
+                          "span",
+                          {
+                            className: "text-(--color-uswds-error-dark)",
+                            "aria-hidden": "true",
+                            children: "*"
+                          }
+                        )
+                      ]
+                    }
+                  ),
+                  hintText && /* @__PURE__ */ jsx("span", { className: "usa-hint text-[length:--font-size-uswds-sm] leading-normal text-(--color-uswds-base)", children: hintText }),
+                  isError && errorText && /* @__PURE__ */ jsx("span", { className: "usa-error-message text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-error-dark)", children: errorText })
+                ]
+              }
+            ),
+            children
+          ]
+        }
+      );
+    };
+    export {
+      UswdsInputGroup as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

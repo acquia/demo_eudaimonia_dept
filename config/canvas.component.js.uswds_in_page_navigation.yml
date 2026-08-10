@@ -1,0 +1,30 @@
+uuid: 2bedddc0-5556-4a1c-9403-0fa8feef3117
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_in_page_navigation
+_core:
+  default_config_hash: S2cuZ6N78L3wNvWSlGV07kXrPI1LVF80kKyyyFU_rAQ
+label: '(Eud-Kit) USWDS In-Page Navigation'
+id: js.uswds_in_page_navigation
+source: js
+source_local_id: uswds_in_page_navigation
+provider: null
+active_version: 055eb337f554444d
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'On this page'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

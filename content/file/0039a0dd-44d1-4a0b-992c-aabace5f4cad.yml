@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 0039a0dd-44d1-4a0b-992c-aabace5f4cad
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: banner-icon-https.png
+  uri:
+    -
+      value: 'public://2026-05/banner-icon-https.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 4397
+  status:
+    -
+      value: true

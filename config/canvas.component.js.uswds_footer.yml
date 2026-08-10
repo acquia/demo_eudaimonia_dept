@@ -1,0 +1,52 @@
+uuid: 90dc3496-b880-4cc3-9382-a06ff31730b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_footer
+  module:
+    - options
+_core:
+  default_config_hash: 9N_7oR8PZ2npg4KJtMcTuldKHMvWDHJya_zuaoUcKyM
+label: '(Eud-Kit) USWDS Footer'
+id: js.uswds_footer
+source: js
+source_local_id: uswds_footer
+provider: null
+active_version: 9d4dc82dd224d323
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        topRowBackgroundColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: primary-darker
+          expression: ℹ︎list_string␟value
+        bottomRowBackgroundColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: primary-dark
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions:
+        logo:
+          title: 'Logo (top row)'
+        top_nav:
+          title: 'Primary Navigation (top row)'
+        cta:
+          title: 'Call to Action (top row)'
+        bottom_nav:
+          title: 'Secondary Navigation (bottom row)'

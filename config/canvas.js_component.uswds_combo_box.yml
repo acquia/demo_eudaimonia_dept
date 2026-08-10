@@ -1,0 +1,219 @@
+uuid: d185b324-c936-42ca-86b4-4e8bafa404e9
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_label
+_core:
+  default_config_hash: JdfeKmx3qDq5--ve7_D8CSVS0yNGUrhq4z1YpktN7Rw
+machineName: uswds_combo_box
+name: '(Eud-Kit) USWDS Combo Box'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - Fruit
+  name:
+    type: string
+    title: Name
+    examples:
+      - fruit
+  hint:
+    type: string
+    title: Hint
+slots: {  }
+js:
+  original: |
+    import { useState } from 'react';
+    import UswdsLabel from '@/components/uswds_label';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsComboBox = ({
+      label = '',
+      name = '',
+      options = [],
+      hint = '',
+      className = '',
+    }) => {
+      const [query, setQuery] = useState('');
+      const [open, setOpen] = useState(false);
+      const [selected, setSelected] = useState('');
+      const id = `combo-${name}`;
+
+      const filtered = options.filter((opt) => {
+        const label = opt.label ?? opt;
+        return label.toLowerCase().includes(query.toLowerCase());
+      });
+
+      const handleSelect = (opt) => {
+        const val = opt.label ?? opt;
+        setSelected(val);
+        setQuery(val);
+        setOpen(false);
+      };
+
+      return (
+        <div className={cn('usa-combo-box relative flex flex-col gap-1 font-sans', className)}>
+          {label && <UswdsLabel labelText={label} htmlFor={id} hintText={hint} />}
+          <div className="relative">
+            <input
+              id={id}
+              type="text"
+              name={name}
+              value={query}
+              autoComplete="off"
+              role="combobox"
+              aria-expanded={open}
+              aria-controls={`${id}-listbox`}
+              aria-autocomplete="list"
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setOpen(true);
+              }}
+              onFocus={() => setOpen(true)}
+              onBlur={() => setTimeout(() => setOpen(false), 150)}
+              className="usa-combo-box__input w-full border-2 border-(--color-uswds-base) bg-white px-3 py-2 text-(--color-uswds-base-ink) focus:border-(--uswds-focus-color) focus:outline-2 focus:outline-offset-0 focus:outline-(--uswds-focus-color) focus:outline-none"
+            />
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="absolute top-0 right-0 h-full px-3 text-(--color-uswds-base)"
+              onClick={() => setOpen(!open)}
+            >
+              ▼
+            </button>
+          </div>
+          {open && filtered.length > 0 && (
+            <ul
+              id={`${id}-listbox`}
+              role="listbox"
+              className="usa-combo-box__list absolute top-full right-0 left-0 z-50 mt-1 max-h-48 overflow-y-auto border-2 border-(--color-uswds-base) bg-white"
+            >
+              {filtered.map((opt, i) => {
+                const val = opt.label ?? opt;
+                return (
+                  <li
+                    key={i}
+                    role="option"
+                    aria-selected={selected === val}
+                    onMouseDown={() => handleSelect(opt)}
+                    className={cn(
+                      'usa-combo-box__list-option cursor-pointer px-3 py-2 hover:bg-(--color-uswds-primary-lighter)',
+                      selected === val &&
+                        'bg-(--color-uswds-primary-lighter) font-bold',
+                    )}
+                  >
+                    {val}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      );
+    };
+
+    export default UswdsComboBox;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { useState } from "react";
+    import UswdsLabel from "@/components/uswds_label";
+    import { cn } from "drupal-canvas";
+    const UswdsComboBox = ({
+      label = "",
+      name = "",
+      options = [],
+      hint = "",
+      className = ""
+    }) => {
+      const [query, setQuery] = useState("");
+      const [open, setOpen] = useState(false);
+      const [selected, setSelected] = useState("");
+      const id = `combo-${name}`;
+      const filtered = options.filter((opt) => {
+        var _a;
+        const label2 = (_a = opt.label) != null ? _a : opt;
+        return label2.toLowerCase().includes(query.toLowerCase());
+      });
+      const handleSelect = (opt) => {
+        var _a;
+        const val = (_a = opt.label) != null ? _a : opt;
+        setSelected(val);
+        setQuery(val);
+        setOpen(false);
+      };
+      return /* @__PURE__ */ jsxs("div", { className: cn("usa-combo-box relative flex flex-col gap-1 font-sans", className), children: [
+        label && /* @__PURE__ */ jsx(UswdsLabel, { labelText: label, htmlFor: id, hintText: hint }),
+        /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+          /* @__PURE__ */ jsx(
+            "input",
+            {
+              id,
+              type: "text",
+              name,
+              value: query,
+              autoComplete: "off",
+              role: "combobox",
+              "aria-expanded": open,
+              "aria-controls": `${id}-listbox`,
+              "aria-autocomplete": "list",
+              onChange: (e) => {
+                setQuery(e.target.value);
+                setOpen(true);
+              },
+              onFocus: () => setOpen(true),
+              onBlur: () => setTimeout(() => setOpen(false), 150),
+              className: "usa-combo-box__input w-full border-2 border-(--color-uswds-base) bg-white px-3 py-2 text-(--color-uswds-base-ink) focus:border-(--uswds-focus-color) focus:outline-2 focus:outline-offset-0 focus:outline-(--uswds-focus-color) focus:outline-none"
+            }
+          ),
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              type: "button",
+              tabIndex: -1,
+              "aria-hidden": "true",
+              className: "absolute top-0 right-0 h-full px-3 text-(--color-uswds-base)",
+              onClick: () => setOpen(!open),
+              children: "▼"
+            }
+          )
+        ] }),
+        open && filtered.length > 0 && /* @__PURE__ */ jsx(
+          "ul",
+          {
+            id: `${id}-listbox`,
+            role: "listbox",
+            className: "usa-combo-box__list absolute top-full right-0 left-0 z-50 mt-1 max-h-48 overflow-y-auto border-2 border-(--color-uswds-base) bg-white",
+            children: filtered.map((opt, i) => {
+              var _a;
+              const val = (_a = opt.label) != null ? _a : opt;
+              return /* @__PURE__ */ jsx(
+                "li",
+                {
+                  role: "option",
+                  "aria-selected": selected === val,
+                  onMouseDown: () => handleSelect(opt),
+                  className: cn(
+                    "usa-combo-box__list-option cursor-pointer px-3 py-2 hover:bg-(--color-uswds-primary-lighter)",
+                    selected === val && "bg-(--color-uswds-primary-lighter) font-bold"
+                  ),
+                  children: val
+                },
+                i
+              );
+            })
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsComboBox as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

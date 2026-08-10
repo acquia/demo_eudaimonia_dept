@@ -1,0 +1,70 @@
+uuid: 946fbbf3-1346-44cb-8b71-d5389f670400
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_text
+    - filter.format.canvas_html_block
+  module:
+    - options
+    - text
+_core:
+  default_config_hash: 5whnjs0vJMolOP-y3g-xQdyNWQS-DMTaz_HBAB8QtEY
+label: '(Eud-Kit) USWDS Text'
+id: js.uswds_text
+source: js
+source_local_id: uswds_text
+provider: null
+active_version: a2fba9394eccddba
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        text:
+          required: false
+          field_type: text_long
+          field_storage_settings: {  }
+          field_instance_settings:
+            allowed_formats:
+              - canvas_html_block
+          field_widget: text_textarea
+          default_value:
+            -
+              value: '<p>Use this component to display standalone body copy outside of a section. It supports rich text formatting and adapts to light or dark backgrounds.</p>'
+              format: canvas_html_block
+          expression: ℹ︎text_long␟processed
+        fontSize:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: md
+          expression: ℹ︎list_string␟value
+        textColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: default
+          expression: ℹ︎list_string␟value
+        maxWidth:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: none
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

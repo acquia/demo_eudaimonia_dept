@@ -1,0 +1,122 @@
+uuid: 36dda441-1f07-45ca-87e6-47178860c03f
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_label
+_core:
+  default_config_hash: 8fAwvSNNkcEpZFbKeK0kQFGVluFSxWOPx_Hu2rZW3wA
+machineName: uswds_range_slider
+name: '(Eud-Kit) USWDS Range Slider'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - Volume
+  name:
+    type: string
+    title: Name
+    examples:
+      - volume
+  min:
+    type: integer
+    title: Min
+    examples:
+      - 0
+  max:
+    type: integer
+    title: Max
+    examples:
+      - 100
+  step:
+    type: integer
+    title: Step
+    examples:
+      - 1
+  value:
+    type: integer
+    title: Value
+    examples:
+      - 50
+slots: {  }
+js:
+  original: |
+    import { useState } from 'react';
+    import UswdsLabel from '@/components/uswds_label';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsRangeSlider = ({
+      label = '',
+      name = '',
+      min = 0,
+      max = 100,
+      step = 1,
+      value: defaultValue,
+      className = '',
+    }) => {
+      const [value, setValue] = useState(defaultValue ?? min);
+      const id = `range-${name}`;
+
+      return (
+        <div className={cn('flex flex-col gap-2 font-sans', className)}>
+          {label && <UswdsLabel labelText={label} htmlFor={id} />}
+          <input
+            id={id}
+            type="range"
+            name={name}
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+            className="w-full accent-(--color-uswds-primary) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)"
+          />
+        </div>
+      );
+    };
+
+    export default UswdsRangeSlider;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { useState } from "react";
+    import UswdsLabel from "@/components/uswds_label";
+    import { cn } from "drupal-canvas";
+    const UswdsRangeSlider = ({
+      label = "",
+      name = "",
+      min = 0,
+      max = 100,
+      step = 1,
+      value: defaultValue,
+      className = ""
+    }) => {
+      const [value, setValue] = useState(defaultValue != null ? defaultValue : min);
+      const id = `range-${name}`;
+      return /* @__PURE__ */ jsxs("div", { className: cn("flex flex-col gap-2 font-sans", className), children: [
+        label && /* @__PURE__ */ jsx(UswdsLabel, { labelText: label, htmlFor: id }),
+        /* @__PURE__ */ jsx(
+          "input",
+          {
+            id,
+            type: "range",
+            name,
+            min,
+            max,
+            step,
+            value,
+            onChange: (e) => setValue(Number(e.target.value)),
+            className: "w-full accent-(--color-uswds-primary) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)"
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsRangeSlider as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

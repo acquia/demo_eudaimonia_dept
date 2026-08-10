@@ -1,0 +1,164 @@
+uuid: 8c9b3cc1-509b-4331-823c-e26f7a8dae08
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: nnmMGAZp8AZLbeppbjRNetPr1U-S2RRyNUhCWmLotjE
+machineName: uswds_text
+name: '(Eud-Kit) USWDS Text'
+required: {  }
+props:
+  text:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Text
+    examples:
+      - '<p>Use this component to display standalone body copy outside of a section. It supports rich text formatting and adapts to light or dark backgrounds.</p>'
+  fontSize:
+    type: string
+    enum:
+      - xs
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      xs: 'Extra Small'
+      sm: Small
+      md: 'Medium (default)'
+      lg: Large
+      xl: 'Extra Large'
+    title: 'Font Size'
+    examples:
+      - md
+  textColor:
+    type: string
+    enum:
+      - default
+      - muted
+      - inverse
+    'meta:enum':
+      default: 'Default (Base Ink)'
+      muted: 'Muted (Base Dark)'
+      inverse: 'Inverse (White)'
+    title: 'Text Color'
+    examples:
+      - default
+  maxWidth:
+    type: string
+    enum:
+      - none
+      - narrow
+      - medium
+    'meta:enum':
+      none: 'None (full width)'
+      narrow: 'Narrow (60ch)'
+      medium: 'Medium (80ch)'
+    title: 'Max Width'
+    examples:
+      - none
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    const textVariants = cva('usa-body font-sans leading-relaxed', {
+      variants: {
+        fontSize: {
+          xs: 'text-[length:var(--font-size-uswds-xs)]',
+          sm: 'text-[length:var(--font-size-uswds-sm)]',
+          md: 'text-base',
+          lg: 'text-lg',
+          xl: 'text-xl',
+        },
+        textColor: {
+          default: 'text-(--color-uswds-base-ink)',
+          muted: 'text-(--color-uswds-base-dark)',
+          inverse: 'text-white',
+        },
+        maxWidth: {
+          none: '',
+          narrow: 'max-w-[60ch]',
+          medium: 'max-w-[80ch]',
+        },
+      },
+      defaultVariants: {
+        fontSize: 'md',
+        textColor: 'default',
+        maxWidth: 'none',
+      },
+    });
+
+    const UswdsText = ({
+      text = '',
+      fontSize = 'md',
+      textColor = 'default',
+      maxWidth = 'none',
+      className = '',
+    }) => {
+      if (!text) return null;
+      return (
+        <FormattedText
+          className={cn(textVariants({ fontSize, textColor, maxWidth }), className)}
+        >
+          {text}
+        </FormattedText>
+      );
+    };
+
+    export default UswdsText;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { FormattedText, cn } from "drupal-canvas";
+    const textVariants = cva("usa-body font-sans leading-relaxed", {
+      variants: {
+        fontSize: {
+          xs: "text-[length:var(--font-size-uswds-xs)]",
+          sm: "text-[length:var(--font-size-uswds-sm)]",
+          md: "text-base",
+          lg: "text-lg",
+          xl: "text-xl"
+        },
+        textColor: {
+          default: "text-(--color-uswds-base-ink)",
+          muted: "text-(--color-uswds-base-dark)",
+          inverse: "text-white"
+        },
+        maxWidth: {
+          none: "",
+          narrow: "max-w-[60ch]",
+          medium: "max-w-[80ch]"
+        }
+      },
+      defaultVariants: {
+        fontSize: "md",
+        textColor: "default",
+        maxWidth: "none"
+      }
+    });
+    const UswdsText = ({
+      text = "",
+      fontSize = "md",
+      textColor = "default",
+      maxWidth = "none",
+      className = ""
+    }) => {
+      if (!text) return null;
+      return /* @__PURE__ */ jsx(
+        FormattedText,
+        {
+          className: cn(textVariants({ fontSize, textColor, maxWidth }), className),
+          children: text
+        }
+      );
+    };
+    export {
+      UswdsText as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

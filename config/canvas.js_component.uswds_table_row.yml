@@ -1,0 +1,216 @@
+uuid: 17c9458f-9f5a-428a-a548-7a4e4f7cc83c
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 33C6aCcLSd1j2JVULxqOHP3lVtZXXaLC7Le6ctvrJu8
+machineName: uswds_table_row
+name: '(Eud-Kit) USWDS Table Row'
+required: {  }
+props:
+  cells:
+    type: array
+    items:
+      type: string
+    title: Cells
+    examples:
+      -
+        - Program
+        - 'Who qualifies'
+        - 'Benefit type'
+        - 'Max amount'
+        - Decision
+  isHeader:
+    type: boolean
+    title: 'Is Header'
+    examples:
+      - false
+  backgroundColor:
+    type: string
+    enum:
+      - white
+      - gray
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      gray: Gray
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: 'Background Color'
+    examples:
+      - primary-lightest
+  textColor:
+    type: string
+    enum:
+      - light
+      - dark
+      - primary
+      - secondary
+    'meta:enum':
+      light: Light
+      dark: Dark
+      primary: Primary
+      secondary: Secondary
+    title: 'Text Color'
+    examples:
+      - dark
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const BG_MAP = {
+      white: 'white',
+      gray: 'var(--color-uswds-base-lightest)',
+      'primary-lightest': 'var(--color-uswds-primary-lightest)',
+      'primary-lighter': 'var(--color-uswds-primary-lighter)',
+      primary: 'var(--color-uswds-primary)',
+      'primary-dark': 'var(--color-uswds-primary-dark)',
+      'primary-darker': 'var(--color-uswds-primary-darker)',
+      'base-lighter': 'var(--color-uswds-base-lighter)',
+      'base-dark': 'var(--color-uswds-base-dark)',
+      'base-darkest': 'var(--color-uswds-base-darkest)',
+    };
+
+    const TEXT_COLOR_MAP = {
+      light: 'white',
+      dark: 'var(--color-uswds-base-ink)',
+      primary: 'var(--color-uswds-primary-darker)',
+      secondary: 'var(--color-eud-gold)',
+    };
+
+    const UswdsTableRow = ({ cells = [], isHeader = false, backgroundColor = '', textColor = '', _tableCtx = {} }) => {
+      const { bordered = false, compact = false, stacked = false, headerLabels = [] } = _tableCtx;
+
+      const cellPadding = compact ? 'px-4 py-2' : 'px-4 py-3';
+      const bgValue = backgroundColor ? BG_MAP[backgroundColor] : undefined;
+      const textValue = textColor ? TEXT_COLOR_MAP[textColor] : undefined;
+      const rowStyle = bgValue ? { backgroundColor: bgValue } : undefined;
+
+      if (isHeader) {
+        const defaultBg = bgValue ?? 'var(--color-uswds-base-lighter)';
+        const defaultText = textValue ?? 'var(--color-uswds-base-ink)';
+        return (
+          <tr className="border-b-2 border-(--color-uswds-base-ink)">
+            {cells.map((cell, i) => (
+              <th
+                key={i}
+                scope="col"
+                style={{ backgroundColor: defaultBg, color: defaultText }}
+                className={cn(
+                  'text-left text-sm font-bold',
+                  cellPadding,
+                  bordered && 'border border-(--color-uswds-base-ink)',
+                )}
+              >
+                {cell}
+              </th>
+            ))}
+          </tr>
+        );
+      }
+
+      return (
+        <tr className="border-b border-(--color-uswds-base-lighter)" style={rowStyle}>
+          {cells.map((cell, i) => (
+            <td
+              key={i}
+              style={textValue ? { color: textValue } : undefined}
+              className={cn(
+                cellPadding,
+                bordered && 'border border-(--color-uswds-base-ink)',
+                stacked && 'block before:mr-2 before:font-bold before:content-[attr(data-label)]',
+              )}
+              data-label={headerLabels[i] ?? ''}
+            >
+              {cell}
+            </td>
+          ))}
+        </tr>
+      );
+    };
+
+    export default UswdsTableRow;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const BG_MAP = {
+      white: "white",
+      gray: "var(--color-uswds-base-lightest)",
+      "primary-lightest": "var(--color-uswds-primary-lightest)",
+      "primary-lighter": "var(--color-uswds-primary-lighter)",
+      primary: "var(--color-uswds-primary)",
+      "primary-dark": "var(--color-uswds-primary-dark)",
+      "primary-darker": "var(--color-uswds-primary-darker)",
+      "base-lighter": "var(--color-uswds-base-lighter)",
+      "base-dark": "var(--color-uswds-base-dark)",
+      "base-darkest": "var(--color-uswds-base-darkest)"
+    };
+    const TEXT_COLOR_MAP = {
+      light: "white",
+      dark: "var(--color-uswds-base-ink)",
+      primary: "var(--color-uswds-primary-darker)",
+      secondary: "var(--color-eud-gold)"
+    };
+    const UswdsTableRow = ({ cells = [], isHeader = false, backgroundColor = "", textColor = "", _tableCtx = {} }) => {
+      const { bordered = false, compact = false, stacked = false, headerLabels = [] } = _tableCtx;
+      const cellPadding = compact ? "px-4 py-2" : "px-4 py-3";
+      const bgValue = backgroundColor ? BG_MAP[backgroundColor] : void 0;
+      const textValue = textColor ? TEXT_COLOR_MAP[textColor] : void 0;
+      const rowStyle = bgValue ? { backgroundColor: bgValue } : void 0;
+      if (isHeader) {
+        const defaultBg = bgValue != null ? bgValue : "var(--color-uswds-base-lighter)";
+        const defaultText = textValue != null ? textValue : "var(--color-uswds-base-ink)";
+        return /* @__PURE__ */ jsx("tr", { className: "border-b-2 border-(--color-uswds-base-ink)", children: cells.map((cell, i) => /* @__PURE__ */ jsx(
+          "th",
+          {
+            scope: "col",
+            style: { backgroundColor: defaultBg, color: defaultText },
+            className: cn(
+              "text-left text-sm font-bold",
+              cellPadding,
+              bordered && "border border-(--color-uswds-base-ink)"
+            ),
+            children: cell
+          },
+          i
+        )) });
+      }
+      return /* @__PURE__ */ jsx("tr", { className: "border-b border-(--color-uswds-base-lighter)", style: rowStyle, children: cells.map((cell, i) => {
+        var _a;
+        return /* @__PURE__ */ jsx(
+          "td",
+          {
+            style: textValue ? { color: textValue } : void 0,
+            className: cn(
+              cellPadding,
+              bordered && "border border-(--color-uswds-base-ink)",
+              stacked && "block before:mr-2 before:font-bold before:content-[attr(data-label)]"
+            ),
+            "data-label": (_a = headerLabels[i]) != null ? _a : "",
+            children: cell
+          },
+          i
+        );
+      }) });
+    };
+    export {
+      UswdsTableRow as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,160 @@
+uuid: ab64b825-6377-46eb-bd2c-5a11e319b034
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 9oL1dYppzB4nT_-LAcHSCZ5aZbrB1D6jrsVDX34jPyA
+machineName: uswds_tab
+name: '(Eud-Kit) USWDS Tab'
+required: {  }
+props:
+  accessibleLabel:
+    type: string
+    title: 'Accessible label'
+    examples:
+      - 'Page sections'
+slots:
+  items:
+    title: 'Tab items (uswds_tab_item)'
+js:
+  original: |
+    import { useEffect, useRef, useState } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsTab = ({
+      items,
+      accessibleLabel = 'Page sections',
+      className = '',
+    }) => {
+      const containerRef = useRef(null);
+      const [activeTab, setActiveTab] = useState(0);
+      const [tabLabels, setTabLabels] = useState([]);
+
+      useEffect(() => {
+        const findTabs = () => {
+          if (!containerRef.current) return;
+          const els = containerRef.current.querySelectorAll('.tab-item-content');
+          if (els.length > 0) {
+            setTabLabels(
+              Array.from(els).map((el) => el.getAttribute('data-tab-label') || ''),
+            );
+          } else {
+            setTimeout(findTabs, 50);
+          }
+        };
+        findTabs();
+      }, [items]);
+
+      useEffect(() => {
+        if (!containerRef.current) return;
+        const els = containerRef.current.querySelectorAll('.tab-item-content');
+        els.forEach((el, i) => {
+          el.style.display = i === activeTab ? 'block' : 'none';
+        });
+      }, [activeTab, tabLabels]);
+
+      return (
+        <div className={cn('usa-tabs font-sans', className)}>
+          <div
+            role="tablist"
+            aria-label={accessibleLabel}
+            className="flex border-b border-(--color-uswds-base-lighter)"
+          >
+            {tabLabels.map((label, i) => (
+              <button
+                key={i}
+                role="tab"
+                type="button"
+                id={`tab-${i}`}
+                aria-selected={i === activeTab}
+                aria-controls={`panel-${i}`}
+                onClick={() => setActiveTab(i)}
+                className={cn(
+                  'flex-1 border-b-[3px] px-2 pt-2.5 pb-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color)',
+                  i === activeTab
+                    ? '-mb-px border-(--color-uswds-primary-darker) text-(--color-uswds-primary-darker)'
+                    : 'border-transparent text-(--color-uswds-base-dark) hover:text-(--color-uswds-primary-darker)',
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <div ref={containerRef} className="mt-4">
+            {items}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsTab;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { useRef, useState, useEffect } from "react";
+    import { cn } from "drupal-canvas";
+    const UswdsTab = ({
+      items,
+      accessibleLabel = "Page sections",
+      className = ""
+    }) => {
+      const containerRef = useRef(null);
+      const [activeTab, setActiveTab] = useState(0);
+      const [tabLabels, setTabLabels] = useState([]);
+      useEffect(() => {
+        const findTabs = () => {
+          if (!containerRef.current) return;
+          const els = containerRef.current.querySelectorAll(".tab-item-content");
+          if (els.length > 0) {
+            setTabLabels(
+              Array.from(els).map((el) => el.getAttribute("data-tab-label") || "")
+            );
+          } else {
+            setTimeout(findTabs, 50);
+          }
+        };
+        findTabs();
+      }, [items]);
+      useEffect(() => {
+        if (!containerRef.current) return;
+        const els = containerRef.current.querySelectorAll(".tab-item-content");
+        els.forEach((el, i) => {
+          el.style.display = i === activeTab ? "block" : "none";
+        });
+      }, [activeTab, tabLabels]);
+      return /* @__PURE__ */ jsxs("div", { className: cn("usa-tabs font-sans", className), children: [
+        /* @__PURE__ */ jsx(
+          "div",
+          {
+            role: "tablist",
+            "aria-label": accessibleLabel,
+            className: "flex border-b border-(--color-uswds-base-lighter)",
+            children: tabLabels.map((label, i) => /* @__PURE__ */ jsx(
+              "button",
+              {
+                role: "tab",
+                type: "button",
+                id: `tab-${i}`,
+                "aria-selected": i === activeTab,
+                "aria-controls": `panel-${i}`,
+                onClick: () => setActiveTab(i),
+                className: cn(
+                  "flex-1 border-b-[3px] px-2 pt-2.5 pb-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color)",
+                  i === activeTab ? "-mb-px border-(--color-uswds-primary-darker) text-(--color-uswds-primary-darker)" : "border-transparent text-(--color-uswds-base-dark) hover:text-(--color-uswds-primary-darker)"
+                ),
+                children: label
+              },
+              i
+            ))
+          }
+        ),
+        /* @__PURE__ */ jsx("div", { ref: containerRef, className: "mt-4", children: items })
+      ] });
+    };
+    export {
+      UswdsTab as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

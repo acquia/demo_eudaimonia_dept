@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 64423ade-847d-40d9-8d26-28705a116c05
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: eud_news_1.png
+  uri:
+    -
+      value: 'public://2026-05/eud_news_1.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 807632
+  status:
+    -
+      value: true

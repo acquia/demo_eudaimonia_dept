@@ -1,0 +1,52 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 3cbb293a-bb8f-4877-a818-487275f3b475
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Not found'
+  components:
+    -
+      uuid: a2eface7-75ab-4717-b8d4-e5d2dac705cd
+      component_id: js.uswds_section
+      inputs:
+        heading: 'Page Not Found'
+        background: white
+        contentWidth: wide
+        paddingTop: lg
+        paddingBottom: lg
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: a2eface7-75ab-4717-b8d4-e5d2dac705cd
+      slot: content
+      uuid: a548b48d-58a8-4077-aa04-da9405a6f418
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: '<p>The requested page could not be found.</p>'
+          format: canvas_html_block
+  path:
+    -
+      alias: /not-found
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

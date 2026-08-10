@@ -1,0 +1,208 @@
+uuid: 21dcff8d-f2dd-4bae-b134-9ca11a092084
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: glU0vDTyu4tWVOfMWZ79PDg34l8nQDWL6KbLH7PHfZA
+machineName: uswds_site_alert
+name: '(Eud-Kit) USWDS Site Alert'
+required: {  }
+props:
+  variant:
+    type: string
+    enum:
+      - info
+      - emergency
+      - warning
+    'meta:enum':
+      info: Info
+      emergency: Emergency
+      warning: Warning
+    title: Variant
+    examples:
+      - info
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Short alert message'
+  body:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Body
+    examples:
+      - 'Optional site-wide alert body text.'
+  slim:
+    type: boolean
+    title: Slim
+    examples:
+      - false
+  width:
+    type: string
+    enum:
+      - full
+      - boxed
+    'meta:enum':
+      full: 'Full width'
+      boxed: 'Boxed (max 1240px)'
+    title: Width
+    examples:
+      - full
+slots: {  }
+js:
+  original: |
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    const barColor = {
+      info: 'bg-(--color-uswds-info)',
+      emergency: 'bg-(--color-uswds-emergency)',
+      warning: 'bg-(--color-uswds-warning)',
+    };
+
+    const bgColor = {
+      info: 'bg-(--color-uswds-accent-cool-lightest)',
+      emergency: 'bg-(--color-uswds-emergency)',
+      warning: 'bg-(--color-uswds-warning-lightest)',
+    };
+
+    const infoIcon = (
+      <svg aria-hidden="true" focusable="false" className="h-full w-full" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+      </svg>
+    );
+
+    const warningIcon = (
+      <svg aria-hidden="true" focusable="false" className="h-full w-full" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+      </svg>
+    );
+
+    const emergencyIcon = (
+      <svg aria-hidden="true" focusable="false" className="h-full w-full" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+      </svg>
+    );
+
+    const icons = { info: infoIcon, warning: warningIcon, emergency: emergencyIcon };
+
+    const UswdsSiteAlert = ({
+      variant = 'info',
+      heading = '',
+      body = '',
+      slim = false,
+      width = 'full',
+      className = '',
+    }) => {
+      const isEmergency = variant === 'emergency';
+      const textColor = isEmergency ? 'text-white' : 'text-(--color-uswds-base-ink)';
+
+      const inner = (
+        <div
+          className={cn(
+            'usa-site-alert',
+            `usa-site-alert--${variant}`,
+            slim && 'usa-site-alert--slim',
+            'flex items-stretch font-sans',
+            width === 'full' && 'w-full',
+            bgColor[variant] ?? bgColor.info,
+            className,
+          )}
+          role="alert"
+        >
+          {/* Left accent bar */}
+          <div className={cn('w-2 shrink-0', barColor[variant] ?? barColor.info)} aria-hidden="true" />
+
+          {/* Icon */}
+          <div className={cn('usa-site-alert__icon flex shrink-0 items-start pl-4', slim ? 'py-2' : 'py-4')}>
+            <div className={cn(slim ? 'h-6 w-6' : 'h-8 w-8', textColor)}>
+              {icons[variant] ?? infoIcon}
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className={cn('usa-site-alert__body flex flex-1 flex-col gap-0.5 px-4', slim ? 'py-2' : 'py-4')}>
+            {heading && (
+              <p className={cn('usa-site-alert__heading text-[18px] leading-snug font-bold', textColor, slim && 'text-[15px]')}>
+                {heading}
+              </p>
+            )}
+            {body && (
+              <FormattedText className={cn('text-[15px] leading-relaxed', textColor)}>
+                {body}
+              </FormattedText>
+            )}
+          </div>
+        </div>
+      );
+
+      if (width === 'boxed') {
+        return <div className="mx-auto max-w-[1240px] px-8">{inner}</div>;
+      }
+      return inner;
+    };
+
+    export default UswdsSiteAlert;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn, FormattedText } from "drupal-canvas";
+    const barColor = {
+      info: "bg-(--color-uswds-info)",
+      emergency: "bg-(--color-uswds-emergency)",
+      warning: "bg-(--color-uswds-warning)"
+    };
+    const bgColor = {
+      info: "bg-(--color-uswds-accent-cool-lightest)",
+      emergency: "bg-(--color-uswds-emergency)",
+      warning: "bg-(--color-uswds-warning-lightest)"
+    };
+    const infoIcon = /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", focusable: "false", className: "h-full w-full", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" }) });
+    const warningIcon = /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", focusable: "false", className: "h-full w-full", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" }) });
+    const emergencyIcon = /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", focusable: "false", className: "h-full w-full", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" }) });
+    const icons = { info: infoIcon, warning: warningIcon, emergency: emergencyIcon };
+    const UswdsSiteAlert = ({
+      variant = "info",
+      heading = "",
+      body = "",
+      slim = false,
+      width = "full",
+      className = ""
+    }) => {
+      var _a, _b, _c;
+      const isEmergency = variant === "emergency";
+      const textColor = isEmergency ? "text-white" : "text-(--color-uswds-base-ink)";
+      const inner = /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-site-alert",
+            `usa-site-alert--${variant}`,
+            slim && "usa-site-alert--slim",
+            "flex items-stretch font-sans",
+            width === "full" && "w-full",
+            (_a = bgColor[variant]) != null ? _a : bgColor.info,
+            className
+          ),
+          role: "alert",
+          children: [
+            /* @__PURE__ */ jsx("div", { className: cn("w-2 shrink-0", (_b = barColor[variant]) != null ? _b : barColor.info), "aria-hidden": "true" }),
+            /* @__PURE__ */ jsx("div", { className: cn("usa-site-alert__icon flex shrink-0 items-start pl-4", slim ? "py-2" : "py-4"), children: /* @__PURE__ */ jsx("div", { className: cn(slim ? "h-6 w-6" : "h-8 w-8", textColor), children: (_c = icons[variant]) != null ? _c : infoIcon }) }),
+            /* @__PURE__ */ jsxs("div", { className: cn("usa-site-alert__body flex flex-1 flex-col gap-0.5 px-4", slim ? "py-2" : "py-4"), children: [
+              heading && /* @__PURE__ */ jsx("p", { className: cn("usa-site-alert__heading text-[18px] leading-snug font-bold", textColor, slim && "text-[15px]"), children: heading }),
+              body && /* @__PURE__ */ jsx(FormattedText, { className: cn("text-[15px] leading-relaxed", textColor), children: body })
+            ] })
+          ]
+        }
+      );
+      if (width === "boxed") {
+        return /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-[1240px] px-8", children: inner });
+      }
+      return inner;
+    };
+    export {
+      UswdsSiteAlert as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

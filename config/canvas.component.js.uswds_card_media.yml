@@ -1,0 +1,52 @@
+uuid: d90a8316-503f-480d-894a-5d0a98f16058
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_card_media
+    - field.field.media.image.media_image
+    - image.style.canvas_parametrized_width
+    - media.type.image
+  module:
+    - file
+    - media
+    - media_library
+    - options
+_core:
+  default_config_hash: 1UD0Bm3zxf0JN5Lm9gfwoH0AvBbIVwJp3_x01J8y0vM
+label: '(Eud-Kit) USWDS Card Media'
+id: js.uswds_card_media
+source: js
+source_local_id: uswds_card_media
+provider: null
+active_version: ab763bd735195a54
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        image:
+          required: false
+          field_type: entity_reference
+          field_storage_settings:
+            target_type: media
+          field_instance_settings:
+            handler: 'default:media'
+            handler_settings:
+              target_bundles:
+                image: image
+          field_widget: media_library_widget
+          default_value: {  }
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+        size:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: md
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

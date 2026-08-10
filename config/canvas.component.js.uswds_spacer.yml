@@ -1,0 +1,33 @@
+uuid: 169f9584-d08d-447a-9b24-86c356ae6f6d
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_spacer
+  module:
+    - options
+_core:
+  default_config_hash: VSQJazSziWhSwZyla6tnz8JL3vyrPsKFwizYmEfkh9I
+label: '(Eud-Kit) USWDS Spacer'
+id: js.uswds_spacer
+source: js
+source_local_id: uswds_spacer
+provider: null
+active_version: 7a6ca41bdfd7a745
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        height:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: md
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

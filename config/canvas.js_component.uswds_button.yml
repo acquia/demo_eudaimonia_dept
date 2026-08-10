@@ -1,0 +1,376 @@
+uuid: 8cdd2fb3-8c34-471a-81da-217876d1a32a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vf_Xfs1IjNuobeyNHT9SldxmIhlhaa6-G3DXVGcMHmY
+machineName: uswds_button
+name: '(Eud-Kit) USWDS Button'
+required:
+  - text
+props:
+  text:
+    type: string
+    title: Text
+    examples:
+      - 'Sign in'
+  link:
+    type: string
+    format: uri-reference
+    title: Link
+    examples:
+      - /
+  variant:
+    type: string
+    enum:
+      - default
+      - outline
+      - outline_inverse
+      - secondary
+      - accent_cool
+      - accent_warm
+      - accent
+      - base
+      - unstyled
+    'meta:enum':
+      default: Default
+      outline: Outline
+      outline_inverse: 'Outline Inverse'
+      secondary: Secondary
+      accent_cool: 'Accent Cool'
+      accent_warm: 'Accent Warm'
+      accent: Accent
+      base: Base
+      unstyled: Unstyled
+    title: Variant
+    examples:
+      - default
+  size:
+    type: string
+    enum:
+      - default
+      - big
+    'meta:enum':
+      default: Default
+      big: Big
+    title: Size
+    examples:
+      - default
+  disabled:
+    type: boolean
+    title: Disabled
+    examples:
+      - false
+  showArrowIcon:
+    type: boolean
+    title: 'Show arrow icon'
+    examples:
+      - false
+  downloadUrl:
+    type: string
+    format: uri-reference
+    title: 'Download URL'
+  iconStart:
+    type: object
+    $ref: 'json-schema-definitions://canvas.module/image'
+    title: 'Icon start'
+  iconEnd:
+    type: object
+    $ref: 'json-schema-definitions://canvas.module/image'
+    title: 'Icon end'
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn, Image } from 'drupal-canvas';
+
+    const focusStyles =
+      'focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)';
+
+    const buttonVariants = cva(
+      cn(
+        'usa-button inline-flex cursor-pointer items-center justify-center gap-2 rounded font-sans leading-tight font-bold no-underline transition-colors',
+        'disabled:pointer-events-none disabled:opacity-50',
+        focusStyles,
+      ),
+      {
+        variants: {
+          variant: {
+            default:
+              'bg-(--color-uswds-primary) text-white hover:bg-(--color-uswds-primary-dark) active:bg-(--color-uswds-primary-darker)',
+            outline:
+              'usa-button--outline border-2 border-(--color-uswds-primary) bg-transparent text-(--color-uswds-primary) hover:border-(--color-uswds-primary-dark) hover:bg-(--color-uswds-primary-lighter) hover:text-(--color-uswds-primary-dark) active:border-(--color-uswds-primary-darker) active:text-(--color-uswds-primary-darker)',
+            outline_inverse:
+              'usa-button--outline usa-button--inverse border-2 border-(--color-uswds-base-light) bg-transparent text-(--color-uswds-base-light) hover:border-(--color-uswds-base-lightest) hover:bg-(--color-uswds-base-darker) hover:text-(--color-uswds-base-lightest) active:border-white active:text-white',
+            secondary:
+              'usa-button--secondary bg-(--color-uswds-secondary) text-white hover:bg-(--color-uswds-secondary-dark) active:bg-(--color-uswds-secondary-darker)',
+            accent_cool:
+              'usa-button--accent-cool bg-(--color-uswds-accent-cool) text-(--color-uswds-base-ink) hover:bg-(--color-uswds-accent-cool-dark) hover:text-white active:bg-(--color-uswds-accent-cool-darker) active:text-white',
+            accent_warm:
+              'usa-button--accent-warm bg-(--color-uswds-accent-warm) text-white hover:bg-(--color-uswds-accent-warm-dark) active:bg-(--color-uswds-accent-warm-darker)',
+            accent:
+              'bg-(--color-eud-gold) text-(--color-uswds-primary-darker) hover:bg-(--color-eud-gold-dark) active:bg-(--color-eud-gold-dark)',
+            base: 'usa-button--base bg-(--color-uswds-base) text-white hover:bg-(--color-uswds-base-dark) active:bg-(--color-uswds-base-darker)',
+            unstyled:
+              'usa-button--unstyled bg-transparent p-0 font-normal text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline active:text-(--color-uswds-primary-darker)',
+          },
+          size: {
+            default:
+              'px-(--spacing-uswds-205) py-(--spacing-uswds-105) text-[16px]',
+            big: 'usa-button--big px-(--spacing-uswds-3) py-(--spacing-uswds-2) text-[18px]',
+          },
+        },
+        compoundVariants: [
+          // unstyled has no padding regardless of size
+          { variant: 'unstyled', size: 'default', className: 'p-0' },
+          { variant: 'unstyled', size: 'big', className: 'p-0' },
+        ],
+        defaultVariants: {
+          variant: 'default',
+          size: 'default',
+        },
+      },
+    );
+
+    const ArrowIcon = ({ big }) => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className={big ? 'h-5 w-5 shrink-0' : 'h-4 w-4 shrink-0'}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+      >
+        <path d="M9 6l6 6-6 6" />
+      </svg>
+    );
+
+    const UswdsButton = ({
+      text = '',
+      link = '#',
+      variant = 'default',
+      size = 'default',
+      disabled = false,
+      showArrowIcon = false,
+      downloadUrl = '',
+      iconStart,
+      iconEnd,
+      className = '',
+      ...props
+    }) => {
+      const isBig = size === 'big';
+      const iconClass = isBig ? 'h-6 w-6 shrink-0' : 'h-[14px] w-[14px] shrink-0';
+      const hasDownload = Boolean(downloadUrl);
+      const isLink = (Boolean(link) && link !== '#') || hasDownload;
+      const href = disabled ? undefined : (hasDownload ? downloadUrl : link);
+
+      const sharedClass = cn(buttonVariants({ variant, size }), className);
+
+      const content = (
+        <>
+          {iconStart?.src && (
+            <Image
+              src={iconStart.src}
+              alt={iconStart.alt || ''}
+              width={iconStart.width || (isBig ? 24 : 14)}
+              height={iconStart.height || (isBig ? 24 : 14)}
+              className={iconClass}
+            />
+          )}
+          {text}
+          {showArrowIcon && <ArrowIcon big={isBig} />}
+          {iconEnd?.src && (
+            <Image
+              src={iconEnd.src}
+              alt={iconEnd.alt || ''}
+              width={iconEnd.width || (isBig ? 24 : 14)}
+              height={iconEnd.height || (isBig ? 24 : 14)}
+              className={iconClass}
+            />
+          )}
+        </>
+      );
+
+      if (isLink) {
+        return (
+          <a
+            className={sharedClass}
+            href={href}
+            aria-disabled={disabled || undefined}
+            download={hasDownload || undefined}
+            {...props}
+          >
+            {content}
+          </a>
+        );
+      }
+
+      return (
+        <button className={sharedClass} type="button" disabled={disabled} {...props}>
+          {content}
+        </button>
+      );
+    };
+
+    export default UswdsButton;
+  compiled: |
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
+    };
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsxs, Fragment, jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { cn, Image } from "drupal-canvas";
+    const focusStyles = "focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)";
+    const buttonVariants = cva(
+      cn(
+        "usa-button inline-flex cursor-pointer items-center justify-center gap-2 rounded font-sans leading-tight font-bold no-underline transition-colors",
+        "disabled:pointer-events-none disabled:opacity-50",
+        focusStyles
+      ),
+      {
+        variants: {
+          variant: {
+            default: "bg-(--color-uswds-primary) text-white hover:bg-(--color-uswds-primary-dark) active:bg-(--color-uswds-primary-darker)",
+            outline: "usa-button--outline border-2 border-(--color-uswds-primary) bg-transparent text-(--color-uswds-primary) hover:border-(--color-uswds-primary-dark) hover:bg-(--color-uswds-primary-lighter) hover:text-(--color-uswds-primary-dark) active:border-(--color-uswds-primary-darker) active:text-(--color-uswds-primary-darker)",
+            outline_inverse: "usa-button--outline usa-button--inverse border-2 border-(--color-uswds-base-light) bg-transparent text-(--color-uswds-base-light) hover:border-(--color-uswds-base-lightest) hover:bg-(--color-uswds-base-darker) hover:text-(--color-uswds-base-lightest) active:border-white active:text-white",
+            secondary: "usa-button--secondary bg-(--color-uswds-secondary) text-white hover:bg-(--color-uswds-secondary-dark) active:bg-(--color-uswds-secondary-darker)",
+            accent_cool: "usa-button--accent-cool bg-(--color-uswds-accent-cool) text-(--color-uswds-base-ink) hover:bg-(--color-uswds-accent-cool-dark) hover:text-white active:bg-(--color-uswds-accent-cool-darker) active:text-white",
+            accent_warm: "usa-button--accent-warm bg-(--color-uswds-accent-warm) text-white hover:bg-(--color-uswds-accent-warm-dark) active:bg-(--color-uswds-accent-warm-darker)",
+            accent: "bg-(--color-eud-gold) text-(--color-uswds-primary-darker) hover:bg-(--color-eud-gold-dark) active:bg-(--color-eud-gold-dark)",
+            base: "usa-button--base bg-(--color-uswds-base) text-white hover:bg-(--color-uswds-base-dark) active:bg-(--color-uswds-base-darker)",
+            unstyled: "usa-button--unstyled bg-transparent p-0 font-normal text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline active:text-(--color-uswds-primary-darker)"
+          },
+          size: {
+            default: "px-(--spacing-uswds-205) py-(--spacing-uswds-105) text-[16px]",
+            big: "usa-button--big px-(--spacing-uswds-3) py-(--spacing-uswds-2) text-[18px]"
+          }
+        },
+        compoundVariants: [
+          // unstyled has no padding regardless of size
+          { variant: "unstyled", size: "default", className: "p-0" },
+          { variant: "unstyled", size: "big", className: "p-0" }
+        ],
+        defaultVariants: {
+          variant: "default",
+          size: "default"
+        }
+      }
+    );
+    const ArrowIcon = ({ big }) => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: big ? "h-5 w-5 shrink-0" : "h-4 w-4 shrink-0",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2.5",
+        children: /* @__PURE__ */ jsx("path", { d: "M9 6l6 6-6 6" })
+      }
+    );
+    const UswdsButton = (_a) => {
+      var _b = _a, {
+        text = "",
+        link = "#",
+        variant = "default",
+        size = "default",
+        disabled = false,
+        showArrowIcon = false,
+        downloadUrl = "",
+        iconStart,
+        iconEnd,
+        className = ""
+      } = _b, props = __objRest(_b, [
+        "text",
+        "link",
+        "variant",
+        "size",
+        "disabled",
+        "showArrowIcon",
+        "downloadUrl",
+        "iconStart",
+        "iconEnd",
+        "className"
+      ]);
+      const isBig = size === "big";
+      const iconClass = isBig ? "h-6 w-6 shrink-0" : "h-[14px] w-[14px] shrink-0";
+      const hasDownload = Boolean(downloadUrl);
+      const isLink = Boolean(link) && link !== "#" || hasDownload;
+      const href = disabled ? void 0 : hasDownload ? downloadUrl : link;
+      const sharedClass = cn(buttonVariants({ variant, size }), className);
+      const content = /* @__PURE__ */ jsxs(Fragment, { children: [
+        (iconStart == null ? void 0 : iconStart.src) && /* @__PURE__ */ jsx(
+          Image,
+          {
+            src: iconStart.src,
+            alt: iconStart.alt || "",
+            width: iconStart.width || (isBig ? 24 : 14),
+            height: iconStart.height || (isBig ? 24 : 14),
+            className: iconClass
+          }
+        ),
+        text,
+        showArrowIcon && /* @__PURE__ */ jsx(ArrowIcon, { big: isBig }),
+        (iconEnd == null ? void 0 : iconEnd.src) && /* @__PURE__ */ jsx(
+          Image,
+          {
+            src: iconEnd.src,
+            alt: iconEnd.alt || "",
+            width: iconEnd.width || (isBig ? 24 : 14),
+            height: iconEnd.height || (isBig ? 24 : 14),
+            className: iconClass
+          }
+        )
+      ] });
+      if (isLink) {
+        return /* @__PURE__ */ jsx(
+          "a",
+          __spreadProps(__spreadValues({
+            className: sharedClass,
+            href,
+            "aria-disabled": disabled || void 0,
+            download: hasDownload || void 0
+          }, props), {
+            children: content
+          })
+        );
+      }
+      return /* @__PURE__ */ jsx("button", __spreadProps(__spreadValues({ className: sharedClass, type: "button", disabled }, props), { children: content }));
+    };
+    export {
+      UswdsButton as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,21 @@
+uuid: f53ec940-6910-43dc-827b-6acdbfe19c04
+langcode: en
+status: true
+dependencies: {  }
+name: xx_large_w1600
+label: 'XX Large (W1600)'
+effects:
+  e7171d76-784b-4c94-9bb2-ed1b05018326:
+    uuid: e7171d76-784b-4c94-9bb2-ed1b05018326
+    id: image_scale
+    weight: 1
+    data:
+      width: 1600
+      height: null
+      upscale: true
+  91c9888b-b954-4a6a-89fc-1291f6cb3b69:
+    uuid: 91c9888b-b954-4a6a-89fc-1291f6cb3b69
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

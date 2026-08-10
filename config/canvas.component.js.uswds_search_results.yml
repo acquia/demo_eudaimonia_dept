@@ -1,0 +1,40 @@
+uuid: 4d064a51-5e02-4102-80ef-c3f3ab367cbb
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_search_results
+_core:
+  default_config_hash: C0fnAL4VhD6j8O9TgNGfRGA7ROaR4_O-HCPQyqQazzw
+label: '(Eud-Kit) USWDS Search Results'
+id: js.uswds_search_results
+source: js
+source_local_id: uswds_search_results
+provider: null
+active_version: dcf5dcee5e633cb8
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        headingText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Search results'
+          expression: ℹ︎string␟value
+        noResultsText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'No results found for your search.'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

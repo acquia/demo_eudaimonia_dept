@@ -1,0 +1,55 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 17c2eaf4-b60e-4860-a4f3-56c4369f649c
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Access denied'
+  description:
+    -
+      value: 'EUD demo home page'
+  components:
+    -
+      uuid: f8c4c87f-b17b-4caf-a781-2eab02415cab
+      component_id: js.uswds_section
+      inputs:
+        heading: 'Access Denied'
+        background: white
+        contentWidth: wide
+        paddingTop: lg
+        paddingBottom: lg
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: f8c4c87f-b17b-4caf-a781-2eab02415cab
+      slot: content
+      uuid: a548b48d-58a8-4077-aa04-da9405a6f418
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: '<p>You are not authorized to access this page.</p>'
+          format: canvas_html_block
+  path:
+    -
+      alias: /access-denied
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

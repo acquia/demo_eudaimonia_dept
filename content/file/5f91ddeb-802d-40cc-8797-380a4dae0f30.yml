@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 5f91ddeb-802d-40cc-8797-380a4dae0f30
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: card-icon-6-creativity.png
+  uri:
+    -
+      value: 'public://2026-05/card-icon-6-creativity.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 2102
+  status:
+    -
+      value: true

@@ -1,0 +1,33 @@
+uuid: e24e7832-d7ec-454b-a5a1-d1e21f6639ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_side_navigation
+_core:
+  default_config_hash: mTX0ZQdTOH9Oa-InMA5wTFwV3oLK-2tDLGiEBzQ5IuE
+label: '(Eud-Kit) USWDS Side Navigation'
+id: js.uswds_side_navigation
+source: js
+source_local_id: uswds_side_navigation
+provider: null
+active_version: 32cbf6e0938ddc2f
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Section
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items
+          description: 'One or more uswds_side_navigation_item components'

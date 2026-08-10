@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: db1a636b-a059-4748-a027-d402be3656e4
+  bundle: image
+  default_langcode: en
+  depends:
+    1c042040-934e-4a82-821f-0fdc72983b65: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: card-icon-1-health
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Solid blue heart shape on a white background.'
+      title: ''
+      width: 128
+      height: 128
+      entity: 1c042040-934e-4a82-821f-0fdc72983b65

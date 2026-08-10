@@ -1,0 +1,91 @@
+uuid: 40ffee0d-a400-40a1-98ce-b00076989185
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: RMYkFUmERh9AnTL-3eieIOa3AwfimI4JdLrm1NfOe-Q
+machineName: uswds_collection_meta_item
+name: '(Eud-Kit) USWDS Collection Meta Item'
+required: {  }
+props:
+  text:
+    type: string
+    title: Text
+    examples:
+      - 'Jan 15, 2024'
+  dotSeparator:
+    type: boolean
+    title: 'Dot separator'
+    examples:
+      - true
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsCollectionMetaItem = ({
+      text = '',
+      dotSeparator = false,
+      className = '',
+    }) => {
+      if (dotSeparator) {
+        return (
+          <span
+            aria-hidden="true"
+            className="text-(--color-uswds-base-light) select-none"
+          >
+            ·
+          </span>
+        );
+      }
+      if (!text) return null;
+      return (
+        <span
+          className={cn(
+            'usa-collection__meta-item text-[13px] leading-[1.35] text-(--color-uswds-base-ink)',
+            className,
+          )}
+        >
+          {text}
+        </span>
+      );
+    };
+
+    export default UswdsCollectionMetaItem;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsCollectionMetaItem = ({
+      text = "",
+      dotSeparator = false,
+      className = ""
+    }) => {
+      if (dotSeparator) {
+        return /* @__PURE__ */ jsx(
+          "span",
+          {
+            "aria-hidden": "true",
+            className: "text-(--color-uswds-base-light) select-none",
+            children: "·"
+          }
+        );
+      }
+      if (!text) return null;
+      return /* @__PURE__ */ jsx(
+        "span",
+        {
+          className: cn(
+            "usa-collection__meta-item text-[13px] leading-[1.35] text-(--color-uswds-base-ink)",
+            className
+          ),
+          children: text
+        }
+      );
+    };
+    export {
+      UswdsCollectionMetaItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

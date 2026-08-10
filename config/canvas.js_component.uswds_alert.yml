@@ -1,0 +1,256 @@
+uuid: f61973e5-48cf-4d8b-a247-9e1713d91dbc
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 9H6OhEcN_mvZcDvwp6f6F9t7SkKQrSO465QIVjE0t4Y
+machineName: uswds_alert
+name: '(Eud-Kit) USWDS Alert'
+required: {  }
+props:
+  variant:
+    type: string
+    enum:
+      - info
+      - warning
+      - error
+      - success
+      - emergency
+    'meta:enum':
+      info: Info
+      warning: Warning
+      error: Error
+      success: Success
+      emergency: Emergency
+    title: Variant
+    examples:
+      - info
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Informational status'
+  body:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Body
+    examples:
+      - 'Optional alert body text.'
+  slim:
+    type: boolean
+    title: Slim
+    examples:
+      - false
+  noIcon:
+    type: boolean
+    title: 'No Icon'
+    examples:
+      - false
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    const alertVariants = cva('usa-alert flex border-l-[0.5rem] font-sans', {
+      variants: {
+        variant: {
+          info: 'usa-alert--info border-(--color-uswds-info) bg-(--color-uswds-info-lightest)',
+          warning:
+            'usa-alert--warning border-(--color-uswds-warning) bg-(--color-uswds-warning-lightest)',
+          error: 'usa-alert--error border-(--color-uswds-error-dark) bg-(--color-uswds-error-lightest)',
+          success:
+            'usa-alert--success border-(--color-uswds-success) bg-(--color-uswds-success-lightest)',
+          emergency:
+            'usa-alert--emergency border-(--color-uswds-emergency) bg-(--color-uswds-emergency) text-white',
+        },
+      },
+      defaultVariants: {
+        variant: 'info',
+      },
+    });
+
+    // error and emergency share the "!" in circle icon (USWDS error_outline)
+    const errorCircleIcon = (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="h-full w-full"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+      </svg>
+    );
+
+    const alertIcons = {
+      info: (
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          className="h-full w-full"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+        </svg>
+      ),
+      warning: (
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          className="h-full w-full"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+        </svg>
+      ),
+      error: errorCircleIcon,
+      success: (
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          className="h-full w-full"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+        </svg>
+      ),
+      emergency: errorCircleIcon,
+    };
+
+    // Non-emergency icons are black (no tint — color meaning comes from border/bg).
+    // Emergency icon is white to contrast against the dark background.
+
+    const UswdsAlert = ({
+      variant = 'info',
+      heading = '',
+      body = '',
+      slim = false,
+      noIcon = false,
+      className = '',
+    }) => {
+      return (
+        <div className={cn(alertVariants({ variant }), className)} role="alert">
+          {!noIcon && (
+            <div className={cn('usa-alert__icon flex-shrink-0 pr-3 pl-4', slim ? 'py-2' : 'py-4')}>
+              <div
+                className={cn(
+                  slim ? 'h-6 w-6' : 'h-8 w-8',
+                  variant === 'emergency' && 'text-white',
+                )}
+              >
+                {alertIcons[variant]}
+              </div>
+            </div>
+          )}
+          <div className={cn('usa-alert__body px-4', slim ? 'py-2' : 'py-4')}>
+            {heading && <p className="usa-alert__heading mb-1 text-[22px] font-bold leading-tight">{heading}</p>}
+            {body && <FormattedText className="text-[15px]">{body}</FormattedText>}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsAlert;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { cn, FormattedText } from "drupal-canvas";
+    const alertVariants = cva("usa-alert flex border-l-[0.5rem] font-sans", {
+      variants: {
+        variant: {
+          info: "usa-alert--info border-(--color-uswds-info) bg-(--color-uswds-info-lightest)",
+          warning: "usa-alert--warning border-(--color-uswds-warning) bg-(--color-uswds-warning-lightest)",
+          error: "usa-alert--error border-(--color-uswds-error-dark) bg-(--color-uswds-error-lightest)",
+          success: "usa-alert--success border-(--color-uswds-success) bg-(--color-uswds-success-lightest)",
+          emergency: "usa-alert--emergency border-(--color-uswds-emergency) bg-(--color-uswds-emergency) text-white"
+        }
+      },
+      defaultVariants: {
+        variant: "info"
+      }
+    });
+    const errorCircleIcon = /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "h-full w-full",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" })
+      }
+    );
+    const alertIcons = {
+      info: /* @__PURE__ */ jsx(
+        "svg",
+        {
+          "aria-hidden": "true",
+          focusable: "false",
+          className: "h-full w-full",
+          viewBox: "0 0 24 24",
+          fill: "currentColor",
+          children: /* @__PURE__ */ jsx("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" })
+        }
+      ),
+      warning: /* @__PURE__ */ jsx(
+        "svg",
+        {
+          "aria-hidden": "true",
+          focusable: "false",
+          className: "h-full w-full",
+          viewBox: "0 0 24 24",
+          fill: "currentColor",
+          children: /* @__PURE__ */ jsx("path", { d: "M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" })
+        }
+      ),
+      error: errorCircleIcon,
+      success: /* @__PURE__ */ jsx(
+        "svg",
+        {
+          "aria-hidden": "true",
+          focusable: "false",
+          className: "h-full w-full",
+          viewBox: "0 0 24 24",
+          fill: "currentColor",
+          children: /* @__PURE__ */ jsx("path", { d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" })
+        }
+      ),
+      emergency: errorCircleIcon
+    };
+    const UswdsAlert = ({
+      variant = "info",
+      heading = "",
+      body = "",
+      slim = false,
+      noIcon = false,
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs("div", { className: cn(alertVariants({ variant }), className), role: "alert", children: [
+        !noIcon && /* @__PURE__ */ jsx("div", { className: cn("usa-alert__icon flex-shrink-0 pr-3 pl-4", slim ? "py-2" : "py-4"), children: /* @__PURE__ */ jsx(
+          "div",
+          {
+            className: cn(
+              slim ? "h-6 w-6" : "h-8 w-8",
+              variant === "emergency" && "text-white"
+            ),
+            children: alertIcons[variant]
+          }
+        ) }),
+        /* @__PURE__ */ jsxs("div", { className: cn("usa-alert__body px-4", slim ? "py-2" : "py-4"), children: [
+          heading && /* @__PURE__ */ jsx("p", { className: "usa-alert__heading mb-1 text-[22px] font-bold leading-tight", children: heading }),
+          body && /* @__PURE__ */ jsx(FormattedText, { className: "text-[15px]", children: body })
+        ] })
+      ] });
+    };
+    export {
+      UswdsAlert as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

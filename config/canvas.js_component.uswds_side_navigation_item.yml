@@ -1,0 +1,153 @@
+uuid: 028edd1a-db8a-4015-a479-ef1653940f88
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dOPE684QDOn2UUojQqhbM6aZQmagqtfXcHsNjXlIcds
+machineName: uswds_side_navigation_item
+name: '(Eud-Kit) USWDS Side Navigation Item'
+required: {  }
+props:
+  text:
+    type: string
+    title: Text
+    examples:
+      - Overview
+  href:
+    type: string
+    title: Href
+    examples:
+      - '#'
+  current:
+    type: boolean
+    title: Current
+    examples:
+      - false
+  level:
+    type: integer
+    enum:
+      - 1
+      - 2
+      - 3
+    'meta:enum':
+      1: 'Level 1'
+      2: 'Level 2'
+      3: 'Level 3'
+    title: Level
+    examples:
+      - 1
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    /**
+     * UswdsSideNavigationItem renders a single side navigation link.
+     *
+     * Props:
+     *  - text:    Link label
+     *  - href:    Link URL
+     *  - current: Whether this is the active/current page
+     *  - level:   Nesting level — 1 (top), 2 (sub), or 3 (sub-sub)
+     */
+    const UswdsSideNavigationItem = ({
+      text = '',
+      href = '#',
+      current = false,
+      level = 1,
+      className = '',
+    }) => {
+      const lvl = Number(level);
+
+      return (
+        <li
+          className={cn(
+            'usa-sidenav__item relative border-t border-(--color-uswds-base-lighter)',
+            className,
+          )}
+        >
+          {/* Current page indicator bar (level 1 only) */}
+          {current && lvl === 1 && (
+            <span
+              aria-hidden="true"
+              className="absolute top-1 bottom-1 left-0 w-1 rounded-full bg-(--color-uswds-primary)"
+            />
+          )}
+          <a
+            href={href}
+            aria-current={current ? 'page' : undefined}
+            className={cn(
+              'usa-sidenav__link block leading-[1.3] no-underline hover:text-(--color-uswds-primary)',
+              // Horizontal padding varies by level; level-1 items get left padding to
+              // accommodate the current indicator bar.
+              lvl === 1 && 'py-2 pr-2 pl-4 text-base',
+              lvl === 2 &&
+                'py-2 pr-2 pl-8 text-[length:var(--font-size-uswds-xs,0.9375rem)]',
+              lvl === 3 &&
+                'py-2 pr-2 pl-12 text-[length:var(--font-size-uswds-xs,0.9375rem)]',
+              current
+                ? 'font-bold text-(--color-uswds-primary)'
+                : 'font-normal text-(--color-uswds-base-dark)',
+            )}
+          >
+            {text}
+          </a>
+        </li>
+      );
+    };
+
+    export default UswdsSideNavigationItem;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsSideNavigationItem = ({
+      text = "",
+      href = "#",
+      current = false,
+      level = 1,
+      className = ""
+    }) => {
+      const lvl = Number(level);
+      return /* @__PURE__ */ jsxs(
+        "li",
+        {
+          className: cn(
+            "usa-sidenav__item relative border-t border-(--color-uswds-base-lighter)",
+            className
+          ),
+          children: [
+            current && lvl === 1 && /* @__PURE__ */ jsx(
+              "span",
+              {
+                "aria-hidden": "true",
+                className: "absolute top-1 bottom-1 left-0 w-1 rounded-full bg-(--color-uswds-primary)"
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "a",
+              {
+                href,
+                "aria-current": current ? "page" : void 0,
+                className: cn(
+                  "usa-sidenav__link block leading-[1.3] no-underline hover:text-(--color-uswds-primary)",
+                  // Horizontal padding varies by level; level-1 items get left padding to
+                  // accommodate the current indicator bar.
+                  lvl === 1 && "py-2 pr-2 pl-4 text-base",
+                  lvl === 2 && "py-2 pr-2 pl-8 text-[length:var(--font-size-uswds-xs,0.9375rem)]",
+                  lvl === 3 && "py-2 pr-2 pl-12 text-[length:var(--font-size-uswds-xs,0.9375rem)]",
+                  current ? "font-bold text-(--color-uswds-primary)" : "font-normal text-(--color-uswds-base-dark)"
+                ),
+                children: text
+              }
+            )
+          ]
+        }
+      );
+    };
+    export {
+      UswdsSideNavigationItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

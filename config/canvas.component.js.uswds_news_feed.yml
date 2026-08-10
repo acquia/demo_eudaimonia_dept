@@ -1,0 +1,75 @@
+uuid: cc26c6ec-dc3c-4ccd-b37b-1e47560049fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_news_feed
+  module:
+    - link
+_core:
+  default_config_hash: SbylTGLXwJPuHQqF-4haYSG_ctx4H8UDf4RrLiJsRNY
+label: '(Eud-Kit) USWDS News Feed'
+id: js.uswds_news_feed
+source: js
+source_local_id: uswds_news_feed
+provider: null
+active_version: be2ca885497ef5d0
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        articleLimit:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 5
+          expression: ℹ︎integer␟value
+        showFeatured:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: true
+          expression: ℹ︎boolean␟value
+        ctaText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Read full release'
+          expression: ℹ︎string␟value
+        viewAllLink:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /newsroom
+              options: {  }
+          expression: ℹ︎link␟url
+        viewAllLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'View all news'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

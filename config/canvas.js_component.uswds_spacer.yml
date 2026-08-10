@@ -1,0 +1,98 @@
+uuid: 60a515a9-44d6-4bb7-9584-577ae95a1ba8
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: V_aAJhZYnjysp__a9j5j7cyIch_NqQkTpahk2hYvkos
+machineName: uswds_spacer
+name: '(Eud-Kit) USWDS Spacer'
+required: {  }
+props:
+  height:
+    type: string
+    enum:
+      - xs
+      - sm
+      - md
+      - lg
+      - xl
+      - 2xl
+    'meta:enum':
+      xs: 'XS (1rem)'
+      sm: 'SM (2rem)'
+      md: 'MD (3rem, default)'
+      lg: 'LG (4rem)'
+      xl: 'XL (6rem)'
+      2xl: '2XL (8rem)'
+    title: Height
+    examples:
+      - md
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn } from 'drupal-canvas';
+
+    const spacerVariants = cva('usa-spacer block w-full', {
+      variants: {
+        height: {
+          xs: 'h-4',
+          sm: 'h-8',
+          md: 'h-12',
+          lg: 'h-16',
+          xl: 'h-24',
+          '2xl': 'h-32',
+        },
+      },
+      defaultVariants: {
+        height: 'md',
+      },
+    });
+
+    const UswdsSpacer = ({
+      height = 'md',
+      className = '',
+    }) => (
+      <div
+        className={cn(spacerVariants({ height }), className)}
+        aria-hidden="true"
+      />
+    );
+
+    export default UswdsSpacer;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
+    const spacerVariants = cva("usa-spacer block w-full", {
+      variants: {
+        height: {
+          xs: "h-4",
+          sm: "h-8",
+          md: "h-12",
+          lg: "h-16",
+          xl: "h-24",
+          "2xl": "h-32"
+        }
+      },
+      defaultVariants: {
+        height: "md"
+      }
+    });
+    const UswdsSpacer = ({
+      height = "md",
+      className = ""
+    }) => /* @__PURE__ */ jsx(
+      "div",
+      {
+        className: cn(spacerVariants({ height }), className),
+        "aria-hidden": "true"
+      }
+    );
+    export {
+      UswdsSpacer as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

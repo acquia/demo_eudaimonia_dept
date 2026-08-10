@@ -1,0 +1,300 @@
+uuid: 85c43252-51eb-4a95-a6b0-42822ad03420
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: e_pritJgjDkviLpQZZ3UwynBlnN1T-3-7r8h2WfsTjM
+machineName: uswds_modal
+name: '(Eud-Kit) USWDS Modal'
+required: {  }
+props:
+  id:
+    type: string
+    title: ID
+    examples:
+      - modal-example
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Are you sure you want to continue?'
+  triggerText:
+    type: string
+    title: 'Trigger Text'
+    examples:
+      - 'Open modal'
+  size:
+    type: string
+    title: Size
+    examples:
+      - default
+      - lg
+  forcedActionNoDismiss:
+    type: boolean
+    title: 'Forced Action No Dismiss'
+    examples:
+      - false
+slots:
+  body:
+    title: Body
+  footer:
+    title: 'Footer Actions'
+js:
+  original: |
+    import { useEffect, useRef, useState } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    const FOCUSABLE =
+      'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+    const UswdsModal = ({
+      id = 'modal',
+      heading = '',
+      body,
+      footer,
+      triggerText = 'Open modal',
+      size = 'default',
+      forcedActionNoDismiss = false,
+      className = '',
+    }) => {
+      const [open, setOpen] = useState(false);
+      const dialogRef = useRef(null);
+      const maxWidth = size === 'lg' ? 'max-w-[880px]' : 'max-w-[480px]';
+
+      useEffect(() => {
+        if (!open) return;
+        const dialog = dialogRef.current;
+
+        // Move focus into dialog on open
+        const focusable = dialog?.querySelectorAll(FOCUSABLE);
+        (focusable?.[0] ?? dialog)?.focus();
+
+        const handleKeyDown = (e) => {
+          if (e.key === 'Escape' && !forcedActionNoDismiss) {
+            setOpen(false);
+            return;
+          }
+          if (e.key === 'Tab' && dialog) {
+            const all = Array.from(dialog.querySelectorAll(FOCUSABLE));
+            if (all.length === 0) return;
+            const first = all[0];
+            const last = all[all.length - 1];
+            if (e.shiftKey) {
+              if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+              }
+            } else {
+              if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }
+          }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+      }, [open, forcedActionNoDismiss]);
+
+      return (
+        <>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="usa-button rounded bg-(--color-uswds-primary) px-(--spacing-uswds-205) py-(--spacing-uswds-105) font-sans text-[length:--font-size-uswds-sm] leading-[0.95] font-bold text-white hover:bg-(--color-uswds-primary-dark) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)"
+            aria-controls={id}
+          >
+            {triggerText}
+          </button>
+
+          {open && (
+            <div
+              role="presentation"
+              className="usa-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-[50px]"
+              onClick={(e) => {
+                if (!forcedActionNoDismiss && e.target === e.currentTarget)
+                  setOpen(false);
+              }}
+            >
+              <div
+                ref={dialogRef}
+                id={id}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={`${id}-heading`}
+                tabIndex={-1}
+                className={cn(
+                  'usa-modal relative flex w-full flex-col overflow-y-auto rounded-lg bg-white font-sans',
+                  maxWidth,
+                  className,
+                )}
+              >
+                {/* Top spacer */}
+                <div className="h-8 shrink-0" aria-hidden="true" />
+
+                {/* Content */}
+                <div className="usa-modal__content flex flex-col gap-6 px-8 pt-2 pb-8">
+                  <div className="flex flex-col gap-4 text-(--color-uswds-base-ink)">
+                    <h2
+                      id={`${id}-heading`}
+                      className="usa-modal__heading text-[length:--font-size-uswds-lg] leading-normal font-bold"
+                    >
+                      {heading}
+                    </h2>
+                    {body && (
+                      <div className="text-[length:--font-size-uswds-sm] leading-relaxed">
+                        {body}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center">
+                    <div className="flex items-center gap-2">
+                      {footer}
+                      {!forcedActionNoDismiss && (
+                        <button
+                          type="button"
+                          onClick={() => setOpen(false)}
+                          className="usa-button usa-button--unstyled px-(--spacing-uswds-1) py-(--spacing-uswds-1) text-[length:--font-size-uswds-sm] leading-[0.95] font-normal text-(--color-uswds-primary) underline decoration-solid [text-decoration-skip-ink:none] hover:text-(--color-uswds-primary-dark) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)"
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      );
+    };
+
+    export default UswdsModal;
+  compiled: |
+    import { jsxs, Fragment, jsx } from "react/jsx-runtime";
+    import { useState, useRef, useEffect } from "react";
+    import { cn } from "drupal-canvas";
+    const FOCUSABLE = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+    const UswdsModal = ({
+      id = "modal",
+      heading = "",
+      body,
+      footer,
+      triggerText = "Open modal",
+      size = "default",
+      forcedActionNoDismiss = false,
+      className = ""
+    }) => {
+      const [open, setOpen] = useState(false);
+      const dialogRef = useRef(null);
+      const maxWidth = size === "lg" ? "max-w-[880px]" : "max-w-[480px]";
+      useEffect(() => {
+        var _a, _b;
+        if (!open) return;
+        const dialog = dialogRef.current;
+        const focusable = dialog == null ? void 0 : dialog.querySelectorAll(FOCUSABLE);
+        (_b = (_a = focusable == null ? void 0 : focusable[0]) != null ? _a : dialog) == null ? void 0 : _b.focus();
+        const handleKeyDown = (e) => {
+          if (e.key === "Escape" && !forcedActionNoDismiss) {
+            setOpen(false);
+            return;
+          }
+          if (e.key === "Tab" && dialog) {
+            const all = Array.from(dialog.querySelectorAll(FOCUSABLE));
+            if (all.length === 0) return;
+            const first = all[0];
+            const last = all[all.length - 1];
+            if (e.shiftKey) {
+              if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+              }
+            } else {
+              if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+              }
+            }
+          }
+        };
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+      }, [open, forcedActionNoDismiss]);
+      return /* @__PURE__ */ jsxs(Fragment, { children: [
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            type: "button",
+            onClick: () => setOpen(true),
+            className: "usa-button rounded bg-(--color-uswds-primary) px-(--spacing-uswds-205) py-(--spacing-uswds-105) font-sans text-[length:--font-size-uswds-sm] leading-[0.95] font-bold text-white hover:bg-(--color-uswds-primary-dark) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)",
+            "aria-controls": id,
+            children: triggerText
+          }
+        ),
+        open && /* @__PURE__ */ jsx(
+          "div",
+          {
+            role: "presentation",
+            className: "usa-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-[50px]",
+            onClick: (e) => {
+              if (!forcedActionNoDismiss && e.target === e.currentTarget)
+                setOpen(false);
+            },
+            children: /* @__PURE__ */ jsxs(
+              "div",
+              {
+                ref: dialogRef,
+                id,
+                role: "dialog",
+                "aria-modal": "true",
+                "aria-labelledby": `${id}-heading`,
+                tabIndex: -1,
+                className: cn(
+                  "usa-modal relative flex w-full flex-col overflow-y-auto rounded-lg bg-white font-sans",
+                  maxWidth,
+                  className
+                ),
+                children: [
+                  /* @__PURE__ */ jsx("div", { className: "h-8 shrink-0", "aria-hidden": "true" }),
+                  /* @__PURE__ */ jsxs("div", { className: "usa-modal__content flex flex-col gap-6 px-8 pt-2 pb-8", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4 text-(--color-uswds-base-ink)", children: [
+                      /* @__PURE__ */ jsx(
+                        "h2",
+                        {
+                          id: `${id}-heading`,
+                          className: "usa-modal__heading text-[length:--font-size-uswds-lg] leading-normal font-bold",
+                          children: heading
+                        }
+                      ),
+                      body && /* @__PURE__ */ jsx("div", { className: "text-[length:--font-size-uswds-sm] leading-relaxed", children: body })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                      footer,
+                      !forcedActionNoDismiss && /* @__PURE__ */ jsx(
+                        "button",
+                        {
+                          type: "button",
+                          onClick: () => setOpen(false),
+                          className: "usa-button usa-button--unstyled px-(--spacing-uswds-1) py-(--spacing-uswds-1) text-[length:--font-size-uswds-sm] leading-[0.95] font-normal text-(--color-uswds-primary) underline decoration-solid [text-decoration-skip-ink:none] hover:text-(--color-uswds-primary-dark) focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)",
+                          children: "Cancel"
+                        }
+                      )
+                    ] }) })
+                  ] })
+                ]
+              }
+            )
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsModal as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

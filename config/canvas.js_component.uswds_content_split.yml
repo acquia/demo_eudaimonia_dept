@@ -1,0 +1,100 @@
+uuid: e9b03100-84b7-4fe6-871a-b433ad7b74c8
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: h_vI54Hz9HSPefk_amnXMysVaFJFbHafqZyodz6yChc
+machineName: uswds_content_split
+name: '(Eud-Kit) USWDS Content Split'
+required: {  }
+props:
+  columnRatio:
+    type: string
+    enum:
+      - wide-left
+      - even
+      - wide-right
+    'meta:enum':
+      wide-left: 'Wide left (1.4 / 1)'
+      even: 'Even (1 / 1)'
+      wide-right: 'Wide right (1 / 1.4)'
+    title: 'Column ratio'
+    examples:
+      - wide-left
+slots:
+  left:
+    title: 'Left column'
+  right:
+    title: 'Right column'
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Content Split
+    // Two-column layout for page sections (e.g. process list + summary box,
+    // featured story + collection). Ratio controls column widths.
+
+    const ratioClass = {
+      'wide-left': 'lg:grid-cols-[1.4fr_1fr]',
+      even: 'lg:grid-cols-2',
+      'wide-right': 'lg:grid-cols-[1fr_1.4fr]',
+    };
+
+    const UswdsContentSplit = ({
+      columnRatio = 'wide-left',
+      left,
+      right,
+      className = '',
+    }) => {
+      return (
+        <div
+          className={cn(
+            'grid grid-cols-1 gap-8',
+            ratioClass[columnRatio] ?? ratioClass['wide-left'],
+            className,
+          )}
+        >
+          <div>{left}</div>
+          <div>{right}</div>
+        </div>
+      );
+    };
+
+    export default UswdsContentSplit;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const ratioClass = {
+      "wide-left": "lg:grid-cols-[1.4fr_1fr]",
+      even: "lg:grid-cols-2",
+      "wide-right": "lg:grid-cols-[1fr_1.4fr]"
+    };
+    const UswdsContentSplit = ({
+      columnRatio = "wide-left",
+      left,
+      right,
+      className = ""
+    }) => {
+      var _a;
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "grid grid-cols-1 gap-8",
+            (_a = ratioClass[columnRatio]) != null ? _a : ratioClass["wide-left"],
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx("div", { children: left }),
+            /* @__PURE__ */ jsx("div", { children: right })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsContentSplit as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,65 @@
+uuid: 35aad46d-8b4f-48ca-bbfe-7d77a4d417bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_banner_item
+    - field.field.media.image.media_image
+    - filter.format.canvas_html_block
+    - image.style.canvas_parametrized_width
+    - media.type.image
+  module:
+    - file
+    - media
+    - media_library
+    - text
+_core:
+  default_config_hash: 52tkKDesuvWObSEFuPZbUCldfUeNaIqMkNHpUo56yJU
+label: '(Eud-Kit) USWDS Banner Item'
+id: js.uswds_banner_item
+source: js
+source_local_id: uswds_banner_item
+provider: null
+active_version: 6e9ef92a8484b37d
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Official websites use .gov'
+          expression: ℹ︎string␟value
+        body:
+          required: false
+          field_type: text_long
+          field_storage_settings: {  }
+          field_instance_settings:
+            allowed_formats:
+              - canvas_html_block
+          field_widget: text_textarea
+          default_value:
+            -
+              value: 'A <strong>.gov</strong> website belongs to an official government organization in the United States.'
+              format: canvas_html_block
+          expression: ℹ︎text_long␟processed
+        icon:
+          required: false
+          field_type: entity_reference
+          field_storage_settings:
+            target_type: media
+          field_instance_settings:
+            handler: 'default:media'
+            handler_settings:
+              target_bundles:
+                image: image
+          field_widget: media_library_widget
+          default_value: {  }
+          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+    fallback_metadata:
+      slot_definitions: {  }

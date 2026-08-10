@@ -1,0 +1,760 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: ff38619a-b7c6-48c1-85b9-7dbc4e386455
+  default_langcode: en
+  depends:
+    1c042040-934e-4a82-821f-0fdc72983b65: file
+    db1a636b-a059-4748-a027-d402be3656e4: media
+    7c74844d-c75f-4617-b9a9-1ae91e9697ff: file
+    4036bfc9-0e94-4f58-97a7-16e6d09fb1c6: media
+    17f4b327-a3f9-4054-ac38-2707a09b58a7: file
+    f2679bb2-04f6-4f83-8662-81d339fd3e3f: media
+    d71ea22d-0347-4f21-bdcd-99836c0831ac: file
+    fa9a0f69-f458-4deb-9f12-b84c770eb75b: media
+    ac462a4c-9ac5-437d-a446-eb76761ab9a7: file
+    d1bb5dea-e51c-4c13-9f54-d50e742f6501: media
+    5f91ddeb-802d-40cc-8797-380a4dae0f30: file
+    fa413e8f-cdcd-4eef-8481-ebe04ad54145: media
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Department of Eudaimonia — Home'
+  description:
+    -
+      value: 'EUD demo home page'
+  components:
+    -
+      uuid: 0dc10f49-a348-4117-98ee-80f228bfb9af
+      component_id: js.uswds_alert
+      inputs:
+        body:
+          value: '<p>Eligible households should apply by the deadline to receive 2026 program funds. <a href="#"><strong><u>Check your eligibility</u></strong></a> or call 1-800-EUD-INFO.</p>'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+        heading: 'Open Enrollment for the Flourish Family Benefit closes December 31, 2026'
+        variant: warning
+    -
+      uuid: b3b1b033-9565-4fca-b882-83c52a96f650
+      component_id: js.uswds_hero
+      inputs:
+        eyebrow: 'Department of Eudaimonia · Established 2026'
+        heading: 'The Work of Flourishing Belongs to All of Us'
+        leadParagraph: 'We provide programs, research, and services that help every person live a meaningful, healthy, and self-determined life — from your first job to your hundredth birthday.'
+    -
+      parent_uuid: b3b1b033-9565-4fca-b882-83c52a96f650
+      slot: ctas
+      uuid: e04fe991-a4f6-4dc4-b93d-0424477ac33b
+      component_id: js.uswds_button
+      inputs:
+        link:
+          uri: 'internal:/eud-programs'
+          options: {  }
+        size: big
+        text: 'Find a benefit'
+        variant: accent
+        disabled: false
+        showArrowIcon: true
+    -
+      parent_uuid: b3b1b033-9565-4fca-b882-83c52a96f650
+      slot: ctas
+      uuid: be4abc1c-bbc8-4f50-a5e0-e40879b47f45
+      component_id: js.uswds_button
+      inputs:
+        link:
+          uri: 'internal:/'
+          options: {  }
+        size: big
+        text: 'How to apply'
+        variant: outline_inverse
+        disabled: false
+        showArrowIcon: false
+    -
+      parent_uuid: b3b1b033-9565-4fca-b882-83c52a96f650
+      slot: quick_access
+      uuid: e1839abf-5fe2-4509-ab58-d3aa173c3194
+      component_id: js.uswds_quick_access
+      inputs:
+        title: 'Quick Access'
+        subtitle: 'Top services for residents and families'
+    -
+      parent_uuid: e1839abf-5fe2-4509-ab58-d3aa173c3194
+      slot: content
+      uuid: 5d58ee4e-609a-46ac-bd84-2598be62d628
+      component_id: js.uswds_tab
+      inputs:
+        accessibleLabel: 'Quick access categories'
+    -
+      parent_uuid: 5d58ee4e-609a-46ac-bd84-2598be62d628
+      slot: items
+      uuid: e912ae36-3d22-46d1-a3b4-990f2301bbf2
+      component_id: js.uswds_tab_item
+      inputs:
+        tabLabel: Individuals
+    -
+      parent_uuid: e912ae36-3d22-46d1-a3b4-990f2301bbf2
+      slot: items
+      uuid: b0435366-33e1-490c-9d22-87dadc696ee3
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Check claim status'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Open
+    -
+      parent_uuid: e912ae36-3d22-46d1-a3b4-990f2301bbf2
+      slot: items
+      uuid: c500f4df-3d75-47e1-9c04-ed48e14e1b98
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Apply for Flourish benefits'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Apply
+    -
+      parent_uuid: e912ae36-3d22-46d1-a3b4-990f2301bbf2
+      slot: items
+      uuid: 5d07e4cb-7dce-45e1-8e1c-b18ecf33ec15
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Update your profile'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Sign in'
+    -
+      parent_uuid: e912ae36-3d22-46d1-a3b4-990f2301bbf2
+      slot: items
+      uuid: d2c207d5-3257-4825-8b9c-8e2120b60c48
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Find a local office'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Search
+    -
+      parent_uuid: 5d58ee4e-609a-46ac-bd84-2598be62d628
+      slot: items
+      uuid: 9181a4f4-7017-4a6f-b839-dc5ea4c4995f
+      component_id: js.uswds_tab_item
+      inputs:
+        tabLabel: Families
+    -
+      parent_uuid: 9181a4f4-7017-4a6f-b839-dc5ea4c4995f
+      slot: items
+      uuid: 29a32de0-765a-4d5c-91ba-1123bfb057fd
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Apply for family benefit'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Apply
+    -
+      parent_uuid: 9181a4f4-7017-4a6f-b839-dc5ea4c4995f
+      slot: items
+      uuid: e96b7e67-b1fd-46dd-81c0-21fab32b8324
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Add a dependent'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Update
+    -
+      parent_uuid: 9181a4f4-7017-4a6f-b839-dc5ea4c4995f
+      slot: items
+      uuid: 78f6bb09-cdce-4030-bb04-ee1f6ed15915
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Child care assistance'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Learn more'
+    -
+      parent_uuid: 9181a4f4-7017-4a6f-b839-dc5ea4c4995f
+      slot: items
+      uuid: ddb75d2c-2fa1-4385-aa60-0b109ff48ab1
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Family support hotline'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Call
+    -
+      parent_uuid: 5d58ee4e-609a-46ac-bd84-2598be62d628
+      slot: items
+      uuid: b6c62ae5-0abe-4777-9dec-eb29e8901b9a
+      component_id: js.uswds_tab_item
+      inputs:
+        tabLabel: Providers
+    -
+      parent_uuid: b6c62ae5-0abe-4777-9dec-eb29e8901b9a
+      slot: items
+      uuid: 97955cb5-34b4-451f-aaa3-7edfd4238a66
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Provider registration'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Register
+    -
+      parent_uuid: b6c62ae5-0abe-4777-9dec-eb29e8901b9a
+      slot: items
+      uuid: 611e5cf6-7bec-4e50-8c88-aece5aafcf01
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Submit a claim'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Submit
+    -
+      parent_uuid: b6c62ae5-0abe-4777-9dec-eb29e8901b9a
+      slot: items
+      uuid: 8cc7835f-85c4-4d53-886a-9f835f9e9c40
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Provider resources'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: View
+    -
+      parent_uuid: b6c62ae5-0abe-4777-9dec-eb29e8901b9a
+      slot: items
+      uuid: f9e3a173-cea4-4a7f-a58a-5c154cdf437d
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Technical support'
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: Contact
+    -
+      uuid: c7158122-085e-46fb-a815-da88917fe7cb
+      component_id: js.uswds_stat_bar
+      inputs:
+        background: primary-darker
+    -
+      parent_uuid: c7158122-085e-46fb-a815-da88917fe7cb
+      slot: items
+      uuid: 22c81325-e1c7-4545-be4a-3fcf1cf4c551
+      component_id: js.uswds_stat_item
+      inputs:
+        label: 'People Served Annually'
+        number: 42.7M
+        variant: default
+        textColor: light
+    -
+      parent_uuid: c7158122-085e-46fb-a815-da88917fe7cb
+      slot: items
+      uuid: 1b74e1d3-857f-4119-b478-d84c8fbe08ce
+      component_id: js.uswds_stat_item
+      inputs:
+        label: 'Benefits Distributed (FY25)'
+        number: $184B
+        variant: default
+        textColor: light
+    -
+      parent_uuid: c7158122-085e-46fb-a815-da88917fe7cb
+      slot: items
+      uuid: d12ece38-2d96-446a-ad1c-1963cecfe2ad
+      component_id: js.uswds_stat_item
+      inputs:
+        label: 'Local Service Centers'
+        number: '3,900'
+        variant: default
+        textColor: light
+    -
+      parent_uuid: c7158122-085e-46fb-a815-da88917fe7cb
+      slot: items
+      uuid: 715a6663-186a-4758-9475-15276e7a50a0
+      component_id: js.uswds_stat_item
+      inputs:
+        label: 'Customer Satisfaction'
+        number: 96%
+        variant: default
+        textColor: light
+    -
+      uuid: 5ef949bd-e2a9-4f52-81a3-681bd0d8114a
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: 'Programs & Services'
+        heading: 'Find the Support That Fits Your Life'
+        marginTop: none
+        background: white
+        paddingTop: lg
+        description: 'Explore the six pillars of Eudaimonia — designed around the core capabilities for human flourishing.'
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: lg
+    -
+      parent_uuid: 5ef949bd-e2a9-4f52-81a3-681bd0d8114a
+      slot: content
+      uuid: 2ea7a2ee-5268-4d44-8b4d-73bc28d11700
+      component_id: js.uswds_card_group
+      inputs:
+        columns: 3
+    -
+      parent_uuid: 2ea7a2ee-5268-4d44-8b4d-73bc28d11700
+      slot: items
+      uuid: 151597bb-1637-43ad-8a29-94344390b5de
+      component_id: js.uswds_card
+      inputs:
+        tag: Health
+        body:
+          value: '<p>Monthly support for households raising children or caring for older relatives. Up to $2,400 per quarter, tax-free.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Check eligibility'
+        heading: 'Flourish Family Benefit'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: true
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: 151597bb-1637-43ad-8a29-94344390b5de
+      slot: icon
+      uuid: e7365c7e-c003-4e21-9809-e051103b67a9
+      component_id: js.uswds_icon_image
+      inputs:
+        iconImage:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: db1a636b-a059-4748-a027-d402be3656e4
+            target_type: media
+        size: md
+        showIconTile: true
+    -
+      parent_uuid: 2ea7a2ee-5268-4d44-8b4d-73bc28d11700
+      slot: items
+      uuid: 4a3a37b0-5c1c-42a9-b5ea-28864c1398b0
+      component_id: js.uswds_card
+      inputs:
+        tag: Work
+        body:
+          value: '<p>Direct grants and paid apprenticeships for adults returning to work after caregiving, extended leave, or career transitions.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Apply now'
+        heading: 'Career Re-entry Grants'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: true
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: 4a3a37b0-5c1c-42a9-b5ea-28864c1398b0
+      slot: icon
+      uuid: 50b7a028-0e59-462b-a59d-4d467cf890ba
+      component_id: js.uswds_icon_image
+      inputs:
+        iconImage:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: 4036bfc9-0e94-4f58-97a7-16e6d09fb1c6
+            target_type: media
+        size: md
+        showIconTile: true
+    -
+      parent_uuid: 2ea7a2ee-5268-4d44-8b4d-73bc28d11700
+      slot: items
+      uuid: 3569bf9e-cdb0-44e1-8970-eda47011b109
+      component_id: js.uswds_card
+      inputs:
+        tag: Learning
+        body:
+          value: '<p>Matched savings for any accredited training — trade school, college, certificate programs, or professional licensure.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Open an account'
+        heading: 'Lifelong Learning Account'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: true
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: 3569bf9e-cdb0-44e1-8970-eda47011b109
+      slot: icon
+      uuid: ec8972b5-a797-461f-88ec-838f52e39645
+      component_id: js.uswds_icon_image
+      inputs:
+        iconImage:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: f2679bb2-04f6-4f83-8662-81d339fd3e3f
+            target_type: media
+        size: md
+        showIconTile: true
+    -
+      parent_uuid: 2ea7a2ee-5268-4d44-8b4d-73bc28d11700
+      slot: items
+      uuid: 27b22e3d-b5d3-491f-8150-2ee92f699585
+      component_id: js.uswds_card
+      inputs:
+        tag: Community
+        body:
+          value: '<p>Grants to civic groups, libraries, and main-street businesses building meaningful community spaces in every county.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Browse opportunities'
+        heading: 'Neighborhood Investment Fund'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: true
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: 27b22e3d-b5d3-491f-8150-2ee92f699585
+      slot: icon
+      uuid: 27bcbc73-d37f-4bb6-9887-31cec9202356
+      component_id: js.uswds_icon_image
+      inputs:
+        iconImage:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: fa9a0f69-f458-4deb-9f12-b84c770eb75b
+            target_type: media
+        size: md
+        showIconTile: true
+    -
+      parent_uuid: 2ea7a2ee-5268-4d44-8b4d-73bc28d11700
+      slot: items
+      uuid: c85cc367-9c51-47c9-919d-ee41a58154ca
+      component_id: js.uswds_card
+      inputs:
+        tag: Dignity
+        body:
+          value: '<p>Guaranteed minimum income for adults experiencing housing insecurity, disability, or sustained unemployment.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'See if you qualify'
+        heading: 'Dignity Floor Income'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: true
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: c85cc367-9c51-47c9-919d-ee41a58154ca
+      slot: icon
+      uuid: 34193695-769b-4e0e-b323-00a3812e367a
+      component_id: js.uswds_icon_image
+      inputs:
+        iconImage:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: d1bb5dea-e51c-4c13-9f54-d50e742f6501
+            target_type: media
+        size: md
+        showIconTile: true
+    -
+      parent_uuid: 2ea7a2ee-5268-4d44-8b4d-73bc28d11700
+      slot: items
+      uuid: de63d1ce-9c33-4c8e-a37f-4aea893c4553
+      component_id: js.uswds_card
+      inputs:
+        tag: Creativity
+        body:
+          value: '<p>Two-year stipends for working artists, musicians, writers, and craftspeople contributing to their local communities.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'View this year’s RFP'
+        heading: 'Public Arts Stipend'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: true
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: de63d1ce-9c33-4c8e-a37f-4aea893c4553
+      slot: icon
+      uuid: c9b32a86-5cb3-4b07-9ccf-9b8c96ef15dc
+      component_id: js.uswds_icon_image
+      inputs:
+        iconImage:
+          CANVAS_ENTITY_REFERENCE:
+            target_uuid: fa413e8f-cdcd-4eef-8481-ebe04ad54145
+            target_type: media
+        size: md
+        showIconTile: true
+    -
+      uuid: 788eda8b-b230-4f39-9c03-ed63cf510ba5
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: 'How to Apply'
+        heading: 'From Application to First Benefit in Four Steps'
+        marginTop: none
+        background: gray
+        paddingTop: lg
+        description: 'Most Eudaimonia programs share a single application process. Apply once — we match you to every program you qualify for.'
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: none
+    -
+      parent_uuid: 788eda8b-b230-4f39-9c03-ed63cf510ba5
+      slot: content
+      uuid: 6fd228f3-3a75-47ac-91fd-51d386dc962e
+      component_id: js.uswds_step_indicator
+      inputs:
+        steps:
+          - 'Verify Identity'
+          - 'Gather Documents'
+          - 'Submit Application'
+          - 'Receive Decision'
+        center: false
+        counters: true
+        noLabels: false
+        paddingTop: sm
+        currentStep: 1
+        paddingBottom: sm
+        smallCounters: false
+    -
+      uuid: 69c0f5dd-4ae5-4aab-9779-1b2ecb9d4faa
+      component_id: js.uswds_section
+      inputs:
+        marginTop: none
+        background: gray
+        paddingTop: sm
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: lg
+    -
+      parent_uuid: 69c0f5dd-4ae5-4aab-9779-1b2ecb9d4faa
+      slot: content
+      uuid: 2c84af71-7eeb-42ba-96f6-c6441136df8c
+      component_id: js.uswds_content_split
+      inputs:
+        columnRatio: wide-left
+    -
+      parent_uuid: 2c84af71-7eeb-42ba-96f6-c6441136df8c
+      slot: left
+      uuid: 1626f336-1322-4f9a-a3fb-832e76562abf
+      component_id: js.uswds_process_list
+      inputs: {  }
+    -
+      parent_uuid: 1626f336-1322-4f9a-a3fb-832e76562abf
+      slot: items
+      uuid: b26645b5-c7f8-4cd7-a927-58e2c974d156
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'Sign in with your secure ID or create a new account. Most people are verified in under three minutes.'
+        last: false
+        number: '1'
+        heading: 'Verify your identity'
+    -
+      parent_uuid: 1626f336-1322-4f9a-a3fb-832e76562abf
+      slot: items
+      uuid: d0bd647a-ade7-475a-9fba-e0d0e3866d87
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'Upload proof of income, residence, and any program-specific documentation (school enrollment, medical records, caregiver attestation).'
+        last: false
+        number: '2'
+        heading: 'Gather your documents'
+    -
+      parent_uuid: 1626f336-1322-4f9a-a3fb-832e76562abf
+      slot: items
+      uuid: 7eac2c7b-8ac9-4244-bf4d-e0d68ff9c01c
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'Answer a short set of questions about your household, then review the programs you’ve been matched to. You can save and return at any point.'
+        last: false
+        number: '3'
+        heading: 'Submit your application'
+    -
+      parent_uuid: 1626f336-1322-4f9a-a3fb-832e76562abf
+      slot: items
+      uuid: 99b30bc4-b4a9-408a-a2c1-2e2cd0b2aa21
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'Most decisions arrive within 14 business days. You’ll receive a written notice by mail and an electronic copy in your account.'
+        last: true
+        number: '4'
+        heading: 'Receive your decision'
+    -
+      parent_uuid: 2c84af71-7eeb-42ba-96f6-c6441136df8c
+      slot: right
+      uuid: 91b0785f-f376-4a3d-b1b2-56a3814895ac
+      component_id: js.uswds_summary_box
+      inputs:
+        body:
+          value: "<ul><li>Social Security number (yours and dependents')</li><li>A government-issued photo ID</li><li>Most recent income statement or tax return</li><li>Proof of address (utility bill or lease)</li><li>Direct-deposit bank information</li><li>For families: birth certificates for children under 18</li><li>For caregivers: signed Form EUD-217</li></ul>"
+          format: canvas_html_block
+        heading: "What you'll need"
+    -
+      parent_uuid: 69c0f5dd-4ae5-4aab-9779-1b2ecb9d4faa
+      slot: content
+      uuid: 7880e327-04ae-44d3-80d5-641ba9e61610
+      component_id: js.uswds_content_split
+      inputs:
+        columnRatio: even
+    -
+      parent_uuid: 7880e327-04ae-44d3-80d5-641ba9e61610
+      slot: left
+      uuid: 667a7c6f-672a-49e8-97fc-84812e64bcf9
+      component_id: js.uswds_alert
+      inputs:
+        body:
+          value: 'Free in-person assistance is available at every Eudaimonia service center and most public libraries. <a href="/offices">Find a location</a>.'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+        heading: 'Need help applying?'
+        variant: info
+    -
+      parent_uuid: 7880e327-04ae-44d3-80d5-641ba9e61610
+      slot: right
+      uuid: ed07c9c3-0e0a-4510-86fe-57ec9da58c02
+      component_id: js.uswds_alert
+      inputs:
+        body:
+          value: 'Eudaimonia uses bank-grade encryption. We never sell or share your data. <a href="/privacy">Read our privacy commitment</a>.'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+        heading: 'Your information is protected'
+        variant: success
+    -
+      uuid: fe3f8c43-a63e-48af-930f-3b8b3fd7f930
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: Newsroom
+        heading: 'Latest From the Department'
+        marginTop: none
+        background: white
+        paddingTop: lg
+        description: 'Press releases, policy briefings, and updates that affect your benefits.'
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: lg
+    -
+      parent_uuid: fe3f8c43-a63e-48af-930f-3b8b3fd7f930
+      slot: content
+      uuid: 46f34c12-cb4a-4bf0-860c-5ab7a2e64927
+      component_id: js.uswds_news_feed
+      inputs:
+        ctaText: 'Read full release'
+        viewAllLink:
+          uri: 'internal:/'
+          options: {  }
+        articleLimit: 5
+        showFeatured: true
+        viewAllLabel: 'View all news'
+    -
+      uuid: 37c12cb7-3e9d-40cf-8943-d79849a3c114
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: 'Frequently Asked'
+        heading: 'Answers to Common Questions'
+        marginTop: none
+        background: primary-darker
+        paddingTop: lg
+        description: "Don't see your question? Contact us or call 1-800-EUD-INFO, weekdays 7 am–9 pm ET."
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: lg
+    -
+      parent_uuid: 37c12cb7-3e9d-40cf-8943-d79849a3c114
+      slot: content
+      uuid: 09538fae-29be-4766-bd4b-f92b0e79dc38
+      component_id: js.uswds_accordion
+      inputs:
+        variant: dark
+        bordered: false
+        multiselectable: false
+    -
+      parent_uuid: 09538fae-29be-4766-bd4b-f92b0e79dc38
+      slot: items
+      uuid: d03ef761-82b1-45ae-b4a6-868bddd3f879
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'Established in 2026, the Department of Eudaimonia coordinates programs that support human flourishing. We don’t replace existing services — we make them easier to find, simpler to apply for, and better connected to one another.'
+        heading: 'What is the Department of Eudaimonia, and how is it different from existing agencies?'
+        variant: dark
+        expanded: true
+    -
+      parent_uuid: 09538fae-29be-4766-bd4b-f92b0e79dc38
+      slot: items
+      uuid: 7283c901-e1b9-4826-a6f1-f868c22e0a6f
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'Many programs are available to permanent residents and qualified non-residents. Specific eligibility rules vary by program — use the eligibility checker on each program page or speak with a representative at your local service center.'
+        heading: 'Am I eligible for benefits if I have non-resident status?'
+        variant: dark
+        expanded: false
+    -
+      parent_uuid: 09538fae-29be-4766-bd4b-f92b0e79dc38
+      slot: items
+      uuid: cd054164-418e-4512-988c-823bc9ce6827
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'Most decisions are made within 14 business days. Complex cases may take up to 45 days. You can track your application status in your Eudaimonia account at any time.'
+        heading: 'How long does it take to receive a decision?'
+        variant: dark
+        expanded: false
+    -
+      parent_uuid: 09538fae-29be-4766-bd4b-f92b0e79dc38
+      slot: items
+      uuid: f311c36f-7bd4-466b-ad9a-a7d0f2f3abac
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'Most direct benefits are not taxable. The Lifelong Learning Account match and Career Re-entry Grants are tax-exempt. Refer to your Form EUD-1099 each January or speak with a tax professional.'
+        heading: 'Are benefits considered taxable income?'
+        variant: dark
+        expanded: false
+    -
+      parent_uuid: 09538fae-29be-4766-bd4b-f92b0e79dc38
+      slot: items
+      uuid: 1ba73049-eef6-4190-a056-ad4cccf345c7
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'You have the right to appeal any decision within 60 days. Appeals are heard by an independent administrative judge. Free legal assistance is available at every service center.'
+        heading: 'What if I disagree with a decision about my application?'
+        variant: dark
+        expanded: false
+  path:
+    -
+      alias: /eud-home
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

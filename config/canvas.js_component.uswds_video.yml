@@ -1,0 +1,202 @@
+uuid: f97125d1-630c-48e6-bb6b-e149f5d3212b
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: XP0YJ4oPaacxkq7LGC--hNiWybRh2YWgOAH-oCIdcpg
+machineName: uswds_video
+name: '(Eud-Kit) USWDS Video'
+required: {  }
+props:
+  videoSourceUrl:
+    type: string
+    title: 'Video Source / URL'
+    examples:
+      - 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+  videoType:
+    type: string
+    enum:
+      - html5
+      - youtube
+      - vimeo
+    'meta:enum':
+      html5: 'HTML5 (self-hosted)'
+      youtube: YouTube
+      vimeo: Vimeo
+    title: 'Video Type'
+    examples:
+      - youtube
+  aspectRatio:
+    type: string
+    enum:
+      - 16-9
+      - 4-3
+      - 1-1
+    'meta:enum':
+      16-9: '16:9 Widescreen (default)'
+      4-3: '4:3 Standard'
+      1-1: '1:1 Square'
+    title: 'Aspect Ratio'
+    examples:
+      - 16-9
+  accessibleTitle:
+    type: string
+    title: 'Accessible Title'
+    examples:
+      - 'Department of Eudaimonia — Program Overview'
+  caption:
+    type: string
+    title: Caption
+    examples:
+      - 'Learn more about our flagship programs and eligibility requirements.'
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const aspectClass = {
+      '16-9': 'aspect-video',
+      '4-3': 'aspect-[4/3]',
+      '1-1': 'aspect-square',
+    };
+
+    const getYouTubeId = (src) => {
+      const match = src.match(
+        /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/,
+      );
+      return match ? match[1] : src;
+    };
+
+    const getVimeoId = (src) => {
+      const match = src.match(/(?:vimeo\.com\/)(\d+)/);
+      return match ? match[1] : src;
+    };
+
+    const UswdsVideo = ({
+      videoSourceUrl = '',
+      videoType = 'html5',
+      aspectRatio = '16-9',
+      caption = '',
+      accessibleTitle = 'Embedded video',
+      className = '',
+    }) => {
+      if (!videoSourceUrl) return null;
+
+      const aspect = aspectClass[aspectRatio] ?? aspectClass['16-9'];
+
+      const videoEl =
+        videoType === 'youtube' ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${getYouTubeId(videoSourceUrl)}?rel=0`}
+            title={accessibleTitle}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full border-0"
+          />
+        ) : videoType === 'vimeo' ? (
+          <iframe
+            src={`https://player.vimeo.com/video/${getVimeoId(videoSourceUrl)}`}
+            title={accessibleTitle}
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            className="absolute inset-0 h-full w-full border-0"
+          />
+        ) : (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            controls
+            title={accessibleTitle}
+          >
+            <source src={videoSourceUrl} />
+            <track kind="captions" />
+            Your browser does not support the video element.
+          </video>
+        );
+
+      return (
+        <figure className={cn('usa-video m-0 w-full font-sans', className)}>
+          <div className={cn('relative w-full overflow-hidden', aspect)}>
+            {videoEl}
+          </div>
+          {caption && (
+            <figcaption className="mt-2 text-sm text-(--color-uswds-base-dark)">
+              {caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+    };
+
+    export default UswdsVideo;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const aspectClass = {
+      "16-9": "aspect-video",
+      "4-3": "aspect-[4/3]",
+      "1-1": "aspect-square"
+    };
+    const getYouTubeId = (src) => {
+      const match = src.match(
+        /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
+      );
+      return match ? match[1] : src;
+    };
+    const getVimeoId = (src) => {
+      const match = src.match(/(?:vimeo\.com\/)(\d+)/);
+      return match ? match[1] : src;
+    };
+    const UswdsVideo = ({
+      videoSourceUrl = "",
+      videoType = "html5",
+      aspectRatio = "16-9",
+      caption = "",
+      accessibleTitle = "Embedded video",
+      className = ""
+    }) => {
+      var _a;
+      if (!videoSourceUrl) return null;
+      const aspect = (_a = aspectClass[aspectRatio]) != null ? _a : aspectClass["16-9"];
+      const videoEl = videoType === "youtube" ? /* @__PURE__ */ jsx(
+        "iframe",
+        {
+          src: `https://www.youtube-nocookie.com/embed/${getYouTubeId(videoSourceUrl)}?rel=0`,
+          title: accessibleTitle,
+          allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+          allowFullScreen: true,
+          className: "absolute inset-0 h-full w-full border-0"
+        }
+      ) : videoType === "vimeo" ? /* @__PURE__ */ jsx(
+        "iframe",
+        {
+          src: `https://player.vimeo.com/video/${getVimeoId(videoSourceUrl)}`,
+          title: accessibleTitle,
+          allow: "autoplay; fullscreen; picture-in-picture",
+          allowFullScreen: true,
+          className: "absolute inset-0 h-full w-full border-0"
+        }
+      ) : /* @__PURE__ */ jsxs(
+        "video",
+        {
+          className: "absolute inset-0 h-full w-full object-cover",
+          controls: true,
+          title: accessibleTitle,
+          children: [
+            /* @__PURE__ */ jsx("source", { src: videoSourceUrl }),
+            /* @__PURE__ */ jsx("track", { kind: "captions" }),
+            "Your browser does not support the video element."
+          ]
+        }
+      );
+      return /* @__PURE__ */ jsxs("figure", { className: cn("usa-video m-0 w-full font-sans", className), children: [
+        /* @__PURE__ */ jsx("div", { className: cn("relative w-full overflow-hidden", aspect), children: videoEl }),
+        caption && /* @__PURE__ */ jsx("figcaption", { className: "mt-2 text-sm text-(--color-uswds-base-dark)", children: caption })
+      ] });
+    };
+    export {
+      UswdsVideo as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

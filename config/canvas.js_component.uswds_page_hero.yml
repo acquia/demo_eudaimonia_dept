@@ -1,0 +1,84 @@
+uuid: f659149e-1761-405c-8cca-a93cdfa233b4
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: AWd-6dSBoqAON7DhhpBge_KXFxyynH-oFKhu1leutr0
+machineName: uswds_page_hero
+name: '(Eud-Kit) USWDS Page Hero'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'About the Department'
+  leadParagraph:
+    type: string
+    title: 'Lead paragraph'
+    examples:
+      - 'The Department was established in 2025 to coordinate federal programs that support human flourishing.'
+slots:
+  breadcrumb:
+    title: 'Breadcrumb (optional)'
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Page Hero — interior page title block
+    // Dark navy background, breadcrumb slot (on-dark context), h1 heading, lead.
+
+    const UswdsPageHero = ({
+      heading = '',
+      leadParagraph = '',
+      breadcrumb,
+      className = '',
+    }) => {
+      return (
+        <div
+          className={cn('usa-hero bg-(--color-uswds-primary-darker) font-sans', className)}
+        >
+          <div className="mx-auto max-w-[1240px] px-8 py-10">
+            {breadcrumb && <div className="mb-6">{breadcrumb}</div>}
+            <h1 className="mb-4 font-serif text-[36px] leading-tight font-bold text-white md:text-[48px]">
+              {heading}
+            </h1>
+            {leadParagraph && (
+              <p className="max-w-[640px] text-lg leading-relaxed text-white/85">
+                {leadParagraph}
+              </p>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsPageHero;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsPageHero = ({
+      heading = "",
+      leadParagraph = "",
+      breadcrumb,
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: cn("usa-hero bg-(--color-uswds-primary-darker) font-sans", className),
+          children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-[1240px] px-8 py-10", children: [
+            breadcrumb && /* @__PURE__ */ jsx("div", { className: "mb-6", children: breadcrumb }),
+            /* @__PURE__ */ jsx("h1", { className: "mb-4 font-serif text-[36px] leading-tight font-bold text-white md:text-[48px]", children: heading }),
+            leadParagraph && /* @__PURE__ */ jsx("p", { className: "max-w-[640px] text-lg leading-relaxed text-white/85", children: leadParagraph })
+          ] })
+        }
+      );
+    };
+    export {
+      UswdsPageHero as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

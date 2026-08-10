@@ -1,0 +1,74 @@
+uuid: 6338d45b-2b08-429b-b844-ef4d3209acf0
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_video
+  module:
+    - options
+_core:
+  default_config_hash: 6uFlpV4mjXl7ql6y0dYjgCjKbxMO8ZjE0AHynRiTiAg
+label: '(Eud-Kit) USWDS Video'
+id: js.uswds_video
+source: js
+source_local_id: uswds_video
+provider: null
+active_version: bdf6d67c517842d8
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        videoSourceUrl:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+          expression: ℹ︎string␟value
+        videoType:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: youtube
+          expression: ℹ︎list_string␟value
+        aspectRatio:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: 16-9
+          expression: ℹ︎list_string␟value
+        accessibleTitle:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Department of Eudaimonia — Program Overview'
+          expression: ℹ︎string␟value
+        caption:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Learn more about our flagship programs and eligibility requirements.'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

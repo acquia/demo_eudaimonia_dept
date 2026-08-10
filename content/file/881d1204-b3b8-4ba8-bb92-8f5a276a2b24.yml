@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 881d1204-b3b8-4ba8-bb92-8f5a276a2b24
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: us_flag_small.png
+  uri:
+    -
+      value: 'public://2026-05/us_flag_small.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 3188
+  status:
+    -
+      value: true

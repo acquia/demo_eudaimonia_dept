@@ -1,0 +1,83 @@
+uuid: 6567f685-d553-482a-9291-08495d56ee1f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: IsaOfh4WW61wg7tpx82yuA7d9-2BifZ4DCTR0mHAekI
+machineName: uswds_card_group
+name: '(Eud-Kit) USWDS Card Group'
+required: {  }
+props:
+  columns:
+    type: integer
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+    'meta:enum':
+      1: '1 Column'
+      2: '2 Columns'
+      3: '3 Columns'
+      4: '4 Columns'
+    title: Columns
+    examples:
+      - 3
+slots:
+  items:
+    title: Items
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsCardGroup = ({ items, columns = 3, className = '' }) => {
+      const colClass = {
+        1: 'grid-cols-1',
+        2: 'grid-cols-1 md:grid-cols-2',
+        3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+        4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+      };
+
+      return (
+        <div
+          className={cn(
+            'usa-card-group grid gap-6 font-sans',
+            colClass[columns] || colClass[3],
+            className,
+          )}
+        >
+          {items}
+        </div>
+      );
+    };
+
+    export default UswdsCardGroup;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsCardGroup = ({ items, columns = 3, className = "" }) => {
+      const colClass = {
+        1: "grid-cols-1",
+        2: "grid-cols-1 md:grid-cols-2",
+        3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+        4: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+      };
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: cn(
+            "usa-card-group grid gap-6 font-sans",
+            colClass[columns] || colClass[3],
+            className
+          ),
+          children: items
+        }
+      );
+    };
+    export {
+      UswdsCardGroup as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

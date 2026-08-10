@@ -1,0 +1,142 @@
+uuid: 388de334-274f-4bf7-b0f5-258bac5468dc
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vkRDu9eyJuKtujg7MP0uJP7Vbb5TSmoF_YqocLYjR9Q
+machineName: uswds_stat_bar
+name: '(Eud-Kit) USWDS Stat Bar'
+required: {  }
+props:
+  background:
+    type: string
+    enum:
+      - white
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lightest
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lightest: 'Base Lightest'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: Background
+    examples:
+      - primary-darker
+slots:
+  items:
+    title: 'Stat items'
+js:
+  original: |
+    import { Children, cloneElement, isValidElement } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    const resolveBgColor = (token) => {
+      if (!token) return undefined;
+      if (token === 'white') return 'white';
+      return `var(--color-uswds-${token})`;
+    };
+
+    // Dark backgrounds auto-get light text; light backgrounds get dark text
+    const DARK_BG = new Set([
+      'primary',
+      'primary-dark',
+      'primary-darker',
+      'base-dark',
+      'base-darkest',
+    ]);
+
+    const UswdsStatBar = ({
+      background = 'primary-darker',
+      items,
+      className = '',
+    }) => {
+      const isDark = DARK_BG.has(background);
+
+      const injected = Children.map(items, (child) =>
+        isValidElement(child)
+          ? cloneElement(child, {
+              variant: isDark ? 'default' : 'card',
+              textColor: isDark ? 'light' : 'dark',
+            })
+          : child,
+      );
+
+      return (
+        <div
+          style={{ backgroundColor: resolveBgColor(background) }}
+          className={cn(
+            'w-full py-12 font-sans',
+            !background && 'bg-(--color-uswds-primary-darker)',
+            className,
+          )}
+        >
+          <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-6 px-8 sm:grid-cols-[repeat(auto-fit,minmax(220px,1fr))]">
+            {injected}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsStatBar;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { Children, isValidElement, cloneElement } from "react";
+    import { cn } from "drupal-canvas";
+    const resolveBgColor = (token) => {
+      if (!token) return void 0;
+      if (token === "white") return "white";
+      return `var(--color-uswds-${token})`;
+    };
+    const DARK_BG = /* @__PURE__ */ new Set([
+      "primary",
+      "primary-dark",
+      "primary-darker",
+      "base-dark",
+      "base-darkest"
+    ]);
+    const UswdsStatBar = ({
+      background = "primary-darker",
+      items,
+      className = ""
+    }) => {
+      const isDark = DARK_BG.has(background);
+      const injected = Children.map(
+        items,
+        (child) => isValidElement(child) ? cloneElement(child, {
+          variant: isDark ? "default" : "card",
+          textColor: isDark ? "light" : "dark"
+        }) : child
+      );
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          style: { backgroundColor: resolveBgColor(background) },
+          className: cn(
+            "w-full py-12 font-sans",
+            !background && "bg-(--color-uswds-primary-darker)",
+            className
+          ),
+          children: /* @__PURE__ */ jsx("div", { className: "mx-auto grid max-w-[1240px] grid-cols-1 gap-6 px-8 sm:grid-cols-[repeat(auto-fit,minmax(220px,1fr))]", children: injected })
+        }
+      );
+    };
+    export {
+      UswdsStatBar as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

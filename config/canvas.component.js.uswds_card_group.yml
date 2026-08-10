@@ -1,0 +1,35 @@
+uuid: 1111747a-32f3-46c3-b919-ac393d3c7e0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_card_group
+  module:
+    - options
+_core:
+  default_config_hash: OPEtxB1SM_VHB7RedIzip7gg2XP1i7xchopMzj3c_-g
+label: '(Eud-Kit) USWDS Card Group'
+id: js.uswds_card_group
+source: js
+source_local_id: uswds_card_group
+provider: null
+active_version: 510326c116cfb0cb
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        columns:
+          required: false
+          field_type: list_integer
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: 3
+          expression: ℹ︎list_integer␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items

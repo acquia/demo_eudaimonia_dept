@@ -1,0 +1,80 @@
+uuid: 4e5365d2-fb4e-4d3c-87f8-48586c817435
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_range_slider
+_core:
+  default_config_hash: Zje3pi6x4sFwuKn_GdpvuZCGrSHZCmGXtKdYtwFGb38
+label: '(Eud-Kit) USWDS Range Slider'
+id: js.uswds_range_slider
+source: js
+source_local_id: uswds_range_slider
+provider: null
+active_version: d1952f3070de6af7
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Volume
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: volume
+          expression: ℹ︎string␟value
+        min:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 0
+          expression: ℹ︎integer␟value
+        max:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 100
+          expression: ℹ︎integer␟value
+        step:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 1
+          expression: ℹ︎integer␟value
+        value:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 50
+          expression: ℹ︎integer␟value
+    fallback_metadata:
+      slot_definitions: {  }

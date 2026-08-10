@@ -1,0 +1,23 @@
+uuid: e540f476-0822-4fd0-b542-f3a609beaca8
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: xx_small_landscape_160x120
+label: 'XX Small landscape (160x120)'
+effects:
+  d77fb6b7-9b82-4f18-8567-dea0270deb28:
+    uuid: d77fb6b7-9b82-4f18-8567-dea0270deb28
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 160
+      height: 120
+      crop_type: focal_point
+  f9a85687-c11f-4732-9289-9e086086fc6d:
+    uuid: f9a85687-c11f-4732-9289-9e086086fc6d
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

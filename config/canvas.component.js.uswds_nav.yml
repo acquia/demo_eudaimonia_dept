@@ -1,0 +1,65 @@
+uuid: f58d394c-0839-445d-8b8a-c128ea429d5a
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_nav
+  module:
+    - options
+_core:
+  default_config_hash: qa_b7sVwSl-WC5dDKKm6qcrKZnFOAihc99Lcb-cWOVg
+label: '(Eud-Kit) USWDS Nav'
+id: js.uswds_nav
+source: js
+source_local_id: uswds_nav
+provider: null
+active_version: 6b066aeac8cfed15
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        menuName:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: main
+          expression: ℹ︎string␟value
+        menuType:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: main
+          expression: ℹ︎list_string␟value
+        bgColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: primary-darker
+          expression: ℹ︎list_string␟value
+        textColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: light
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

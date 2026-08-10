@@ -1,0 +1,186 @@
+uuid: a68d8cf2-d890-48ea-bcad-603604dca783
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: J9Qz6bCz9lCFq4q3oqaESv83uNVaXgpgSMbXYv1rTls
+machineName: uswds_language_selector_item
+name: '(Eud-Kit) USWDS Language Selector Item'
+required: {  }
+props:
+  nativeName:
+    type: string
+    title: 'Native Name'
+    examples:
+      - Español
+  label:
+    type: string
+    title: Label
+    examples:
+      - (Spanish)
+  url:
+    type: string
+    format: uri-reference
+    title: URL
+    examples:
+      - /es
+  languageCode:
+    type: string
+    title: 'Language Code'
+    examples:
+      - es
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // Detect the active language from the current page URL
+    const getCurrentLang = () => {
+      try {
+        const match = parent.window.location.pathname.match(/^\/([a-z]{2})(\/|$)/);
+        return match ? match[1] : 'en';
+      } catch {
+        return 'en';
+      }
+    };
+
+    // Build the translated URL for the current page by swapping the language prefix.
+    // e.g. on /es/about → languageCode "fr" → /fr/about
+    const buildTranslatedUrl = (languageCode) => {
+      try {
+        const { pathname, search, hash } = parent.window.location;
+        const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
+        const newPath = langPrefixRe.test(pathname)
+          ? pathname.replace(/^\/[a-z]{2}/, `/${languageCode}`)
+          : `/${languageCode}${pathname === '/' ? '' : pathname}`;
+        return newPath + search + hash;
+      } catch {
+        return `/${languageCode}`;
+      }
+    };
+
+    // Build URL for the default (English) language — strips the lang prefix if present.
+    const buildDefaultUrl = () => {
+      try {
+        const { pathname, search, hash } = parent.window.location;
+        const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
+        const newPath = langPrefixRe.test(pathname)
+          ? pathname.replace(/^\/[a-z]{2}/, '') || '/'
+          : pathname;
+        return newPath + search + hash;
+      } catch {
+        return '/';
+      }
+    };
+
+    const UswdsLanguageSelectorItem = ({
+      nativeName = '',
+      label = '',
+      url = '',
+      languageCode = '',
+      className = '',
+    }) => {
+      const currentLang = getCurrentLang();
+      const isActive = Boolean(languageCode && languageCode === currentLang);
+
+      // Prefer dynamically-built URL; fall back to static prop when no languageCode.
+      const href = languageCode
+        ? buildTranslatedUrl(languageCode)
+        : url || buildDefaultUrl();
+
+      return (
+        <li className="usa-language-selector__submenu-item border-t border-white/10 first:border-t-0">
+          <a
+            href={href}
+            lang={languageCode || undefined}
+            aria-current={isActive ? 'true' : undefined}
+            className={cn(
+              'usa-language-selector__submenu-link block px-[14px] py-[10px] text-sm text-white no-underline',
+              'hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color)',
+              isActive
+                ? 'bg-white/15 font-bold'
+                : 'bg-(--color-uswds-primary-darkest) font-normal',
+              className,
+            )}
+          >
+            {nativeName && <strong className="font-bold">{nativeName}</strong>}
+            {label && (
+              <span className={cn('font-normal', nativeName && 'ml-1 text-white/65')}>
+                {label}
+              </span>
+            )}
+            {isActive && <span className="sr-only"> (current language)</span>}
+          </a>
+        </li>
+      );
+    };
+
+    export default UswdsLanguageSelectorItem;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const getCurrentLang = () => {
+      try {
+        const match = parent.window.location.pathname.match(/^\/([a-z]{2})(\/|$)/);
+        return match ? match[1] : "en";
+      } catch (e) {
+        return "en";
+      }
+    };
+    const buildTranslatedUrl = (languageCode) => {
+      try {
+        const { pathname, search, hash } = parent.window.location;
+        const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
+        const newPath = langPrefixRe.test(pathname) ? pathname.replace(/^\/[a-z]{2}/, `/${languageCode}`) : `/${languageCode}${pathname === "/" ? "" : pathname}`;
+        return newPath + search + hash;
+      } catch (e) {
+        return `/${languageCode}`;
+      }
+    };
+    const buildDefaultUrl = () => {
+      try {
+        const { pathname, search, hash } = parent.window.location;
+        const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
+        const newPath = langPrefixRe.test(pathname) ? pathname.replace(/^\/[a-z]{2}/, "") || "/" : pathname;
+        return newPath + search + hash;
+      } catch (e) {
+        return "/";
+      }
+    };
+    const UswdsLanguageSelectorItem = ({
+      nativeName = "",
+      label = "",
+      url = "",
+      languageCode = "",
+      className = ""
+    }) => {
+      const currentLang = getCurrentLang();
+      const isActive = Boolean(languageCode && languageCode === currentLang);
+      const href = languageCode ? buildTranslatedUrl(languageCode) : url || buildDefaultUrl();
+      return /* @__PURE__ */ jsx("li", { className: "usa-language-selector__submenu-item border-t border-white/10 first:border-t-0", children: /* @__PURE__ */ jsxs(
+        "a",
+        {
+          href,
+          lang: languageCode || void 0,
+          "aria-current": isActive ? "true" : void 0,
+          className: cn(
+            "usa-language-selector__submenu-link block px-[14px] py-[10px] text-sm text-white no-underline",
+            "hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color)",
+            isActive ? "bg-white/15 font-bold" : "bg-(--color-uswds-primary-darkest) font-normal",
+            className
+          ),
+          children: [
+            nativeName && /* @__PURE__ */ jsx("strong", { className: "font-bold", children: nativeName }),
+            label && /* @__PURE__ */ jsx("span", { className: cn("font-normal", nativeName && "ml-1 text-white/65"), children: label }),
+            isActive && /* @__PURE__ */ jsx("span", { className: "sr-only", children: " (current language)" })
+          ]
+        }
+      ) });
+    };
+    export {
+      UswdsLanguageSelectorItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }
