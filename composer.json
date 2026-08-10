@@ -10,7 +10,6 @@
         "drupal/consumers": "^1.24",
         "drupal/crop": "^2.6",
         "drupal/diff": "^2.1",
-        "drupal/entity_clone": "^2.1.0-beta1",
         "drupal/field_group": "^4.0",
         "drupal/focal_point": "^2.1",
         "drupal/gin": "^5.0",
