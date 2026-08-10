@@ -30,15 +30,25 @@ The recipe depends only on Drupal core and contributed modules from drupal.org (
 
 ## Usage
 
-From a Composer-managed Drupal site:
+From a Composer-managed Drupal site, run these from the **project root** (the folder
+containing `composer.json` and the `recipes/` directory — a sibling of the docroot):
 
 ```bash
-composer require drupal/department_of_eudaimonia
+composer require acquia/department_of_eudaimonia
 drush recipe recipes/department_of_eudaimonia
 drush cache:rebuild
 ```
 
-(Adjust the path to wherever Composer unpacks the recipe, e.g. `recipes/`.)
+Composer installs the recipe to `recipes/department_of_eudaimonia/` (standard
+`type: drupal-recipe` location, set by your project template's `installer-paths`).
+
+**DDEV note:** `ddev drush` runs inside the container with its working directory at the
+docroot (`web/`), so a relative `recipes/…` path won't resolve. Pass the absolute
+container path instead:
+
+```bash
+ddev drush recipe /var/www/html/recipes/department_of_eudaimonia
+```
 
 ## Notes
 
