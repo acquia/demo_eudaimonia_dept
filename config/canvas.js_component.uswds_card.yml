@@ -1,0 +1,327 @@
+uuid: fc025957-00e6-403b-ae48-28761f0a8e93
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: W6m0rNhW3ZB2WErdLuQehxLQ2324z6XAkUMu3VjSamE
+machineName: uswds_card
+name: '(Eud-Kit) USWDS Card'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Card heading'
+  headingLevel:
+    type: string
+    enum:
+      - h2
+      - h3
+      - h4
+    'meta:enum':
+      h2: H2
+      h3: H3
+      h4: H4
+    title: 'Heading Level'
+    examples:
+      - h3
+  body:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Body
+    examples:
+      - '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vehicula metus at metus fringilla blandit.</p>'
+  tag:
+    type: string
+    title: Tag
+    examples:
+      - Health
+  ctaText:
+    type: string
+    title: 'CTA Text'
+    examples:
+      - 'Check eligibility'
+  ctaLink:
+    type: string
+    format: uri-reference
+    title: 'CTA Link'
+    examples:
+      - /apply
+  layout:
+    type: string
+    enum:
+      - default
+      - flag
+    'meta:enum':
+      default: Default
+      flag: Flag
+    title: Layout
+    examples:
+      - default
+  mediaFirst:
+    type: boolean
+    title: 'Media First'
+    examples:
+      - true
+  mediaExdent:
+    type: boolean
+    title: 'Media Exdent'
+    examples:
+      - true
+  mediaInset:
+    type: boolean
+    title: 'Media Inset'
+    examples:
+      - false
+  mediaPosition:
+    type: string
+    enum:
+      - left
+      - right
+    'meta:enum':
+      left: Left
+      right: Right
+    title: 'Media Position'
+    examples:
+      - left
+slots:
+  icon:
+    title: Icon
+  media:
+    title: Media
+  footer:
+    title: Footer
+js:
+  original: |
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    const CardChevron = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="h-4 w-4 shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+      >
+        <path d="M9 6l6 6-6 6" />
+      </svg>
+    );
+
+    const UswdsCard = ({
+      heading = '',
+      headingLevel = 'h3',
+      body = '',
+      tag = '',
+      ctaText = '',
+      ctaLink = '',
+      layout = 'default',
+      mediaFirst = true,
+      mediaExdent = true,
+      mediaInset = false,
+      mediaPosition = 'left',
+      icon,
+      media,
+      footer,
+      className = '',
+    }) => {
+      const HeadingTag = headingLevel;
+      const isFlag = layout === 'flag';
+      // Simple presence check — tile ownership lives on the icon child (showTile prop)
+      const hasMedia = !!media;
+
+      // Vertical card: media wrapper padding based on exdent/inset
+      const verticalMediaClass = cn(
+        'w-full shrink-0 overflow-hidden',
+        !mediaExdent && 'px-(--spacing-uswds-3)',
+        mediaInset && 'py-(--spacing-uswds-3)',
+      );
+
+      // Flag card: media wrapper width + optional gap/inset
+      const flagMediaClass = cn(
+        'flex w-[240px] shrink-0 items-stretch overflow-hidden',
+        !mediaExdent &&
+        (mediaPosition === 'left'
+          ? 'my-(--spacing-uswds-3) ml-(--spacing-uswds-3)'
+          : 'my-(--spacing-uswds-3) mr-(--spacing-uswds-3)'),
+        mediaInset &&
+        (mediaPosition === 'left'
+          ? 'py-(--spacing-uswds-3) pl-(--spacing-uswds-3)'
+          : 'py-(--spacing-uswds-3) pr-(--spacing-uswds-3)'),
+      );
+
+      const content = (
+        <div className="usa-card__body flex flex-1 flex-col gap-3 p-(--spacing-uswds-3)">
+          {/* Icon tile rendered by the child component (uswds_icon / uswds_icon_image) via showTile prop */}
+          {icon}
+          {tag && (
+            <span className="self-start rounded-sm bg-(--color-uswds-primary-lighter) px-2 py-1 text-[12px] font-bold tracking-[.6px] text-(--color-uswds-primary-darker) uppercase">
+              {tag}
+            </span>
+          )}
+          {heading && (
+            <HeadingTag className="usa-card__heading m-0 font-serif text-[22px] leading-[1.15] font-bold text-(--color-uswds-primary-darker)">
+              {heading}
+            </HeadingTag>
+          )}
+          {body && (
+            <div className="flex-1 text-[15px] leading-[1.6] text-(--color-uswds-base-dark)">
+              <FormattedText>{body}</FormattedText>
+            </div>
+          )}
+          {ctaText && ctaLink && (
+            <a
+              href={ctaLink}
+              className="mt-auto inline-flex items-center gap-1.5 pt-2 text-[15px] font-bold text-(--color-uswds-primary) no-underline hover:underline"
+            >
+              {ctaText}
+              <CardChevron />
+            </a>
+          )}
+          {footer && <div className="shrink-0">{footer}</div>}
+        </div>
+      );
+
+      if (isFlag) {
+        return (
+          <div
+            className={cn(
+              'usa-card usa-card--flag flex flex-row items-stretch overflow-hidden rounded border border-(--color-uswds-base-lighter) bg-white font-sans transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-md',
+              className,
+            )}
+          >
+            {hasMedia && mediaPosition === 'left' && (
+              <div className={flagMediaClass}>{media}</div>
+            )}
+            {content}
+            {hasMedia && mediaPosition === 'right' && (
+              <div className={flagMediaClass}>{media}</div>
+            )}
+          </div>
+        );
+      }
+
+      return (
+        <div
+          className={cn(
+            'usa-card flex flex-col overflow-hidden rounded border border-(--color-uswds-base-lighter) bg-white font-sans transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-md',
+            className,
+          )}
+        >
+          {hasMedia && mediaFirst && (
+            <div className={verticalMediaClass}>{media}</div>
+          )}
+          {content}
+          {hasMedia && !mediaFirst && (
+            <div className={verticalMediaClass}>{media}</div>
+          )}
+        </div>
+      );
+    };
+
+    export default UswdsCard;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn, FormattedText } from "drupal-canvas";
+    const CardChevron = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "h-4 w-4 shrink-0",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: "2.5",
+        children: /* @__PURE__ */ jsx("path", { d: "M9 6l6 6-6 6" })
+      }
+    );
+    const UswdsCard = ({
+      heading = "",
+      headingLevel = "h3",
+      body = "",
+      tag = "",
+      ctaText = "",
+      ctaLink = "",
+      layout = "default",
+      mediaFirst = true,
+      mediaExdent = true,
+      mediaInset = false,
+      mediaPosition = "left",
+      icon,
+      media,
+      footer,
+      className = ""
+    }) => {
+      const HeadingTag = headingLevel;
+      const isFlag = layout === "flag";
+      const hasMedia = !!media;
+      const verticalMediaClass = cn(
+        "w-full shrink-0 overflow-hidden",
+        !mediaExdent && "px-(--spacing-uswds-3)",
+        mediaInset && "py-(--spacing-uswds-3)"
+      );
+      const flagMediaClass = cn(
+        "flex w-[240px] shrink-0 items-stretch overflow-hidden",
+        !mediaExdent && (mediaPosition === "left" ? "my-(--spacing-uswds-3) ml-(--spacing-uswds-3)" : "my-(--spacing-uswds-3) mr-(--spacing-uswds-3)"),
+        mediaInset && (mediaPosition === "left" ? "py-(--spacing-uswds-3) pl-(--spacing-uswds-3)" : "py-(--spacing-uswds-3) pr-(--spacing-uswds-3)")
+      );
+      const content = /* @__PURE__ */ jsxs("div", { className: "usa-card__body flex flex-1 flex-col gap-3 p-(--spacing-uswds-3)", children: [
+        icon,
+        tag && /* @__PURE__ */ jsx("span", { className: "self-start rounded-sm bg-(--color-uswds-primary-lighter) px-2 py-1 text-[12px] font-bold tracking-[.6px] text-(--color-uswds-primary-darker) uppercase", children: tag }),
+        heading && /* @__PURE__ */ jsx(HeadingTag, { className: "usa-card__heading m-0 font-serif text-[22px] leading-[1.15] font-bold text-(--color-uswds-primary-darker)", children: heading }),
+        body && /* @__PURE__ */ jsx("div", { className: "flex-1 text-[15px] leading-[1.6] text-(--color-uswds-base-dark)", children: /* @__PURE__ */ jsx(FormattedText, { children: body }) }),
+        ctaText && ctaLink && /* @__PURE__ */ jsxs(
+          "a",
+          {
+            href: ctaLink,
+            className: "mt-auto inline-flex items-center gap-1.5 pt-2 text-[15px] font-bold text-(--color-uswds-primary) no-underline hover:underline",
+            children: [
+              ctaText,
+              /* @__PURE__ */ jsx(CardChevron, {})
+            ]
+          }
+        ),
+        footer && /* @__PURE__ */ jsx("div", { className: "shrink-0", children: footer })
+      ] });
+      if (isFlag) {
+        return /* @__PURE__ */ jsxs(
+          "div",
+          {
+            className: cn(
+              "usa-card usa-card--flag flex flex-row items-stretch overflow-hidden rounded border border-(--color-uswds-base-lighter) bg-white font-sans transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-md",
+              className
+            ),
+            children: [
+              hasMedia && mediaPosition === "left" && /* @__PURE__ */ jsx("div", { className: flagMediaClass, children: media }),
+              content,
+              hasMedia && mediaPosition === "right" && /* @__PURE__ */ jsx("div", { className: flagMediaClass, children: media })
+            ]
+          }
+        );
+      }
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-card flex flex-col overflow-hidden rounded border border-(--color-uswds-base-lighter) bg-white font-sans transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-md",
+            className
+          ),
+          children: [
+            hasMedia && mediaFirst && /* @__PURE__ */ jsx("div", { className: verticalMediaClass, children: media }),
+            content,
+            hasMedia && !mediaFirst && /* @__PURE__ */ jsx("div", { className: verticalMediaClass, children: media })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsCard as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,85 @@
+uuid: 9a88d0f2-bd98-44f0-ba28-ab99dee12475
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_news_feature
+  module:
+    - link
+_core:
+  default_config_hash: tUlnkjfPnvj5yPvPdeOomp3vl-xQxPBgfBwvwZWip14
+label: '(Eud-Kit) USWDS News Feature'
+id: js.uswds_news_feature
+source: js
+source_local_id: uswds_news_feature
+provider: null
+active_version: 1426382c70506991
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        date:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'April 28, 2026'
+          expression: ℹ︎string␟value
+        category:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Press Release'
+          expression: ℹ︎string␟value
+        heading:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Secretary Hawthorne announces $14B expansion of the Lifelong Learning Account program'
+          expression: ℹ︎string␟value
+        body:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'The expansion raises the federal match from 1:1 to 2:1 for households earning under $75,000.'
+          expression: ℹ︎string␟value
+        ctaText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Read full release'
+          expression: ℹ︎string␟value
+        ctaLink:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /newsroom
+              options: {  }
+          expression: ℹ︎link␟url
+    fallback_metadata:
+      slot_definitions: {  }

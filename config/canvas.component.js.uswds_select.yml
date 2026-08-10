@@ -1,0 +1,76 @@
+uuid: 8d5c08a0-2312-4334-b22a-9adf2a658974
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_select
+_core:
+  default_config_hash: rIKA54reRqf3Xdq8yF_YaXpZMZkY_Ll6RkafF3b15Pc
+label: '(Eud-Kit) USWDS Select'
+id: js.uswds_select
+source: js
+source_local_id: uswds_select
+provider: null
+active_version: a8120c31f74fdad0
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: State
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: state
+          expression: ℹ︎string␟value
+        hint:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        error:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        required:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        disabled:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions: {  }

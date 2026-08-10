@@ -1,0 +1,616 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 05a824dc-8ccc-4dac-91dd-eb46b73ade0d
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'USWDS Demo — Forms & Inputs'
+  description:
+    -
+      value: 'Visual demo of USWDS form and input components'
+  components:
+    -
+      uuid: 1cb66e01-f789-48d9-8596-128c5ed3d693
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_button — Button Variants'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 1cb66e01-f789-48d9-8596-128c5ed3d693
+      slot: content
+      uuid: 9b96afdc-aa1e-4416-94ba-60b872705440
+      component_id: js.uswds_button
+      inputs:
+        text: 'Submit application'
+        link:
+          uri: 'internal:/apply'
+          options: {  }
+        variant: default
+        size: default
+    -
+      parent_uuid: 1cb66e01-f789-48d9-8596-128c5ed3d693
+      slot: content
+      uuid: 6f07f4e6-863a-474c-8bb8-75dc4995ced9
+      component_id: js.uswds_button
+      inputs:
+        text: 'Save and continue'
+        link:
+          uri: 'internal:'
+          options: {  }
+        variant: outline
+        size: default
+    -
+      parent_uuid: 1cb66e01-f789-48d9-8596-128c5ed3d693
+      slot: content
+      uuid: 401b4672-1084-47b8-a9c2-648ceb635645
+      component_id: js.uswds_button
+      inputs:
+        text: 'Secondary action'
+        link:
+          uri: 'internal:'
+          options: {  }
+        variant: secondary
+        size: default
+    -
+      parent_uuid: 1cb66e01-f789-48d9-8596-128c5ed3d693
+      slot: content
+      uuid: 394a2e9c-2afc-4bd8-ac9d-166fd4bab332
+      component_id: js.uswds_button
+      inputs:
+        text: 'Disabled button'
+        link:
+          uri: 'internal:'
+          options: {  }
+        variant: default
+        size: default
+        disabled: true
+    -
+      uuid: f2a987c3-8d6d-4aae-8902-95dd00bda76c
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_button_group — Button Group'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: f2a987c3-8d6d-4aae-8902-95dd00bda76c
+      slot: content
+      uuid: 74b99567-c9c3-4f98-951f-1981c5d5a9f3
+      component_id: js.uswds_button_group
+      inputs:
+        segmented: false
+    -
+      parent_uuid: 74b99567-c9c3-4f98-951f-1981c5d5a9f3
+      slot: buttons
+      uuid: e9733303-5765-41d3-b4fb-b256cde1188a
+      component_id: js.uswds_button
+      inputs:
+        text: Submit
+        link:
+          uri: 'internal:/apply/submit'
+          options: {  }
+        variant: default
+    -
+      parent_uuid: 74b99567-c9c3-4f98-951f-1981c5d5a9f3
+      slot: buttons
+      uuid: bdfa2e15-17ee-4730-b156-2404c0d1e6d5
+      component_id: js.uswds_button
+      inputs:
+        text: 'Save draft'
+        link:
+          uri: 'internal:/apply/save'
+          options: {  }
+        variant: outline
+    -
+      parent_uuid: 74b99567-c9c3-4f98-951f-1981c5d5a9f3
+      slot: buttons
+      uuid: 3daa077b-3d55-46aa-ae2d-452932847287
+      component_id: js.uswds_button
+      inputs:
+        text: Cancel
+        link:
+          uri: 'internal:/'
+          options: {  }
+        variant: secondary
+    -
+      uuid: 07b277ed-fb0d-4c55-a03d-b3dddc3cae8e
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_search — Search Bar'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 07b277ed-fb0d-4c55-a03d-b3dddc3cae8e
+      slot: content
+      uuid: c8d3645e-8979-491a-99b7-b16aeb40c750
+      component_id: js.uswds_search
+      inputs:
+        size: default
+        placeholder: 'Search programs and services...'
+        searchPageUrl:
+          uri: 'internal:/search'
+          options: {  }
+    -
+      uuid: 1b2ebb0f-ea5f-447b-ba38-9688bde81459
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_label — Label (with hint and error states)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 1b2ebb0f-ea5f-447b-ba38-9688bde81459
+      slot: content
+      uuid: 446fe129-5ca1-4aac-82e9-a534edb8ce6d
+      component_id: js.uswds_label
+      inputs:
+        labelText: 'Legal first name'
+        htmlFor: first-name
+        required: true
+        hintText: 'Enter your name exactly as it appears on your government-issued ID'
+        state: default
+    -
+      parent_uuid: 1b2ebb0f-ea5f-447b-ba38-9688bde81459
+      slot: content
+      uuid: ab679de4-e8aa-4634-b87e-922ba436d9e0
+      component_id: js.uswds_label
+      inputs:
+        labelText: 'Social Security Number'
+        htmlFor: ssn
+        required: true
+        hintText: 'Format: XXX-XX-XXXX'
+        state: error
+        errorText: 'Please enter a valid Social Security Number'
+    -
+      uuid: d5cd9b2a-356d-4bc7-921f-f5a39cf71a09
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_text_input — Text Input (default, error, disabled)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: d5cd9b2a-356d-4bc7-921f-f5a39cf71a09
+      slot: content
+      uuid: 133c473c-bfb3-4eb1-9588-3aaddab62618
+      component_id: js.uswds_text_input
+      inputs:
+        label: 'Legal first name'
+        name: first-name
+        type: text
+        hint: 'Enter your name as it appears on your government-issued ID'
+        required: true
+    -
+      parent_uuid: d5cd9b2a-356d-4bc7-921f-f5a39cf71a09
+      slot: content
+      uuid: 7b6b1aa2-e988-4e0e-bcf3-9db4912fca29
+      component_id: js.uswds_text_input
+      inputs:
+        label: 'Email address'
+        name: email
+        type: email
+        error: 'Please enter a valid email address'
+        required: true
+    -
+      parent_uuid: d5cd9b2a-356d-4bc7-921f-f5a39cf71a09
+      slot: content
+      uuid: 6ab223b1-fd44-46b3-975a-64113bfa37eb
+      component_id: js.uswds_text_input
+      inputs:
+        label: 'Case number (read-only)'
+        name: case-number
+        type: text
+        disabled: true
+    -
+      uuid: a1838f20-ca9e-465a-b361-0ce522e7f54a
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_text_area — Text Area'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: a1838f20-ca9e-465a-b361-0ce522e7f54a
+      slot: content
+      uuid: 912cfbde-211d-4f12-b5fd-076ca3ad99da
+      component_id: js.uswds_text_area
+      inputs:
+        label: 'Describe your household situation'
+        name: household-description
+        hint: 'Include any circumstances that may affect your eligibility, such as recent job loss or medical events.'
+        required: false
+        rows: 5
+    -
+      uuid: a547e47c-ea99-4b70-8758-9bacb85580c5
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_select — Select Dropdown'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: a547e47c-ea99-4b70-8758-9bacb85580c5
+      slot: content
+      uuid: 1a5bdca4-eb76-43bd-bf5d-405a4672e00c
+      component_id: js.uswds_select
+      inputs:
+        label: 'State of residence'
+        name: state
+        hint: 'Select the state where you currently live'
+        required: true
+    -
+      uuid: 94003ba6-b1b1-4331-a33b-57b0bee15dde
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_checkbox — Checkbox (3 variants)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 94003ba6-b1b1-4331-a33b-57b0bee15dde
+      slot: content
+      uuid: 37f3bcaf-4082-4e17-b172-11cc58e8b289
+      component_id: js.uswds_checkbox
+      inputs:
+        label: 'I am a U.S. citizen or lawful permanent resident'
+        name: eligibility
+        value: citizen
+        checked: true
+        tile: false
+    -
+      parent_uuid: 94003ba6-b1b1-4331-a33b-57b0bee15dde
+      slot: content
+      uuid: 35defea5-7a33-4aa2-baf1-7d93be84e2cc
+      component_id: js.uswds_checkbox
+      inputs:
+        label: 'Flourish Family Benefit'
+        name: programs
+        value: ffb
+        description: 'Monthly direct support for families with children under 18'
+        checked: false
+        tile: true
+    -
+      parent_uuid: 94003ba6-b1b1-4331-a33b-57b0bee15dde
+      slot: content
+      uuid: 1e45d23b-9b09-4036-8277-70ad006e6bee
+      component_id: js.uswds_checkbox
+      inputs:
+        label: 'Lifelong Learning Account'
+        name: programs
+        value: lla
+        description: 'Portable education savings with a federal 2:1 match'
+        checked: false
+        disabled: true
+        tile: true
+    -
+      uuid: 78577d4b-5df5-4cd1-a1f4-d2ea7fb09f7d
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_radio — Radio Buttons (3 instances)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 78577d4b-5df5-4cd1-a1f4-d2ea7fb09f7d
+      slot: content
+      uuid: 1c4b2699-1b2d-466c-a7d0-639b7da6eb72
+      component_id: js.uswds_radio
+      inputs:
+        label: 'Online application portal'
+        name: application-method
+        value: online
+        hint: 'Available 24/7, decisions within 10 business days'
+    -
+      parent_uuid: 78577d4b-5df5-4cd1-a1f4-d2ea7fb09f7d
+      slot: content
+      uuid: 2924f272-ae99-4113-8966-f7507d9d9ae7
+      component_id: js.uswds_radio
+      inputs:
+        label: 'Regional office in-person'
+        name: application-method
+        value: in-person
+        hint: 'Walk-in and appointment options available'
+    -
+      parent_uuid: 78577d4b-5df5-4cd1-a1f4-d2ea7fb09f7d
+      slot: content
+      uuid: 3cccc4cb-9dff-42f9-b806-0a7d8b459c9c
+      component_id: js.uswds_radio
+      inputs:
+        label: 'Mail-in application'
+        name: application-method
+        value: mail
+        hint: 'Allow 4–6 weeks for processing'
+        disabled: false
+    -
+      uuid: 541ffb84-d851-469b-8e1c-c840f00cf7ba
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_character_count — Character Count'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 541ffb84-d851-469b-8e1c-c840f00cf7ba
+      slot: content
+      uuid: d9a7b411-d22e-4672-84fc-97a3515d0650
+      component_id: js.uswds_character_count
+      inputs:
+        label: 'Brief description of your need'
+        name: need-description
+        maxLength: 150
+        hint: 'Summarize your situation in 150 characters or fewer'
+        multiline: false
+    -
+      uuid: ce35d67f-93a1-42a4-bc15-cf5cf5dc36ea
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_file_input — File Input'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: ce35d67f-93a1-42a4-bc15-cf5cf5dc36ea
+      slot: content
+      uuid: 3eb3735a-a3a0-4304-9f23-58f16232b241
+      component_id: js.uswds_file_input
+      inputs:
+        label: 'Upload proof of income'
+        name: income-proof
+        accept: '.pdf,.jpg,.png'
+        multiple: true
+        hint: 'Accepted formats: PDF, JPG, PNG. Maximum 10 MB per file.'
+    -
+      uuid: 5fd3f28b-51c3-43e1-8fe5-2794cc0f360a
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_input_group — Input Group (with label, hint, error)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 5fd3f28b-51c3-43e1-8fe5-2794cc0f360a
+      slot: content
+      uuid: c31d99e9-fd97-45f1-88af-2c7fb50a6900
+      component_id: js.uswds_input_group
+      inputs:
+        labelText: 'ZIP code'
+        htmlFor: zip-code
+        required: true
+        hintText: 'Enter your 5-digit ZIP code'
+        state: default
+    -
+      parent_uuid: c31d99e9-fd97-45f1-88af-2c7fb50a6900
+      slot: children
+      uuid: 716391c0-403c-4921-9cf4-b167df51dbf0
+      component_id: js.uswds_text_input
+      inputs:
+        name: zip-code
+        type: text
+        width: xs
+    -
+      uuid: 984716c5-20d8-4062-a6c1-6609929312b7
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_input_prefix_suffix — Input with Prefix & Suffix'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 984716c5-20d8-4062-a6c1-6609929312b7
+      slot: content
+      uuid: 7e450fbf-9114-4858-b0f8-2574c689ac28
+      component_id: js.uswds_input_prefix_suffix
+      inputs:
+        label: 'Requested benefit amount'
+        name: benefit-amount
+        prefixText: $
+        suffixText: '.00'
+        placeholder: '0'
+        hintText: 'Enter the monthly amount you are requesting, up to your program maximum'
+        state: default
+    -
+      uuid: 53a1d7d2-62ab-488a-b594-5f0532c358c2
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_date_picker — Date Picker'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 53a1d7d2-62ab-488a-b594-5f0532c358c2
+      slot: content
+      uuid: ca46eb57-ccea-411f-b909-5257082078bd
+      component_id: js.uswds_date_picker
+      inputs:
+        label: 'Application start date'
+        name: start-date
+        hint: mm/dd/yyyy
+        minDate: '2025-01-01'
+    -
+      uuid: 4a0d2661-6c05-468e-8ed2-6fd8ddce577e
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_memorable_date — Memorable Date'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 4a0d2661-6c05-468e-8ed2-6fd8ddce577e
+      slot: content
+      uuid: 0153166f-21fa-4a8c-9e9d-3159cc79a586
+      component_id: js.uswds_memorable_date
+      inputs:
+        label: 'Date of birth'
+        name: dob
+        hint: 'For example, April 28 1986'
+    -
+      uuid: 60317bb2-3d8b-4768-849c-3ae97c2e7698
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_combo_box — Combo Box'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 60317bb2-3d8b-4768-849c-3ae97c2e7698
+      slot: content
+      uuid: 9e3dc2df-c5b1-41ac-9205-4cb5505cb2fd
+      component_id: js.uswds_combo_box
+      inputs:
+        label: 'Primary program of interest'
+        name: program-interest
+        hint: 'Start typing to search available programs'
+    -
+      uuid: 51b3dd30-9b37-4146-82e6-eabb1296e846
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_range_slider — Range Slider'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 51b3dd30-9b37-4146-82e6-eabb1296e846
+      slot: content
+      uuid: b54420f3-d4c8-4b0e-96fb-808aa6ae9508
+      component_id: js.uswds_range_slider
+      inputs:
+        label: 'Estimated monthly household income ($)'
+        name: monthly-income
+        min: 0
+        max: 10000
+        step: 500
+        value: 3000
+    -
+      uuid: cf081db0-f54e-4dbe-b35d-4c3b0016fa80
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_date_range_picker — Date Range Picker'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: cf081db0-f54e-4dbe-b35d-4c3b0016fa80
+      slot: content
+      uuid: 87367cf1-3647-46ce-8fe0-93beff54209e
+      component_id: js.uswds_date_range_picker
+      inputs:
+        startLabel: 'Travel start date'
+        endLabel: 'Travel end date'
+        name: travel-dates
+        hint: mm/dd/yyyy
+        minDate: '2025-01-01'
+    -
+      uuid: dec88a67-8765-4351-b3ff-3553b687ef1b
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_time_picker — Time Picker (default + error state)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: dec88a67-8765-4351-b3ff-3553b687ef1b
+      slot: content
+      uuid: 22035200-f079-4000-ba1a-36499000be40
+      component_id: js.uswds_time_picker
+      inputs:
+        label: 'Preferred appointment time'
+        name: appointment-time
+        hint: 'Select a time between 9 AM and 5 PM'
+        minTime: '09:00'
+        maxTime: '17:00'
+        stepMinutes: 30
+    -
+      parent_uuid: dec88a67-8765-4351-b3ff-3553b687ef1b
+      slot: content
+      uuid: f53f4d7b-d444-4059-97b1-67ff950ae0fa
+      component_id: js.uswds_time_picker
+      inputs:
+        label: 'Callback time (error state)'
+        name: callback-time
+        hint: 'Select a time for your callback'
+        error: 'Please select a valid callback time'
+        stepMinutes: 15
+  path:
+    -
+      alias: /demo-04-forms
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

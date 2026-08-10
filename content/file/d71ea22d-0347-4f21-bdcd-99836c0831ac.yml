@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: d71ea22d-0347-4f21-bdcd-99836c0831ac
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: card-icon-4-community.png
+  uri:
+    -
+      value: 'public://2026-05/card-icon-4-community.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 1704
+  status:
+    -
+      value: true

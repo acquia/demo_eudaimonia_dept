@@ -1,0 +1,48 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: ba94e892-7a06-4999-acd5-7171ffabf95b
+  bundle: article
+  default_langcode: en
+  depends:
+    dbdaaadf-9a80-4999-9019-4dcd810c4be0: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'FY25 Annual Wellbeing Index released — life satisfaction up 4.2 points nationwide'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      alias: /articles/2026/5/fy25-annual-wellbeing-index-released-life-satisfaction-42-points-nationwide
+      langcode: en
+  body:
+    -
+      value: 'The FY25 Wellbeing Index shows a 4.2-point increase in national life satisfaction scores, with the largest gains in rural counties that received expanded service center access.'
+      format: filtered_html
+      summary: 'The FY25 Wellbeing Index shows a 4.2-point increase in national life satisfaction scores, with the largest gains in rural counties that received expanded service center access.'
+  featured:
+    -
+      value: false
+  tags:
+    -
+      entity: dbdaaadf-9a80-4999-9019-4dcd810c4be0

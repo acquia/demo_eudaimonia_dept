@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: f2679bb2-04f6-4f83-8662-81d339fd3e3f
+  bundle: image
+  default_langcode: en
+  depends:
+    17f4b327-a3f9-4054-ac38-2707a09b58a7: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: card-icon-3-learning
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Blue graduation cap icon with flat top and tassel.'
+      title: ''
+      width: 128
+      height: 128
+      entity: 17f4b327-a3f9-4054-ac38-2707a09b58a7

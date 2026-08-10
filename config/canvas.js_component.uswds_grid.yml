@@ -1,0 +1,128 @@
+uuid: 9408603b-8cb8-4be0-9ce2-9ae85f94583f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 9nPL-xiXGMR3bCOMRmZ0L-PMYPIc4psmsvkc0sdeHeE
+machineName: uswds_grid
+name: '(Eud-Kit) USWDS Grid'
+required: {  }
+props:
+  columns:
+    type: integer
+    enum:
+      - 1
+      - 2
+      - 3
+      - 4
+    'meta:enum':
+      1: '1 Column'
+      2: '2 Columns'
+      3: '3 Columns (default)'
+      4: '4 Columns'
+    title: Columns
+    examples:
+      - 3
+  gap:
+    type: string
+    enum:
+      - xs
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      xs: 'Extra Small (0.5rem)'
+      sm: 'Small (1rem)'
+      md: 'Medium (1.5rem, default)'
+      lg: 'Large (2rem)'
+      xl: 'Extra Large (3rem)'
+    title: Gap
+    examples:
+      - md
+slots:
+  items:
+    title: Items
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const colClass = {
+      1: 'grid-cols-1',
+      2: 'grid-cols-1 sm:grid-cols-2',
+      3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+      4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+    };
+
+    const gapClass = {
+      xs: 'gap-2',
+      sm: 'gap-4',
+      md: 'gap-6',
+      lg: 'gap-8',
+      xl: 'gap-12',
+    };
+
+    const UswdsGrid = ({
+      columns = 3,
+      gap = 'md',
+      items,
+      className = '',
+    }) => {
+      return (
+        <div
+          className={cn(
+            'usa-grid grid w-full font-sans',
+            colClass[columns] ?? colClass[3],
+            gapClass[gap] ?? gapClass.md,
+            className,
+          )}
+        >
+          {items}
+        </div>
+      );
+    };
+
+    export default UswdsGrid;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const colClass = {
+      1: "grid-cols-1",
+      2: "grid-cols-1 sm:grid-cols-2",
+      3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+      4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+    };
+    const gapClass = {
+      xs: "gap-2",
+      sm: "gap-4",
+      md: "gap-6",
+      lg: "gap-8",
+      xl: "gap-12"
+    };
+    const UswdsGrid = ({
+      columns = 3,
+      gap = "md",
+      items,
+      className = ""
+    }) => {
+      var _a, _b;
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: cn(
+            "usa-grid grid w-full font-sans",
+            (_a = colClass[columns]) != null ? _a : colClass[3],
+            (_b = gapClass[gap]) != null ? _b : gapClass.md,
+            className
+          ),
+          children: items
+        }
+      );
+    };
+    export {
+      UswdsGrid as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

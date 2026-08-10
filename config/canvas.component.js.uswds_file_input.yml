@@ -1,0 +1,74 @@
+uuid: 4342b092-8cfa-4c55-baf4-8938fcf61ec0
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_file_input
+_core:
+  default_config_hash: NUX6mLT1_Ai17zdcpf6-fJG-ZkLowN5OkHD_vrJrVE8
+label: '(Eud-Kit) USWDS File Input'
+id: js.uswds_file_input
+source: js
+source_local_id: uswds_file_input
+provider: null
+active_version: 1113425bc78218ac
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Upload file'
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: upload
+          expression: ℹ︎string␟value
+        accept:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        multiple:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        hint:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        error:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

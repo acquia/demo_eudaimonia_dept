@@ -1,0 +1,478 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 7d4dc715-0a61-4fe8-bfce-a68a79a583aa
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'USWDS Demo — Heroes & Content Blocks'
+  description:
+    -
+      value: 'Visual demo of USWDS hero and content block components'
+  components:
+    -
+      uuid: 6966c0d6-723f-47c7-80ab-541b7a610232
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_hero — Hero Banner'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 6966c0d6-723f-47c7-80ab-541b7a610232
+      slot: content
+      uuid: d9ec4b9f-812d-46cf-b74c-9c2a56a74e3b
+      component_id: js.uswds_hero
+      inputs:
+        eyebrow: 'Department of Eudaimonia · Established 2025'
+        heading: 'The work of flourishing belongs to all of us.'
+        leadParagraph: 'We provide programs, research, and services that help every person live a meaningful, healthy, and self-determined life.'
+    -
+      parent_uuid: d9ec4b9f-812d-46cf-b74c-9c2a56a74e3b
+      slot: ctas
+      uuid: 869e9b4b-fcb2-4736-b34c-605491e0a045
+      component_id: js.uswds_button
+      inputs:
+        text: 'Explore programs'
+        link:
+          uri: 'internal:/eud-programs'
+          options: {  }
+        variant: default
+        size: big
+        showArrowIcon: true
+    -
+      uuid: ef76086b-3b1c-4e01-8b41-53b6419c0187
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_page_hero — Page Hero with Breadcrumb'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: ef76086b-3b1c-4e01-8b41-53b6419c0187
+      slot: content
+      uuid: 988b4e24-b64b-4fdb-a3f0-49dfd9ee3c48
+      component_id: js.uswds_page_hero
+      inputs:
+        heading: 'Programs & Services'
+        leadParagraph: 'Discover the full range of federal programs designed to help you and your family achieve lasting well-being.'
+    -
+      parent_uuid: 988b4e24-b64b-4fdb-a3f0-49dfd9ee3c48
+      slot: breadcrumb
+      uuid: 5f440749-1d88-441f-824a-4ac0ecde9370
+      component_id: js.uswds_breadcrumb
+      inputs:
+        context: on-dark
+        wrap: false
+    -
+      parent_uuid: 5f440749-1d88-441f-824a-4ac0ecde9370
+      slot: items
+      uuid: 797568cd-e68d-4c07-a0e6-b435df46cf8e
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: Home
+        href:
+          uri: 'internal:/'
+          options: {  }
+        context: on-dark
+        isLast: false
+        showSeparator: false
+    -
+      parent_uuid: 5f440749-1d88-441f-824a-4ac0ecde9370
+      slot: items
+      uuid: 95739644-f3c2-41ec-8292-590920af0f04
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: 'Programs & Services'
+        href:
+          uri: 'internal:/eud-programs'
+          options: {  }
+        context: on-dark
+        isLast: true
+        showSeparator: true
+    -
+      uuid: 408a775b-8400-432f-84e1-20802ce10dfc
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_stat_bar — Statistics Bar'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 408a775b-8400-432f-84e1-20802ce10dfc
+      slot: content
+      uuid: a7b10e6e-714c-4c21-aaef-e23ca5fd7e43
+      component_id: js.uswds_stat_bar
+      inputs:
+        background: primary-darker
+    -
+      parent_uuid: a7b10e6e-714c-4c21-aaef-e23ca5fd7e43
+      slot: items
+      uuid: c65dfc08-ccf8-4a18-8da4-7e79acbffca9
+      component_id: js.uswds_stat_item
+      inputs:
+        number: 42.7M
+        label: 'People Served Annually'
+        variant: default
+        textColor: light
+    -
+      parent_uuid: a7b10e6e-714c-4c21-aaef-e23ca5fd7e43
+      slot: items
+      uuid: 47951300-bd60-4509-9345-56866f01aaf7
+      component_id: js.uswds_stat_item
+      inputs:
+        number: '6'
+        label: 'Pillars of Flourishing'
+        variant: default
+        textColor: light
+    -
+      parent_uuid: a7b10e6e-714c-4c21-aaef-e23ca5fd7e43
+      slot: items
+      uuid: d677f67e-3866-4e9f-b197-51f2beeba8d9
+      component_id: js.uswds_stat_item
+      inputs:
+        number: $2.4B
+        label: 'Benefits Disbursed in FY2025'
+        variant: default
+        textColor: light
+    -
+      uuid: 05b81020-cc45-4905-9c93-ef3996c3445a
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_text — Text Block (size/color variants)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 05b81020-cc45-4905-9c93-ef3996c3445a
+      slot: content
+      uuid: 461551a2-5328-4385-b9ee-bbff0ed4aa0d
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: '<p>The Department of Eudaimonia coordinates federal programs across six pillars of human flourishing: health, learning, livelihood, connection, safety, and purpose. Our goal is to make every program easier to find and simpler to access.</p>'
+          format: canvas_html_block
+        textColor: default
+        maxWidth: medium
+        fontSize: md
+    -
+      parent_uuid: 05b81020-cc45-4905-9c93-ef3996c3445a
+      slot: content
+      uuid: 4cb57384-44de-4f13-afc2-19a6a8e032e4
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: '<p>Enrollment windows, eligibility thresholds, and program updates are published in real time. Contact your regional office for case-specific guidance.</p>'
+          format: canvas_html_block
+        textColor: muted
+        maxWidth: narrow
+        fontSize: lg
+    -
+      uuid: 2cadbf9f-356b-45f9-b9a1-e54cfed59332
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_blockquote — Blockquote (2 variants)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 2cadbf9f-356b-45f9-b9a1-e54cfed59332
+      slot: content
+      uuid: 1a018df6-7cea-4feb-8dfe-1ff84da791b7
+      component_id: js.uswds_blockquote
+      inputs:
+        name: 'Maria Gutierrez'
+        textColor: dark
+        quoteText:
+          value: "Programs like this changed my family's trajectory. The support was real, and the team genuinely cared."
+          format: canvas_html_block
+        roleAttribution: 'Program Participant, 2023'
+        accentBarColor: default
+    -
+      parent_uuid: 2cadbf9f-356b-45f9-b9a1-e54cfed59332
+      slot: content
+      uuid: 6e6f83b6-a779-4a5c-aebd-ba0e407e38d5
+      component_id: js.uswds_blockquote
+      inputs:
+        name: 'James Okafor'
+        textColor: dark
+        quoteText:
+          value: 'For the first time I felt like the government was working with me, not around me.'
+          format: canvas_html_block
+        roleAttribution: 'Flourish Family Benefit Recipient'
+        accentBarColor: accent-cool
+    -
+      uuid: 0d85bcc2-662f-4544-8231-e52ab23c80b9
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_video — Video Embed (YouTube)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 0d85bcc2-662f-4544-8231-e52ab23c80b9
+      slot: content
+      uuid: 31ed9136-c361-4a36-a58c-650b952ece56
+      component_id: js.uswds_video
+      inputs:
+        videoType: youtube
+        aspectRatio: 16-9
+        caption: 'Learn more about our flagship programs and eligibility requirements.'
+        videoSourceUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+        accessibleTitle: 'Department of Eudaimonia — Program Overview'
+    -
+      uuid: b174681b-5aa9-4cc0-a8bb-14b6375d71d3
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_summary_box — Summary Box'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: b174681b-5aa9-4cc0-a8bb-14b6375d71d3
+      slot: content
+      uuid: ac876bbf-1f99-4273-8c3a-e18358c52967
+      component_id: js.uswds_summary_box
+      inputs:
+        heading: 'Eligibility at a glance'
+        body:
+          value: '<ul><li>U.S. citizen or qualifying resident</li><li>Household income at or below 250% FPL</li><li>At least one dependent child under 18</li><li>No prior benefit fraud convictions</li></ul>'
+          format: canvas_html_block
+    -
+      uuid: 5ed30182-447c-445a-8f7b-cdf1f5b19374
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_process_list — Process List (3 steps)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 5ed30182-447c-445a-8f7b-cdf1f5b19374
+      slot: content
+      uuid: fc160e0b-9a33-4d43-84b4-7ce4d04e1f86
+      component_id: js.uswds_process_list
+      inputs: {  }
+    -
+      parent_uuid: fc160e0b-9a33-4d43-84b4-7ce4d04e1f86
+      slot: items
+      uuid: d19773ab-c9bd-49e6-806e-6aba26142fbc
+      component_id: js.uswds_process_list_item
+      inputs:
+        number: '1'
+        heading: 'Check your eligibility'
+        body: 'Use our online eligibility checker to see which programs match your household size, income, and circumstances.'
+        last: false
+    -
+      parent_uuid: fc160e0b-9a33-4d43-84b4-7ce4d04e1f86
+      slot: items
+      uuid: 7ffdbe58-9f96-4f91-9fab-8c08a4e6360a
+      component_id: js.uswds_process_list_item
+      inputs:
+        number: '2'
+        heading: 'Gather your documents'
+        body: 'You will need proof of income, government-issued ID, and dependent information for all household members.'
+        last: false
+    -
+      parent_uuid: fc160e0b-9a33-4d43-84b4-7ce4d04e1f86
+      slot: items
+      uuid: 2e9823b0-3b26-4610-81d9-d9a4e8a49788
+      component_id: js.uswds_process_list_item
+      inputs:
+        number: '3'
+        heading: 'Submit your application'
+        body: 'Complete the online form or visit a regional office. Most decisions are made within 10 business days.'
+        last: true
+    -
+      uuid: 3b06b6b8-90c0-45fb-97b8-e75a9d83c866
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_icon_list — Icon List (4 items)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 3b06b6b8-90c0-45fb-97b8-e75a9d83c866
+      slot: content
+      uuid: 13192b96-3d5c-42f1-bf3b-087d57e929f6
+      component_id: js.uswds_icon_list
+      inputs: {  }
+    -
+      parent_uuid: 13192b96-3d5c-42f1-bf3b-087d57e929f6
+      slot: items
+      uuid: 3b399d28-fd1a-4508-a1c1-378934ddb729
+      component_id: js.uswds_icon_list_item
+      inputs:
+        heading: 'Human-centered design'
+        body: 'Programs are built around how people actually live — not how agencies are organized.'
+    -
+      parent_uuid: 13192b96-3d5c-42f1-bf3b-087d57e929f6
+      slot: items
+      uuid: 58f9fce3-1d83-4943-8b9f-3e471635369b
+      component_id: js.uswds_icon_list_item
+      inputs:
+        heading: 'Equity by default'
+        body: 'Every program is evaluated for disparate impact before launch and adjusted when gaps are found.'
+    -
+      parent_uuid: 13192b96-3d5c-42f1-bf3b-087d57e929f6
+      slot: items
+      uuid: 41351572-be8e-4886-8d0c-631819dea054
+      component_id: js.uswds_icon_list_item
+      inputs:
+        heading: 'Plain language throughout'
+        body: 'Notices, eligibility rules, and decisions are written at a 6th-grade reading level.'
+    -
+      parent_uuid: 13192b96-3d5c-42f1-bf3b-087d57e929f6
+      slot: items
+      uuid: 4bb2aa9d-77d1-41e1-9d7c-5f83b84eb64d
+      component_id: js.uswds_icon_list_item
+      inputs:
+        heading: 'No wrong door'
+        body: 'Any Eudaimonia office or online portal can route you to the right program — no matter where you start.'
+    -
+      uuid: 21ac907a-ee72-4917-a469-d4420695137a
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_grid — 3-Column Grid'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 21ac907a-ee72-4917-a469-d4420695137a
+      slot: content
+      uuid: 737ff4b7-e4fe-40de-9c9d-9a9500fe51f5
+      component_id: js.uswds_grid
+      inputs:
+        columns: 3
+        gap: md
+    -
+      parent_uuid: 737ff4b7-e4fe-40de-9c9d-9a9500fe51f5
+      slot: items
+      uuid: 280e36d7-9b9f-4c7e-9fc6-ec24dac560dd
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: 'Health &amp; Wellness<p>Connect to preventive care, mental health services, and nutrition support programs available in your region.</p>'
+          format: canvas_html_block
+        textColor: default
+        maxWidth: none
+        fontSize: md
+    -
+      parent_uuid: 737ff4b7-e4fe-40de-9c9d-9a9500fe51f5
+      slot: items
+      uuid: 692a854c-6826-452a-996e-bf634c2c5757
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: 'Lifelong Learning<p>Access scholarships, apprenticeship matching, and adult education grants through a single application portal.</p>'
+          format: canvas_html_block
+        textColor: default
+        maxWidth: none
+        fontSize: md
+    -
+      parent_uuid: 737ff4b7-e4fe-40de-9c9d-9a9500fe51f5
+      slot: items
+      uuid: 8789e1f9-2047-4571-921f-446d111f540b
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: 'Economic Security<p>Find income support, housing assistance, and small business launch grants designed for long-term stability.</p>'
+          format: canvas_html_block
+        textColor: default
+        maxWidth: none
+        fontSize: md
+    -
+      uuid: ee2faf7c-0be9-48f5-a3e8-770a9e83b416
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_content_split — Content Split'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: ee2faf7c-0be9-48f5-a3e8-770a9e83b416
+      slot: content
+      uuid: 8a0b0f47-4cc4-4d07-9499-912e07de8dc3
+      component_id: js.uswds_content_split
+      inputs:
+        columnRatio: wide-left
+    -
+      parent_uuid: 8a0b0f47-4cc4-4d07-9499-912e07de8dc3
+      slot: left
+      uuid: 30222d66-c89c-46d2-a1c9-2d7ef464b7a3
+      component_id: js.uswds_text
+      inputs:
+        text:
+          value: 'Our mission is measurable.<p>Every program we run publishes annual outcome data, third-party evaluations, and disaggregated impact reports. If a program is not working, we say so — and we fix it.</p>'
+          format: canvas_html_block
+        textColor: default
+        maxWidth: none
+        fontSize: md
+    -
+      parent_uuid: 8a0b0f47-4cc4-4d07-9499-912e07de8dc3
+      slot: right
+      uuid: 8ace18ec-fb62-4f50-b338-b23ed5840f47
+      component_id: js.uswds_button
+      inputs:
+        text: 'Read the annual report'
+        link:
+          uri: 'internal:/research'
+          options: {  }
+        variant: outline
+        size: default
+        showArrowIcon: true
+  path:
+    -
+      alias: /demo-02-content
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

@@ -1,0 +1,143 @@
+uuid: ff0db40d-4c7c-471e-b893-b337d4f9c26a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: LuvUTrgp8tZDi6VkVX96qu5kDOU5rfk01YA4BtWOGtE
+machineName: uswds_icon_image
+name: '(Eud-Kit) USWDS Icon Image'
+required:
+  - iconImage
+props:
+  iconImage:
+    type: object
+    $ref: 'json-schema-definitions://canvas.module/image'
+    title: 'Icon Image'
+    examples:
+      -
+        src: 'https://placehold.co/24x24/005ea2/ffffff?text=♥'
+        alt: ''
+        width: 24
+        height: 24
+  size:
+    type: string
+    enum:
+      - sm
+      - md
+      - lg
+    'meta:enum':
+      sm: 'Small (16px)'
+      md: 'Medium (24px, default)'
+      lg: 'Large (32px)'
+    title: Size
+    examples:
+      - md
+  showIconTile:
+    type: boolean
+    title: 'Show Icon Tile'
+    examples:
+      - true
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // uswds_icon_image
+    // Renders an uploaded image at icon size, intended for use in uswds_card's icon slot.
+    // Pass showIconTile={true} to render the 48×48 themed tile background around the image.
+    // The tile background automatically follows --color-uswds-primary-lighter so it adapts
+    // to any theme ramp change in global.css.
+    //
+    // Uses a plain <img> tag (not the drupal-canvas Image component).
+    // Tile uses flex (not grid) for centering — <img> is a CSS replaced element and
+    // justify-items:center in grid is less reliable for replaced content than flexbox.
+    //
+    // For fully themeable icons (SVG that inherits text color), use uswds_icon instead.
+
+    const UswdsIconImage = ({
+      iconImage,
+      size = 'md',
+      showIconTile = false,
+      className = '',
+    }) => {
+      if (!iconImage?.src) return null;
+
+      const sizeClass = {
+        sm: 'h-4 w-4',   // 16px — matches uswds_icon size:sm
+        md: 'h-6 w-6',   // 24px — matches uswds_icon size:md (default, fits 48×48 tile)
+        lg: 'h-8 w-8',   // 32px — larger icon in tile
+      };
+
+      const img = (
+        <img
+          src={iconImage.src}
+          alt={iconImage.alt || ''}
+          width={iconImage.width || 24}
+          height={iconImage.height || 24}
+          className={cn(
+            'object-contain',
+            sizeClass[size] ?? sizeClass.md,
+            className,
+          )}
+        />
+      );
+
+      if (showIconTile) {
+        return (
+          <div
+            className="usa-card__icon self-start flex h-12 w-12 shrink-0 items-center justify-center rounded bg-(--color-uswds-primary-lighter)"
+            aria-hidden="true"
+          >
+            {img}
+          </div>
+        );
+      }
+
+      return img;
+    };
+
+    export default UswdsIconImage;
+  compiled: |
+    import { jsx as _jsx } from "react/jsx-runtime";
+    import { cn } from 'drupal-canvas';
+    // uswds_icon_image
+    // Renders an uploaded image at icon size, intended for use in uswds_card's icon slot.
+    // Pass showIconTile={true} to render the 48×48 themed tile background around the image.
+    // The tile background automatically follows --color-uswds-primary-lighter so it adapts
+    // to any theme ramp change in global.css.
+    //
+    // Uses a plain <img> tag (not the drupal-canvas Image component).
+    // Tile uses flex (not grid) for centering — <img> is a CSS replaced element and
+    // justify-items:center in grid is less reliable for replaced content than flexbox.
+    //
+    // For fully themeable icons (SVG that inherits text color), use uswds_icon instead.
+    const UswdsIconImage = ({ iconImage, size = 'md', showIconTile = false, className = '' })=>{
+        var _sizeClass_size;
+        if (!(iconImage === null || iconImage === void 0 ? void 0 : iconImage.src)) return null;
+        const sizeClass = {
+            sm: 'h-4 w-4',
+            md: 'h-6 w-6',
+            lg: 'h-8 w-8'
+        };
+        const img = /*#__PURE__*/ _jsx("img", {
+            src: iconImage.src,
+            alt: iconImage.alt || '',
+            width: iconImage.width || 24,
+            height: iconImage.height || 24,
+            className: cn('object-contain', (_sizeClass_size = sizeClass[size]) !== null && _sizeClass_size !== void 0 ? _sizeClass_size : sizeClass.md, className)
+        });
+        if (showIconTile) {
+            return /*#__PURE__*/ _jsx("div", {
+                className: "usa-card__icon self-start flex h-12 w-12 shrink-0 items-center justify-center rounded bg-(--color-uswds-primary-lighter)",
+                "aria-hidden": "true",
+                children: img
+            });
+        }
+        return img;
+    };
+    export default UswdsIconImage;
+css:
+  original: ''
+  compiled: |
+    /*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+dataDependencies: {  }

@@ -1,0 +1,49 @@
+uuid: 64e401c5-c059-486f-b20f-bbf2c74d67d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_button_group
+_core:
+  default_config_hash: wlrKNzuF31uzenctK2-md6SYyFpqtwgsW2YnJugFQmE
+active_version: b8a85650d03619aa
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        segmented:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions:
+        buttons:
+          title: 'Buttons (uswds_button items)'
+  606b0803e0dd5d43:
+    settings:
+      prop_field_definitions:
+        segmented:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions:
+        buttons:
+          title: Buttons
+label: '(Eud-Kit) USWDS Button Group'
+id: js.uswds_button_group
+provider: null
+source: js
+source_local_id: uswds_button_group

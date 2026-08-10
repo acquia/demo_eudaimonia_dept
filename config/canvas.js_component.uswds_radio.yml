@@ -1,0 +1,184 @@
+uuid: 40c696d5-d9cf-49ca-aebf-b722d44d3f44
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: tnHMqfjk_ycRgLe03_0KeSVbhdMo19cdEhmyG1-njuo
+machineName: uswds_radio
+name: '(Eud-Kit) USWDS Radio'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'Option A'
+  name:
+    type: string
+    title: Name
+    examples:
+      - choice
+  value:
+    type: string
+    title: Value
+    examples:
+      - option-a
+  hint:
+    type: string
+    title: Hint
+  tile:
+    type: boolean
+    title: Tile
+    examples:
+      - false
+  disabled:
+    type: boolean
+    title: Disabled
+    examples:
+      - false
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const UswdsRadio = ({
+      label = '',
+      name = '',
+      value = '',
+      hint = '',
+      tile = false,
+      disabled = false,
+      className = '',
+    }) => {
+      const id = `radio-${name}-${value}`;
+      return (
+        <div
+          className={cn(
+            'usa-radio font-sans',
+            tile
+              ? cn(
+                  'usa-radio--tile rounded border-2 border-(--color-uswds-disabled) bg-white px-4 py-3',
+                  'has-[:checked]:border-(--color-uswds-primary) has-[:checked]:bg-(--color-uswds-primary-lighter)',
+                  disabled &&
+                    'border-(--color-uswds-disabled) bg-white opacity-100',
+                )
+              : 'pt-3',
+            className,
+          )}
+        >
+          <div className="flex items-start gap-2">
+            <input
+              id={id}
+              type="radio"
+              name={name}
+              value={value}
+              disabled={disabled}
+              className={cn(
+                'usa-radio__input mt-0.5 h-5 w-5 flex-shrink-0 cursor-pointer accent-(--color-uswds-primary)',
+                'focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)',
+                disabled && 'cursor-not-allowed opacity-60',
+              )}
+            />
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor={id}
+                className={cn(
+                  'usa-radio__label cursor-pointer text-base leading-[1.3] text-(--color-uswds-base-ink)',
+                  disabled &&
+                    'cursor-not-allowed text-(--color-uswds-disabled-medium)',
+                )}
+              >
+                {label}
+              </label>
+              {hint && (
+                <span
+                  className={cn(
+                    'text-sm leading-[1.3] text-(--color-uswds-base-ink)',
+                    disabled && 'text-(--color-uswds-disabled-medium)',
+                  )}
+                >
+                  {hint}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsRadio;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsRadio = ({
+      label = "",
+      name = "",
+      value = "",
+      hint = "",
+      tile = false,
+      disabled = false,
+      className = ""
+    }) => {
+      const id = `radio-${name}-${value}`;
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: cn(
+            "usa-radio font-sans",
+            tile ? cn(
+              "usa-radio--tile rounded border-2 border-(--color-uswds-disabled) bg-white px-4 py-3",
+              "has-[:checked]:border-(--color-uswds-primary) has-[:checked]:bg-(--color-uswds-primary-lighter)",
+              disabled && "border-(--color-uswds-disabled) bg-white opacity-100"
+            ) : "pt-3",
+            className
+          ),
+          children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-2", children: [
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                id,
+                type: "radio",
+                name,
+                value,
+                disabled,
+                className: cn(
+                  "usa-radio__input mt-0.5 h-5 w-5 flex-shrink-0 cursor-pointer accent-(--color-uswds-primary)",
+                  "focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)",
+                  disabled && "cursor-not-allowed opacity-60"
+                )
+              }
+            ),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-1", children: [
+              /* @__PURE__ */ jsx(
+                "label",
+                {
+                  htmlFor: id,
+                  className: cn(
+                    "usa-radio__label cursor-pointer text-base leading-[1.3] text-(--color-uswds-base-ink)",
+                    disabled && "cursor-not-allowed text-(--color-uswds-disabled-medium)"
+                  ),
+                  children: label
+                }
+              ),
+              hint && /* @__PURE__ */ jsx(
+                "span",
+                {
+                  className: cn(
+                    "text-sm leading-[1.3] text-(--color-uswds-base-ink)",
+                    disabled && "text-(--color-uswds-disabled-medium)"
+                  ),
+                  children: hint
+                }
+              )
+            ] })
+          ] })
+        }
+      );
+    };
+    export {
+      UswdsRadio as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

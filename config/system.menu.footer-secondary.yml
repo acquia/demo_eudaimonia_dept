@@ -1,0 +1,8 @@
+uuid: 4946440c-bb78-4ff2-932a-b6e48207bf5e
+langcode: en
+status: true
+dependencies: {  }
+id: footer-secondary
+label: 'Footer Secondary'
+description: 'Footer secondary / legal links'
+locked: false

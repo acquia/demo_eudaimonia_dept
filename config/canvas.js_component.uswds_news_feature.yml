@@ -1,0 +1,205 @@
+uuid: 3a76ad5f-80a5-4a70-a074-917e396a5a70
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 3yS004BpquPe1-0hyzKm_kqk-lxYe1a_fEvOCGE7PNE
+machineName: uswds_news_feature
+name: '(Eud-Kit) USWDS News Feature'
+required:
+  - heading
+props:
+  date:
+    type: string
+    title: Date
+    examples:
+      - 'April 28, 2026'
+  category:
+    type: string
+    title: Category
+    examples:
+      - 'Press Release'
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Secretary Hawthorne announces $14B expansion of the Lifelong Learning Account program'
+  body:
+    type: string
+    title: Body
+    examples:
+      - 'The expansion raises the federal match from 1:1 to 2:1 for households earning under $75,000.'
+  ctaText:
+    type: string
+    title: 'CTA Text'
+    examples:
+      - 'Read full release'
+  ctaLink:
+    type: string
+    format: uri-reference
+    title: 'CTA Link'
+    examples:
+      - /newsroom
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS News Feature
+    // Large featured news/press-release card used in a news section alongside
+    // a collection list. Has a gradient image placeholder (no real image needed),
+    // a "Featured Story" badge, date + category, serif heading, body, and CTA.
+
+    const UswdsNewsFeature = ({
+      date = '',
+      category = '',
+      heading = '',
+      body = '',
+      ctaText = 'Read full release',
+      ctaLink = '#',
+      className = '',
+    }) => {
+      const meta = [date, category].filter(Boolean).join(' · ');
+
+      return (
+        <article
+          className={cn(
+            'usa-card flex flex-col overflow-hidden rounded-sm border border-(--color-uswds-base-lighter) bg-white font-sans',
+            className,
+          )}
+        >
+          {/* Gradient image placeholder */}
+          <div
+            className="relative h-72 shrink-0"
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(22,46,81,.85), rgba(0,94,162,.5)), radial-gradient(circle at 35% 65%, rgba(222,198,154,.55), transparent 45%), linear-gradient(180deg, var(--color-uswds-primary-dark), var(--color-uswds-primary-darker))',
+            }}
+            aria-hidden="true"
+          >
+            <span className="absolute bottom-4 left-6 rounded-sm bg-black/45 px-2.5 py-1.5 text-xs font-bold tracking-[1.5px] text-white uppercase">
+              Featured Story
+            </span>
+          </div>
+
+          {/* Body */}
+          <div className="flex flex-1 flex-col p-7">
+            {meta && (
+              <p className="mb-2 text-[13px] font-normal tracking-[.8px] text-(--color-uswds-base-dark) uppercase">
+                {meta}
+              </p>
+            )}
+
+            {heading && (
+              <h3 className="mb-3 font-serif text-[26px] leading-snug font-bold text-(--color-uswds-primary-darker)">
+                {heading}
+              </h3>
+            )}
+
+            {body && (
+              <p className="mb-4 flex-1 text-[15px] leading-relaxed text-(--color-uswds-base-dark)">
+                {body}
+              </p>
+            )}
+
+            {ctaText && (
+              <a
+                href={ctaLink}
+                className="inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline"
+              >
+                {ctaText}
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M9 6l6 6-6 6"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    fill="none"
+                  />
+                </svg>
+              </a>
+            )}
+          </div>
+        </article>
+      );
+    };
+
+    export default UswdsNewsFeature;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsNewsFeature = ({
+      date = "",
+      category = "",
+      heading = "",
+      body = "",
+      ctaText = "Read full release",
+      ctaLink = "#",
+      className = ""
+    }) => {
+      const meta = [date, category].filter(Boolean).join(" · ");
+      return /* @__PURE__ */ jsxs(
+        "article",
+        {
+          className: cn(
+            "usa-card flex flex-col overflow-hidden rounded-sm border border-(--color-uswds-base-lighter) bg-white font-sans",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "relative h-72 shrink-0",
+                style: {
+                  background: "linear-gradient(135deg, rgba(22,46,81,.85), rgba(0,94,162,.5)), radial-gradient(circle at 35% 65%, rgba(222,198,154,.55), transparent 45%), linear-gradient(180deg, var(--color-uswds-primary-dark), var(--color-uswds-primary-darker))"
+                },
+                "aria-hidden": "true",
+                children: /* @__PURE__ */ jsx("span", { className: "absolute bottom-4 left-6 rounded-sm bg-black/45 px-2.5 py-1.5 text-xs font-bold tracking-[1.5px] text-white uppercase", children: "Featured Story" })
+              }
+            ),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-1 flex-col p-7", children: [
+              meta && /* @__PURE__ */ jsx("p", { className: "mb-2 text-[13px] font-normal tracking-[.8px] text-(--color-uswds-base-dark) uppercase", children: meta }),
+              heading && /* @__PURE__ */ jsx("h3", { className: "mb-3 font-serif text-[26px] leading-snug font-bold text-(--color-uswds-primary-darker)", children: heading }),
+              body && /* @__PURE__ */ jsx("p", { className: "mb-4 flex-1 text-[15px] leading-relaxed text-(--color-uswds-base-dark)", children: body }),
+              ctaText && /* @__PURE__ */ jsxs(
+                "a",
+                {
+                  href: ctaLink,
+                  className: "inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline",
+                  children: [
+                    ctaText,
+                    /* @__PURE__ */ jsx(
+                      "svg",
+                      {
+                        viewBox: "0 0 24 24",
+                        className: "h-4 w-4 shrink-0",
+                        "aria-hidden": "true",
+                        children: /* @__PURE__ */ jsx(
+                          "path",
+                          {
+                            d: "M9 6l6 6-6 6",
+                            stroke: "currentColor",
+                            strokeWidth: "2.5",
+                            fill: "none"
+                          }
+                        )
+                      }
+                    )
+                  ]
+                }
+              )
+            ] })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsNewsFeature as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,54 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: ababbb8c-f891-4f34-87cd-81843d56a272
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: Search
+  description:
+    -
+      value: 'EUD demo programs page'
+  components:
+    -
+      uuid: 06093c0f-0009-43ca-a3ed-4f33dfd6208c
+      component_id: js.uswds_section
+      inputs:
+        heading: 'Search Results'
+        marginTop: none
+        background: white
+        paddingTop: lg
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: lg
+    -
+      parent_uuid: 06093c0f-0009-43ca-a3ed-4f33dfd6208c
+      slot: content
+      uuid: b4ee66e2-b4bc-47cb-a785-79634d3fd948
+      component_id: js.uswds_search_results
+      inputs:
+        headingText: 'Search results'
+        noResultsText: 'No results found for your search.'
+  path:
+    -
+      alias: /search
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

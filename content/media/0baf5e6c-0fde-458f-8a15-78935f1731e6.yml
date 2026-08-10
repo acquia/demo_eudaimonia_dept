@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 0baf5e6c-0fde-458f-8a15-78935f1731e6
+  bundle: image
+  default_langcode: en
+  depends:
+    98267b0f-67d1-4dba-a8b1-60355b4190d6: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: banner-icon-dotgov
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Blue icon of a classical building with columns inside a circle.'
+      title: ''
+      width: 160
+      height: 160
+      entity: 98267b0f-67d1-4dba-a8b1-60355b4190d6

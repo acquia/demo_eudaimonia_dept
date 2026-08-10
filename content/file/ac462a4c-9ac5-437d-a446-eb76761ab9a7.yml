@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: ac462a4c-9ac5-437d-a446-eb76761ab9a7
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: card-icon-5-dignity.png
+  uri:
+    -
+      value: 'public://2026-05/card-icon-5-dignity.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 1746
+  status:
+    -
+      value: true

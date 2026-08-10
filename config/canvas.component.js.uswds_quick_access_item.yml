@@ -1,0 +1,55 @@
+uuid: 7b24a14b-d124-4e75-8a19-d1418119cb1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_quick_access_item
+  module:
+    - link
+_core:
+  default_config_hash: LNd7tvNR9N4lmQ4oNZmdZrpKRWFF1x5VuYtT6PdUf6g
+label: '(Eud-Kit) USWDS Quick Access Item'
+id: js.uswds_quick_access_item
+source: js
+source_local_id: uswds_quick_access_item
+provider: null
+active_version: 9c6a061dd7d785e0
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Check claim status'
+          expression: ℹ︎string␟value
+        ctaText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Open
+          expression: ℹ︎string␟value
+        ctaLink:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /claims
+              options: {  }
+          expression: ℹ︎link␟url
+    fallback_metadata:
+      slot_definitions: {  }

@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 4036bfc9-0e94-4f58-97a7-16e6d09fb1c6
+  bundle: image
+  default_langcode: en
+  depends:
+    7c74844d-c75f-4617-b9a9-1ae91e9697ff: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: card-icon-2-work
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Blue briefcase icon with handle'
+      title: ''
+      width: 128
+      height: 128
+      entity: 7c74844d-c75f-4617-b9a9-1ae91e9697ff

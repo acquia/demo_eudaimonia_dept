@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 94da3aaa-626a-4de6-86f7-de057649b537
+  bundle: image
+  default_langcode: en
+  depends:
+    0039a0dd-44d1-4a0b-992c-aabace5f4cad: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: banner-icon-https
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Green padlock icon inside a green circle on a transparent background.'
+      title: ''
+      width: 160
+      height: 160
+      entity: 0039a0dd-44d1-4a0b-992c-aabace5f4cad

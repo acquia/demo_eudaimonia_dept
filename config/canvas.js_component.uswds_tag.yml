@@ -1,0 +1,146 @@
+uuid: 3e1f1565-7c2e-43e1-95de-805ed9e839f2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: gWzyypE9HedEKu2XQ3bDfRsU6GWLZy1Ef96pTahOtJQ
+machineName: uswds_tag
+name: '(Eud-Kit) USWDS Tag'
+required:
+  - text
+props:
+  text:
+    type: string
+    title: Text
+    examples:
+      - New
+  variant:
+    type: string
+    enum:
+      - default
+      - informative
+      - warning
+      - success
+      - error
+      - cool
+      - neutral
+    'meta:enum':
+      default: Default
+      informative: Informative
+      warning: Warning
+      success: Success
+      error: Error
+      cool: Cool
+      neutral: Neutral
+    title: Variant
+    examples:
+      - default
+  size:
+    type: string
+    enum:
+      - default
+      - big
+    'meta:enum':
+      default: Default
+      big: Big
+    title: Size
+    examples:
+      - default
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Tag
+    // Figma defines two sizes: default (14px text, 8px px, 1px py) and big (16px text, 8px px, 1px py).
+    // Both use base-dark bg (#565c65), white text, uppercase, rounded-sm (2px).
+    // Additional color variants are supported for project use but are not in USWDS core Figma.
+
+    const tagVariants = cva(
+      'usa-tag inline-flex items-center rounded-sm px-(--spacing-uswds-1) py-px font-sans leading-none uppercase',
+      {
+        variants: {
+          variant: {
+            default: 'bg-(--color-uswds-base-dark) text-white',
+            informative: 'bg-(--color-uswds-primary) text-white',
+            warning: 'bg-(--color-uswds-warning) text-(--color-uswds-base-ink)',
+            success: 'bg-(--color-uswds-success) text-white',
+            error: 'bg-(--color-uswds-error) text-white',
+            cool: 'bg-(--color-uswds-accent-cool) text-(--color-uswds-base-ink)',
+            neutral:
+              'bg-(--color-uswds-base-lighter) text-(--color-uswds-base-ink)',
+          },
+          size: {
+            // default = 12px
+            default: 'text-[12px]',
+            // big = 16px (text-[length:var(--font-size-uswds-sm)])
+            big: 'text-[length:var(--font-size-uswds-sm)]',
+          },
+        },
+        defaultVariants: {
+          variant: 'default',
+          size: 'default',
+        },
+      },
+    );
+
+    const UswdsTag = ({
+      text = '',
+      variant = 'default',
+      size = 'default',
+      className = '',
+    }) => {
+      return (
+        <span className={cn(tagVariants({ variant, size }), className)}>
+          {text}
+        </span>
+      );
+    };
+
+    export default UswdsTag;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
+    const tagVariants = cva(
+      "usa-tag inline-flex items-center rounded-sm px-(--spacing-uswds-1) py-px font-sans leading-none uppercase",
+      {
+        variants: {
+          variant: {
+            default: "bg-(--color-uswds-base-dark) text-white",
+            informative: "bg-(--color-uswds-primary) text-white",
+            warning: "bg-(--color-uswds-warning) text-(--color-uswds-base-ink)",
+            success: "bg-(--color-uswds-success) text-white",
+            error: "bg-(--color-uswds-error) text-white",
+            cool: "bg-(--color-uswds-accent-cool) text-(--color-uswds-base-ink)",
+            neutral: "bg-(--color-uswds-base-lighter) text-(--color-uswds-base-ink)"
+          },
+          size: {
+            // default = 12px
+            default: "text-[12px]",
+            // big = 16px (text-[length:var(--font-size-uswds-sm)])
+            big: "text-[length:var(--font-size-uswds-sm)]"
+          }
+        },
+        defaultVariants: {
+          variant: "default",
+          size: "default"
+        }
+      }
+    );
+    const UswdsTag = ({
+      text = "",
+      variant = "default",
+      size = "default",
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsx("span", { className: cn(tagVariants({ variant, size }), className), children: text });
+    };
+    export {
+      UswdsTag as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

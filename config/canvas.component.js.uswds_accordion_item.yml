@@ -1,0 +1,65 @@
+uuid: 1e0423b0-1a73-4e55-b717-9140ee8c70e1
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_accordion_item
+  module:
+    - options
+_core:
+  default_config_hash: 5dQ1z8el8tFN4jrGRWuaoxkHhWZaGPz2xZQm-i_3uPY
+label: '(Eud-Kit) USWDS Accordion Item'
+id: js.uswds_accordion_item
+source: js
+source_local_id: uswds_accordion_item
+provider: null
+active_version: 295151aa6cae9487
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'First item'
+          expression: ℹ︎string␟value
+        body:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Item body text.'
+          expression: ℹ︎string␟value
+        expanded:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        variant:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: default
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions:
+        content:
+          title: Content

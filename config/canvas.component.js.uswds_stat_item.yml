@@ -1,0 +1,64 @@
+uuid: cab1de68-f02e-4d15-b91d-968e047e0ba4
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_stat_item
+  module:
+    - options
+_core:
+  default_config_hash: qfVLw2rYSZ-R3hd6H-SMrpa8YbPtdX9_fw9COIFOl0s
+label: '(Eud-Kit) USWDS Stat Item'
+id: js.uswds_stat_item
+source: js
+source_local_id: uswds_stat_item
+provider: null
+active_version: ac1350d46f4b2b5d
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        number:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 42.7M
+          expression: ℹ︎string␟value
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'People Served Annually'
+          expression: ℹ︎string␟value
+        variant:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: default
+          expression: ℹ︎list_string␟value
+        textColor:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: light
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions: {  }

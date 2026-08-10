@@ -1,0 +1,45 @@
+uuid: 031def20-4762-45f9-bd99-ecae62f40ced
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_breadcrumb
+  module:
+    - options
+_core:
+  default_config_hash: 98s1MEgiTB4HWjVpLs-I6FFiTgzKk7CQC9QY9fGfgsk
+label: '(Eud-Kit) USWDS Breadcrumb'
+id: js.uswds_breadcrumb
+source: js
+source_local_id: uswds_breadcrumb
+provider: null
+active_version: 9d8a5c4a423a4dc5
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        context:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: on-light
+          expression: ℹ︎list_string␟value
+        wrap:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items

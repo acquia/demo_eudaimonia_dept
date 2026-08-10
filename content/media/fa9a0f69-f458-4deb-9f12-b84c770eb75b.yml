@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: fa9a0f69-f458-4deb-9f12-b84c770eb75b
+  bundle: image
+  default_langcode: en
+  depends:
+    d71ea22d-0347-4f21-bdcd-99836c0831ac: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: card-icon-4-community
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Blue user profile icon with a circle head and half-oval body on a white background.'
+      title: ''
+      width: 128
+      height: 128
+      entity: d71ea22d-0347-4f21-bdcd-99836c0831ac

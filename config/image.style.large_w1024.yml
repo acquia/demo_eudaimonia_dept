@@ -1,0 +1,21 @@
+uuid: 4bc2f77d-6276-4021-8284-76bc094cbdca
+langcode: en
+status: true
+dependencies: {  }
+name: large_w1024
+label: 'Large (W1024)'
+effects:
+  53f6e512-5e13-44cf-8ffa-7f0ea0f35eec:
+    uuid: 53f6e512-5e13-44cf-8ffa-7f0ea0f35eec
+    id: image_scale
+    weight: 1
+    data:
+      width: 1024
+      height: null
+      upscale: true
+  3e3361c0-00e5-4285-bb01-89a1e8506f09:
+    uuid: 3e3361c0-00e5-4285-bb01-89a1e8506f09
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

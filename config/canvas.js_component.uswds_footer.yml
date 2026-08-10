@@ -1,0 +1,163 @@
+uuid: b6a436be-85fa-4a9b-85ae-edfebed20642
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: eSb3aYBu3FOcpx9FTzsiZPGy0NIUnXD64D3F8CyQxCE
+machineName: uswds_footer
+name: '(Eud-Kit) USWDS Footer'
+required: {  }
+props:
+  topRowBackgroundColor:
+    type: string
+    enum:
+      - white
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lightest
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lightest: 'Base Lightest'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: 'Top Row Background Color'
+    examples:
+      - primary-darker
+  bottomRowBackgroundColor:
+    type: string
+    enum:
+      - white
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lightest
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lightest: 'Base Lightest'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: 'Bottom Row Background Color'
+    examples:
+      - primary-dark
+slots:
+  logo:
+    title: 'Logo (top row)'
+  top_nav:
+    title: 'Primary Navigation (top row)'
+  cta:
+    title: 'Call to Action (top row)'
+  bottom_nav:
+    title: 'Secondary Navigation (bottom row)'
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const resolveColor = (token) => {
+      if (!token) return undefined;
+      if (token === 'white') return 'white';
+      return `var(--color-uswds-${token})`;
+    };
+
+    const UswdsFooter = ({
+      topRowBackgroundColor = 'primary-darker',
+      bottomRowBackgroundColor = 'primary-dark',
+      logo,
+      top_nav,
+      cta,
+      bottom_nav,
+      className = '',
+    }) => {
+      return (
+        <footer className={cn('usa-footer font-sans', className)}>
+          {/* Top row: logo + primary nav + cta */}
+          <div className="usa-footer__primary-section" style={{ backgroundColor: resolveColor(topRowBackgroundColor) }}>
+            <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6 px-8 py-8">
+              {logo && <div className="shrink-0">{logo}</div>}
+              {top_nav && (
+                <nav
+                  aria-label="Footer primary navigation"
+                  className="usa-footer__nav min-w-[200px] flex-1"
+                >
+                  {top_nav}
+                </nav>
+              )}
+              {cta && <div className="shrink-0">{cta}</div>}
+            </div>
+          </div>
+
+          {/* Bottom row: secondary nav */}
+          <div className="usa-footer__secondary-section" style={{ backgroundColor: resolveColor(bottomRowBackgroundColor) }}>
+            <div className="mx-auto flex max-w-[1240px] flex-wrap items-center px-8 py-6">
+              {bottom_nav && (
+                <nav aria-label="Footer secondary navigation" className="usa-footer__nav">{bottom_nav}</nav>
+              )}
+            </div>
+          </div>
+        </footer>
+      );
+    };
+
+    export default UswdsFooter;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const resolveColor = (token) => {
+      if (!token) return void 0;
+      if (token === "white") return "white";
+      return `var(--color-uswds-${token})`;
+    };
+    const UswdsFooter = ({
+      topRowBackgroundColor = "primary-darker",
+      bottomRowBackgroundColor = "primary-dark",
+      logo,
+      top_nav,
+      cta,
+      bottom_nav,
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs("footer", { className: cn("usa-footer font-sans", className), children: [
+        /* @__PURE__ */ jsx("div", { className: "usa-footer__primary-section", style: { backgroundColor: resolveColor(topRowBackgroundColor) }, children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6 px-8 py-8", children: [
+          logo && /* @__PURE__ */ jsx("div", { className: "shrink-0", children: logo }),
+          top_nav && /* @__PURE__ */ jsx(
+            "nav",
+            {
+              "aria-label": "Footer primary navigation",
+              className: "usa-footer__nav min-w-[200px] flex-1",
+              children: top_nav
+            }
+          ),
+          cta && /* @__PURE__ */ jsx("div", { className: "shrink-0", children: cta })
+        ] }) }),
+        /* @__PURE__ */ jsx("div", { className: "usa-footer__secondary-section", style: { backgroundColor: resolveColor(bottomRowBackgroundColor) }, children: /* @__PURE__ */ jsx("div", { className: "mx-auto flex max-w-[1240px] flex-wrap items-center px-8 py-6", children: bottom_nav && /* @__PURE__ */ jsx("nav", { "aria-label": "Footer secondary navigation", className: "usa-footer__nav", children: bottom_nav }) }) })
+      ] });
+    };
+    export {
+      UswdsFooter as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

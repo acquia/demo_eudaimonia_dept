@@ -1,0 +1,394 @@
+uuid: a73a5b10-35bb-41a0-875f-645826b9b82e
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: Gt9q6viQgO6hWuxWoWtp5yurIN2XuGa2yG1pTfPqYec
+machineName: uswds_section
+name: '(Eud-Kit) USWDS Section'
+required: {  }
+props:
+  eyebrow:
+    type: string
+    title: Eyebrow
+    examples:
+      - 'Programs & Services'
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Find the support that fits your life'
+  description:
+    type: string
+    title: Description
+    examples:
+      - 'Explore the six pillars of Eudaimonia — designed around the core capabilities for human flourishing.'
+  background:
+    type: string
+    enum:
+      - white
+      - gray
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      gray: Gray
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: Background
+    examples:
+      - white
+  contentWidth:
+    type: string
+    enum:
+      - wide
+      - narrow
+      - full
+    'meta:enum':
+      wide: 'Wide (1240px, default)'
+      narrow: 'Narrow (760px)'
+      full: 'Full bleed'
+    title: 'Content Width'
+    examples:
+      - wide
+  paddingTop:
+    type: string
+    enum:
+      - none
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      none: None
+      sm: 'Small (2rem)'
+      md: 'Medium (3rem)'
+      lg: 'Large (5rem, default)'
+      xl: 'X-Large (8rem)'
+    title: 'Padding Top'
+    examples:
+      - lg
+  paddingBottom:
+    type: string
+    enum:
+      - none
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      none: None
+      sm: 'Small (2rem)'
+      md: 'Medium (3rem)'
+      lg: 'Large (5rem, default)'
+      xl: 'X-Large (8rem)'
+    title: 'Padding Bottom'
+    examples:
+      - lg
+  marginTop:
+    type: string
+    enum:
+      - none
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      none: None
+      sm: 'Small (1rem)'
+      md: 'Medium (2rem)'
+      lg: 'Large (4rem)'
+      xl: 'X-Large (6rem)'
+    title: 'Margin Top'
+    examples:
+      - none
+  marginBottom:
+    type: string
+    enum:
+      - none
+      - sm
+      - md
+      - lg
+      - xl
+    'meta:enum':
+      none: None
+      sm: 'Small (1rem)'
+      md: 'Medium (2rem)'
+      lg: 'Large (4rem)'
+      xl: 'X-Large (6rem)'
+    title: 'Margin Bottom'
+    examples:
+      - none
+slots:
+  content:
+    title: Content
+js:
+  original: |
+    import { cn, FormattedText } from 'drupal-canvas';
+
+    // Section wrapper — controls background, max-width container, and optional
+    // section-head (eyebrow + heading + description). Content renders in the slot.
+    // navy background flips eyebrow to gold and text to white.
+
+    const WIDTH_MAP = {
+      wide: 'max-w-[1240px]',
+      narrow: 'max-w-[760px]',
+      full: 'max-w-none',
+    };
+
+    const PADDING_TOP_MAP = {
+      none: 'pt-0',
+      sm: 'pt-8',
+      md: 'pt-12',
+      lg: 'pt-20',
+      xl: 'pt-32',
+    };
+
+    const PADDING_BOTTOM_MAP = {
+      none: 'pb-0',
+      sm: 'pb-8',
+      md: 'pb-12',
+      lg: 'pb-20',
+      xl: 'pb-32',
+    };
+
+    const MARGIN_TOP_MAP = {
+      none: 'mt-0',
+      sm: 'mt-4',
+      md: 'mt-8',
+      lg: 'mt-16',
+      xl: 'mt-24',
+    };
+
+    const MARGIN_BOTTOM_MAP = {
+      none: 'mb-0',
+      sm: 'mb-4',
+      md: 'mb-8',
+      lg: 'mb-16',
+      xl: 'mb-24',
+    };
+
+    const BG_MAP = {
+      white: 'bg-white',
+      gray: 'bg-(--color-uswds-base-lightest)',
+      'primary-lightest': 'bg-(--color-uswds-primary-lightest)',
+      'primary-lighter': 'bg-(--color-uswds-primary-lighter)',
+      primary: 'bg-(--color-uswds-primary)',
+      'primary-dark': 'bg-(--color-uswds-primary-dark)',
+      'primary-darker': 'bg-(--color-uswds-primary-darker)',
+      'base-lightest': 'bg-(--color-uswds-base-lightest)',
+      'base-lighter': 'bg-(--color-uswds-base-lighter)',
+      'base-dark': 'bg-(--color-uswds-base-dark)',
+      'base-darkest': 'bg-(--color-uswds-base-darkest)',
+    };
+
+    const DARK_BG = new Set(['primary', 'primary-dark', 'primary-darker', 'base-dark', 'base-darkest']);
+
+    const UswdsSection = ({
+      eyebrow = '',
+      heading = '',
+      description = '',
+      background = 'white',
+      contentWidth = 'wide',
+      paddingTop = 'lg',
+      paddingBottom = 'lg',
+      marginTop = 'none',
+      marginBottom = 'none',
+      content,
+      className = '',
+    }) => {
+      const isDark = DARK_BG.has(background);
+      const maxW = WIDTH_MAP[contentWidth] ?? WIDTH_MAP.wide;
+
+      return (
+        <section
+          className={cn(
+            'w-full font-sans',
+            BG_MAP[background] ?? BG_MAP.white,
+            PADDING_TOP_MAP[paddingTop] ?? PADDING_TOP_MAP.lg,
+            PADDING_BOTTOM_MAP[paddingBottom] ?? PADDING_BOTTOM_MAP.lg,
+            MARGIN_TOP_MAP[marginTop] ?? MARGIN_TOP_MAP.none,
+            MARGIN_BOTTOM_MAP[marginBottom] ?? MARGIN_BOTTOM_MAP.none,
+            className,
+          )}
+        >
+          <div className={cn('mx-auto px-8', maxW)}>
+            {/* Section head */}
+            {(eyebrow || heading || description) && (
+              <div className="mb-12 max-w-3xl">
+                {eyebrow && (
+                  <p
+                    className={cn(
+                      'mb-3 text-[13px] font-bold tracking-[1.5px] uppercase',
+                      isDark ? 'text-(--color-eud-gold)' : 'text-(--color-uswds-primary)',
+                    )}
+                  >
+                    {eyebrow}
+                  </p>
+                )}
+                {heading && (
+                  <h2
+                    className={cn(
+                      'mb-3 font-serif text-[36px] leading-tight font-bold',
+                      isDark ? 'text-white' : 'text-(--color-uswds-primary-darker)',
+                    )}
+                  >
+                    {heading}
+                  </h2>
+                )}
+                {description && (
+                  <FormattedText
+                    className={cn(
+                      'text-[18px] leading-relaxed',
+                      isDark ? 'text-white/75' : 'text-(--color-uswds-base-dark)',
+                    )}
+                  >
+                    {description}
+                  </FormattedText>
+                )}
+              </div>
+            )}
+
+            {/* Content slot */}
+            {content && <div>{content}</div>}
+          </div>
+        </section>
+      );
+    };
+
+    export default UswdsSection;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { cn, FormattedText } from "drupal-canvas";
+    const WIDTH_MAP = {
+      wide: "max-w-[1240px]",
+      narrow: "max-w-[760px]",
+      full: "max-w-none"
+    };
+    const PADDING_TOP_MAP = {
+      none: "pt-0",
+      sm: "pt-8",
+      md: "pt-12",
+      lg: "pt-20",
+      xl: "pt-32"
+    };
+    const PADDING_BOTTOM_MAP = {
+      none: "pb-0",
+      sm: "pb-8",
+      md: "pb-12",
+      lg: "pb-20",
+      xl: "pb-32"
+    };
+    const MARGIN_TOP_MAP = {
+      none: "mt-0",
+      sm: "mt-4",
+      md: "mt-8",
+      lg: "mt-16",
+      xl: "mt-24"
+    };
+    const MARGIN_BOTTOM_MAP = {
+      none: "mb-0",
+      sm: "mb-4",
+      md: "mb-8",
+      lg: "mb-16",
+      xl: "mb-24"
+    };
+    const BG_MAP = {
+      white: "bg-white",
+      gray: "bg-(--color-uswds-base-lightest)",
+      "primary-lightest": "bg-(--color-uswds-primary-lightest)",
+      "primary-lighter": "bg-(--color-uswds-primary-lighter)",
+      primary: "bg-(--color-uswds-primary)",
+      "primary-dark": "bg-(--color-uswds-primary-dark)",
+      "primary-darker": "bg-(--color-uswds-primary-darker)",
+      "base-lightest": "bg-(--color-uswds-base-lightest)",
+      "base-lighter": "bg-(--color-uswds-base-lighter)",
+      "base-dark": "bg-(--color-uswds-base-dark)",
+      "base-darkest": "bg-(--color-uswds-base-darkest)"
+    };
+    const DARK_BG = /* @__PURE__ */ new Set(["primary", "primary-dark", "primary-darker", "base-dark", "base-darkest"]);
+    const UswdsSection = ({
+      eyebrow = "",
+      heading = "",
+      description = "",
+      background = "white",
+      contentWidth = "wide",
+      paddingTop = "lg",
+      paddingBottom = "lg",
+      marginTop = "none",
+      marginBottom = "none",
+      content,
+      className = ""
+    }) => {
+      var _a, _b, _c, _d, _e, _f;
+      const isDark = DARK_BG.has(background);
+      const maxW = (_a = WIDTH_MAP[contentWidth]) != null ? _a : WIDTH_MAP.wide;
+      return /* @__PURE__ */ jsx(
+        "section",
+        {
+          className: cn(
+            "w-full font-sans",
+            (_b = BG_MAP[background]) != null ? _b : BG_MAP.white,
+            (_c = PADDING_TOP_MAP[paddingTop]) != null ? _c : PADDING_TOP_MAP.lg,
+            (_d = PADDING_BOTTOM_MAP[paddingBottom]) != null ? _d : PADDING_BOTTOM_MAP.lg,
+            (_e = MARGIN_TOP_MAP[marginTop]) != null ? _e : MARGIN_TOP_MAP.none,
+            (_f = MARGIN_BOTTOM_MAP[marginBottom]) != null ? _f : MARGIN_BOTTOM_MAP.none,
+            className
+          ),
+          children: /* @__PURE__ */ jsxs("div", { className: cn("mx-auto px-8", maxW), children: [
+            (eyebrow || heading || description) && /* @__PURE__ */ jsxs("div", { className: "mb-12 max-w-3xl", children: [
+              eyebrow && /* @__PURE__ */ jsx(
+                "p",
+                {
+                  className: cn(
+                    "mb-3 text-[13px] font-bold tracking-[1.5px] uppercase",
+                    isDark ? "text-(--color-eud-gold)" : "text-(--color-uswds-primary)"
+                  ),
+                  children: eyebrow
+                }
+              ),
+              heading && /* @__PURE__ */ jsx(
+                "h2",
+                {
+                  className: cn(
+                    "mb-3 font-serif text-[36px] leading-tight font-bold",
+                    isDark ? "text-white" : "text-(--color-uswds-primary-darker)"
+                  ),
+                  children: heading
+                }
+              ),
+              description && /* @__PURE__ */ jsx(
+                FormattedText,
+                {
+                  className: cn(
+                    "text-[18px] leading-relaxed",
+                    isDark ? "text-white/75" : "text-(--color-uswds-base-dark)"
+                  ),
+                  children: description
+                }
+              )
+            ] }),
+            content && /* @__PURE__ */ jsx("div", { children: content })
+          ] })
+        }
+      );
+    };
+    export {
+      UswdsSection as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,357 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 3b89444d-c202-4d65-9f44-8268eef82ac1
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Department of Eudaimonia — Programs'
+  description:
+    -
+      value: 'EUD demo programs page'
+  components:
+    -
+      uuid: 7cd2ad56-7352-4ac9-b89e-e5388b13671b
+      component_id: js.uswds_page_hero
+      inputs:
+        heading: 'Programs & Services'
+        leadParagraph: 'Six flagship programs cover the core capabilities for a flourishing life. Use the filters below to find what fits your situation.'
+    -
+      parent_uuid: 7cd2ad56-7352-4ac9-b89e-e5388b13671b
+      slot: breadcrumb
+      uuid: 9d7caa26-d212-44d4-acd6-9e11df3709cd
+      component_id: js.uswds_breadcrumb
+      inputs:
+        wrap: false
+        context: on-dark
+    -
+      parent_uuid: 9d7caa26-d212-44d4-acd6-9e11df3709cd
+      slot: items
+      uuid: 6509ecad-1bd4-47e6-bd5d-a772ece63e9a
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        href:
+          uri: 'internal:/eud-home'
+          options: {  }
+        text: Home
+        isLast: false
+        context: on-dark
+        showSeparator: false
+    -
+      parent_uuid: 9d7caa26-d212-44d4-acd6-9e11df3709cd
+      slot: items
+      uuid: 6a7c3a94-dd66-48d2-a696-5482a1fac26a
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: 'Programs & Services'
+        isLast: true
+        context: on-dark
+        showSeparator: true
+    -
+      uuid: 1c3f3dc8-3507-4932-9ddb-d3c0148b3981
+      component_id: js.uswds_section
+      inputs:
+        marginTop: none
+        background: white
+        paddingTop: lg
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: none
+    -
+      parent_uuid: 1c3f3dc8-3507-4932-9ddb-d3c0148b3981
+      slot: content
+      uuid: 16140a9c-3ed9-4919-bc13-ef628b7d86d0
+      component_id: js.uswds_alert
+      inputs:
+        body:
+          value: '<p>Flourish Family Benefit open enrollment closes <strong>December 31, 2026</strong>. <a href="https://apply.html"><strong><u>Apply now →</u></strong></a></p>'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+        heading: 'Enrollment deadline approaching'
+        variant: warning
+    -
+      uuid: f828b982-2afe-41a8-ab5e-5f32dda0589c
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: 'Programs & Services'
+        heading: 'Find the Right Program for You'
+        marginTop: none
+        background: white
+        paddingTop: sm
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: f828b982-2afe-41a8-ab5e-5f32dda0589c
+      slot: content
+      uuid: 20f856a7-097c-4b1c-bf6a-53ebce56f375
+      component_id: js.uswds_program_list
+      inputs:
+        ariaLabel: 'All programs'
+        programLimit: 10
+    -
+      uuid: abec280b-6e9d-4258-903c-1d2d078a5293
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: Compare
+        heading: 'At a Glance'
+        marginTop: none
+        background: gray
+        paddingTop: sm
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: abec280b-6e9d-4258-903c-1d2d078a5293
+      slot: content
+      uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      component_id: js.uswds_table
+      inputs:
+        compact: false
+        stacked: false
+        striped: true
+        bordered: false
+    -
+      parent_uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      slot: rows
+      uuid: d3a4ce0c-119e-4881-9b32-7eb0aa997027
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - Program
+          - 'Who qualifies'
+          - 'Benefit type'
+          - 'Max amount'
+          - Decision
+        isHeader: true
+        textColor: light
+        backgroundColor: primary-darker
+    -
+      parent_uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      slot: rows
+      uuid: 2dd68d85-bca7-4ad6-b2b7-b3e6fe8ddabe
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Flourish Family'
+          - 'Households with dependents'
+          - 'Monthly cash'
+          - '$2,400/qtr'
+          - '14 days'
+        isHeader: false
+        textColor: dark
+        backgroundColor: gray
+    -
+      parent_uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      slot: rows
+      uuid: f8e573a0-1493-440a-9bfc-2d676e8c0951
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Career Re-entry'
+          - 'Adults returning to work'
+          - 'Grant + apprenticeship'
+          - '$8,000'
+          - '21 days'
+        isHeader: false
+        textColor: dark
+        backgroundColor: white
+    -
+      parent_uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      slot: rows
+      uuid: aed9e0db-2168-48d3-9c19-3cb1bb8b3f10
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Lifelong Learning'
+          - 'All residents 16+'
+          - 'Savings match'
+          - '$6,000/yr'
+          - '7 days'
+        isHeader: false
+        textColor: dark
+        backgroundColor: gray
+    -
+      parent_uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      slot: rows
+      uuid: d2c26f3d-9d36-42d1-9316-65486d3fd9c2
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Neighborhood Fund'
+          - 'Organizations & businesses'
+          - Grant
+          - '$250,000'
+          - '60 days'
+        isHeader: false
+        textColor: dark
+        backgroundColor: white
+    -
+      parent_uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      slot: rows
+      uuid: 0faf35e0-14c9-4253-8a02-6c2b00e9d67b
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Dignity Floor'
+          - 'Adults in financial need'
+          - 'Monthly cash'
+          - '$1,200/mo'
+          - '30 days'
+        isHeader: false
+        textColor: dark
+        backgroundColor: gray
+    -
+      parent_uuid: 815bd0ff-7af3-4d4f-a380-f090c5fa8c67
+      slot: rows
+      uuid: b321c107-3384-4823-a5ea-db131df8597f
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Public Arts Stipend'
+          - 'Working artists'
+          - 'Annual stipend'
+          - '$28,000/yr'
+          - '90 days'
+        isHeader: false
+        textColor: dark
+        backgroundColor: white
+    -
+      uuid: 71f10775-a4ce-404c-9dee-5f7a65b70767
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: Resources
+        heading: 'Guides and Toolkits'
+        marginTop: none
+        background: white
+        paddingTop: sm
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: 71f10775-a4ce-404c-9dee-5f7a65b70767
+      slot: content
+      uuid: 484dae4b-d3bf-4ea4-8cda-5e9370f2bfcb
+      component_id: js.uswds_card_group
+      inputs:
+        columns: 3
+    -
+      parent_uuid: 484dae4b-d3bf-4ea4-8cda-5e9370f2bfcb
+      slot: items
+      uuid: 4de4146c-2e8d-4d5a-9850-5a616f8c9d7a
+      component_id: js.uswds_card
+      inputs:
+        tag: Health
+        body:
+          value: '<p>Step-by-step walkthrough for completing the online eligibility screener. Includes sample scenarios and tips for common situations.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Check eligibility'
+        heading: 'Eligibility Screener Guide'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: false
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: 4de4146c-2e8d-4d5a-9850-5a616f8c9d7a
+      slot: footer
+      uuid: 35b13111-a01f-4bd5-9248-39b03605bdb5
+      component_id: js.uswds_button
+      inputs:
+        size: default
+        text: 'Download PDF'
+        variant: outline
+        disabled: false
+        showArrowIcon: false
+    -
+      parent_uuid: 484dae4b-d3bf-4ea4-8cda-5e9370f2bfcb
+      slot: items
+      uuid: 0958586b-c6f1-4d6f-9dbd-efbcac131a24
+      component_id: js.uswds_card
+      inputs:
+        tag: Health
+        body:
+          value: '<p>A printable checklist of documents and information you’ll need before starting your application — available in 12 languages.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Check eligibility'
+        heading: 'Application Checklist'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: false
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: 0958586b-c6f1-4d6f-9dbd-efbcac131a24
+      slot: footer
+      uuid: 36082b57-9477-40d1-8c4a-cdfa884830ba
+      component_id: js.uswds_button
+      inputs:
+        size: default
+        text: 'Download PDF'
+        variant: outline
+        disabled: false
+        showArrowIcon: false
+    -
+      parent_uuid: 484dae4b-d3bf-4ea4-8cda-5e9370f2bfcb
+      slot: items
+      uuid: 9120981d-07c2-4cf2-8635-4835361994b0
+      component_id: js.uswds_card
+      inputs:
+        tag: Health
+        body:
+          value: '<p>Learn how to combine multiple Eudaimonia programs for maximum benefit. Includes income interaction charts and real-world examples.</p>'
+          format: canvas_html_block
+        layout: default
+        ctaLink:
+          uri: 'internal:/'
+          options: {  }
+        ctaText: 'Check eligibility'
+        heading: 'Benefit Stacking Guide'
+        mediaFirst: true
+        mediaInset: false
+        mediaExdent: false
+        headingLevel: h3
+        mediaPosition: left
+    -
+      parent_uuid: 9120981d-07c2-4cf2-8635-4835361994b0
+      slot: footer
+      uuid: 3749792e-0768-4f7c-951c-850b8e703c65
+      component_id: js.uswds_button
+      inputs:
+        size: default
+        text: 'Download PDF'
+        variant: outline
+        disabled: false
+        showArrowIcon: false
+  path:
+    -
+      alias: /eud-programs
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

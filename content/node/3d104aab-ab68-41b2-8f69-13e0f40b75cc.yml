@@ -1,0 +1,51 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 3d104aab-ab68-41b2-8f69-13e0f40b75cc
+  bundle: program
+  default_langcode: en
+  depends:
+    689400ae-d815-455c-ad16-588f9b0ffaac: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Lifelong Learning Account'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Matched savings for any accredited training — trade school, college, certificate programs, or professional licensure. Government matches up to $6,000/year.'
+      format: filtered_html
+      summary: 'Matched savings for any accredited training — trade school, college, certificate programs, or professional licensure. Government matches up to $6,000/year.'
+  field_categories:
+    -
+      entity: 689400ae-d815-455c-ad16-588f9b0ffaac
+  field_decision_timeline:
+    -
+      value: '7 days'
+  field_enrollment_status:
+    -
+      value: coming_soon
+  field_max_amount:
+    -
+      value: 'Up to $6,000/year match'

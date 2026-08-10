@@ -1,0 +1,21 @@
+uuid: b73e22dd-3540-4a69-b773-c7e1da1c7e07
+langcode: en
+status: true
+dependencies: {  }
+name: x_large_1360
+label: 'X Large (1360)'
+effects:
+  67e1c5b4-1702-4d22-b2c6-e001faeb3876:
+    uuid: 67e1c5b4-1702-4d22-b2c6-e001faeb3876
+    id: image_scale
+    weight: 1
+    data:
+      width: 1360
+      height: null
+      upscale: true
+  601cd79d-0f7a-46c5-8b1b-d9c63c5b1b00:
+    uuid: 601cd79d-0f7a-46c5-8b1b-d9c63c5b1b00
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

@@ -1,0 +1,500 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 64796edd-e595-4441-9486-8e19494c8fb9
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'USWDS Demo — Interactive & Feedback'
+  description:
+    -
+      value: 'Visual demo of USWDS interactive and feedback components'
+  components:
+    -
+      uuid: 2ee6665d-8043-4d71-b5ec-62401de9cf1d
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_alert — Alert Messages (4 variants)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 2ee6665d-8043-4d71-b5ec-62401de9cf1d
+      slot: content
+      uuid: 8ff5fffc-440a-4c33-9a10-d52207912d2a
+      component_id: js.uswds_alert
+      inputs:
+        variant: info
+        heading: 'Open enrollment period active'
+        body:
+          value: '<p>The Flourish Family Benefit enrollment window is open through December 31, 2026. <a href="/apply">Learn more about eligibility</a>.</p>'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+    -
+      parent_uuid: 2ee6665d-8043-4d71-b5ec-62401de9cf1d
+      slot: content
+      uuid: 9f445f43-54a1-4ad2-abf3-4c9563586825
+      component_id: js.uswds_alert
+      inputs:
+        variant: warning
+        heading: 'Document submission deadline approaching'
+        body:
+          value: '<p>Your supporting documents are due within 7 days. Incomplete applications may be automatically closed.</p>'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+    -
+      parent_uuid: 2ee6665d-8043-4d71-b5ec-62401de9cf1d
+      slot: content
+      uuid: 401ce4c0-bb9f-46fe-ab51-8f165421b8e8
+      component_id: js.uswds_alert
+      inputs:
+        variant: error
+        heading: 'Application submission failed'
+        body:
+          value: '<p>We were unable to process your submission. Please check your information and try again, or contact <a href="/contact">support</a>.</p>'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+    -
+      parent_uuid: 2ee6665d-8043-4d71-b5ec-62401de9cf1d
+      slot: content
+      uuid: dfb07ef9-62ae-4b78-987b-a8de3ca35089
+      component_id: js.uswds_alert
+      inputs:
+        variant: success
+        heading: 'Application submitted successfully'
+        body:
+          value: '<p>Your application has been received. You will receive a decision by email within 10 business days. Reference number: EUD-2026-482910.</p>'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+    -
+      uuid: 4463c676-aa08-4120-b7e9-ea3e49e84c3a
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_site_alert — Site-wide Alert'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 4463c676-aa08-4120-b7e9-ea3e49e84c3a
+      slot: content
+      uuid: edad3f8d-2221-4853-91f8-971d98170938
+      component_id: js.uswds_site_alert
+      inputs:
+        variant: info
+        heading: 'Scheduled system maintenance this Sunday'
+        body:
+          value: '<p>The application portal will be unavailable from 2–6 AM ET on Sunday, June 1. Save your work before then.</p>'
+          format: canvas_html_block
+        slim: false
+        width: boxed
+    -
+      uuid: dddd5e2d-754c-4ffc-9b5d-c50411723cb1
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_modal — Modal Dialog'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: dddd5e2d-754c-4ffc-9b5d-c50411723cb1
+      slot: content
+      uuid: 91a0f10d-901b-4e30-a3e2-076f1e26deb5
+      component_id: js.uswds_modal
+      inputs:
+        id: confirm-withdraw-modal
+        heading: 'Withdraw your application?'
+        triggerText: 'Withdraw application'
+        size: default
+        forcedActionNoDismiss: false
+    -
+      uuid: 4f9fb3dc-e1ef-40f8-afde-912c7b472a53
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_accordion — Accordion (3 items)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 4f9fb3dc-e1ef-40f8-afde-912c7b472a53
+      slot: content
+      uuid: 7d9d2dff-0d1b-4c03-97bd-f092f987bb82
+      component_id: js.uswds_accordion
+      inputs:
+        bordered: false
+        multiselectable: true
+        variant: default
+    -
+      parent_uuid: 7d9d2dff-0d1b-4c03-97bd-f092f987bb82
+      slot: items
+      uuid: 4a8f1537-49ac-49c6-a865-221c94cbdf8c
+      component_id: js.uswds_accordion_item
+      inputs:
+        heading: 'Who qualifies for the Flourish Family Benefit?'
+        body: 'Families with at least one dependent child under 18, household income at or below 250% of the Federal Poverty Level, and U.S. citizenship or qualifying residency status are eligible to apply.'
+        expanded: true
+        variant: default
+    -
+      parent_uuid: 7d9d2dff-0d1b-4c03-97bd-f092f987bb82
+      slot: items
+      uuid: d6542878-79e7-4550-bed8-e20eff2c7a8e
+      component_id: js.uswds_accordion_item
+      inputs:
+        heading: 'How long does the application process take?'
+        body: 'Most online applications receive a preliminary decision within 10 business days. Mail-in applications may take 4–6 weeks. Incomplete applications will be held for 30 days before being closed.'
+        expanded: false
+        variant: default
+    -
+      parent_uuid: 7d9d2dff-0d1b-4c03-97bd-f092f987bb82
+      slot: items
+      uuid: 283f7f67-df87-4edf-9aab-8b5ecb93274a
+      component_id: js.uswds_accordion_item
+      inputs:
+        heading: 'Can I appeal a denial?'
+        body: 'Yes. You have 60 days from the date of the denial notice to file a formal appeal. Appeals must be submitted in writing and include any new supporting documentation.'
+        expanded: false
+        variant: default
+    -
+      uuid: 20d76ffb-7888-4c86-baaf-dc0691138b1b
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_tab — Tabs (3 panels)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 20d76ffb-7888-4c86-baaf-dc0691138b1b
+      slot: content
+      uuid: bf19aa86-9bd8-427e-8236-5590ddc0292b
+      component_id: js.uswds_tab
+      inputs:
+        accessibleLabel: 'Program categories'
+    -
+      parent_uuid: bf19aa86-9bd8-427e-8236-5590ddc0292b
+      slot: items
+      uuid: 01f288bd-3135-4b84-8543-bc2528289c17
+      component_id: js.uswds_tab_item
+      inputs:
+        tabLabel: Individuals
+    -
+      parent_uuid: 01f288bd-3135-4b84-8543-bc2528289c17
+      slot: items
+      uuid: 0bc63eca-5ed5-43be-bb7f-8c55ff9ca31d
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Check my eligibility'
+        ctaText: Start
+        ctaLink:
+          uri: 'internal:/eligibility'
+          options: {  }
+    -
+      parent_uuid: bf19aa86-9bd8-427e-8236-5590ddc0292b
+      slot: items
+      uuid: 5c0ad6ad-0e66-496a-884b-48d6851d3852
+      component_id: js.uswds_tab_item
+      inputs:
+        tabLabel: Families
+    -
+      parent_uuid: 5c0ad6ad-0e66-496a-884b-48d6851d3852
+      slot: items
+      uuid: 24ff150b-f0f2-47f2-ba8f-604080ff3469
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Apply for Flourish Family Benefit'
+        ctaText: Apply
+        ctaLink:
+          uri: 'internal:/apply/ffb'
+          options: {  }
+    -
+      parent_uuid: bf19aa86-9bd8-427e-8236-5590ddc0292b
+      slot: items
+      uuid: 6299d074-a83f-4478-b556-3779b56b57ef
+      component_id: js.uswds_tab_item
+      inputs:
+        tabLabel: Businesses
+    -
+      parent_uuid: 6299d074-a83f-4478-b556-3779b56b57ef
+      slot: items
+      uuid: bccd6720-23ad-4730-824f-8cfbfdff5827
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Small business launch grants'
+        ctaText: 'Learn more'
+        ctaLink:
+          uri: 'internal:/programs/small-business'
+          options: {  }
+    -
+      uuid: 61a7bcdd-d8d4-45f2-b752-a4a1e47696bf
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_tag — Tags (3 variants)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 61a7bcdd-d8d4-45f2-b752-a4a1e47696bf
+      slot: content
+      uuid: 8492f98d-bce4-42ac-af2d-7c094b01a20a
+      component_id: js.uswds_tag
+      inputs:
+        text: 'Open enrollment'
+        variant: success
+        size: default
+    -
+      parent_uuid: 61a7bcdd-d8d4-45f2-b752-a4a1e47696bf
+      slot: content
+      uuid: 8e00f486-4e39-4f81-9e9d-72c077fd12f2
+      component_id: js.uswds_tag
+      inputs:
+        text: 'Deadline approaching'
+        variant: warning
+        size: default
+    -
+      parent_uuid: 61a7bcdd-d8d4-45f2-b752-a4a1e47696bf
+      slot: content
+      uuid: d8da0ede-7c62-457a-bb23-4ddb7e0cda0f
+      component_id: js.uswds_tag
+      inputs:
+        text: 'New program'
+        variant: informative
+        size: big
+    -
+      uuid: 525acb17-8485-4d0a-aed6-898b70bd5456
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_icon — Icons (3 instances)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 525acb17-8485-4d0a-aed6-898b70bd5456
+      slot: content
+      uuid: 38936e60-8310-4e55-a803-67344c454752
+      component_id: js.uswds_icon
+      inputs:
+        iconName: people
+        size: xl
+        color: dark
+    -
+      parent_uuid: 525acb17-8485-4d0a-aed6-898b70bd5456
+      slot: content
+      uuid: 679662e3-0093-44ee-a8a0-4fdb3597019e
+      component_id: js.uswds_icon
+      inputs:
+        iconName: school
+        size: lg
+        color: dark
+    -
+      parent_uuid: 525acb17-8485-4d0a-aed6-898b70bd5456
+      slot: content
+      uuid: c55a2811-6440-44a2-953c-8082eeb725c6
+      component_id: js.uswds_icon
+      inputs:
+        iconName: verified
+        size: md
+        color: dark
+    -
+      uuid: 5fc8c8c0-3745-4499-afaa-bc2abf976542
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_tooltip — Tooltip (wrapping a button)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 5fc8c8c0-3745-4499-afaa-bc2abf976542
+      slot: content
+      uuid: 54567e88-fb1f-44d2-8026-729b70718286
+      component_id: js.uswds_tooltip
+      inputs:
+        tooltipText: 'Submitting starts a 10-business-day review. You cannot edit after submission.'
+        position: top
+    -
+      parent_uuid: 54567e88-fb1f-44d2-8026-729b70718286
+      slot: children
+      uuid: 61002727-727e-4ee4-978e-967b00f83115
+      component_id: js.uswds_button
+      inputs:
+        text: 'Submit final application'
+        link:
+          uri: 'internal:/apply/submit'
+          options: {  }
+        variant: default
+        size: default
+    -
+      uuid: ca32d9d2-f357-46a2-ae21-7214023b9ee4
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_step_indicator — Step Indicator (counters, step 2 of 4 active)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: ca32d9d2-f357-46a2-ae21-7214023b9ee4
+      slot: content
+      uuid: 708ba0f0-2086-461b-a717-00460b777ec7
+      component_id: js.uswds_step_indicator
+      inputs:
+        steps:
+          - 'Personal information'
+          - 'Household status'
+          - 'Supporting documents'
+          - 'Signature & submit'
+        currentStep: 2
+        counters: true
+        smallCounters: false
+        center: false
+        noLabels: false
+        headingTitle: 'Household status'
+        backgroundColor: white
+    -
+      uuid: 92e1474a-4e29-4f23-b39c-28dab32647d1
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_table — Data Table (1 header + 3 data rows)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 92e1474a-4e29-4f23-b39c-28dab32647d1
+      slot: content
+      uuid: 458f07d7-fc00-487e-9e30-cf36fafb8d7d
+      component_id: js.uswds_table
+      inputs:
+        caption: 'Eudaimonia Programs — Eligibility Summary'
+        striped: true
+        bordered: false
+        compact: false
+        stacked: false
+    -
+      parent_uuid: 458f07d7-fc00-487e-9e30-cf36fafb8d7d
+      slot: rows
+      uuid: c5d04c8f-51be-4109-a6ee-9392d31059a4
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - Program
+          - 'Who qualifies'
+          - 'Benefit type'
+          - 'Max amount'
+          - 'Decision time'
+        isHeader: true
+        backgroundColor: primary-lightest
+        textColor: dark
+    -
+      parent_uuid: 458f07d7-fc00-487e-9e30-cf36fafb8d7d
+      slot: rows
+      uuid: 8f16fb2d-b7c1-4237-81b9-3c8c57019774
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Flourish Family Benefit'
+          - 'Families with children under 18'
+          - 'Direct cash'
+          - $800/mo
+          - '10 business days'
+        isHeader: false
+        textColor: dark
+    -
+      parent_uuid: 458f07d7-fc00-487e-9e30-cf36fafb8d7d
+      slot: rows
+      uuid: 03e7bb86-a905-44b5-8884-f1e5a7e680da
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Lifelong Learning Account'
+          - 'All residents 18+'
+          - 'Education savings match'
+          - '$5,000/yr'
+          - '5 business days'
+        isHeader: false
+        textColor: dark
+    -
+      parent_uuid: 458f07d7-fc00-487e-9e30-cf36fafb8d7d
+      slot: rows
+      uuid: 18196f23-affd-435e-9251-b682f6545ee1
+      component_id: js.uswds_table_row
+      inputs:
+        cells:
+          - 'Community Connection Corps'
+          - 'Residents 16+ seeking community engagement'
+          - 'Paid placement'
+          - $18/hr
+          - '2 weeks'
+        isHeader: false
+        textColor: dark
+    -
+      uuid: ff487342-ca8f-449b-89c1-3c9c80b236b9
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_search_results — Search Results Component'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: ff487342-ca8f-449b-89c1-3c9c80b236b9
+      slot: content
+      uuid: b3cca4de-27b7-4486-8124-79deb0f49f23
+      component_id: js.uswds_search_results
+      inputs:
+        headingText: 'Search results'
+        noResultsText: 'No results found for your search. Try different keywords or browse all programs.'
+  path:
+    -
+      alias: /demo-05-interactive
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

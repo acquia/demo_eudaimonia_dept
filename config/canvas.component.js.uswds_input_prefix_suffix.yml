@@ -1,0 +1,96 @@
+uuid: 7ee31280-0cf4-4f9d-b02f-2c2d9ceb9bd6
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_input_prefix_suffix
+_core:
+  default_config_hash: yI_WUhiGoqSO5Q1fn58gs03IM6HY--N845Hfvqn23xY
+label: '(Eud-Kit) USWDS Input Prefix Suffix'
+id: js.uswds_input_prefix_suffix
+source: js
+source_local_id: uswds_input_prefix_suffix
+provider: null
+active_version: 0af9a873e0a00cf8
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Dollar amount'
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: amount
+          expression: ℹ︎string␟value
+        prefixText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: $
+          expression: ℹ︎string␟value
+        suffixText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '.00'
+          expression: ℹ︎string␟value
+        placeholder:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        hintText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        state:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: default
+          expression: ℹ︎string␟value
+        errorText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Enter a valid amount'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

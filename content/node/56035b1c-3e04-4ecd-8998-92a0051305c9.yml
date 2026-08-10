@@ -1,0 +1,51 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 56035b1c-3e04-4ecd-8998-92a0051305c9
+  bundle: program
+  default_langcode: en
+  depends:
+    4e56e5e0-c8db-4daa-9a0b-4a2269af5e62: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Flourish Family Benefit'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Monthly support for households raising children or caring for older relatives. Up to $2,400 per quarter, tax-free.'
+      format: filtered_html
+      summary: 'Monthly support for households raising children or caring for older relatives. Up to $2,400 per quarter, tax-free.'
+  field_categories:
+    -
+      entity: 4e56e5e0-c8db-4daa-9a0b-4a2269af5e62
+  field_decision_timeline:
+    -
+      value: '14 days'
+  field_enrollment_status:
+    -
+      value: open
+  field_max_amount:
+    -
+      value: 'Up to $2,400/quarter'

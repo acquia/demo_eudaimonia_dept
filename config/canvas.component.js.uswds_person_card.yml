@@ -1,0 +1,70 @@
+uuid: 1385435b-56ac-47de-9a63-e721dae79ddd
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_person_card
+_core:
+  default_config_hash: aPC9q6LrJqIuzNAx7BTJLqL49AhD6KS059ITY79QPwk
+label: '(Eud-Kit) USWDS Person Card'
+id: js.uswds_person_card
+source: js
+source_local_id: uswds_person_card
+provider: null
+active_version: 3fb35188623bc3e9
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        initials:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: MH
+          expression: ℹ︎string␟value
+        roleLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Secretary
+          expression: ℹ︎string␟value
+        name:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Maya Hawthorne'
+          expression: ℹ︎string␟value
+        title:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Secretary of Eudaimonia'
+          expression: ℹ︎string␟value
+        bio:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: "Former director of the Harvard Kennedy School's Center for Human Flourishing."
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

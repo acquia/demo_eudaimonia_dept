@@ -1,0 +1,37 @@
+uuid: 905b36bf-b773-443a-a12b-8e3c9adacf27
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_content_split
+  module:
+    - options
+_core:
+  default_config_hash: '-qNjRHLQgJrYhEeGldCmg9XsOCxeEB6Zd1lYDrVTcBk'
+label: '(Eud-Kit) USWDS Content Split'
+id: js.uswds_content_split
+source: js
+source_local_id: uswds_content_split
+provider: null
+active_version: 0f9eaf89fa41edab
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        columnRatio:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: wide-left
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions:
+        left:
+          title: 'Left column'
+        right:
+          title: 'Right column'

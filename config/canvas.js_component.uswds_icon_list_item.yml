@@ -1,0 +1,90 @@
+uuid: 4d286d7f-1953-4436-96a8-1dfa9424107c
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: cajGtlFUmN-MM-Z_PPXy8AnJItGz0W9_6HGcsqV2-s4
+machineName: uswds_icon_list_item
+name: '(Eud-Kit) USWDS Icon List Item'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Human-centered design'
+  body:
+    type: string
+    title: Body
+    examples:
+      - 'Programs are built around how people actually live — not how agencies are organized.'
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Icon List Item — row with a checkmark icon, bold heading, and body text.
+
+    const CheckIcon = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="mt-0.5 h-5 w-5 shrink-0 text-(--color-uswds-primary)"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+      </svg>
+    );
+
+    const UswdsIconListItem = ({ heading = '', body = '', className = '' }) => {
+      return (
+        <li className={cn('usa-icon-list__item flex items-start gap-2 font-sans', className)}>
+          <CheckIcon />
+          <div>
+            {heading && (
+              <strong className="text-base font-bold text-(--color-uswds-primary-darker)">
+                {heading}
+              </strong>
+            )}
+            {body && (
+              <p className="mt-0.5 text-base leading-relaxed text-(--color-uswds-base-ink)">
+                {body}
+              </p>
+            )}
+          </div>
+        </li>
+      );
+    };
+
+    export default UswdsIconListItem;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const CheckIcon = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "mt-0.5 h-5 w-5 shrink-0 text-(--color-uswds-primary)",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" })
+      }
+    );
+    const UswdsIconListItem = ({ heading = "", body = "", className = "" }) => {
+      return /* @__PURE__ */ jsxs("li", { className: cn("usa-icon-list__item flex items-start gap-2 font-sans", className), children: [
+        /* @__PURE__ */ jsx(CheckIcon, {}),
+        /* @__PURE__ */ jsxs("div", { children: [
+          heading && /* @__PURE__ */ jsx("strong", { className: "text-base font-bold text-(--color-uswds-primary-darker)", children: heading }),
+          body && /* @__PURE__ */ jsx("p", { className: "mt-0.5 text-base leading-relaxed text-(--color-uswds-base-ink)", children: body })
+        ] })
+      ] });
+    };
+    export {
+      UswdsIconListItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,174 @@
+uuid: 560e2566-e61e-455a-a056-14522f768e5e
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: ezarqJtkdUKG9_gX0qGw0XA1O88JsvAhODZFyCi-JrQ
+machineName: uswds_stat_item
+name: '(Eud-Kit) USWDS Stat Item'
+required:
+  - number
+props:
+  number:
+    type: string
+    title: Number
+    examples:
+      - 42.7M
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'People Served Annually'
+  variant:
+    type: string
+    enum:
+      - default
+      - card
+    'meta:enum':
+      default: 'Default (border style)'
+      card: 'Card (bordered box)'
+    title: Variant
+    examples:
+      - default
+  textColor:
+    type: string
+    enum:
+      - light
+      - dark
+      - primary
+      - secondary
+    'meta:enum':
+      light: Light
+      dark: Dark
+      primary: Primary
+      secondary: Secondary
+    title: 'Text Color'
+    examples:
+      - light
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Stat Item
+    // variant 'default': gold left border style (use on dark/navy bg → textColor 'light')
+    // variant 'card': bordered card style (use on white/gray bg → textColor 'dark')
+
+    const NUMBER_COLOR_MAP = {
+      light: 'text-white',
+      dark: 'text-(--color-uswds-primary-darker)',
+      primary: 'text-(--color-uswds-primary-darker)',
+      secondary: 'text-(--color-eud-gold)',
+    };
+
+    const LABEL_COLOR_MAP = {
+      light: 'text-white/70',
+      dark: 'text-(--color-uswds-base-dark)',
+      primary: 'text-(--color-uswds-base-dark)',
+      secondary: 'text-(--color-uswds-base-dark)',
+    };
+
+    const UswdsStatItem = ({
+      number = '',
+      label = '',
+      variant = 'default',
+      textColor = 'light',
+      className = '',
+    }) => {
+      const isCard = variant === 'card';
+
+      return (
+        <div
+          className={cn(
+            'font-sans',
+            isCard
+              ? 'flex flex-col items-center justify-center rounded-sm border border-(--color-uswds-base-lighter) px-6 py-8 text-center'
+              : 'border-l-[3px] border-(--color-eud-gold) pl-5',
+            className,
+          )}
+        >
+          <p
+            className={cn(
+              'mb-2 font-serif text-[44px] leading-none font-black',
+              NUMBER_COLOR_MAP[textColor] ?? 'text-white',
+            )}
+          >
+            {number}
+          </p>
+          <p
+            className={cn(
+              'text-[13px] font-normal tracking-[1px] uppercase',
+              LABEL_COLOR_MAP[textColor] ?? 'text-white/70',
+            )}
+          >
+            {label}
+          </p>
+        </div>
+      );
+    };
+
+    export default UswdsStatItem;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const NUMBER_COLOR_MAP = {
+      light: "text-white",
+      dark: "text-(--color-uswds-primary-darker)",
+      primary: "text-(--color-uswds-primary-darker)",
+      secondary: "text-(--color-eud-gold)"
+    };
+    const LABEL_COLOR_MAP = {
+      light: "text-white/70",
+      dark: "text-(--color-uswds-base-dark)",
+      primary: "text-(--color-uswds-base-dark)",
+      secondary: "text-(--color-uswds-base-dark)"
+    };
+    const UswdsStatItem = ({
+      number = "",
+      label = "",
+      variant = "default",
+      textColor = "light",
+      className = ""
+    }) => {
+      var _a, _b;
+      const isCard = variant === "card";
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "font-sans",
+            isCard ? "flex flex-col items-center justify-center rounded-sm border border-(--color-uswds-base-lighter) px-6 py-8 text-center" : "border-l-[3px] border-(--color-eud-gold) pl-5",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx(
+              "p",
+              {
+                className: cn(
+                  "mb-2 font-serif text-[44px] leading-none font-black",
+                  (_a = NUMBER_COLOR_MAP[textColor]) != null ? _a : "text-white"
+                ),
+                children: number
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "p",
+              {
+                className: cn(
+                  "text-[13px] font-normal tracking-[1px] uppercase",
+                  (_b = LABEL_COLOR_MAP[textColor]) != null ? _b : "text-white/70"
+                ),
+                children: label
+              }
+            )
+          ]
+        }
+      );
+    };
+    export {
+      UswdsStatItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

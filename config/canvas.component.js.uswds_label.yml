@@ -1,0 +1,80 @@
+uuid: b28a1a6e-504a-425a-af1b-2b7dd8860db2
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_label
+_core:
+  default_config_hash: 66AMGMrfWddzXj2fIseMhhImS-WaiUG6WfmutHfoz9I
+label: '(Eud-Kit) USWDS Label'
+id: js.uswds_label
+source: js
+source_local_id: uswds_label
+provider: null
+active_version: 2b8319f85bb5f069
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        labelText:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'First name'
+          expression: ℹ︎string␟value
+        htmlFor:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: first-name
+          expression: ℹ︎string␟value
+        required:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        hintText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Enter your legal first name'
+          expression: ℹ︎string␟value
+        state:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: default
+          expression: ℹ︎string␟value
+        errorText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'This field is required'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

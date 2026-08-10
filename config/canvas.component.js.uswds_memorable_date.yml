@@ -1,0 +1,58 @@
+uuid: f969ce23-627b-4c53-8e1d-c4613b0c7e3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_memorable_date
+_core:
+  default_config_hash: MzTNzb1QNiFWT5peEPsstJaL8XhgbeJVx-hUeFSiPGg
+label: '(Eud-Kit) USWDS Memorable Date'
+id: js.uswds_memorable_date
+source: js
+source_local_id: uswds_memorable_date
+provider: null
+active_version: 6ed5e8c499546cb7
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Date of birth'
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: dob
+          expression: ℹ︎string␟value
+        hint:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'For example, April 28 1986'
+          expression: ℹ︎string␟value
+        error:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

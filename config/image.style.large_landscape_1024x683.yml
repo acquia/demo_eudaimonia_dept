@@ -1,0 +1,23 @@
+uuid: e607864e-7415-4fbe-9b9d-5374ad8007c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: large_landscape_1024x683
+label: 'Large landscape (1024x683)'
+effects:
+  b8927cd2-1065-49da-b627-152331f1dfaa:
+    uuid: b8927cd2-1065-49da-b627-152331f1dfaa
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1024
+      height: 683
+      crop_type: focal_point
+  18faf2de-7fa3-4331-8e13-de11b758fe5f:
+    uuid: 18faf2de-7fa3-4331-8e13-de11b758fe5f
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

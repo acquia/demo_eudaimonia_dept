@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies: {  }
+id: member
+name: member
+description: Member
+grant_types:
+  client_credentials:
+    status: true
+    description: ''
+  refresh_token:
+    status: true
+    description: ''
+  authorization_code:
+    status: true
+    description: ''
+umbrella: false
+parent: _none
+granularity_id: role
+granularity_configuration:
+  role: member
+

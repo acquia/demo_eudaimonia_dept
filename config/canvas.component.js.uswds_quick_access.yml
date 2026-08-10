@@ -1,0 +1,42 @@
+uuid: fa47715e-a8ea-45a0-a92a-0fd11fbbef45
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_quick_access
+_core:
+  default_config_hash: aO5brA2CaaobGymd72ruPfki3QyXJoe5sYO5H1lclrQ
+label: '(Eud-Kit) USWDS Quick Access'
+id: js.uswds_quick_access
+source: js
+source_local_id: uswds_quick_access
+provider: null
+active_version: 7fd98b57e7852ff8
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        title:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Quick Access'
+          expression: ℹ︎string␟value
+        subtitle:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Top services for residents and families'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions:
+        content:
+          title: Content

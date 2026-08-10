@@ -1,0 +1,32 @@
+uuid: 6efbab58-c0e3-4751-884e-6f1460c5a813
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_tab_item
+_core:
+  default_config_hash: H2oKC7L2tr9KX1DMp4xZ3Vt920mkiWfMz7Jc1ioRQH0
+label: '(Eud-Kit) USWDS Tab Item'
+id: js.uswds_tab_item
+source: js
+source_local_id: uswds_tab_item
+provider: null
+active_version: 744b90f22979da9b
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        tabLabel:
+          required: true
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Individuals
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: 'Panel items (uswds_quick_access_item)'

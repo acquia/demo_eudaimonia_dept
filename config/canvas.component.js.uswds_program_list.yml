@@ -1,0 +1,40 @@
+uuid: c796471a-8061-43b5-92f4-8b07a2d57ce3
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_program_list
+_core:
+  default_config_hash: bwMeptralUrBT7x3yli9YSszMpEnoyxTZwZy5cYq0eU
+label: '(Eud-Kit) USWDS Program List'
+id: js.uswds_program_list
+source: js
+source_local_id: uswds_program_list
+provider: null
+active_version: e9a88a8b499c8596
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        programLimit:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 10
+          expression: ℹ︎integer␟value
+        ariaLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'All programs'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

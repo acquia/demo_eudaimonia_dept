@@ -1,0 +1,78 @@
+uuid: c42a6202-dba1-4912-b7c9-7fee7b454058
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_radio
+_core:
+  default_config_hash: OOvm40WLXPXxofdBhjGS-x_VMBev7EpSizbvW-cVTvo
+label: '(Eud-Kit) USWDS Radio'
+id: js.uswds_radio
+source: js
+source_local_id: uswds_radio
+provider: null
+active_version: 3325d0cc835024f4
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Option A'
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: choice
+          expression: ℹ︎string␟value
+        value:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: option-a
+          expression: ℹ︎string␟value
+        hint:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        tile:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+        disabled:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions: {  }

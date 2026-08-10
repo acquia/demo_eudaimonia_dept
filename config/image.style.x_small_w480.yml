@@ -1,0 +1,21 @@
+uuid: eee11746-8c14-4d5c-a83b-1962e10bed40
+langcode: en
+status: true
+dependencies: {  }
+name: x_small_w480
+label: 'X Small (W480) '
+effects:
+  337df599-a5f9-4086-a186-b7f7f9fb207f:
+    uuid: 337df599-a5f9-4086-a186-b7f7f9fb207f
+    id: image_scale
+    weight: 1
+    data:
+      width: 480
+      height: null
+      upscale: true
+  012944d5-ece9-4690-8f60-aa9e846867d5:
+    uuid: 012944d5-ece9-4690-8f60-aa9e846867d5
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

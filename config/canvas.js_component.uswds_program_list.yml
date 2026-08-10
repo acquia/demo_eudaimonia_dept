@@ -1,0 +1,580 @@
+uuid: 8dfc7090-4cbd-4869-82b0-b33661edede1
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rlblPQRLfB3mfbFeon-ZCcUtPHHZY_uFblxA_azVwOI
+machineName: uswds_program_list
+name: '(Eud-Kit) USWDS Program List'
+required: {  }
+props:
+  programLimit:
+    type: integer
+    title: 'Program Limit'
+    examples:
+      - 10
+  ariaLabel:
+    type: string
+    title: 'Aria Label'
+    examples:
+      - 'All programs'
+slots: {  }
+js:
+  original: |-
+    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
+    import useSWR from 'swr';
+
+    const client = new JsonApiClient();
+
+    const FALLBACK = [
+      {
+        id: 'p1',
+        title: 'Flourish Family Benefit',
+        body: {
+          summary:
+            'Monthly support for households raising children or caring for older relatives. Up to $2,400 per quarter, tax-free.',
+        },
+        path: { alias: '/programs/family' },
+        category: 'Health',
+        field_max_amount: 'Up to $2,400/quarter',
+        field_decision_timeline: '14 days',
+        field_enrollment_status: 'open',
+      },
+      {
+        id: 'p2',
+        title: 'Career Re-entry Grants',
+        body: {
+          summary:
+            'Direct grants and paid apprenticeships for adults returning to work after caregiving, extended leave, or career transitions.',
+        },
+        path: { alias: '/programs/career' },
+        category: 'Work',
+        field_max_amount: 'Up to $8,000',
+        field_decision_timeline: '21 days',
+        field_enrollment_status: 'open',
+      },
+      {
+        id: 'p3',
+        title: 'Lifelong Learning Account',
+        body: {
+          summary:
+            'Matched savings for any accredited training — trade school, college, certificate programs, or professional licensure. Government matches up to $6,000/year.',
+        },
+        path: { alias: '/programs/learning' },
+        category: 'Learning',
+        field_max_amount: 'Up to $6,000/year match',
+        field_decision_timeline: '7 days',
+        field_enrollment_status: 'open',
+      },
+      {
+        id: 'p4',
+        title: 'Neighborhood Investment Fund',
+        body: {
+          summary:
+            'Grants to civic organizations, libraries, and main-street businesses building meaningful community spaces in every county.',
+        },
+        path: { alias: '/programs/community' },
+        category: 'Community',
+        field_max_amount: 'Up to $250,000',
+        field_decision_timeline: '60 days',
+        field_enrollment_status: 'open',
+      },
+      {
+        id: 'p5',
+        title: 'Dignity Floor Income',
+        body: {
+          summary:
+            'Guaranteed minimum income for adults experiencing housing insecurity, chronic disability, or sustained unemployment. Paid monthly, no work requirements.',
+        },
+        path: { alias: '/programs/income' },
+        category: 'Dignity',
+        field_max_amount: '$1,200/month',
+        field_decision_timeline: '30 days',
+        field_enrollment_status: 'open',
+      },
+      {
+        id: 'p6',
+        title: 'Public Arts Stipend',
+        body: {
+          summary:
+            'Two-year stipends for working artists, musicians, writers, and craftspeople contributing to their local communities through public work or teaching.',
+        },
+        path: { alias: '/programs/arts' },
+        category: 'Creativity',
+        field_max_amount: '$28,000/year',
+        field_decision_timeline: '90 days',
+        field_enrollment_status: 'coming_soon',
+      },
+    ];
+
+    const STATUS_LABELS = {
+      open: 'Open',
+      closed: 'Closed',
+      coming_soon: 'Coming Soon',
+    };
+
+    const STATUS_CLASSES = {
+      open: 'bg-(--color-uswds-success-lighter) text-(--color-uswds-success-dark)',
+      closed: 'bg-(--color-uswds-base-lighter) text-(--color-uswds-base-dark)',
+      coming_soon:
+        'bg-(--color-uswds-warning-lighter) text-(--color-uswds-warning-dark)',
+    };
+
+    // Resolve a field that may exist with or without the field_ prefix
+    const resolveField = (item, name) =>
+      item[`field_${name}`] ?? item[name] ?? null;
+
+    // Normalize a scalar field that may arrive as a plain value, {value}, or [{value}]
+    const resolveScalar = (val) => {
+      if (val == null) return null;
+      if (Array.isArray(val)) return val[0]?.value ?? val[0] ?? null;
+      if (typeof val === 'object') return val.value ?? null;
+      return val;
+    };
+
+    // Resolve a taxonomy term relationship that may arrive as:
+    //   { name }  |  { value }  |  [{ name }]  |  [{ value }]
+    // and stored under either 'field_categories' or 'categories'
+    const resolveCategory = (item) => {
+      const raw = item['field_categories'] ?? item['categories'] ?? null;
+      if (!raw) return null;
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      if (!first || typeof first !== 'object') return null;
+      return first.name ?? first.value ?? null;
+    };
+
+    const normalizeProgram = (item) => {
+      return {
+        id: item.id,
+        title: item.title,
+        body: item.body,
+        path: item.path,
+        category: resolveCategory(item),
+        field_max_amount: resolveScalar(resolveField(item, 'max_amount')),
+        field_decision_timeline: resolveScalar(resolveField(item, 'decision_timeline')),
+        field_enrollment_status: resolveScalar(resolveField(item, 'enrollment_status')),
+      };
+    };
+
+    const UswdsProgramList = ({
+      programLimit = 10,
+      ariaLabel = 'All programs',
+    }) => {
+      const { data, error, isLoading } = useSWR(
+        ['node--program', programLimit],
+        async () => {
+          const baseParams = new DrupalJsonApiParams()
+            .addSort('title', 'ASC')
+            .addPageLimit(programLimit);
+
+          // Fire both known category field names simultaneously.
+          // One site uses 'field_categories', another uses 'categories'.
+          // Promise.allSettled means one 400 + one 200 resolve together — we
+          // pick whichever returned a valid array.
+          const [r1, r2] = await Promise.allSettled([
+            client.getCollection('node--program', {
+              queryString: new DrupalJsonApiParams()
+                .addSort('title', 'ASC')
+                .addPageLimit(programLimit)
+                .addInclude(['field_categories'])
+                .getQueryString(),
+            }),
+            client.getCollection('node--program', {
+              queryString: new DrupalJsonApiParams()
+                .addSort('title', 'ASC')
+                .addPageLimit(programLimit)
+                .addInclude(['categories'])
+                .getQueryString(),
+            }),
+          ]);
+
+          const winner = [r1, r2].find(
+            (r) => r.status === 'fulfilled' && Array.isArray(r.value),
+          );
+          if (winner) return winner.value;
+
+          // Both includes rejected — fetch without category relationship
+          return client.getCollection('node--program', {
+            queryString: baseParams.getQueryString(),
+          });
+        },
+      );
+
+      const programs =
+        !error && !isLoading && data && data.length > 0
+          ? data.map(normalizeProgram)
+          : FALLBACK;
+
+      return (
+        <ul className="m-0 list-none p-0 font-sans" aria-label={ariaLabel}>
+          {programs.map((program) => {
+            const href = '#'; // TODO: link to program detail page once routes are defined
+            const status = program.field_enrollment_status;
+
+            return (
+              <li
+                key={program.id}
+                className="flex gap-5 border-t border-(--color-uswds-base-lighter) py-5 first:border-t-0"
+              >
+                {/* Category tag — left column */}
+                <div className="w-[88px] shrink-0 pt-1">
+                  {program.category && (
+                    <span className="inline-block rounded-sm bg-(--color-uswds-base-lighter) px-2 py-0.5 text-[11px] font-bold tracking-[0.6px] uppercase text-(--color-uswds-base-dark)">
+                      {program.category}
+                    </span>
+                  )}
+                </div>
+
+                {/* Body */}
+                <div className="flex flex-1 flex-col gap-2">
+                  <h3 className="m-0 font-sans text-[22px] leading-snug font-bold">
+                    <a
+                      href={href}
+                      className="text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline"
+                    >
+                      {program.title}
+                    </a>
+                  </h3>
+
+                  {program.body?.summary && (
+                    <p className="m-0 text-[15px] leading-relaxed text-(--color-uswds-base-dark)">
+                      {program.body.summary}
+                    </p>
+                  )}
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    {program.field_max_amount && (
+                      <span className="text-[13px] text-(--color-uswds-base-ink)">
+                        {program.field_max_amount}
+                      </span>
+                    )}
+                    {program.field_decision_timeline && (
+                      <>
+                        <span
+                          className="text-(--color-uswds-base-light) select-none"
+                          aria-hidden="true"
+                        >
+                          ·
+                        </span>
+                        <span className="text-[13px] text-(--color-uswds-base-ink)">
+                          Decision in {program.field_decision_timeline}
+                        </span>
+                      </>
+                    )}
+                    {status && (
+                      <>
+                        <span
+                          className="text-(--color-uswds-base-light) select-none"
+                          aria-hidden="true"
+                        >
+                          ·
+                        </span>
+                        <span
+                          className={cn(
+                            'rounded-sm px-2 py-0.5 text-[11px] font-bold tracking-[0.6px] uppercase',
+                            STATUS_CLASSES[status] ?? STATUS_CLASSES.closed,
+                          )}
+                        >
+                          {STATUS_LABELS[status] ?? status}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      );
+    };
+
+    export default UswdsProgramList;
+  compiled: |
+    function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+        try {
+            var info = gen[key](arg);
+            var value = info.value;
+        } catch (error) {
+            reject(error);
+            return;
+        }
+        if (info.done) {
+            resolve(value);
+        } else {
+            Promise.resolve(value).then(_next, _throw);
+        }
+    }
+    function _async_to_generator(fn) {
+        return function() {
+            var self = this, args = arguments;
+            return new Promise(function(resolve, reject) {
+                var gen = fn.apply(self, args);
+                function _next(value) {
+                    asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+                }
+                function _throw(err) {
+                    asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+                }
+                _next(undefined);
+            });
+        };
+    }
+    import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
+    import useSWR from 'swr';
+    const client = new JsonApiClient();
+    const FALLBACK = [
+        {
+            id: 'p1',
+            title: 'Flourish Family Benefit',
+            body: {
+                summary: 'Monthly support for households raising children or caring for older relatives. Up to $2,400 per quarter, tax-free.'
+            },
+            path: {
+                alias: '/programs/family'
+            },
+            category: 'Health',
+            field_max_amount: 'Up to $2,400/quarter',
+            field_decision_timeline: '14 days',
+            field_enrollment_status: 'open'
+        },
+        {
+            id: 'p2',
+            title: 'Career Re-entry Grants',
+            body: {
+                summary: 'Direct grants and paid apprenticeships for adults returning to work after caregiving, extended leave, or career transitions.'
+            },
+            path: {
+                alias: '/programs/career'
+            },
+            category: 'Work',
+            field_max_amount: 'Up to $8,000',
+            field_decision_timeline: '21 days',
+            field_enrollment_status: 'open'
+        },
+        {
+            id: 'p3',
+            title: 'Lifelong Learning Account',
+            body: {
+                summary: 'Matched savings for any accredited training — trade school, college, certificate programs, or professional licensure. Government matches up to $6,000/year.'
+            },
+            path: {
+                alias: '/programs/learning'
+            },
+            category: 'Learning',
+            field_max_amount: 'Up to $6,000/year match',
+            field_decision_timeline: '7 days',
+            field_enrollment_status: 'open'
+        },
+        {
+            id: 'p4',
+            title: 'Neighborhood Investment Fund',
+            body: {
+                summary: 'Grants to civic organizations, libraries, and main-street businesses building meaningful community spaces in every county.'
+            },
+            path: {
+                alias: '/programs/community'
+            },
+            category: 'Community',
+            field_max_amount: 'Up to $250,000',
+            field_decision_timeline: '60 days',
+            field_enrollment_status: 'open'
+        },
+        {
+            id: 'p5',
+            title: 'Dignity Floor Income',
+            body: {
+                summary: 'Guaranteed minimum income for adults experiencing housing insecurity, chronic disability, or sustained unemployment. Paid monthly, no work requirements.'
+            },
+            path: {
+                alias: '/programs/income'
+            },
+            category: 'Dignity',
+            field_max_amount: '$1,200/month',
+            field_decision_timeline: '30 days',
+            field_enrollment_status: 'open'
+        },
+        {
+            id: 'p6',
+            title: 'Public Arts Stipend',
+            body: {
+                summary: 'Two-year stipends for working artists, musicians, writers, and craftspeople contributing to their local communities through public work or teaching.'
+            },
+            path: {
+                alias: '/programs/arts'
+            },
+            category: 'Creativity',
+            field_max_amount: '$28,000/year',
+            field_decision_timeline: '90 days',
+            field_enrollment_status: 'coming_soon'
+        }
+    ];
+    const STATUS_LABELS = {
+        open: 'Open',
+        closed: 'Closed',
+        coming_soon: 'Coming Soon'
+    };
+    const STATUS_CLASSES = {
+        open: 'bg-(--color-uswds-success-lighter) text-(--color-uswds-success-dark)',
+        closed: 'bg-(--color-uswds-base-lighter) text-(--color-uswds-base-dark)',
+        coming_soon: 'bg-(--color-uswds-warning-lighter) text-(--color-uswds-warning-dark)'
+    };
+    // Resolve a field that may exist with or without the field_ prefix
+    const resolveField = (item, name)=>{
+        var _ref, _item_;
+        return (_ref = (_item_ = item[`field_${name}`]) !== null && _item_ !== void 0 ? _item_ : item[name]) !== null && _ref !== void 0 ? _ref : null;
+    };
+    // Normalize a scalar field that may arrive as a plain value, {value}, or [{value}]
+    const resolveScalar = (val)=>{
+        var _ref, _ref1, _val_value;
+        var _val_;
+        if (val == null) return null;
+        if (Array.isArray(val)) return (_ref = (_ref1 = (_val_ = val[0]) === null || _val_ === void 0 ? void 0 : _val_.value) !== null && _ref1 !== void 0 ? _ref1 : val[0]) !== null && _ref !== void 0 ? _ref : null;
+        if (typeof val === 'object') return (_val_value = val.value) !== null && _val_value !== void 0 ? _val_value : null;
+        return val;
+    };
+    // Resolve a taxonomy term relationship that may arrive as:
+    //   { name }  |  { value }  |  [{ name }]  |  [{ value }]
+    // and stored under either 'field_categories' or 'categories'
+    const resolveCategory = (item)=>{
+        var _ref, _item_field_categories, _ref1, _first_name;
+        const raw = (_ref = (_item_field_categories = item['field_categories']) !== null && _item_field_categories !== void 0 ? _item_field_categories : item['categories']) !== null && _ref !== void 0 ? _ref : null;
+        if (!raw) return null;
+        const first = Array.isArray(raw) ? raw[0] : raw;
+        if (!first || typeof first !== 'object') return null;
+        return (_ref1 = (_first_name = first.name) !== null && _first_name !== void 0 ? _first_name : first.value) !== null && _ref1 !== void 0 ? _ref1 : null;
+    };
+    const normalizeProgram = (item)=>{
+        return {
+            id: item.id,
+            title: item.title,
+            body: item.body,
+            path: item.path,
+            category: resolveCategory(item),
+            field_max_amount: resolveScalar(resolveField(item, 'max_amount')),
+            field_decision_timeline: resolveScalar(resolveField(item, 'decision_timeline')),
+            field_enrollment_status: resolveScalar(resolveField(item, 'enrollment_status'))
+        };
+    };
+    const UswdsProgramList = ({ programLimit = 10, ariaLabel = 'All programs' })=>{
+        const { data, error, isLoading } = useSWR([
+            'node--program',
+            programLimit
+        ], ()=>_async_to_generator(function*() {
+                const baseParams = new DrupalJsonApiParams().addSort('title', 'ASC').addPageLimit(programLimit);
+                // Fire both known category field names simultaneously.
+                // One site uses 'field_categories', another uses 'categories'.
+                // Promise.allSettled means one 400 + one 200 resolve together — we
+                // pick whichever returned a valid array.
+                const [r1, r2] = yield Promise.allSettled([
+                    client.getCollection('node--program', {
+                        queryString: new DrupalJsonApiParams().addSort('title', 'ASC').addPageLimit(programLimit).addInclude([
+                            'field_categories'
+                        ]).getQueryString()
+                    }),
+                    client.getCollection('node--program', {
+                        queryString: new DrupalJsonApiParams().addSort('title', 'ASC').addPageLimit(programLimit).addInclude([
+                            'categories'
+                        ]).getQueryString()
+                    })
+                ]);
+                const winner = [
+                    r1,
+                    r2
+                ].find((r)=>r.status === 'fulfilled' && Array.isArray(r.value));
+                if (winner) return winner.value;
+                // Both includes rejected — fetch without category relationship
+                return client.getCollection('node--program', {
+                    queryString: baseParams.getQueryString()
+                });
+            })());
+        const programs = !error && !isLoading && data && data.length > 0 ? data.map(normalizeProgram) : FALLBACK;
+        return /*#__PURE__*/ _jsx("ul", {
+            className: "m-0 list-none p-0 font-sans",
+            "aria-label": ariaLabel,
+            children: programs.map((program)=>{
+                var _STATUS_CLASSES_status, _STATUS_LABELS_status;
+                var _program_body;
+                const href = '#'; // TODO: link to program detail page once routes are defined
+                const status = program.field_enrollment_status;
+                return /*#__PURE__*/ _jsxs("li", {
+                    className: "flex gap-5 border-t border-(--color-uswds-base-lighter) py-5 first:border-t-0",
+                    children: [
+                        /*#__PURE__*/ _jsx("div", {
+                            className: "w-[88px] shrink-0 pt-1",
+                            children: program.category && /*#__PURE__*/ _jsx("span", {
+                                className: "inline-block rounded-sm bg-(--color-uswds-base-lighter) px-2 py-0.5 text-[11px] font-bold tracking-[0.6px] uppercase text-(--color-uswds-base-dark)",
+                                children: program.category
+                            })
+                        }),
+                        /*#__PURE__*/ _jsxs("div", {
+                            className: "flex flex-1 flex-col gap-2",
+                            children: [
+                                /*#__PURE__*/ _jsx("h3", {
+                                    className: "m-0 font-sans text-[22px] leading-snug font-bold",
+                                    children: /*#__PURE__*/ _jsx("a", {
+                                        href: href,
+                                        className: "text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline",
+                                        children: program.title
+                                    })
+                                }),
+                                ((_program_body = program.body) === null || _program_body === void 0 ? void 0 : _program_body.summary) && /*#__PURE__*/ _jsx("p", {
+                                    className: "m-0 text-[15px] leading-relaxed text-(--color-uswds-base-dark)",
+                                    children: program.body.summary
+                                }),
+                                /*#__PURE__*/ _jsxs("div", {
+                                    className: "flex flex-wrap items-center gap-2",
+                                    children: [
+                                        program.field_max_amount && /*#__PURE__*/ _jsx("span", {
+                                            className: "text-[13px] text-(--color-uswds-base-ink)",
+                                            children: program.field_max_amount
+                                        }),
+                                        program.field_decision_timeline && /*#__PURE__*/ _jsxs(_Fragment, {
+                                            children: [
+                                                /*#__PURE__*/ _jsx("span", {
+                                                    className: "text-(--color-uswds-base-light) select-none",
+                                                    "aria-hidden": "true",
+                                                    children: "·"
+                                                }),
+                                                /*#__PURE__*/ _jsxs("span", {
+                                                    className: "text-[13px] text-(--color-uswds-base-ink)",
+                                                    children: [
+                                                        "Decision in ",
+                                                        program.field_decision_timeline
+                                                    ]
+                                                })
+                                            ]
+                                        }),
+                                        status && /*#__PURE__*/ _jsxs(_Fragment, {
+                                            children: [
+                                                /*#__PURE__*/ _jsx("span", {
+                                                    className: "text-(--color-uswds-base-light) select-none",
+                                                    "aria-hidden": "true",
+                                                    children: "·"
+                                                }),
+                                                /*#__PURE__*/ _jsx("span", {
+                                                    className: cn('rounded-sm px-2 py-0.5 text-[11px] font-bold tracking-[0.6px] uppercase', (_STATUS_CLASSES_status = STATUS_CLASSES[status]) !== null && _STATUS_CLASSES_status !== void 0 ? _STATUS_CLASSES_status : STATUS_CLASSES.closed),
+                                                    children: (_STATUS_LABELS_status = STATUS_LABELS[status]) !== null && _STATUS_LABELS_status !== void 0 ? _STATUS_LABELS_status : status
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                }, program.id);
+            })
+        });
+    };
+    export default UswdsProgramList;
+css:
+  original: ''
+  compiled: |
+    /*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+dataDependencies:
+  drupalSettings:
+    - v0.baseUrl
+    - v0.jsonapiSettings

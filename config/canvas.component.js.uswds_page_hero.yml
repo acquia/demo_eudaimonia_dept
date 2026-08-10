@@ -1,0 +1,42 @@
+uuid: 15b7e2f0-1ec4-40dd-b148-433d2e5f6a69
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_page_hero
+_core:
+  default_config_hash: QJTxdnDoGIVLRFeFQk903ET4hmu1JuZHo2ArGXOwCJE
+label: '(Eud-Kit) USWDS Page Hero'
+id: js.uswds_page_hero
+source: js
+source_local_id: uswds_page_hero
+provider: null
+active_version: 69c8e3662bb09dfd
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'About the Department'
+          expression: ℹ︎string␟value
+        leadParagraph:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'The Department was established in 2025 to coordinate federal programs that support human flourishing.'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions:
+        breadcrumb:
+          title: 'Breadcrumb (optional)'

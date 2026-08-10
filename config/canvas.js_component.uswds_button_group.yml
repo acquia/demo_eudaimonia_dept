@@ -1,0 +1,107 @@
+uuid: 51312b37-8494-4b3d-bae5-ea5f764bf430
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: bQfnxNkjfZ5T9SQsfqLspvuBMcWiL-GqNttLyWcGfIo
+machineName: uswds_button_group
+name: '(Eud-Kit) USWDS Button Group'
+required: {  }
+props:
+  segmented:
+    type: boolean
+    title: Segmented
+    examples:
+      - false
+slots:
+  buttons:
+    title: 'Buttons (uswds_button items)'
+js:
+  original: |
+    import { Children, cloneElement, isValidElement } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsButtonGroup = ({ segmented = false, buttons, className = '' }) => {
+      const buttonArray = Children.toArray(buttons).filter(isValidElement);
+      if (!buttonArray.length) return null;
+
+      const lastIndex = buttonArray.length - 1;
+
+      const injected = buttonArray.map((child, i) => {
+        const existingClass = child.props.className || '';
+        if (!segmented) {
+          // Non-segmented: make each button full-width on mobile, auto on md+
+          return cloneElement(child, {
+            className: cn(existingClass, 'w-full md:w-auto'),
+          });
+        }
+        // Segmented: override corner rounding by position
+        const isStart = i === 0;
+        const isEnd = i === lastIndex;
+        const roundingClass = isStart
+          ? 'rounded-tr-none rounded-br-none'
+          : isEnd
+            ? 'rounded-tl-none rounded-bl-none'
+            : 'rounded-none';
+        return cloneElement(child, {
+          className: cn(existingClass, roundingClass),
+        });
+      });
+
+      return (
+        <div
+          className={cn(
+            'usa-button-group font-sans',
+            segmented
+              ? 'flex flex-row'
+              : 'flex flex-col gap-2 md:flex-row md:flex-wrap md:items-center',
+            className,
+          )}
+        >
+          {injected}
+        </div>
+      );
+    };
+
+    export default UswdsButtonGroup;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { Children, isValidElement, cloneElement } from "react";
+    import { cn } from "drupal-canvas";
+    const UswdsButtonGroup = ({ segmented = false, buttons, className = "" }) => {
+      const buttonArray = Children.toArray(buttons).filter(isValidElement);
+      if (!buttonArray.length) return null;
+      const lastIndex = buttonArray.length - 1;
+      const injected = buttonArray.map((child, i) => {
+        const existingClass = child.props.className || "";
+        if (!segmented) {
+          return cloneElement(child, {
+            className: cn(existingClass, "w-full md:w-auto")
+          });
+        }
+        const isStart = i === 0;
+        const isEnd = i === lastIndex;
+        const roundingClass = isStart ? "rounded-tr-none rounded-br-none" : isEnd ? "rounded-tl-none rounded-bl-none" : "rounded-none";
+        return cloneElement(child, {
+          className: cn(existingClass, roundingClass)
+        });
+      });
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: cn(
+            "usa-button-group font-sans",
+            segmented ? "flex flex-row" : "flex flex-col gap-2 md:flex-row md:flex-wrap md:items-center",
+            className
+          ),
+          children: injected
+        }
+      );
+    };
+    export {
+      UswdsButtonGroup as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

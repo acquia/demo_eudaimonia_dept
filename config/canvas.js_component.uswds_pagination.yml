@@ -1,0 +1,293 @@
+uuid: 354894c0-7543-48ad-8165-97ac4b33767f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 5OtCrtCcIWFCmAQwArwUb6-sPIJ83264jl0YXe6il1s
+machineName: uswds_pagination
+name: '(Eud-Kit) USWDS Pagination'
+required: {  }
+props:
+  currentPage:
+    type: integer
+    title: 'Current Page'
+    examples:
+      - 1
+  totalPages:
+    type: integer
+    title: 'Total Pages'
+    examples:
+      - 10
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const focusStyles =
+      'focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)';
+
+    // SVG chevron icons matching USWDS navigate_before / navigate_next
+    const IconPrev = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="h-[18px] w-[18px]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+      </svg>
+    );
+
+    const IconNext = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="h-[18px] w-[18px]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+      </svg>
+    );
+
+    const UswdsPagination = ({
+      currentPage = 1,
+      totalPages = 1,
+      onPage,
+      className = '',
+    }) => {
+      const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+      const visiblePages = pages.filter((p) => {
+        if (totalPages <= 7) return true;
+        if (p === 1 || p === totalPages) return true;
+        if (Math.abs(p - currentPage) <= 2) return true;
+        return false;
+      });
+
+      const renderPages = [];
+      let prev = null;
+      for (const p of visiblePages) {
+        if (prev !== null && p - prev > 1) {
+          renderPages.push('ellipsis-' + p);
+        }
+        renderPages.push(p);
+        prev = p;
+      }
+
+      const handleClick = (page) => {
+        if (onPage) {
+          onPage(page);
+        }
+      };
+
+      return (
+        <nav
+          aria-label="Pagination"
+          className={cn('usa-pagination flex items-center gap-2 font-sans', className)}
+        >
+          {/* Previous button */}
+          <button
+            type="button"
+            onClick={() => handleClick(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={cn(
+              'usa-pagination__previous-page flex h-10 items-center gap-1 pr-5 text-sm text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) disabled:pointer-events-none disabled:opacity-0',
+              focusStyles,
+            )}
+            aria-label="Previous page"
+          >
+            <IconPrev />
+            Previous
+          </button>
+
+          {/* Page buttons */}
+          {renderPages.map((item) => {
+            if (typeof item === 'string' && item.startsWith('ellipsis')) {
+              return (
+                <span
+                  key={item}
+                  className="flex h-10 w-10 items-center justify-center text-sm text-(--color-uswds-base)"
+                >
+                  ...
+                </span>
+              );
+            }
+            const page = item;
+            const isCurrent = page === currentPage;
+            return (
+              <button
+                key={page}
+                type="button"
+                onClick={() => handleClick(page)}
+                aria-current={isCurrent ? 'page' : undefined}
+                className={cn(
+                  'flex h-10 w-10 items-center justify-center rounded text-sm underline',
+                  isCurrent
+                    ? 'usa-current bg-(--color-uswds-base-ink) font-normal text-white'
+                    : 'usa-pagination__button border border-(--color-uswds-base-lighter) text-(--color-uswds-primary) hover:text-(--color-uswds-primary-dark)',
+                  focusStyles,
+                )}
+              >
+                {page}
+              </button>
+            );
+          })}
+
+          {/* Next button */}
+          <button
+            type="button"
+            onClick={() => handleClick(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={cn(
+              'usa-pagination__next-page flex h-10 items-center gap-1 pl-5 text-sm text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) disabled:pointer-events-none disabled:opacity-0',
+              focusStyles,
+            )}
+            aria-label="Next page"
+          >
+            Next
+            <IconNext />
+          </button>
+        </nav>
+      );
+    };
+
+    export default UswdsPagination;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const focusStyles = "focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)";
+    const IconPrev = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "h-[18px] w-[18px]",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" })
+      }
+    );
+    const IconNext = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "h-[18px] w-[18px]",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" })
+      }
+    );
+    const UswdsPagination = ({
+      currentPage = 1,
+      totalPages = 1,
+      onPage,
+      className = ""
+    }) => {
+      const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+      const visiblePages = pages.filter((p) => {
+        if (totalPages <= 7) return true;
+        if (p === 1 || p === totalPages) return true;
+        if (Math.abs(p - currentPage) <= 2) return true;
+        return false;
+      });
+      const renderPages = [];
+      let prev = null;
+      for (const p of visiblePages) {
+        if (prev !== null && p - prev > 1) {
+          renderPages.push("ellipsis-" + p);
+        }
+        renderPages.push(p);
+        prev = p;
+      }
+      const handleClick = (page) => {
+        if (onPage) {
+          onPage(page);
+        }
+      };
+      return /* @__PURE__ */ jsxs(
+        "nav",
+        {
+          "aria-label": "Pagination",
+          className: cn("usa-pagination flex items-center gap-2 font-sans", className),
+          children: [
+            /* @__PURE__ */ jsxs(
+              "button",
+              {
+                type: "button",
+                onClick: () => handleClick(currentPage - 1),
+                disabled: currentPage === 1,
+                className: cn(
+                  "usa-pagination__previous-page flex h-10 items-center gap-1 pr-5 text-sm text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) disabled:pointer-events-none disabled:opacity-0",
+                  focusStyles
+                ),
+                "aria-label": "Previous page",
+                children: [
+                  /* @__PURE__ */ jsx(IconPrev, {}),
+                  "Previous"
+                ]
+              }
+            ),
+            renderPages.map((item) => {
+              if (typeof item === "string" && item.startsWith("ellipsis")) {
+                return /* @__PURE__ */ jsx(
+                  "span",
+                  {
+                    className: "flex h-10 w-10 items-center justify-center text-sm text-(--color-uswds-base)",
+                    children: "..."
+                  },
+                  item
+                );
+              }
+              const page = item;
+              const isCurrent = page === currentPage;
+              return /* @__PURE__ */ jsx(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => handleClick(page),
+                  "aria-current": isCurrent ? "page" : void 0,
+                  className: cn(
+                    "flex h-10 w-10 items-center justify-center rounded text-sm underline",
+                    isCurrent ? "usa-current bg-(--color-uswds-base-ink) font-normal text-white" : "usa-pagination__button border border-(--color-uswds-base-lighter) text-(--color-uswds-primary) hover:text-(--color-uswds-primary-dark)",
+                    focusStyles
+                  ),
+                  children: page
+                },
+                page
+              );
+            }),
+            /* @__PURE__ */ jsxs(
+              "button",
+              {
+                type: "button",
+                onClick: () => handleClick(currentPage + 1),
+                disabled: currentPage === totalPages,
+                className: cn(
+                  "usa-pagination__next-page flex h-10 items-center gap-1 pl-5 text-sm text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) disabled:pointer-events-none disabled:opacity-0",
+                  focusStyles
+                ),
+                "aria-label": "Next page",
+                children: [
+                  "Next",
+                  /* @__PURE__ */ jsx(IconNext, {})
+                ]
+              }
+            )
+          ]
+        }
+      );
+    };
+    export {
+      UswdsPagination as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -1,0 +1,24 @@
+uuid: 83d3b429-a3ed-4c7f-a034-40f484df14c8
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: T8L99sT3yGwKS4ZTwDwE4baBT1X8rIr-nUkggz67UKY
+id: person_alias_pattern
+label: 'Person Alias Pattern'
+type: 'canonical_entities:node'
+pattern: 'profile/[node:title]'
+selection_criteria:
+  d5cab0ad-6965-44f4-8c1e-eae19cecd224:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: d5cab0ad-6965-44f4-8c1e-eae19cecd224
+    context_mapping:
+      node: node
+    bundles:
+      person: person
+selection_logic: and
+weight: -5
+relationships: {  }

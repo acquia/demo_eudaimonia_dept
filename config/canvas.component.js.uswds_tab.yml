@@ -1,0 +1,32 @@
+uuid: c7abbcc8-b755-4dfb-af10-1efd31d04cd9
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_tab
+_core:
+  default_config_hash: mJh2wTkVMI45gLFWsfCIRKCvvimhn62rZsVJ_1O4ZwE
+label: '(Eud-Kit) USWDS Tab'
+id: js.uswds_tab
+source: js
+source_local_id: uswds_tab
+provider: null
+active_version: b4d917952ef83d9b
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        accessibleLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Page sections'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: 'Tab items (uswds_tab_item)'

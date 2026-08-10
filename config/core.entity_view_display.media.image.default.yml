@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.image.categories
+    - field.field.media.image.media_image
+    - field.field.media.image.tags
+    - image.style.large_w1024
+    - media.type.image
+  module:
+    - image
+id: media.image.default
+targetEntityType: media
+bundle: image
+mode: default
+content:
+  media_image:
+    type: image
+    label: visually_hidden
+    settings:
+      image_link: ''
+      image_style: large_w1024
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  categories: true
+  content_translation_source: true
+  created: true
+  name: true
+  search_api_excerpt: true
+  tags: true
+  thumbnail: true
+  uid: true

@@ -1,0 +1,38 @@
+_meta:
+  version: '1.0'
+  entity_type: menu_link_content
+  uuid: f6400dac-c5c6-4a07-8e43-ad3f4717f1db
+  bundle: menu_link_content
+  default_langcode: en
+  depends:
+    3b89444d-c202-4d65-9f44-8268eef82ac1: canvas_page
+default:
+  enabled:
+    -
+      value: true
+  title:
+    -
+      value: 'Programs & Services'
+  menu_name:
+    -
+      value: main
+  link:
+    -
+      title: ''
+      options: {  }
+      target_uuid: 3b89444d-c202-4d65-9f44-8268eef82ac1
+  external:
+    -
+      value: false
+  rediscover:
+    -
+      value: true
+  weight:
+    -
+      value: 1
+  expanded:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true

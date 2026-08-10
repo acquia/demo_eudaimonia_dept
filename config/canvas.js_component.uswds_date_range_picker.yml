@@ -1,0 +1,172 @@
+uuid: e1b45809-eb01-446e-b955-39ca5b3727d3
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_date_picker
+_core:
+  default_config_hash: dGVDzotXRQ50UTYhlAiJBsn1e_BzkF9Fw4w1YTcP70U
+machineName: uswds_date_range_picker
+name: '(Eud-Kit) USWDS Date Range Picker'
+required: {  }
+props:
+  startLabel:
+    type: string
+    title: 'Start Label'
+    examples:
+      - 'Start date'
+  endLabel:
+    type: string
+    title: 'End Label'
+    examples:
+      - 'End date'
+  name:
+    type: string
+    title: Name
+    examples:
+      - travel-dates
+  hint:
+    type: string
+    title: Hint
+    examples:
+      - mm/dd/yyyy
+  minDate:
+    type: string
+    title: 'Min Date'
+    examples:
+      - 01/01/2024
+  maxDate:
+    type: string
+    title: 'Max Date'
+    examples:
+      - 12/31/2025
+slots: {  }
+js:
+  original: |
+    import { useState } from 'react';
+    import UswdsDatePicker from '@/components/uswds_date_picker';
+    import { cn } from 'drupal-canvas';
+
+    function formatForPicker(date) {
+      if (!date) return '';
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${m}/${d}/${date.getFullYear()}`;
+    }
+
+    const UswdsDateRangePicker = ({
+      startLabel = 'Start date',
+      endLabel = 'End date',
+      name = '',
+      hint = '',
+      minDate = '',
+      maxDate = '',
+      className = '',
+    }) => {
+      const [startDate, setStartDate] = useState(null);
+      const [endDate, setEndDate] = useState(null);
+
+      const handleStartChange = (date) => {
+        setStartDate(date);
+        if (endDate && date > endDate) setEndDate(null);
+      };
+
+      const handleEndChange = (date) => {
+        setEndDate(date);
+      };
+
+      return (
+        <fieldset className={cn('usa-date-range-picker m-0 border-0 p-0 font-sans', className)}>
+          <div className="flex flex-col gap-4">
+            <UswdsDatePicker
+              label={startLabel}
+              name={name ? `${name}-start` : 'range-start'}
+              hint={hint}
+              minDate={minDate}
+              maxDate={endDate ? formatForPicker(endDate) : maxDate}
+              onDateChange={handleStartChange}
+              rangeStart={startDate}
+              rangeEnd={endDate}
+            />
+            <UswdsDatePicker
+              label={endLabel}
+              name={name ? `${name}-end` : 'range-end'}
+              hint={hint}
+              minDate={startDate ? formatForPicker(startDate) : minDate}
+              maxDate={maxDate}
+              onDateChange={handleEndChange}
+              rangeStart={startDate}
+              rangeEnd={endDate}
+            />
+          </div>
+        </fieldset>
+      );
+    };
+
+    export default UswdsDateRangePicker;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { useState } from "react";
+    import UswdsDatePicker from "@/components/uswds_date_picker";
+    import { cn } from "drupal-canvas";
+    function formatForPicker(date) {
+      if (!date) return "";
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${m}/${d}/${date.getFullYear()}`;
+    }
+    const UswdsDateRangePicker = ({
+      startLabel = "Start date",
+      endLabel = "End date",
+      name = "",
+      hint = "",
+      minDate = "",
+      maxDate = "",
+      className = ""
+    }) => {
+      const [startDate, setStartDate] = useState(null);
+      const [endDate, setEndDate] = useState(null);
+      const handleStartChange = (date) => {
+        setStartDate(date);
+        if (endDate && date > endDate) setEndDate(null);
+      };
+      const handleEndChange = (date) => {
+        setEndDate(date);
+      };
+      return /* @__PURE__ */ jsx("fieldset", { className: cn("usa-date-range-picker m-0 border-0 p-0 font-sans", className), children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-4", children: [
+        /* @__PURE__ */ jsx(
+          UswdsDatePicker,
+          {
+            label: startLabel,
+            name: name ? `${name}-start` : "range-start",
+            hint,
+            minDate,
+            maxDate: endDate ? formatForPicker(endDate) : maxDate,
+            onDateChange: handleStartChange,
+            rangeStart: startDate,
+            rangeEnd: endDate
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          UswdsDatePicker,
+          {
+            label: endLabel,
+            name: name ? `${name}-end` : "range-end",
+            hint,
+            minDate: startDate ? formatForPicker(startDate) : minDate,
+            maxDate,
+            onDateChange: handleEndChange,
+            rangeStart: startDate,
+            rangeEnd: endDate
+          }
+        )
+      ] }) });
+    };
+    export {
+      UswdsDateRangePicker as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

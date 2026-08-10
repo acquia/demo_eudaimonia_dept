@@ -1,0 +1,222 @@
+uuid: 2ffc0b6f-89d0-4601-89a6-9dfa7cc092fd
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_label
+_core:
+  default_config_hash: y8qbzDU4m1njwlMApcJCdS771mkgoTyq8sTbNAzb0Bk
+machineName: uswds_input_prefix_suffix
+name: '(Eud-Kit) USWDS Input Prefix Suffix'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'Dollar amount'
+  name:
+    type: string
+    title: Name
+    examples:
+      - amount
+  prefixText:
+    type: string
+    title: 'Prefix Text'
+    examples:
+      - $
+  suffixText:
+    type: string
+    title: 'Suffix Text'
+    examples:
+      - '.00'
+  placeholder:
+    type: string
+    title: Placeholder
+  hintText:
+    type: string
+    title: 'Hint Text'
+  state:
+    type: string
+    title: State
+    examples:
+      - default
+      - error
+  errorText:
+    type: string
+    title: 'Error Text'
+    examples:
+      - 'Enter a valid amount'
+slots: {  }
+js:
+  original: |
+    import UswdsLabel from '@/components/uswds_label';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsInputPrefixSuffix = ({
+      label = '',
+      name = '',
+      prefixText = '',
+      suffixText = '',
+      prefixIcon,
+      suffixIcon,
+      placeholder = '',
+      hintText = '',
+      state = 'default',
+      errorText = '',
+      className = '',
+    }) => {
+      const id = `input-ps-${name}`;
+      const isError = state === 'error';
+
+      return (
+        <div
+          className={cn(
+            'usa-form-group flex flex-col gap-(--spacing-uswds-1) font-sans',
+            className,
+          )}
+        >
+          {label && (
+            <UswdsLabel
+              labelText={label}
+              htmlFor={id}
+              hintText={hintText}
+              state={state}
+              errorText={errorText}
+            />
+          )}
+          <div
+            className={cn(
+              'usa-input-group flex h-10 border border-(--color-uswds-base-ink) bg-white focus-within:outline focus-within:outline-[length:4px] focus-within:outline-offset-0 focus-within:outline-(--uswds-focus-color)',
+              isError && 'border-(--color-uswds-error-dark)',
+            )}
+          >
+            {(prefixText || prefixIcon) && (
+              <span className="usa-input-prefix flex shrink-0 items-center justify-center px-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base)">
+                {prefixIcon ? (
+                  <span
+                    aria-hidden="true"
+                    className="flex size-6 items-center justify-center"
+                  >
+                    {prefixIcon}
+                  </span>
+                ) : (
+                  prefixText
+                )}
+              </span>
+            )}
+            <input
+              id={id}
+              type="text"
+              name={name}
+              placeholder={placeholder}
+              aria-invalid={isError ? 'true' : undefined}
+              className="usa-input min-w-0 flex-1 bg-transparent px-2 py-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base-ink) focus:outline-none"
+            />
+            {(suffixText || suffixIcon) && (
+              <span className="usa-input-suffix flex shrink-0 items-center justify-center px-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base)">
+                {suffixIcon ? (
+                  <span
+                    aria-hidden="true"
+                    className="flex size-6 items-center justify-center"
+                  >
+                    {suffixIcon}
+                  </span>
+                ) : (
+                  suffixText
+                )}
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsInputPrefixSuffix;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import UswdsLabel from "@/components/uswds_label";
+    import { cn } from "drupal-canvas";
+    const UswdsInputPrefixSuffix = ({
+      label = "",
+      name = "",
+      prefixText = "",
+      suffixText = "",
+      prefixIcon,
+      suffixIcon,
+      placeholder = "",
+      hintText = "",
+      state = "default",
+      errorText = "",
+      className = ""
+    }) => {
+      const id = `input-ps-${name}`;
+      const isError = state === "error";
+      return /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: cn(
+            "usa-form-group flex flex-col gap-(--spacing-uswds-1) font-sans",
+            className
+          ),
+          children: [
+            label && /* @__PURE__ */ jsx(
+              UswdsLabel,
+              {
+                labelText: label,
+                htmlFor: id,
+                hintText,
+                state,
+                errorText
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              "div",
+              {
+                className: cn(
+                  "usa-input-group flex h-10 border border-(--color-uswds-base-ink) bg-white focus-within:outline focus-within:outline-[length:4px] focus-within:outline-offset-0 focus-within:outline-(--uswds-focus-color)",
+                  isError && "border-(--color-uswds-error-dark)"
+                ),
+                children: [
+                  (prefixText || prefixIcon) && /* @__PURE__ */ jsx("span", { className: "usa-input-prefix flex shrink-0 items-center justify-center px-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base)", children: prefixIcon ? /* @__PURE__ */ jsx(
+                    "span",
+                    {
+                      "aria-hidden": "true",
+                      className: "flex size-6 items-center justify-center",
+                      children: prefixIcon
+                    }
+                  ) : prefixText }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      id,
+                      type: "text",
+                      name,
+                      placeholder,
+                      "aria-invalid": isError ? "true" : void 0,
+                      className: "usa-input min-w-0 flex-1 bg-transparent px-2 py-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base-ink) focus:outline-none"
+                    }
+                  ),
+                  (suffixText || suffixIcon) && /* @__PURE__ */ jsx("span", { className: "usa-input-suffix flex shrink-0 items-center justify-center px-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base)", children: suffixIcon ? /* @__PURE__ */ jsx(
+                    "span",
+                    {
+                      "aria-hidden": "true",
+                      className: "flex size-6 items-center justify-center",
+                      children: suffixIcon
+                    }
+                  ) : suffixText })
+                ]
+              }
+            )
+          ]
+        }
+      );
+    };
+    export {
+      UswdsInputPrefixSuffix as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

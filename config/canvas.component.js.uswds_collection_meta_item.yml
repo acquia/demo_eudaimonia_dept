@@ -1,0 +1,40 @@
+uuid: 55766c5e-32be-43e0-b36c-2698335f86d6
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_collection_meta_item
+_core:
+  default_config_hash: zH6rvosbm2xn_WsMaH8CV-FWRs4-FHdsYk2htipyqQA
+label: '(Eud-Kit) USWDS Collection Meta Item'
+id: js.uswds_collection_meta_item
+source: js
+source_local_id: uswds_collection_meta_item
+provider: null
+active_version: 0be140594fded326
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        text:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Jan 15, 2024'
+          expression: ℹ︎string␟value
+        dotSeparator:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: true
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions: {  }

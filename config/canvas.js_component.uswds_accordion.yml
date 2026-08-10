@@ -1,0 +1,92 @@
+uuid: 609ce4e2-4b1b-4323-8949-5ab0ffc993b2
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: LJJvIOC6tLm3iq3PaRpXdoSPrNrRu-b4FADFc6hEEnw
+machineName: uswds_accordion
+name: '(Eud-Kit) USWDS Accordion'
+required: {  }
+props:
+  bordered:
+    type: boolean
+    title: Bordered
+    examples:
+      - false
+  multiselectable:
+    type: boolean
+    title: Multiselectable
+    examples:
+      - false
+  variant:
+    type: string
+    enum:
+      - default
+      - dark
+    'meta:enum':
+      default: Default
+      dark: Dark
+    title: Variant
+    examples:
+      - default
+slots:
+  items:
+    title: Items
+js:
+  original: |
+    import { Children, cloneElement, isValidElement } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsAccordion = ({
+      items,
+      bordered = false,
+      multiselectable = false,
+      variant = 'default',
+      className = '',
+    }) => {
+      const injectedItems = Children.map(items, (child) =>
+        isValidElement(child) ? cloneElement(child, { bordered, variant }) : child,
+      );
+
+      return (
+        <div
+          className={cn('usa-accordion flex w-full flex-col gap-2 font-sans', className)}
+          data-allow-multiple={multiselectable || undefined}
+        >
+          {injectedItems}
+        </div>
+      );
+    };
+
+    export default UswdsAccordion;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { Children, isValidElement, cloneElement } from "react";
+    import { cn } from "drupal-canvas";
+    const UswdsAccordion = ({
+      items,
+      bordered = false,
+      multiselectable = false,
+      variant = "default",
+      className = ""
+    }) => {
+      const injectedItems = Children.map(
+        items,
+        (child) => isValidElement(child) ? cloneElement(child, { bordered, variant }) : child
+      );
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: cn("usa-accordion flex w-full flex-col gap-2 font-sans", className),
+          "data-allow-multiple": multiselectable || void 0,
+          children: injectedItems
+        }
+      );
+    };
+    export {
+      UswdsAccordion as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

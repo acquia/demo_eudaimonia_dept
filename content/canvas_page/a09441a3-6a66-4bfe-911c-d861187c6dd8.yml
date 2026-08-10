@@ -1,0 +1,474 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: a09441a3-6a66-4bfe-911c-d861187c6dd8
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'USWDS Demo — Cards & Collections'
+  description:
+    -
+      value: 'Visual demo of USWDS card and collection components'
+  components:
+    -
+      uuid: 6c1f934c-fb45-40ff-a771-315a6ffeca97
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_card_group — Card Group (3 cards)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 6c1f934c-fb45-40ff-a771-315a6ffeca97
+      slot: content
+      uuid: a55251f4-3042-4304-b0cf-02db5ae5e7fb
+      component_id: js.uswds_card_group
+      inputs:
+        columns: 3
+    -
+      parent_uuid: a55251f4-3042-4304-b0cf-02db5ae5e7fb
+      slot: items
+      uuid: 2b109dd3-04e4-4277-a1bd-b8f6fb21b815
+      component_id: js.uswds_card
+      inputs:
+        heading: 'Flourish Family Benefit'
+        headingLevel: h3
+        body:
+          value: '<p>Monthly direct support for families with children under 18, scaled to household size and income level.</p>'
+          format: canvas_html_block
+        tag: Health
+        ctaText: 'Check eligibility'
+        ctaLink:
+          uri: 'internal:/eud-programs/flourish-family'
+          options: {  }
+        layout: default
+        mediaFirst: true
+    -
+      parent_uuid: 2b109dd3-04e4-4277-a1bd-b8f6fb21b815
+      slot: media
+      uuid: eddc5486-8290-4a26-96c5-f1e51c4e0fa3
+      component_id: js.uswds_card_media
+      inputs:
+        size: lg
+    -
+      parent_uuid: a55251f4-3042-4304-b0cf-02db5ae5e7fb
+      slot: items
+      uuid: ac08757b-f312-45b6-8b29-3d1e8f25586c
+      component_id: js.uswds_card
+      inputs:
+        heading: 'Lifelong Learning Account'
+        headingLevel: h3
+        body:
+          value: '<p>A portable education savings account with a federal 2:1 match for households earning under $75,000 annually.</p>'
+          format: canvas_html_block
+        tag: Education
+        ctaText: 'Open an account'
+        ctaLink:
+          uri: 'internal:/eud-programs/lifelong-learning'
+          options: {  }
+        layout: default
+    -
+      parent_uuid: a55251f4-3042-4304-b0cf-02db5ae5e7fb
+      slot: items
+      uuid: 5c7269d6-84db-4f39-99f1-da3d179d697d
+      component_id: js.uswds_card
+      inputs:
+        heading: 'Community Connection Corps'
+        headingLevel: h3
+        body:
+          value: '<p>Paid volunteer placements that connect residents to local nonprofits, mentorship networks, and civic organizations.</p>'
+          format: canvas_html_block
+        tag: Community
+        ctaText: 'Find a placement'
+        ctaLink:
+          uri: 'internal:/eud-programs/connection-corps'
+          options: {  }
+        layout: default
+    -
+      uuid: d3d12b69-3d08-455d-8f73-1e29b1b84a7b
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_collection — Article Collection (3 items)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: d3d12b69-3d08-455d-8f73-1e29b1b84a7b
+      slot: content
+      uuid: 5358552b-2f4a-429c-b828-6f9a6f5b3c88
+      component_id: js.uswds_collection
+      inputs:
+        heading: 'Latest from the Newsroom'
+        spacing: default
+    -
+      parent_uuid: 5358552b-2f4a-429c-b828-6f9a6f5b3c88
+      slot: items
+      uuid: 09e25607-331c-4acd-9fa3-826da14779b5
+      component_id: js.uswds_collection_item
+      inputs:
+        title: 'Secretary Hawthorne announces $14B expansion of Lifelong Learning Accounts'
+        link:
+          uri: 'internal:/newsroom/lifelong-learning-expansion'
+          options: {  }
+        description:
+          value: '<p>The expansion raises the federal match from 1:1 to 2:1 for households earning under $75,000.</p>'
+          format: canvas_html_block
+        categoryLabel: 'Press Release'
+        calendarMonthShort: Apr
+        calendarDay: '28'
+    -
+      parent_uuid: 09e25607-331c-4acd-9fa3-826da14779b5
+      slot: meta
+      uuid: 0116497b-2fd9-4dbd-8599-c6afa7bf0bf8
+      component_id: js.uswds_collection_meta_item
+      inputs:
+        text: 'April 28, 2026'
+        dotSeparator: false
+    -
+      parent_uuid: 09e25607-331c-4acd-9fa3-826da14779b5
+      slot: meta
+      uuid: a9c92c2c-742b-464e-a607-9fbfa224d05d
+      component_id: js.uswds_collection_meta_item
+      inputs:
+        text: 'Press Release'
+        dotSeparator: true
+    -
+      parent_uuid: 5358552b-2f4a-429c-b828-6f9a6f5b3c88
+      slot: items
+      uuid: c6e9bc5b-a6e9-4123-a40d-c9d3ae2bd4e3
+      component_id: js.uswds_collection_item
+      inputs:
+        title: 'New report: Flourish Family Benefit reduces child poverty rate by 18% in pilot states'
+        link:
+          uri: 'internal:/research/ffb-impact-report-2025'
+          options: {  }
+        description:
+          value: '<p>Independent evaluation confirms significant improvements in food security, school attendance, and parental employment.</p>'
+          format: canvas_html_block
+        categoryLabel: Research
+        calendarMonthShort: Mar
+        calendarDay: '12'
+    -
+      parent_uuid: c6e9bc5b-a6e9-4123-a40d-c9d3ae2bd4e3
+      slot: meta
+      uuid: 9dac835a-8a7b-409a-a463-f7af1a6a3cd8
+      component_id: js.uswds_collection_meta_item
+      inputs:
+        text: 'March 12, 2026'
+        dotSeparator: false
+    -
+      parent_uuid: c6e9bc5b-a6e9-4123-a40d-c9d3ae2bd4e3
+      slot: meta
+      uuid: 3b413533-0b4b-410b-b7fe-193c474dc13f
+      component_id: js.uswds_collection_meta_item
+      inputs:
+        text: Research
+        dotSeparator: true
+    -
+      parent_uuid: 5358552b-2f4a-429c-b828-6f9a6f5b3c88
+      slot: items
+      uuid: 5368c55b-f4c1-4172-ba60-ffa080c9811a
+      component_id: js.uswds_collection_item
+      inputs:
+        title: 'Open enrollment for Community Connection Corps begins February 1'
+        link:
+          uri: 'internal:/newsroom/connection-corps-enrollment'
+          options: {  }
+        description:
+          value: '<p>Applications accepted on a rolling basis. Placements available in all 50 states and territories.</p>'
+          format: canvas_html_block
+        categoryLabel: Announcement
+        calendarMonthShort: Jan
+        calendarDay: '20'
+    -
+      parent_uuid: 5368c55b-f4c1-4172-ba60-ffa080c9811a
+      slot: meta
+      uuid: 8e82c3fa-b667-4603-aabf-4eb059d58439
+      component_id: js.uswds_collection_meta_item
+      inputs:
+        text: 'January 20, 2026'
+        dotSeparator: false
+    -
+      parent_uuid: 5368c55b-f4c1-4172-ba60-ffa080c9811a
+      slot: meta
+      uuid: a7af64c5-e19b-4ab7-831c-31b8b90928fe
+      component_id: js.uswds_collection_meta_item
+      inputs:
+        text: Announcement
+        dotSeparator: true
+    -
+      uuid: 2ee589fe-3092-4905-b1eb-7855274dc863
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_news_feature — News Feature'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 2ee589fe-3092-4905-b1eb-7855274dc863
+      slot: content
+      uuid: ed28afd2-a6a1-4bfa-8967-510830ed59bc
+      component_id: js.uswds_news_feature
+      inputs:
+        date: 'April 28, 2026'
+        category: 'Press Release'
+        heading: 'Secretary Hawthorne announces $14B expansion of the Lifelong Learning Account program'
+        body: 'The expansion raises the federal match from 1:1 to 2:1 for households earning under $75,000, effective January 1, 2027.'
+        ctaText: 'Read full release'
+        ctaLink:
+          uri: 'internal:/newsroom'
+          options: {  }
+    -
+      uuid: e5b076b6-0974-4e75-8259-dfab9bb54bde
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_person_card — Person Card'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: e5b076b6-0974-4e75-8259-dfab9bb54bde
+      slot: content
+      uuid: b192f7c3-70d0-4166-a23c-5a13fd91bcdd
+      component_id: js.uswds_person_card
+      inputs:
+        name: 'Maya Hawthorne'
+        initials: MH
+        roleLabel: Secretary
+        title: 'Secretary of Eudaimonia'
+        bio: "Former director of the Harvard Kennedy School's Center for Human Flourishing and architect of the original Flourish Family Benefit legislation."
+    -
+      uuid: af32041a-fb46-42f8-8664-ed60d275ae58
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_quick_access — Quick Access Widget'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: af32041a-fb46-42f8-8664-ed60d275ae58
+      slot: content
+      uuid: 0536f60b-e080-4cf9-9484-df8da2853fc8
+      component_id: js.uswds_quick_access
+      inputs:
+        title: 'Quick Access'
+        subtitle: 'Top services for residents and families'
+    -
+      parent_uuid: 0536f60b-e080-4cf9-9484-df8da2853fc8
+      slot: content
+      uuid: 027d2145-a04e-498d-a0b3-7f7038c51b9c
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Check program eligibility'
+        ctaText: Open
+        ctaLink:
+          uri: 'internal:/eligibility'
+          options: {  }
+    -
+      parent_uuid: 0536f60b-e080-4cf9-9484-df8da2853fc8
+      slot: content
+      uuid: a0c3a4fd-f452-438a-b6a1-31a928cee0d4
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Track my application'
+        ctaText: Open
+        ctaLink:
+          uri: 'internal:/my-applications'
+          options: {  }
+    -
+      parent_uuid: 0536f60b-e080-4cf9-9484-df8da2853fc8
+      slot: content
+      uuid: d05590f8-5a44-4744-a2ba-95b5080905bd
+      component_id: js.uswds_quick_access_item
+      inputs:
+        label: 'Find a regional office'
+        ctaText: Open
+        ctaLink:
+          uri: 'internal:/offices'
+          options: {  }
+    -
+      uuid: 616181ad-36c8-47f6-8f17-a30b8df5a26e
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_card — Cards with Icon Tile (icon auto-themed)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 616181ad-36c8-47f6-8f17-a30b8df5a26e
+      slot: content
+      uuid: 9980ff16-a9bc-4519-852e-91a8a09e85db
+      component_id: js.uswds_card_group
+      inputs:
+        columns: 3
+    -
+      parent_uuid: 9980ff16-a9bc-4519-852e-91a8a09e85db
+      slot: items
+      uuid: 6a65eb45-3f6a-4fc2-a165-d83be851e979
+      component_id: js.uswds_card
+      inputs:
+        heading: 'Health & Wellbeing'
+        headingLevel: h3
+        body:
+          value: '<p>Programs that support physical and mental health for every household.</p>'
+          format: canvas_html_block
+        tag: Health
+        ctaText: 'Explore programs'
+        ctaLink:
+          uri: 'internal:/programs/health'
+          options: {  }
+    -
+      parent_uuid: 6a65eb45-3f6a-4fc2-a165-d83be851e979
+      slot: icon
+      uuid: 99f02473-cf68-42a3-82a1-dfd566a6fd77
+      component_id: js.uswds_icon
+      inputs:
+        iconName: favorite
+        size: md
+        color: primary
+        showIconTile: true
+    -
+      parent_uuid: 9980ff16-a9bc-4519-852e-91a8a09e85db
+      slot: items
+      uuid: c21d37cf-a799-4c27-a60c-76ee0dfe8de5
+      component_id: js.uswds_card
+      inputs:
+        heading: 'Work & Career'
+        headingLevel: h3
+        body:
+          value: '<p>Grants and training to help residents re-enter or advance in the workforce.</p>'
+          format: canvas_html_block
+        tag: Work
+        ctaText: 'Find opportunities'
+        ctaLink:
+          uri: 'internal:/programs/work'
+          options: {  }
+    -
+      parent_uuid: c21d37cf-a799-4c27-a60c-76ee0dfe8de5
+      slot: icon
+      uuid: 2ce4ca4d-535a-4c48-b5a1-97de567812db
+      component_id: js.uswds_icon
+      inputs:
+        iconName: work
+        size: md
+        color: primary
+        showIconTile: true
+    -
+      parent_uuid: 9980ff16-a9bc-4519-852e-91a8a09e85db
+      slot: items
+      uuid: 61e19791-9a34-46bd-925a-f00016448bef
+      component_id: js.uswds_card
+      inputs:
+        heading: 'Lifelong Learning'
+        headingLevel: h3
+        body:
+          value: '<p>Education savings accounts and paid learning pathways for all ages.</p>'
+          format: canvas_html_block
+        tag: Education
+        ctaText: 'Start learning'
+        ctaLink:
+          uri: 'internal:/programs/learning'
+          options: {  }
+    -
+      parent_uuid: 61e19791-9a34-46bd-925a-f00016448bef
+      slot: icon
+      uuid: 2884246c-95da-4445-b72d-c4753af35ff2
+      component_id: js.uswds_icon
+      inputs:
+        iconName: school
+        size: md
+        color: primary
+        showIconTile: true
+    -
+      parent_uuid: 9980ff16-a9bc-4519-852e-91a8a09e85db
+      slot: items
+      uuid: 824132eb-654d-4faa-aa39-29125e292bf1
+      component_id: js.uswds_card
+      inputs:
+        heading: Community
+        headingLevel: h3
+        body:
+          value: '<p>Volunteer placements and civic programs connecting residents to local organisations.</p>'
+          format: canvas_html_block
+        tag: Community
+        ctaText: 'Get involved'
+        ctaLink:
+          uri: 'internal:/programs/community'
+          options: {  }
+    -
+      parent_uuid: 824132eb-654d-4faa-aa39-29125e292bf1
+      slot: icon
+      uuid: e8b5d6a3-1798-4899-9235-c0a2e0728d8c
+      component_id: js.uswds_icon
+      inputs:
+        iconName: person
+        size: md
+        color: primary
+        showIconTile: true
+    -
+      parent_uuid: 9980ff16-a9bc-4519-852e-91a8a09e85db
+      slot: items
+      uuid: c51a3973-2513-404d-a0c3-4d9deb56bb99
+      component_id: js.uswds_card
+      inputs:
+        heading: 'Dignity & Safety'
+        headingLevel: h3
+        body:
+          value: '<p>Income support and safety-net services ensuring a dignified life for all residents.</p>'
+          format: canvas_html_block
+        tag: Safety
+        ctaText: 'Learn more'
+        ctaLink:
+          uri: 'internal:/programs/safety'
+          options: {  }
+    -
+      parent_uuid: c51a3973-2513-404d-a0c3-4d9deb56bb99
+      slot: icon
+      uuid: 4d33fbd6-41d5-4791-926e-0ca2825e89f3
+      component_id: js.uswds_icon
+      inputs:
+        iconName: shield
+        size: md
+        color: primary
+        showIconTile: true
+  path:
+    -
+      alias: /demo-03-cards
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

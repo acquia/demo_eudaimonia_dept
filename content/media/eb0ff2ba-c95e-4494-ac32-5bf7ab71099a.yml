@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: eb0ff2ba-c95e-4494-ac32-5bf7ab71099a
+  bundle: image
+  default_langcode: en
+  depends:
+    64423ade-847d-40d9-8d26-28705a116c05: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: eud_news_1
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Smiling woman speaks at a podium during a press conference, photographers in foreground.'
+      title: ''
+      width: 2051
+      height: 1188
+      entity: 64423ade-847d-40d9-8d26-28705a116c05

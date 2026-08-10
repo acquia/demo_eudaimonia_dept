@@ -1,0 +1,46 @@
+uuid: 115aeb3d-43f0-4d8c-ac91-efc3b5e3c27e
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_grid
+  module:
+    - options
+_core:
+  default_config_hash: eZICmSFTTstnwldwCRKXM5NgX5BVFhs_vY33vT776DU
+label: '(Eud-Kit) USWDS Grid'
+id: js.uswds_grid
+source: js
+source_local_id: uswds_grid
+provider: null
+active_version: d127443db2ab7ec6
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        columns:
+          required: false
+          field_type: list_integer
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: 3
+          expression: ℹ︎list_integer␟value
+        gap:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: md
+          expression: ℹ︎list_string␟value
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items

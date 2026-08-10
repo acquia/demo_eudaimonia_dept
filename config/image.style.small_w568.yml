@@ -1,0 +1,21 @@
+uuid: a30b6519-0fb5-4189-b124-084f8bd2e2aa
+langcode: en
+status: true
+dependencies: {  }
+name: small_w568
+label: 'Small (W568)'
+effects:
+  74ecd01d-8e1e-4411-ab32-8227ec80955f:
+    uuid: 74ecd01d-8e1e-4411-ab32-8227ec80955f
+    id: image_scale
+    weight: 1
+    data:
+      width: 568
+      height: null
+      upscale: true
+  504fecb8-1191-49eb-89a8-7f7a64a61508:
+    uuid: 504fecb8-1191-49eb-89a8-7f7a64a61508
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

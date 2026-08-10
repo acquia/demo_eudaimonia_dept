@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: d1bb5dea-e51c-4c13-9f54-d50e742f6501
+  bundle: image
+  default_langcode: en
+  depends:
+    ac462a4c-9ac5-437d-a446-eb76761ab9a7: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: card-icon-5-dignity
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'Blue shield icon on a transparent background'
+      title: ''
+      width: 128
+      height: 128
+      entity: ac462a4c-9ac5-437d-a446-eb76761ab9a7

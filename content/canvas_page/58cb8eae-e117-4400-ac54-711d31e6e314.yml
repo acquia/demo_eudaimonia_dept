@@ -1,0 +1,416 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 58cb8eae-e117-4400-ac54-711d31e6e314
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Department of Eudaimonia — About'
+  description:
+    -
+      value: 'EUD demo about page'
+  components:
+    -
+      uuid: 855eee47-53b3-4bf4-87be-e434e468486a
+      component_id: js.uswds_page_hero
+      inputs:
+        heading: 'About the Department'
+        leadParagraph: 'The Department of Eudaimonia was established in 2025 to coordinate federal programs that support human flourishing — making them easier to find, simpler to apply for, and more effective together.'
+    -
+      parent_uuid: 855eee47-53b3-4bf4-87be-e434e468486a
+      slot: breadcrumb
+      uuid: 54e6ea55-258e-438a-8ac0-4986253dc197
+      component_id: js.uswds_breadcrumb
+      inputs:
+        wrap: false
+        context: on-dark
+    -
+      parent_uuid: 54e6ea55-258e-438a-8ac0-4986253dc197
+      slot: items
+      uuid: cf1f67d7-e084-44e9-a609-f6f994ea75e2
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        href:
+          uri: 'internal:/'
+          options: {  }
+        text: Home
+        isLast: false
+        context: on-dark
+        showSeparator: false
+    -
+      parent_uuid: 54e6ea55-258e-438a-8ac0-4986253dc197
+      slot: items
+      uuid: af7fa2c7-d28b-4998-a069-75891f8c835e
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        href:
+          uri: 'internal:/'
+          options: {  }
+        text: About
+        isLast: true
+        context: on-dark
+        showSeparator: true
+    -
+      uuid: 682a72d5-f5fa-41c4-a939-3f3b7913d181
+      component_id: js.uswds_section
+      inputs:
+        marginTop: none
+        background: white
+        paddingTop: lg
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: none
+    -
+      parent_uuid: 682a72d5-f5fa-41c4-a939-3f3b7913d181
+      slot: content
+      uuid: cb8c9e93-b5ab-4616-b00b-ac34934bafbd
+      component_id: js.uswds_alert
+      inputs:
+        body:
+          value: '<p>The Flourish Family Benefit enrollment window closes December 31, 2026. <a href="/apply">Learn more about eligibility</a>.</p>'
+          format: canvas_html_block
+        slim: false
+        noIcon: false
+        heading: 'Open enrollment period active'
+        variant: info
+    -
+      uuid: e94bc396-9c81-48af-963b-f40961b43c41
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: 'Our Purpose'
+        heading: 'Mission & Vision'
+        marginTop: none
+        background: white
+        paddingTop: sm
+        description: '<p>The Department of Eudaimonia exists to ensure that every American has access to the conditions that make a meaningful, healthy, and self-directed life possible — regardless of where they were born, how much they earn, or what challenges they face.</p><p>We work to reduce friction, eliminate duplication, and connect people with the right support at the right time. Where programs existed, we made them work better together. Where gaps existed, we built something new.</p>'
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: e94bc396-9c81-48af-963b-f40961b43c41
+      slot: content
+      uuid: 18ded744-b943-4c7d-8a80-21f77191094b
+      component_id: js.uswds_icon_list
+      inputs: {  }
+    -
+      parent_uuid: 18ded744-b943-4c7d-8a80-21f77191094b
+      slot: items
+      uuid: 86a0e486-2bb2-41a6-8707-c6eed135886d
+      component_id: js.uswds_icon_list_item
+      inputs:
+        body: 'Programs are built around how people actually live — not how agencies are organized.'
+        heading: 'Human-centered design'
+    -
+      parent_uuid: 18ded744-b943-4c7d-8a80-21f77191094b
+      slot: items
+      uuid: 4f84acd2-502e-40b1-8580-03d548e2ca44
+      component_id: js.uswds_icon_list_item
+      inputs:
+        body: 'Every program is evaluated against clear outcomes. Results are published annually.'
+        heading: 'Evidence and accountability'
+    -
+      parent_uuid: 18ded744-b943-4c7d-8a80-21f77191094b
+      slot: items
+      uuid: a5dc32ed-8f1c-4b04-a011-a45cb5d7333c
+      component_id: js.uswds_icon_list_item
+      inputs:
+        body: 'We prioritize communities that have historically been underserved by federal programs.'
+        heading: 'Equity and access'
+    -
+      parent_uuid: 18ded744-b943-4c7d-8a80-21f77191094b
+      slot: items
+      uuid: bec55efa-e895-4bf9-be77-6b316e8d8984
+      component_id: js.uswds_icon_list_item
+      inputs:
+        body: 'A benefit that’s hard to use isn’t really a benefit. We design for the person, not the expert.'
+        heading: Simplicity
+    -
+      uuid: cca73df3-1a30-4b6e-8c9b-0e39468852a8
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: 'Our Story'
+        heading: 'How We Were Formed'
+        marginTop: none
+        paddingTop: sm
+        description: 'The Department of Eudaimonia emerged from a decade of research showing that fragmented federal programs were failing the people they were meant to serve — not from lack of resources, but from lack of coordination.'
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: cca73df3-1a30-4b6e-8c9b-0e39468852a8
+      slot: content
+      uuid: 1e26072c-c692-43a9-b5fa-807cb79035cc
+      component_id: js.uswds_process_list
+      inputs: {  }
+    -
+      parent_uuid: 1e26072c-c692-43a9-b5fa-807cb79035cc
+      slot: items
+      uuid: 54a20d55-68f3-46d9-acb6-cf26ead41d9f
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'A bipartisan commission examined federal wellbeing programs across 14 agencies. Their report found that the average American qualified for 7.3 programs but accessed fewer than 2, primarily due to application complexity and lack of awareness.'
+        last: false
+        number: '1'
+        heading: 'The Flourishing Commission (2022–2023)'
+    -
+      parent_uuid: 1e26072c-c692-43a9-b5fa-807cb79035cc
+      slot: items
+      uuid: 66b4cfd3-58fd-4b95-accc-0cc0d0307006
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'The President directed OMB to develop a consolidation plan. Over 18 months, 47 existing programs were reviewed, simplified, and in some cases merged into the six pillars of the Eudaimonia framework.'
+        last: false
+        number: '2'
+        heading: 'Executive Order 14211 (January 2024)'
+    -
+      parent_uuid: 1e26072c-c692-43a9-b5fa-807cb79035cc
+      slot: items
+      uuid: e436916f-6864-4b56-bfd0-67d6323acfbe
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'The Flourishing for All Act created the Department with Cabinet-level status. Secretary Maya Hawthorne was confirmed unanimously as the first Secretary of Eudaimonia.'
+        last: false
+        number: '3'
+        heading: 'Department established (March 2025)'
+    -
+      parent_uuid: 1e26072c-c692-43a9-b5fa-807cb79035cc
+      slot: items
+      uuid: a5c3f738-5131-4f15-8894-80b4334cd663
+      component_id: js.uswds_process_list_item
+      inputs:
+        body: 'The Flourish Family Benefit and Lifelong Learning Account went live simultaneously, serving 4.2 million Americans in the first 90 days — exceeding first-year projections by 340%.'
+        last: true
+        number: '4'
+        heading: 'First programs launch (October 2025)'
+    -
+      uuid: 8fcd121b-3db2-4bfe-b864-5a24851ddba8
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: Leadership
+        heading: 'Department Leadership'
+        marginTop: none
+        background: white
+        paddingTop: sm
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: 8fcd121b-3db2-4bfe-b864-5a24851ddba8
+      slot: content
+      uuid: fcf949f5-15f0-46e4-8cf5-995b067405e9
+      component_id: js.uswds_card_group
+      inputs:
+        columns: 2
+    -
+      parent_uuid: fcf949f5-15f0-46e4-8cf5-995b067405e9
+      slot: items
+      uuid: 67eb36c4-4acd-4d08-9170-53da9e7eb374
+      component_id: js.uswds_person_card
+      inputs:
+        bio: 'Former director of the Harvard Kennedy School’s Center for Human Flourishing. Confirmed unanimously by the Senate in March 2025.'
+        name: 'Maya Hawthorne'
+        title: 'Secretary of Eudaimonia'
+        initials: MH
+        roleLabel: Secretary
+    -
+      parent_uuid: fcf949f5-15f0-46e4-8cf5-995b067405e9
+      slot: items
+      uuid: f2f8b824-b893-4b91-87c2-3b424ec92a97
+      component_id: js.uswds_person_card
+      inputs:
+        bio: 'Previously led the Office of Family Assistance at HHS. Architect of the single-application model that underpins all Eudaimonia programs.'
+        name: 'David Reyes'
+        title: 'Deputy Secretary of Eudaimonia'
+        initials: DR
+        roleLabel: 'Deputy Secretary'
+    -
+      parent_uuid: fcf949f5-15f0-46e4-8cf5-995b067405e9
+      slot: items
+      uuid: 3a9b92e1-4403-48b5-87ab-1578644f031b
+      component_id: js.uswds_person_card
+      inputs:
+        bio: 'Oversees the six program pillars and coordinates with state and local partners. Former executive director of the National Academy for Social Insurance.'
+        name: 'Jennifer Kwan'
+        title: 'Chief Program Officer'
+        initials: JK
+        roleLabel: 'Chief Program Officer'
+    -
+      parent_uuid: fcf949f5-15f0-46e4-8cf5-995b067405e9
+      slot: items
+      uuid: d1aef9e1-ee8c-4e12-bf0c-6c829081426d
+      component_id: js.uswds_person_card
+      inputs:
+        bio: 'Built the MyEudaimonia portal and the unified eligibility engine. Previously at 18F and USDS, where he led the HealthCare.gov recovery effort.'
+        name: 'Thomas Abara'
+        title: 'Chief Technology Officer'
+        initials: TA
+        roleLabel: 'Chief Technology Officer'
+    -
+      uuid: beb4771a-05e1-46cb-b713-28afa6aa5f9c
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: Impact
+        heading: 'By the Numbers'
+        marginTop: none
+        background: white
+        paddingTop: sm
+        description: 'Since launching in October 2025, Eudaimonia has delivered measurable results across all six program pillars.'
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: beb4771a-05e1-46cb-b713-28afa6aa5f9c
+      slot: content
+      uuid: bf67b56c-6e52-42d2-858a-f608ca469841
+      component_id: js.uswds_stat_bar
+      inputs:
+        background: white
+    -
+      parent_uuid: bf67b56c-6e52-42d2-858a-f608ca469841
+      slot: items
+      uuid: c1090459-0866-4c94-a359-0d2701f34975
+      component_id: js.uswds_stat_item
+      inputs:
+        label: 'People Served Annually'
+        number: 42.7M
+        variant: card
+        textColor: dark
+    -
+      parent_uuid: bf67b56c-6e52-42d2-858a-f608ca469841
+      slot: items
+      uuid: 6afa7777-b5e7-459d-9a9b-b489d0f4752d
+      component_id: js.uswds_stat_item
+      inputs:
+        label: 'Benefits Distributed (FY25)'
+        number: $184B
+        variant: card
+        textColor: dark
+    -
+      parent_uuid: bf67b56c-6e52-42d2-858a-f608ca469841
+      slot: items
+      uuid: 8d52afd7-3013-4ad9-8bff-01edd65fe40a
+      component_id: js.uswds_stat_item
+      inputs:
+        label: 'Local Service Centers'
+        number: '3,900'
+        variant: card
+        textColor: dark
+    -
+      parent_uuid: beb4771a-05e1-46cb-b713-28afa6aa5f9c
+      slot: content
+      uuid: 671eaeab-aacc-4fc3-8b37-703499dbd85a
+      component_id: js.uswds_summary_box
+      inputs:
+        body:
+          value: '<ul><li>96% customer satisfaction rating across all programs</li><li>Average application time reduced from 4.5 hours to 18 minutes</li><li>78% of eligible households now access at least one program — up from 27%</li><li>$2.4B in administrative savings through program consolidation</li><li>National Wellbeing Index rose 4.2 points in the first year</li></ul>'
+          format: canvas_html_block
+        heading: 'FY25 Annual Report Highlights'
+    -
+      uuid: b624373c-fa51-4c4f-baf8-335a1c277994
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: Questions
+        heading: 'Common Questions About the Department'
+        marginTop: none
+        background: white
+        paddingTop: sm
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: sm
+    -
+      parent_uuid: b624373c-fa51-4c4f-baf8-335a1c277994
+      slot: content
+      uuid: 56725641-1676-4b6e-a7d5-3d6d638c373c
+      component_id: js.uswds_accordion
+      inputs:
+        variant: default
+        bordered: true
+        multiselectable: false
+    -
+      parent_uuid: 56725641-1676-4b6e-a7d5-3d6d638c373c
+      slot: items
+      uuid: b0b7bff1-5b6c-4d99-b2a9-b6aa219bd89e
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'No. Eudaimonia coordinates and connects programs — it doesn’t replace agencies like HHS, HUD, or the Department of Labor. Staff from those agencies are detailed to Eudaimonia to help integrate services, but the underlying programs remain within their original departments.'
+        heading: 'Is Eudaimonia replacing other agencies?'
+        variant: default
+        expanded: true
+    -
+      parent_uuid: 56725641-1676-4b6e-a7d5-3d6d638c373c
+      slot: items
+      uuid: 223cb5df-9eb5-45f1-b519-f536ae5c979a
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'Eudaimonia is funded through public partnerships. The FY26 budget is $184.3 billion, the majority of which flows directly to program beneficiaries. Administrative costs are capped at 1.8% of total expenditure by statute.'
+        heading: 'How is the Department funded?'
+        variant: default
+        expanded: false
+    -
+      parent_uuid: 56725641-1676-4b6e-a7d5-3d6d638c373c
+      slot: items
+      uuid: 6d187941-be85-42ed-b4c6-5922e3745801
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'The Department’s headquarters is in Washington, D.C. There are 3,900 local service centers across all 50 states, the District of Columbia, Puerto Rico, Guam, and the U.S. Virgin Islands.'
+        heading: 'Where are Eudaimonia offices located?'
+        variant: default
+        expanded: false
+    -
+      parent_uuid: 56725641-1676-4b6e-a7d5-3d6d638c373c
+      slot: items
+      uuid: f7ddb271-5cba-47f9-ae0b-aed48a161cf8
+      component_id: js.uswds_accordion_item
+      inputs:
+        body: 'Contact the Office of the Inspector General at oig.eudaimonia.gov or call the OIG hotline at 1-800-EUD-TIPS. Reports can be made anonymously.'
+        heading: 'How do I report waste, fraud, or abuse?'
+        variant: default
+        expanded: false
+    -
+      uuid: eed516b1-dab4-4947-908b-f6be980a359b
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: Latest
+        heading: 'Recent Updates'
+        marginTop: none
+        background: white
+        paddingTop: sm
+        contentWidth: wide
+        marginBottom: none
+        paddingBottom: lg
+    -
+      parent_uuid: eed516b1-dab4-4947-908b-f6be980a359b
+      slot: content
+      uuid: 2eeb4eec-e7ed-4b41-963f-bedc30897106
+      component_id: js.uswds_news_feed
+      inputs:
+        ctaText: 'Read full release'
+        viewAllLink:
+          uri: 'internal:/'
+          options: {  }
+        articleLimit: 3
+        showFeatured: false
+        viewAllLabel: 'View all news'
+  path:
+    -
+      alias: /eud-about
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

@@ -1,0 +1,35 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: aecb5692-68cc-46c3-bcde-a4e1468173aa
+  bundle: image
+  default_langcode: en
+  depends:
+    881d1204-b3b8-4ba8-bb92-8f5a276a2b24: file
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: us_flag_small
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  media_image:
+    -
+      alt: 'United States flag with red and white stripes and a blue field with white stars'
+      title: ''
+      width: 384
+      height: 264
+      entity: 881d1204-b3b8-4ba8-bb92-8f5a276a2b24

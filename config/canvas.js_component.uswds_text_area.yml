@@ -1,0 +1,201 @@
+uuid: 9f89406b-0698-4cf8-95d0-bf75ab437688
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_label
+_core:
+  default_config_hash: MizSJ9IaGBp5Bbslu3JimyUkPu2Kgb4c7-zsiodaowk
+machineName: uswds_text_area
+name: '(Eud-Kit) USWDS Text Area'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - Message
+  name:
+    type: string
+    title: Name
+    examples:
+      - message
+  placeholder:
+    type: string
+    title: Placeholder
+  hint:
+    type: string
+    title: Hint
+  error:
+    type: string
+    title: Error
+  success:
+    type: boolean
+    title: Success
+    examples:
+      - false
+  disabled:
+    type: boolean
+    title: Disabled
+    examples:
+      - false
+  required:
+    type: boolean
+    title: Required
+    examples:
+      - false
+  rows:
+    type: integer
+    title: Rows
+    examples:
+      - 4
+slots: {  }
+js:
+  original: |
+    import UswdsLabel from '@/components/uswds_label';
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Text Area
+    // Figma states: default, disabled, error, success
+    // default/success: 1px border, base-ink color; error/success: 4px border
+    // error border = error-dark (#b50909); success border = success-dark (#008817)
+    // disabled: bg = disabled-medium (#757575), 1px border base-ink
+    // Focus ring: 4px solid focus-color (#2491ff) inset outline
+
+    const UswdsTextArea = ({
+      label = '',
+      name = '',
+      placeholder = '',
+      hint = '',
+      error = '',
+      success = false,
+      disabled = false,
+      required = false,
+      rows = 4,
+      className = '',
+    }) => {
+      const id = `textarea-${name}`;
+      const hasError = Boolean(error);
+
+      return (
+        <div className={cn('usa-form-group flex flex-col gap-2 font-sans', className)}>
+          {label && (
+            <UswdsLabel
+              labelText={label}
+              htmlFor={id}
+              required={required}
+              hintText={hint}
+            />
+          )}
+          {hasError && (
+            <span
+              id={`${id}-error`}
+              className="usa-error-message text-[length:var(--font-size-uswds-sm)] font-bold text-(--color-uswds-error-dark)"
+            >
+              {error}
+            </span>
+          )}
+          <textarea
+            id={id}
+            name={name}
+            placeholder={placeholder}
+            required={required}
+            disabled={disabled}
+            rows={rows}
+            aria-describedby={hasError ? `${id}-error` : undefined}
+            aria-invalid={hasError ? 'true' : undefined}
+            className={cn(
+              'usa-textarea w-full resize-y px-(--spacing-uswds-1) py-(--spacing-uswds-105) font-sans text-[length:var(--font-size-uswds-sm)] text-(--color-uswds-base-ink)',
+              'focus:ring-4 focus:ring-(--uswds-focus-color) focus:ring-offset-0 focus:outline-none',
+              // Default state
+              !hasError &&
+                !success &&
+                !disabled &&
+                'border border-(--color-uswds-base-ink) bg-white',
+              // Error state: 4px border, error-dark color
+              hasError && 'border-4 border-(--color-uswds-error-dark) bg-white',
+              // Success state: 4px border, success-dark color
+              success &&
+                !hasError &&
+                'border-4 border-(--color-uswds-success-dark) bg-white',
+              // Disabled state
+              disabled &&
+                'cursor-not-allowed border border-(--color-uswds-base-ink) bg-(--color-uswds-disabled-medium)',
+            )}
+          />
+        </div>
+      );
+    };
+
+    export default UswdsTextArea;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import UswdsLabel from "@/components/uswds_label";
+    import { cn } from "drupal-canvas";
+    const UswdsTextArea = ({
+      label = "",
+      name = "",
+      placeholder = "",
+      hint = "",
+      error = "",
+      success = false,
+      disabled = false,
+      required = false,
+      rows = 4,
+      className = ""
+    }) => {
+      const id = `textarea-${name}`;
+      const hasError = Boolean(error);
+      return /* @__PURE__ */ jsxs("div", { className: cn("usa-form-group flex flex-col gap-2 font-sans", className), children: [
+        label && /* @__PURE__ */ jsx(
+          UswdsLabel,
+          {
+            labelText: label,
+            htmlFor: id,
+            required,
+            hintText: hint
+          }
+        ),
+        hasError && /* @__PURE__ */ jsx(
+          "span",
+          {
+            id: `${id}-error`,
+            className: "usa-error-message text-[length:var(--font-size-uswds-sm)] font-bold text-(--color-uswds-error-dark)",
+            children: error
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          "textarea",
+          {
+            id,
+            name,
+            placeholder,
+            required,
+            disabled,
+            rows,
+            "aria-describedby": hasError ? `${id}-error` : void 0,
+            "aria-invalid": hasError ? "true" : void 0,
+            className: cn(
+              "usa-textarea w-full resize-y px-(--spacing-uswds-1) py-(--spacing-uswds-105) font-sans text-[length:var(--font-size-uswds-sm)] text-(--color-uswds-base-ink)",
+              "focus:ring-4 focus:ring-(--uswds-focus-color) focus:ring-offset-0 focus:outline-none",
+              // Default state
+              !hasError && !success && !disabled && "border border-(--color-uswds-base-ink) bg-white",
+              // Error state: 4px border, error-dark color
+              hasError && "border-4 border-(--color-uswds-error-dark) bg-white",
+              // Success state: 4px border, success-dark color
+              success && !hasError && "border-4 border-(--color-uswds-success-dark) bg-white",
+              // Disabled state
+              disabled && "cursor-not-allowed border border-(--color-uswds-base-ink) bg-(--color-uswds-disabled-medium)"
+            )
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsTextArea as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

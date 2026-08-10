@@ -1,0 +1,488 @@
+uuid: 0d53d0b0-0467-4760-bfac-d088893875ab
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: lTUC4SzkWeaORZ8OyXVw5pIKhqVal7044Fpv3BmW4oE
+machineName: uswds_nav
+name: '(Eud-Kit) USWDS Nav'
+required: {  }
+props:
+  menuName:
+    type: string
+    title: 'Menu name'
+    examples:
+      - main
+  menuType:
+    type: string
+    enum:
+      - main
+      - footer
+      - footer-secondary
+    'meta:enum':
+      main: 'Main (horizontal with dropdowns)'
+      footer: 'Footer (stacked list)'
+      footer-secondary: 'Footer Secondary (small horizontal)'
+    title: 'Menu Type'
+    examples:
+      - main
+  bgColor:
+    type: string
+    enum:
+      - white
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lightest
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lightest: 'Base Lightest'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: 'Bg Color'
+    examples:
+      - primary-darker
+  textColor:
+    type: string
+    enum:
+      - light
+      - dark
+      - primary
+      - secondary
+    'meta:enum':
+      light: Light
+      dark: Dark
+      primary: Primary
+      secondary: Secondary
+    title: 'Text Color'
+    examples:
+      - light
+slots: {  }
+js:
+  original: |
+    import { cn, JsonApiClient, sortMenu } from 'drupal-canvas';
+    import useSWR from 'swr';
+
+    const resolveBgColor = (token) => {
+      if (!token) return undefined;
+      if (token === 'white') return 'white';
+      return `var(--color-uswds-${token})`;
+    };
+
+    const TEXT_COLOR_MAP = {
+      light: 'white',
+      dark: 'var(--color-uswds-base-ink)',
+      primary: 'var(--color-uswds-primary-darker)',
+      secondary: 'var(--color-eud-gold)',
+    };
+
+    const resolveTextColor = (token) => TEXT_COLOR_MAP[token] ?? undefined;
+
+    const FALLBACK_LINKS = [
+      { id: 'home', title: 'Home', url: '/', _hasSubmenu: false, _children: [] },
+      {
+        id: 'programs',
+        title: 'Programs & Services',
+        url: '/programs',
+        _hasSubmenu: true,
+        _children: [
+          { id: 'programs-all', title: 'All Programs', url: '/programs' },
+          {
+            id: 'programs-family',
+            title: 'Flourish Family Benefit',
+            url: '/programs/family',
+          },
+          {
+            id: 'programs-career',
+            title: 'Career Re-entry Grants',
+            url: '/programs/career',
+          },
+          {
+            id: 'programs-learning',
+            title: 'Lifelong Learning Account',
+            url: '/programs/learning',
+          },
+          {
+            id: 'programs-income',
+            title: 'Dignity Floor Income',
+            url: '/programs/income',
+          },
+        ],
+      },
+      {
+        id: 'about',
+        title: 'About',
+        url: '/about',
+        _hasSubmenu: false,
+        _children: [],
+      },
+      {
+        id: 'research',
+        title: 'Research & Data',
+        url: '/research',
+        _hasSubmenu: false,
+        _children: [],
+      },
+      {
+        id: 'newsroom',
+        title: 'Newsroom',
+        url: '/newsroom',
+        _hasSubmenu: false,
+        _children: [],
+      },
+      {
+        id: 'contact',
+        title: 'Contact',
+        url: '/contact',
+        _hasSubmenu: false,
+        _children: [],
+      },
+    ];
+
+    const client = new JsonApiClient();
+
+    const CaretIcon = () => (
+      <svg
+        className="h-[10px] w-[10px] fill-current"
+        viewBox="0 0 10 6"
+        aria-hidden="true"
+      >
+        <path d="M0 0l5 6 5-6z" />
+      </svg>
+    );
+
+    const NavDropdown = ({ items }) => (
+      <ul className="usa-nav__submenu absolute top-full left-0 z-50 hidden min-w-[240px] border border-t-[3px] border-(--color-uswds-base-lighter) border-t-(--color-eud-gold) bg-white shadow-md group-hover:block">
+        {items.map(({ id, title, url }) => (
+          <li
+            key={id}
+            className="usa-nav__submenu-item border-b border-(--color-uswds-base-lighter) last:border-b-0"
+          >
+            <a
+              href={url}
+              className="block px-5 py-[11px] text-sm font-medium text-(--color-uswds-primary) no-underline hover:bg-(--color-uswds-primary-lighter) hover:text-(--color-uswds-primary-darker)"
+            >
+              {title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    );
+
+    const UswdsNav = ({
+      menuName = 'main',
+      menuType = 'main',
+      bgColor = '',
+      textColor = 'light',
+    }) => {
+      const resolvedBgColor = resolveBgColor(bgColor);
+      const resolvedTextColor = resolveTextColor(textColor);
+      const { data, error, isLoading } = useSWR(
+        menuName ? ['menu_items', menuName] : null,
+        ([type, id]) => client.getResource(type, id),
+      );
+
+      const rawLinks =
+        !error && !isLoading && data ? Array.from(sortMenu(data)) : null;
+      const links = rawLinks && rawLinks.length > 0 ? rawLinks : FALLBACK_LINKS;
+      const topLevel = links.filter((l) => !l.parent);
+
+      const activePath =
+        (typeof parent !== 'undefined' && parent.window?.location?.pathname) || '/';
+
+      if (menuType === 'footer') {
+        return (
+          <ul className="usa-footer__primary-content flex flex-col gap-2 font-sans">
+            {topLevel.map(({ id, title, url }) => (
+              <li key={id}>
+                <a
+                  href={url}
+                  className="block py-2 text-base font-normal no-underline hover:underline"
+                  style={{ color: resolvedTextColor }}
+                >
+                  {title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        );
+      }
+
+      if (menuType === 'footer-secondary') {
+        return (
+          <ul className="usa-footer__secondary-links flex flex-wrap gap-x-5 gap-y-1 font-sans">
+            {topLevel.map(({ id, title, url }) => (
+              <li key={id}>
+                <a
+                  href={url}
+                  className="text-sm no-underline opacity-80 hover:underline hover:opacity-100"
+                  style={{ color: resolvedTextColor }}
+                >
+                  {title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        );
+      }
+
+      // Default: main — stacked on mobile, horizontal with dropdowns on desktop
+      return (
+        <ul
+          style={{ backgroundColor: resolvedBgColor }}
+          className="usa-nav__primary flex w-full flex-col font-sans md:flex-row"
+        >
+          {topLevel.map((item) => {
+            const isActive = activePath === item.url;
+            const sharedCls = cn(
+              'inline-flex items-center gap-1.5 px-5 pb-[0.875rem] pt-4 text-sm font-semibold transition-colors',
+              'border-b-[3px] border-b-transparent',
+              'hover:border-b-(--color-eud-gold)',
+            );
+            return (
+              <li
+                key={item.id}
+                className="usa-nav__primary-item group relative border-b border-white/10 last:border-b-0 md:border-b-0"
+              >
+                {item._hasSubmenu ? (
+                  <button
+                    type="button"
+                    className={cn('usa-nav__link', sharedCls, 'w-full cursor-pointer border-0 bg-transparent md:w-auto')}
+                    style={{ color: resolvedTextColor }}
+                  >
+                    {item.title}
+                    <CaretIcon />
+                  </button>
+                ) : (
+                  <a
+                    href={item.url}
+                    className={cn('usa-nav__link', sharedCls, 'w-full no-underline md:w-auto')}
+                    style={{ color: resolvedTextColor }}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {item.title}
+                  </a>
+                )}
+                {item._hasSubmenu && item._children?.length > 0 && (
+                  <NavDropdown items={item._children} />
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    };
+
+    export default UswdsNav;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { JsonApiClient, sortMenu, cn } from "drupal-canvas";
+    import useSWR from "swr";
+    const resolveBgColor = (token) => {
+      if (!token) return void 0;
+      if (token === "white") return "white";
+      return `var(--color-uswds-${token})`;
+    };
+    const TEXT_COLOR_MAP = {
+      light: "white",
+      dark: "var(--color-uswds-base-ink)",
+      primary: "var(--color-uswds-primary-darker)",
+      secondary: "var(--color-eud-gold)"
+    };
+    const resolveTextColor = (token) => {
+      var _a;
+      return (_a = TEXT_COLOR_MAP[token]) != null ? _a : void 0;
+    };
+    const FALLBACK_LINKS = [
+      { id: "home", title: "Home", url: "/", _hasSubmenu: false, _children: [] },
+      {
+        id: "programs",
+        title: "Programs & Services",
+        url: "/programs",
+        _hasSubmenu: true,
+        _children: [
+          { id: "programs-all", title: "All Programs", url: "/programs" },
+          {
+            id: "programs-family",
+            title: "Flourish Family Benefit",
+            url: "/programs/family"
+          },
+          {
+            id: "programs-career",
+            title: "Career Re-entry Grants",
+            url: "/programs/career"
+          },
+          {
+            id: "programs-learning",
+            title: "Lifelong Learning Account",
+            url: "/programs/learning"
+          },
+          {
+            id: "programs-income",
+            title: "Dignity Floor Income",
+            url: "/programs/income"
+          }
+        ]
+      },
+      {
+        id: "about",
+        title: "About",
+        url: "/about",
+        _hasSubmenu: false,
+        _children: []
+      },
+      {
+        id: "research",
+        title: "Research & Data",
+        url: "/research",
+        _hasSubmenu: false,
+        _children: []
+      },
+      {
+        id: "newsroom",
+        title: "Newsroom",
+        url: "/newsroom",
+        _hasSubmenu: false,
+        _children: []
+      },
+      {
+        id: "contact",
+        title: "Contact",
+        url: "/contact",
+        _hasSubmenu: false,
+        _children: []
+      }
+    ];
+    const client = new JsonApiClient();
+    const CaretIcon = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        className: "h-[10px] w-[10px] fill-current",
+        viewBox: "0 0 10 6",
+        "aria-hidden": "true",
+        children: /* @__PURE__ */ jsx("path", { d: "M0 0l5 6 5-6z" })
+      }
+    );
+    const NavDropdown = ({ items }) => /* @__PURE__ */ jsx("ul", { className: "usa-nav__submenu absolute top-full left-0 z-50 hidden min-w-[240px] border border-t-[3px] border-(--color-uswds-base-lighter) border-t-(--color-eud-gold) bg-white shadow-md group-hover:block", children: items.map(({ id, title, url }) => /* @__PURE__ */ jsx(
+      "li",
+      {
+        className: "usa-nav__submenu-item border-b border-(--color-uswds-base-lighter) last:border-b-0",
+        children: /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: url,
+            className: "block px-5 py-[11px] text-sm font-medium text-(--color-uswds-primary) no-underline hover:bg-(--color-uswds-primary-lighter) hover:text-(--color-uswds-primary-darker)",
+            children: title
+          }
+        )
+      },
+      id
+    )) });
+    const UswdsNav = ({
+      menuName = "main",
+      menuType = "main",
+      bgColor = "",
+      textColor = "light"
+    }) => {
+      var _a, _b;
+      const resolvedBgColor = resolveBgColor(bgColor);
+      const resolvedTextColor = resolveTextColor(textColor);
+      const { data, error, isLoading } = useSWR(
+        menuName ? ["menu_items", menuName] : null,
+        ([type, id]) => client.getResource(type, id)
+      );
+      const rawLinks = !error && !isLoading && data ? Array.from(sortMenu(data)) : null;
+      const links = rawLinks && rawLinks.length > 0 ? rawLinks : FALLBACK_LINKS;
+      const topLevel = links.filter((l) => !l.parent);
+      const activePath = typeof parent !== "undefined" && ((_b = (_a = parent.window) == null ? void 0 : _a.location) == null ? void 0 : _b.pathname) || "/";
+      if (menuType === "footer") {
+        return /* @__PURE__ */ jsx("ul", { className: "usa-footer__primary-content flex flex-col gap-2 font-sans", children: topLevel.map(({ id, title, url }) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: url,
+            className: "block py-2 text-base font-normal no-underline hover:underline",
+            style: { color: resolvedTextColor },
+            children: title
+          }
+        ) }, id)) });
+      }
+      if (menuType === "footer-secondary") {
+        return /* @__PURE__ */ jsx("ul", { className: "usa-footer__secondary-links flex flex-wrap gap-x-5 gap-y-1 font-sans", children: topLevel.map(({ id, title, url }) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: url,
+            className: "text-sm no-underline opacity-80 hover:underline hover:opacity-100",
+            style: { color: resolvedTextColor },
+            children: title
+          }
+        ) }, id)) });
+      }
+      return /* @__PURE__ */ jsx(
+        "ul",
+        {
+          style: { backgroundColor: resolvedBgColor },
+          className: "usa-nav__primary flex w-full flex-col font-sans md:flex-row",
+          children: topLevel.map((item) => {
+            var _a2;
+            const isActive = activePath === item.url;
+            const sharedCls = cn(
+              "inline-flex items-center gap-1.5 px-5 pb-[0.875rem] pt-4 text-sm font-semibold transition-colors",
+              "border-b-[3px] border-b-transparent",
+              "hover:border-b-(--color-eud-gold)"
+            );
+            return /* @__PURE__ */ jsxs(
+              "li",
+              {
+                className: "usa-nav__primary-item group relative border-b border-white/10 last:border-b-0 md:border-b-0",
+                children: [
+                  item._hasSubmenu ? /* @__PURE__ */ jsxs(
+                    "button",
+                    {
+                      type: "button",
+                      className: cn("usa-nav__link", sharedCls, "w-full cursor-pointer border-0 bg-transparent md:w-auto"),
+                      style: { color: resolvedTextColor },
+                      children: [
+                        item.title,
+                        /* @__PURE__ */ jsx(CaretIcon, {})
+                      ]
+                    }
+                  ) : /* @__PURE__ */ jsx(
+                    "a",
+                    {
+                      href: item.url,
+                      className: cn("usa-nav__link", sharedCls, "w-full no-underline md:w-auto"),
+                      style: { color: resolvedTextColor },
+                      "aria-current": isActive ? "page" : void 0,
+                      children: item.title
+                    }
+                  ),
+                  item._hasSubmenu && ((_a2 = item._children) == null ? void 0 : _a2.length) > 0 && /* @__PURE__ */ jsx(NavDropdown, { items: item._children })
+                ]
+              },
+              item.id
+            );
+          })
+        }
+      );
+    };
+    export {
+      UswdsNav as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies:
+  drupalSettings:
+    - v0.baseUrl
+    - v0.jsonapiSettings

@@ -1,0 +1,48 @@
+uuid: 25509a0b-0572-4f80-a782-c7cbdf0a3273
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_summary_box
+    - filter.format.canvas_html_block
+  module:
+    - text
+_core:
+  default_config_hash: adqiNX6awZLVHfZMV0LC_7qmTl8taSuCcmysGvJfGlg
+label: '(Eud-Kit) USWDS Summary Box'
+id: js.uswds_summary_box
+source: js
+source_local_id: uswds_summary_box
+provider: null
+active_version: cf65e53d05ff9a85
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Key information'
+          expression: ℹ︎string␟value
+        body:
+          required: false
+          field_type: text_long
+          field_storage_settings: {  }
+          field_instance_settings:
+            allowed_formats:
+              - canvas_html_block
+          field_widget: text_textarea
+          default_value:
+            -
+              value: 'Summary of key takeaways from this content.'
+              format: canvas_html_block
+          expression: ℹ︎text_long␟processed
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items

@@ -1,0 +1,83 @@
+uuid: 7522eb47-2fb2-499e-b2a1-b73ca1174d32
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: yME7Y2SzD1E0sP_7fCpWyaE-1xfPfrf6DrJsFviJvis
+machineName: uswds_collection
+name: '(Eud-Kit) USWDS Collection'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Latest articles'
+  spacing:
+    type: string
+    enum:
+      - default
+      - condensed
+    'meta:enum':
+      default: Default
+      condensed: Condensed
+    title: Spacing
+    examples:
+      - default
+slots:
+  items:
+    title: Items
+js:
+  original: |
+    import { Children, cloneElement, isValidElement } from 'react';
+    import { cn } from 'drupal-canvas';
+
+    const UswdsCollection = ({
+      heading = '',
+      spacing = 'default',
+      items,
+      className = '',
+    }) => {
+      const styledItems = Children.map(items, (child) =>
+        isValidElement(child) ? cloneElement(child, { spacing }) : child,
+      );
+
+      return (
+        <section className={cn('usa-collection font-sans', className)}>
+          {heading && (
+            <h2 className="mb-4 font-serif text-[22px] leading-tight font-bold text-(--color-uswds-primary-darker)">
+              {heading}
+            </h2>
+          )}
+          <ul className="usa-collection__list m-0 list-none p-0">{styledItems}</ul>
+        </section>
+      );
+    };
+
+    export default UswdsCollection;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { Children, isValidElement, cloneElement } from "react";
+    import { cn } from "drupal-canvas";
+    const UswdsCollection = ({
+      heading = "",
+      spacing = "default",
+      items,
+      className = ""
+    }) => {
+      const styledItems = Children.map(
+        items,
+        (child) => isValidElement(child) ? cloneElement(child, { spacing }) : child
+      );
+      return /* @__PURE__ */ jsxs("section", { className: cn("usa-collection font-sans", className), children: [
+        heading && /* @__PURE__ */ jsx("h2", { className: "mb-4 font-serif text-[22px] leading-tight font-bold text-(--color-uswds-primary-darker)", children: heading }),
+        /* @__PURE__ */ jsx("ul", { className: "usa-collection__list m-0 list-none p-0", children: styledItems })
+      ] });
+    };
+    export {
+      UswdsCollection as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

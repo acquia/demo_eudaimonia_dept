@@ -1,0 +1,195 @@
+uuid: a8b98c18-e24f-4847-9cd3-8c32706214d8
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: mavIOu05mokJA5UwKHrLSLZkHRVWxO4YA9edzRFMywg
+machineName: uswds_search
+name: '(Eud-Kit) USWDS Search'
+required: {  }
+props:
+  size:
+    type: string
+    enum:
+      - default
+      - small
+      - large
+    'meta:enum':
+      default: Default
+      small: Small
+      large: Large
+    title: Size
+    examples:
+      - default
+  placeholder:
+    type: string
+    title: Placeholder
+    examples:
+      - Search...
+  searchPageUrl:
+    type: string
+    format: uri-reference
+    title: 'Search page URL'
+    examples:
+      - /search
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const IconSearch = ({ className = 'h-6 w-6' }) => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className={className}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+      </svg>
+    );
+
+    const focusStyles =
+      'focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)';
+
+    const UswdsSearch = ({
+      size = 'default',
+      placeholder = '',
+      searchPageUrl = '/search',
+      className = '',
+    }) => {
+      const isLarge = size === 'large';
+      const isSmall = size === 'small';
+
+      // Pre-fill with the current ?q= value when already on the search page
+      const q =
+        typeof parent !== 'undefined'
+          ? new URLSearchParams(parent.window?.location?.search || '').get('q') ||
+            ''
+          : '';
+
+      return (
+        <form
+          role="search"
+          action={searchPageUrl}
+          method="get"
+          className={cn(
+            'usa-search flex h-10 overflow-hidden rounded border-2 border-(--color-uswds-primary-darker) font-sans',
+            isLarge && 'h-12',
+            className,
+          )}
+        >
+          <label htmlFor="search-field" className="sr-only">
+            Search
+          </label>
+          <input
+            id="search-field"
+            type="search"
+            name="q"
+            defaultValue={q}
+            placeholder={placeholder}
+            className={cn(
+              'usa-search__input flex-1 border-0 bg-white px-3 text-(--color-uswds-base-ink) outline-none',
+              'focus:ring-2 focus:ring-(--uswds-focus-color) focus:ring-inset',
+              isLarge ? 'text-lg' : 'text-base',
+            )}
+          />
+          <button
+            type="submit"
+            className={cn(
+              'usa-search__submit-button flex items-center justify-center bg-(--color-uswds-primary-darker) font-semibold text-white transition-opacity',
+              'hover:opacity-80',
+              focusStyles,
+              isLarge
+                ? 'px-6 text-[length:var(--font-size-uswds-lg,1.375rem)]'
+                : 'px-4 text-sm',
+            )}
+            aria-label={isSmall ? 'Search' : undefined}
+          >
+            {isSmall ? <IconSearch className="h-5 w-5" /> : <span>Search</span>}
+          </button>
+        </form>
+      );
+    };
+
+    export default UswdsSearch;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const IconSearch = ({ className = "h-6 w-6" }) => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className,
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" })
+      }
+    );
+    const focusStyles = "focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)";
+    const UswdsSearch = ({
+      size = "default",
+      placeholder = "",
+      searchPageUrl = "/search",
+      className = ""
+    }) => {
+      var _a, _b;
+      const isLarge = size === "large";
+      const isSmall = size === "small";
+      const q = typeof parent !== "undefined" ? new URLSearchParams(((_b = (_a = parent.window) == null ? void 0 : _a.location) == null ? void 0 : _b.search) || "").get("q") || "" : "";
+      return /* @__PURE__ */ jsxs(
+        "form",
+        {
+          role: "search",
+          action: searchPageUrl,
+          method: "get",
+          className: cn(
+            "usa-search flex h-10 overflow-hidden rounded border-2 border-(--color-uswds-primary-darker) font-sans",
+            isLarge && "h-12",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx("label", { htmlFor: "search-field", className: "sr-only", children: "Search" }),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                id: "search-field",
+                type: "search",
+                name: "q",
+                defaultValue: q,
+                placeholder,
+                className: cn(
+                  "usa-search__input flex-1 border-0 bg-white px-3 text-(--color-uswds-base-ink) outline-none",
+                  "focus:ring-2 focus:ring-(--uswds-focus-color) focus:ring-inset",
+                  isLarge ? "text-lg" : "text-base"
+                )
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "button",
+              {
+                type: "submit",
+                className: cn(
+                  "usa-search__submit-button flex items-center justify-center bg-(--color-uswds-primary-darker) font-semibold text-white transition-opacity",
+                  "hover:opacity-80",
+                  focusStyles,
+                  isLarge ? "px-6 text-[length:var(--font-size-uswds-lg,1.375rem)]" : "px-4 text-sm"
+                ),
+                "aria-label": isSmall ? "Search" : void 0,
+                children: isSmall ? /* @__PURE__ */ jsx(IconSearch, { className: "h-5 w-5" }) : /* @__PURE__ */ jsx("span", { children: "Search" })
+              }
+            )
+          ]
+        }
+      );
+    };
+    export {
+      UswdsSearch as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

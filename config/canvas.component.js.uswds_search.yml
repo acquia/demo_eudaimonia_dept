@@ -1,0 +1,57 @@
+uuid: 5e16a904-d7d6-43d6-b409-33e5cafdc790
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_search
+  module:
+    - link
+    - options
+_core:
+  default_config_hash: 39UXO4GyaGT5-sIPdnsnmd6Pr7pBg6DZUgiaCTSlrPI
+label: '(Eud-Kit) USWDS Search'
+id: js.uswds_search
+source: js
+source_local_id: uswds_search
+provider: null
+active_version: 67bde6c89a635e5c
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        size:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: default
+          expression: ℹ︎list_string␟value
+        placeholder:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Search...
+          expression: ℹ︎string␟value
+        searchPageUrl:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /search
+              options: {  }
+          expression: ℹ︎link␟url
+    fallback_metadata:
+      slot_definitions: {  }

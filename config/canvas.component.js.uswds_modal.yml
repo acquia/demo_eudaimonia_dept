@@ -1,0 +1,74 @@
+uuid: bc6d3feb-aee2-43e4-8460-ac6e2ead0f0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_modal
+_core:
+  default_config_hash: cmt8A_44YLY388Uu8EOAbCObS7zyhgsz6q2vR0LPqb8
+label: '(Eud-Kit) USWDS Modal'
+id: js.uswds_modal
+source: js
+source_local_id: uswds_modal
+provider: null
+active_version: 637c06e132ac5690
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        id:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: modal-example
+          expression: ℹ︎string␟value
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Are you sure you want to continue?'
+          expression: ℹ︎string␟value
+        triggerText:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Open modal'
+          expression: ℹ︎string␟value
+        size:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: default
+          expression: ℹ︎string␟value
+        forcedActionNoDismiss:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions:
+        body:
+          title: Body
+        footer:
+          title: 'Footer Actions'

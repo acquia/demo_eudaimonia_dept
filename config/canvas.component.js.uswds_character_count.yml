@@ -1,0 +1,68 @@
+uuid: 5c50a26e-82aa-4ccf-98f7-85d6539f4b81
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_character_count
+_core:
+  default_config_hash: r7sDGgBUcthF3zBrqzZhEoNe8j-5ylYebT_6AQcWnOw
+label: '(Eud-Kit) USWDS Character Count'
+id: js.uswds_character_count
+source: js
+source_local_id: uswds_character_count
+provider: null
+active_version: b22a4546ee5e9e69
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        maxLength:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 150
+          expression: ℹ︎integer␟value
+        label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Message
+          expression: ℹ︎string␟value
+        name:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: message
+          expression: ℹ︎string␟value
+        hint:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+        multiline:
+          required: false
+          field_type: boolean
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: boolean_checkbox
+          default_value:
+            -
+              value: false
+          expression: ℹ︎boolean␟value
+    fallback_metadata:
+      slot_definitions: {  }

@@ -1,0 +1,100 @@
+uuid: 89f6b568-774d-4d13-8c45-4b970a8d9a45
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vBh0yZuRs01Jii9t88J5BulJQ0l9nvdKOd-Uk3P481A
+machineName: uswds_card_media
+name: '(Eud-Kit) USWDS Card Media'
+required: {  }
+props:
+  image:
+    type: object
+    $ref: 'json-schema-definitions://canvas.module/image'
+    title: Image
+  size:
+    type: string
+    enum:
+      - xs
+      - sm
+      - md
+      - lg
+      - full
+    'meta:enum':
+      xs: 'XS (32px)'
+      sm: 'SM (80px)'
+      md: 'MD (160px)'
+      lg: 'LG (240px)'
+      full: 'Full height'
+    title: Size
+    examples:
+      - md
+slots: {  }
+js:
+  original: |
+    import { cn, Image } from 'drupal-canvas';
+
+    const sizeClass = {
+      xs: 'h-8',
+      sm: 'h-20',
+      md: 'h-40',
+      lg: 'h-60',
+      full: 'h-full min-h-40',
+    };
+
+    const UswdsCardMedia = ({ image, size = 'md' }) => {
+      if (!image?.src) return null;
+
+      return (
+        <div
+          className={cn('usa-card__media w-full overflow-hidden', sizeClass[size] ?? sizeClass.md)}
+        >
+          <Image
+            src={image.src}
+            alt={image.alt || ''}
+            width={image.width || 640}
+            height={image.height || 360}
+            className="h-full w-full object-cover"
+          />
+        </div>
+      );
+    };
+
+    export default UswdsCardMedia;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { Image, cn } from "drupal-canvas";
+    const sizeClass = {
+      xs: "h-8",
+      sm: "h-20",
+      md: "h-40",
+      lg: "h-60",
+      full: "h-full min-h-40"
+    };
+    const UswdsCardMedia = ({ image, size = "md" }) => {
+      var _a;
+      if (!(image == null ? void 0 : image.src)) return null;
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: cn("usa-card__media w-full overflow-hidden", (_a = sizeClass[size]) != null ? _a : sizeClass.md),
+          children: /* @__PURE__ */ jsx(
+            Image,
+            {
+              src: image.src,
+              alt: image.alt || "",
+              width: image.width || 640,
+              height: image.height || 360,
+              className: "h-full w-full object-cover"
+            }
+          )
+        }
+      );
+    };
+    export {
+      UswdsCardMedia as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

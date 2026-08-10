@@ -1,0 +1,54 @@
+uuid: 29bb893b-fa35-42f2-89fa-9ffe4de1f43c
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_hero
+_core:
+  default_config_hash: 1XK1hKA1HfHSMZ8E6j9f0Ln43YUUswpapQX9Tusk2lA
+label: '(Eud-Kit) USWDS Hero'
+id: js.uswds_hero
+source: js
+source_local_id: uswds_hero
+provider: null
+active_version: e73a7821121725ef
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        eyebrow:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Department of Eudaimonia · Established 2025'
+          expression: ℹ︎string␟value
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'The work of flourishing belongs to all of us.'
+          expression: ℹ︎string␟value
+        leadParagraph:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'We provide programs, research, and services that help every person live a meaningful, healthy, and self-determined life.'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions:
+        ctas:
+          title: 'Call-to-action buttons'
+        quick_access:
+          title: 'Quick Access widget (optional)'

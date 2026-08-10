@@ -1,0 +1,430 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: b1c1d8e2-f92a-4553-a0fe-bdc4c163ab8d
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'USWDS Demo — Layout & Navigation'
+  description:
+    -
+      value: 'Visual demo of USWDS layout and navigation components'
+  components:
+    -
+      uuid: 8965df2c-7e02-4985-aaeb-db60b4ec08e5
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_banner — Government Banner'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 8965df2c-7e02-4985-aaeb-db60b4ec08e5
+      slot: content
+      uuid: 882b4a38-f11c-4eb9-b658-6910131b202a
+      component_id: js.uswds_banner
+      inputs:
+        background: light
+        headerText: 'An official website of the United States government'
+        triggerText: "Here's how you know"
+        expanded: false
+    -
+      parent_uuid: 882b4a38-f11c-4eb9-b658-6910131b202a
+      slot: details
+      uuid: e9338c12-bdf9-4926-98dc-de3e0eb85fa1
+      component_id: js.uswds_banner_item
+      inputs:
+        heading: 'Official websites use .gov'
+        body:
+          value: 'A <strong>.gov</strong> website belongs to an official government organization in the United States.'
+          format: canvas_html_block
+    -
+      parent_uuid: 882b4a38-f11c-4eb9-b658-6910131b202a
+      slot: details
+      uuid: 880c569d-a03e-4337-899b-76a2d3b7f13d
+      component_id: js.uswds_banner_item
+      inputs:
+        heading: 'Secure .gov websites use HTTPS'
+        body:
+          value: "A <strong>lock</strong> or <strong>https://</strong> means you've safely connected to the .gov website."
+          format: canvas_html_block
+    -
+      uuid: fde13037-8593-4c68-bc95-370a88ee1e06
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_logo — Agency Logo'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: fde13037-8593-4c68-bc95-370a88ee1e06
+      slot: content
+      uuid: 3f696b0f-2a5c-41da-9bad-840fa5aa97c5
+      component_id: js.uswds_logo
+      inputs:
+        variant: dark
+        linkUrl:
+          uri: 'internal:/'
+          options: {  }
+    -
+      uuid: 20974b19-2f95-4b3b-8996-8895accd508d
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_language_selector — Language Selector'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 20974b19-2f95-4b3b-8996-8895accd508d
+      slot: content
+      uuid: 4875215e-6568-4422-a358-9dfa86f48c9f
+      component_id: js.uswds_language_selector
+      inputs:
+        buttonType: primary
+        showIcon: true
+    -
+      parent_uuid: 4875215e-6568-4422-a358-9dfa86f48c9f
+      slot: items
+      uuid: f69d19e2-82cc-4c16-aea3-a17cfaac9cd3
+      component_id: js.uswds_language_selector_item
+      inputs:
+        nativeName: Español
+        label: (Spanish)
+        url:
+          uri: 'internal:/es'
+          options: {  }
+        languageCode: es
+    -
+      parent_uuid: 4875215e-6568-4422-a358-9dfa86f48c9f
+      slot: items
+      uuid: 0786b2b3-b5b8-49a3-a663-38e14a65a195
+      component_id: js.uswds_language_selector_item
+      inputs:
+        nativeName: 'Tiếng Việt'
+        label: (Vietnamese)
+        url:
+          uri: 'internal:/vi'
+          options: {  }
+        languageCode: vi
+    -
+      uuid: 5b54779a-e9ab-4c49-8059-4cf45e3cb477
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_breadcrumb — Breadcrumb Navigation'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 5b54779a-e9ab-4c49-8059-4cf45e3cb477
+      slot: content
+      uuid: 83ce0ae7-e659-49db-901f-5c76feef8e28
+      component_id: js.uswds_breadcrumb
+      inputs:
+        context: on-light
+        wrap: false
+    -
+      parent_uuid: 83ce0ae7-e659-49db-901f-5c76feef8e28
+      slot: items
+      uuid: f4838a3b-8f62-4f53-8b41-3873e419318a
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: Home
+        href:
+          uri: 'internal:/'
+          options: {  }
+        context: on-light
+        isLast: false
+        showSeparator: false
+    -
+      parent_uuid: 83ce0ae7-e659-49db-901f-5c76feef8e28
+      slot: items
+      uuid: d1a2be89-3d88-4e91-84cc-4c63ccd3f812
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: 'Programs & Services'
+        href:
+          uri: 'internal:/eud-programs'
+          options: {  }
+        context: on-light
+        isLast: false
+        showSeparator: true
+    -
+      parent_uuid: 83ce0ae7-e659-49db-901f-5c76feef8e28
+      slot: items
+      uuid: 2d40996e-3ac6-43fe-883c-2437e03b19a4
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: 'Flourish Family Benefit'
+        href:
+          uri: 'internal:/eud-programs/flourish-family'
+          options: {  }
+        context: on-light
+        isLast: true
+        showSeparator: true
+    -
+      uuid: 922d1af0-c476-43a0-8003-8b6f92fdab65
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_side_navigation — Side Navigation'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 922d1af0-c476-43a0-8003-8b6f92fdab65
+      slot: content
+      uuid: 3ae4afdf-fcd8-439a-88a5-f2805793d1aa
+      component_id: js.uswds_side_navigation
+      inputs:
+        heading: 'About the Department'
+    -
+      parent_uuid: 3ae4afdf-fcd8-439a-88a5-f2805793d1aa
+      slot: items
+      uuid: fb77e26f-1622-4bd8-96fd-fe850babd767
+      component_id: js.uswds_side_navigation_item
+      inputs:
+        text: Overview
+        href: /eud-about
+        current: true
+        level: 1
+    -
+      parent_uuid: 3ae4afdf-fcd8-439a-88a5-f2805793d1aa
+      slot: items
+      uuid: 3df38f7e-4946-4e1a-96c5-bf535202346b
+      component_id: js.uswds_side_navigation_item
+      inputs:
+        text: Leadership
+        href: /eud-about/leadership
+        current: false
+        level: 1
+    -
+      parent_uuid: 3ae4afdf-fcd8-439a-88a5-f2805793d1aa
+      slot: items
+      uuid: 279d6703-6376-4f60-af46-451464b2feb0
+      component_id: js.uswds_side_navigation_item
+      inputs:
+        text: 'Research & Data'
+        href: /eud-about/research
+        current: false
+        level: 1
+    -
+      parent_uuid: 3ae4afdf-fcd8-439a-88a5-f2805793d1aa
+      slot: items
+      uuid: 799d1902-c7a1-4755-a884-f55ef8a97e54
+      component_id: js.uswds_side_navigation_item
+      inputs:
+        text: 'Contact Us'
+        href: /contact
+        current: false
+        level: 1
+    -
+      uuid: a46fcc6e-d0e0-4f2e-964b-ae71715bc2bc
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_in_page_navigation — In-Page Navigation'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: a46fcc6e-d0e0-4f2e-964b-ae71715bc2bc
+      slot: content
+      uuid: f8c4dbf6-f23d-4b39-acf2-fbcd43c619d6
+      component_id: js.uswds_in_page_navigation
+      inputs:
+        heading: 'On this page'
+    -
+      uuid: 15499e7b-09d9-4896-bb63-7c0da8350ab4
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_pagination — Pagination (page 3 of 10)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 15499e7b-09d9-4896-bb63-7c0da8350ab4
+      slot: content
+      uuid: c4dd6ae0-2dc6-46c1-9427-23bff6d149e4
+      component_id: js.uswds_pagination
+      inputs:
+        currentPage: 3
+        totalPages: 10
+    -
+      uuid: ba835db7-27d4-4f90-839e-28803dfe63fa
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_spacer — Spacer (all 6 sizes)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: ba835db7-27d4-4f90-839e-28803dfe63fa
+      slot: content
+      uuid: e93548d4-631d-4c81-b248-d79987f4740a
+      component_id: js.uswds_spacer
+      inputs:
+        height: xs
+    -
+      parent_uuid: ba835db7-27d4-4f90-839e-28803dfe63fa
+      slot: content
+      uuid: edf977e7-e270-40a0-bb6c-047086e979b1
+      component_id: js.uswds_spacer
+      inputs:
+        height: sm
+    -
+      parent_uuid: ba835db7-27d4-4f90-839e-28803dfe63fa
+      slot: content
+      uuid: 559f7bcf-ec64-4d3e-9950-16641b5d7500
+      component_id: js.uswds_spacer
+      inputs:
+        height: md
+    -
+      parent_uuid: ba835db7-27d4-4f90-839e-28803dfe63fa
+      slot: content
+      uuid: a374c227-f57b-40e0-8264-c352d4fb3a11
+      component_id: js.uswds_spacer
+      inputs:
+        height: lg
+    -
+      parent_uuid: ba835db7-27d4-4f90-839e-28803dfe63fa
+      slot: content
+      uuid: 46b81b10-0678-4798-8592-35ea46714a3d
+      component_id: js.uswds_spacer
+      inputs:
+        height: xl
+    -
+      parent_uuid: ba835db7-27d4-4f90-839e-28803dfe63fa
+      slot: content
+      uuid: 59beb861-8c8c-4a9b-85b6-71c6a2147c6f
+      component_id: js.uswds_spacer
+      inputs:
+        height: 2xl
+    -
+      uuid: e150a45c-83d3-413b-946d-0d3bdf19a8cf
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_divider — Divider (4 variants)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: e150a45c-83d3-413b-946d-0d3bdf19a8cf
+      slot: content
+      uuid: 2c54f47e-f614-4954-9c5f-29dcfde3c1d3
+      component_id: js.uswds_divider
+      inputs:
+        thickness: thin
+        color: default
+        verticalSpacing: md
+    -
+      parent_uuid: e150a45c-83d3-413b-946d-0d3bdf19a8cf
+      slot: content
+      uuid: 8fd80332-6a42-43cc-a35b-0fb93d788a6b
+      component_id: js.uswds_divider
+      inputs:
+        thickness: medium
+        color: primary
+        verticalSpacing: md
+    -
+      parent_uuid: e150a45c-83d3-413b-946d-0d3bdf19a8cf
+      slot: content
+      uuid: a4975409-5ed3-420f-a8ae-d81dbd659c9c
+      component_id: js.uswds_divider
+      inputs:
+        thickness: medium
+        color: accent-cool
+        verticalSpacing: md
+    -
+      parent_uuid: e150a45c-83d3-413b-946d-0d3bdf19a8cf
+      slot: content
+      uuid: 9e39d1b5-7df6-4555-b7f5-f0658c8519fd
+      component_id: js.uswds_divider
+      inputs:
+        thickness: thick
+        color: inverse
+        verticalSpacing: md
+    -
+      uuid: cbe08a4e-5e5b-4a25-b3d4-c9674561186b
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_language_switcher_block — Language Switcher Block (Drupal core block wrapper)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: cbe08a4e-5e5b-4a25-b3d4-c9674561186b
+      slot: content
+      uuid: 1923f1c8-242d-43ec-86cf-613d22954be3
+      component_id: js.uswds_language_switcher_block
+      inputs:
+        buttonLabel: Languages
+        buttonStyle: primary
+        showGlobeIcon: false
+    -
+      parent_uuid: cbe08a4e-5e5b-4a25-b3d4-c9674561186b
+      slot: content
+      uuid: caa3a356-5875-453d-b225-ca0a04a56152
+      component_id: js.uswds_language_switcher_block
+      inputs:
+        buttonLabel: Languages
+        buttonStyle: primary
+        showGlobeIcon: true
+    -
+      parent_uuid: cbe08a4e-5e5b-4a25-b3d4-c9674561186b
+      slot: content
+      uuid: 74f4b560-4646-4b72-b038-1546be6d4148
+      component_id: js.uswds_language_switcher_block
+      inputs:
+        buttonLabel: Languages
+        buttonStyle: link
+  path:
+    -
+      alias: /demo-01-layout
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

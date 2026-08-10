@@ -1,0 +1,40 @@
+uuid: 97e29fef-e9b3-4348-ba26-86b1043d898b
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_icon_list_item
+_core:
+  default_config_hash: '-Q9UYLvsU-pMWQ6zaluatDuJ4LYnuPif666zYpx7tYI'
+label: '(Eud-Kit) USWDS Icon List Item'
+id: js.uswds_icon_list_item
+source: js
+source_local_id: uswds_icon_list_item
+provider: null
+active_version: 2eefea4357811d40
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        heading:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Human-centered design'
+          expression: ℹ︎string␟value
+        body:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Programs are built around how people actually live — not how agencies are organized.'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

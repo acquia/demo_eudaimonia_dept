@@ -1,0 +1,1003 @@
+uuid: 714f403b-ce93-438b-9549-7015cb916039
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: sSFkutGU0jGtYJBjctewqsAhX0McUKrTcTzYUwMUtDM
+machineName: uswds_news_feed
+name: '(Eud-Kit) USWDS News Feed'
+required: {  }
+props:
+  articleLimit:
+    type: integer
+    title: 'Article Limit'
+    examples:
+      - 5
+  showFeatured:
+    type: boolean
+    title: 'Show Featured'
+    examples:
+      - true
+  ctaText:
+    type: string
+    title: 'CTA Text'
+    examples:
+      - 'Read full release'
+  viewAllLink:
+    type: string
+    format: uri-reference
+    title: 'View All Link'
+    examples:
+      - /newsroom
+  viewAllLabel:
+    type: string
+    title: 'View All Label'
+    examples:
+      - 'View all news'
+slots: {  }
+js:
+  original: |-
+    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
+    import useSWR from 'swr';
+
+    const client = new JsonApiClient();
+
+    // ─── fallback data (used when API is unreachable, e.g. local Workbench) ───────
+
+    const FALLBACK_ARTICLES = [
+      {
+        id: 'fallback-1',
+        title: 'Secretary Hawthorne announces $14B expansion of Lifelong Learning Accounts',
+        created: '2026-04-28T00:00:00Z',
+        body: { summary: 'The expansion raises the federal match from 1:1 to 2:1 for households earning under $75,000, covering over 4 million new participants in fiscal year 2027.' },
+        path: { alias: '/newsroom/lifelong-learning-expansion' },
+        featured: true,
+        newsType: 'Press Release',
+        imageUrl: null,
+        imageAlt: '',
+      },
+      {
+        id: 'fallback-2',
+        title: 'New report: Flourish Family Benefit reduces child poverty rate by 18% in pilot states',
+        created: '2026-03-12T00:00:00Z',
+        body: { summary: 'Independent evaluation confirms significant improvements in food security, school attendance, and parental employment across all five pilot states.' },
+        path: { alias: '/research/ffb-impact-report-2025' },
+        featured: false,
+        newsType: 'Research Report',
+        imageUrl: null,
+        imageAlt: '',
+      },
+      {
+        id: 'fallback-3',
+        title: 'Open enrollment for Community Connection Corps begins February 1',
+        created: '2026-01-20T00:00:00Z',
+        body: { summary: 'Applications accepted on a rolling basis. Placements available in all 50 states and territories through the end of the fiscal year.' },
+        path: { alias: '/newsroom/connection-corps-enrollment' },
+        featured: false,
+        newsType: 'Announcement',
+        imageUrl: null,
+        imageAlt: '',
+      },
+      {
+        id: 'fallback-4',
+        title: 'Dignity Floor Income program exceeds 500,000 household milestone',
+        created: '2025-12-03T00:00:00Z',
+        body: { summary: 'Monthly direct payments now reach over 500,000 households nationwide, with application processing times averaging under five business days.' },
+        path: { alias: '/newsroom/dignity-floor-milestone' },
+        featured: false,
+        newsType: 'News',
+        imageUrl: null,
+        imageAlt: '',
+      },
+      {
+        id: 'fallback-5',
+        title: 'Department publishes 2025 Annual Wellbeing Index',
+        created: '2025-11-15T00:00:00Z',
+        body: { summary: 'The index tracks 24 indicators across economic security, housing, health, and education. Overall wellbeing scores rose 7 points year-over-year.' },
+        path: { alias: '/research/wellbeing-index-2025' },
+        featured: false,
+        newsType: 'Research Report',
+        imageUrl: null,
+        imageAlt: '',
+      },
+    ];
+
+    // ─── helpers ──────────────────────────────────────────────────────────────────
+
+    const formatDate = (iso) => {
+      if (!iso) return '';
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'UTC',
+      }).format(new Date(iso));
+    };
+
+    const formatShortDate = (iso) => {
+      if (!iso) return { month: '', day: '' };
+      const d = new Date(iso);
+      return {
+        month: new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' }).format(d),
+        day: new Intl.DateTimeFormat('en-US', { day: 'numeric', timeZone: 'UTC' }).format(d),
+      };
+    };
+
+    // Resolve a field that may exist with or without the field_ prefix
+    const resolveField = (item, name) =>
+      item[`field_${name}`] ?? item[name] ?? null;
+
+    const normalizeArticle = (item) => {
+      const tags = resolveField(item, 'tags');
+      const media = resolveField(item, 'media');
+      const featured = resolveField(item, 'featured');
+      return {
+        id: item.id,
+        title: item.title,
+        created: item.created,
+        body: item.body,
+        path: item.path,
+        featured: featured === true,
+        newsType: tags?.[0]?.name ?? null,
+        imageUrl: media?.media_image?.uri?.url ?? null,
+        imageAlt: media?.media_image?.resourceIdObjMeta?.alt ?? '',
+      };
+    };
+
+    const TAG_STYLE = {
+      'Press Release': 'bg-(--color-uswds-primary) text-white',
+      New: 'bg-(--color-uswds-info-lightest) text-(--color-uswds-info-dark)',
+      Updated: 'bg-(--color-uswds-base-lighter) text-(--color-uswds-base-ink)',
+      Urgent: 'bg-(--color-uswds-error-lightest) text-(--color-uswds-error-dark)',
+      Report: 'bg-(--color-uswds-success-lightest) text-(--color-uswds-success-dark)',
+      'Research Report': 'bg-(--color-uswds-success-lightest) text-(--color-uswds-success-dark)',
+      News: 'bg-(--color-uswds-primary-lighter) text-(--color-uswds-primary-darker)',
+    };
+
+    const TypeTag = ({ type }) => {
+      if (!type) return null;
+      return (
+        <span
+          className={cn(
+            'inline-block rounded-sm px-2 py-0.5 text-[11px] font-bold tracking-[.8px] uppercase',
+            TAG_STYLE[type] ?? 'bg-(--color-uswds-base-lighter) text-(--color-uswds-base-ink)',
+          )}
+        >
+          {type}
+        </span>
+      );
+    };
+
+    const ArrowIcon = () => (
+      <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" aria-hidden="true">
+        <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" fill="none" />
+      </svg>
+    );
+
+    // ─── skeleton loaders ──────────────────────────────────────────────────────────
+
+    const FeaturedSkeleton = () => (
+      <div className="grid animate-pulse grid-cols-1 gap-8 font-sans md:grid-cols-[1.4fr_1fr]">
+        <div className="overflow-hidden rounded-sm border border-(--color-uswds-base-lighter)">
+          <div className="h-72 bg-(--color-uswds-base-lighter)" />
+          <div className="p-7 space-y-3">
+            <div className="h-3 w-32 rounded bg-(--color-uswds-base-lighter)" />
+            <div className="h-6 w-3/4 rounded bg-(--color-uswds-base-lighter)" />
+            <div className="h-4 w-full rounded bg-(--color-uswds-base-lighter)" />
+            <div className="h-4 w-2/3 rounded bg-(--color-uswds-base-lighter)" />
+          </div>
+        </div>
+        <div className="space-y-4 pt-2">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="space-y-2 border-t border-(--color-uswds-base-lighter) pt-4">
+              <div className="h-4 w-full rounded bg-(--color-uswds-base-lighter)" />
+              <div className="h-3 w-24 rounded bg-(--color-uswds-base-lighter)" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+
+    const CompactSkeleton = () => (
+      <div className="animate-pulse space-y-0 font-sans">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="flex gap-5 border-t border-(--color-uswds-base-lighter) py-5 first:border-t-0">
+            <div className="h-14 w-12 shrink-0 rounded-sm bg-(--color-uswds-base-lighter)" />
+            <div className="flex-1 space-y-2 pt-1">
+              <div className="h-4 w-full rounded bg-(--color-uswds-base-lighter)" />
+              <div className="h-3 w-24 rounded bg-(--color-uswds-base-lighter)" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+
+    // ─── featured layout (homepage) ───────────────────────────────────────────────
+
+    const FeaturedLayout = ({ featured, rest, ctaText, viewAllLink, viewAllLabel }) => {
+      const featuredPath = '#'; // TODO: link to article detail page once routes are defined
+      return (
+        <div className="grid grid-cols-1 gap-8 font-sans md:grid-cols-[1.4fr_1fr]">
+          {/* Featured article */}
+          <article className="flex flex-col overflow-hidden rounded-sm border border-(--color-uswds-base-lighter) bg-white">
+            {/* Image or gradient placeholder */}
+            <div className="relative h-72 shrink-0 overflow-hidden">
+              {featured?.imageUrl ? (
+                <img
+                  src={featured.imageUrl}
+                  alt={featured.imageAlt || ''}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div
+                  className="h-full w-full"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(22,46,81,.85), rgba(0,94,162,.5)), radial-gradient(circle at 35% 65%, rgba(222,198,154,.55), transparent 45%), linear-gradient(180deg, var(--color-uswds-primary-dark), var(--color-uswds-primary-darker))',
+                  }}
+                  aria-hidden="true"
+                />
+              )}
+              <span className="absolute bottom-4 left-6 rounded-sm bg-black/45 px-2.5 py-1.5 text-xs font-bold tracking-[1.5px] text-white uppercase">
+                Featured Story
+              </span>
+            </div>
+
+            {/* Body */}
+            <div className="flex flex-1 flex-col p-7">
+              <div className="mb-2 flex items-center gap-2">
+                <p className="text-[13px] font-normal tracking-[.8px] text-(--color-uswds-base-dark) uppercase">
+                  {formatDate(featured?.created)}
+                </p>
+                {featured?.newsType && <TypeTag type={featured.newsType} />}
+              </div>
+              <h3 className="mb-3 font-serif text-[26px] leading-snug font-bold text-(--color-uswds-primary-darker)">
+                {featured?.title}
+              </h3>
+              {featured?.body?.summary && (
+                <p className="mb-4 flex-1 text-[15px] leading-relaxed text-(--color-uswds-base-dark)">
+                  {featured.body.summary}
+                </p>
+              )}
+              <a
+                href={featuredPath}
+                className="inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline"
+              >
+                {ctaText}
+                <ArrowIcon />
+              </a>
+            </div>
+          </article>
+
+          {/* Collection list with tags */}
+          <div className="flex flex-col">
+            <ul className="m-0 list-none p-0">
+              {rest.slice(0, 4).map((item) => (
+                <li
+                  key={item.id}
+                  className="border-t border-(--color-uswds-base-lighter) py-4 first:border-t-0"
+                >
+                  <a
+                    href='#'
+                    className="block text-[16px] leading-snug font-bold text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline"
+                  >
+                    {item.title}
+                  </a>
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <p className="text-[13px] text-(--color-uswds-base-dark)">
+                      {formatDate(item.created)}
+                    </p>
+                    {item.newsType && <TypeTag type={item.newsType} />}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            {viewAllLink && (
+              <a
+                href={viewAllLink}
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline"
+              >
+                {viewAllLabel}
+                <ArrowIcon />
+              </a>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    // ─── compact layout (about page) ──────────────────────────────────────────────
+
+    const CompactLayout = ({ items, viewAllLink, viewAllLabel }) => (
+      <div className="font-sans">
+        <ul className="m-0 list-none p-0">
+          {items.map((item) => {
+            const { month, day } = formatShortDate(item.created);
+            return (
+              <li
+                key={item.id}
+                className="flex gap-5 border-t border-(--color-uswds-base-lighter) py-5 first:border-t-0"
+              >
+                {/* Date block */}
+                <div className="flex w-12 shrink-0 flex-col items-center rounded-sm bg-(--color-uswds-primary-darker) px-1 py-2 text-center text-white">
+                  <span className="text-[11px] font-bold uppercase leading-none">{month}</span>
+                  <span className="mt-0.5 font-serif text-[22px] leading-none font-bold">{day}</span>
+                </div>
+
+                {/* Content */}
+                <div className="flex flex-col justify-center">
+                  <a
+                    href='#'
+                    className="text-[15px] leading-snug font-bold text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline"
+                  >
+                    {item.title}
+                  </a>
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <span className="text-[13px] text-(--color-uswds-base-dark)">
+                      {formatDate(item.created)}
+                    </span>
+                    {item.newsType && <TypeTag type={item.newsType} />}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+        {viewAllLink && (
+          <a
+            href={viewAllLink}
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline"
+          >
+            {viewAllLabel}
+            <ArrowIcon />
+          </a>
+        )}
+      </div>
+    );
+
+    // ─── main component ───────────────────────────────────────────────────────────
+
+    const UswdsNewsFeed = ({
+      articleLimit = 5,
+      showFeatured = true,
+      ctaText = 'Read full release',
+      viewAllLink = '/newsroom',
+      viewAllLabel = 'View all news →',
+    }) => {
+      const { data, error, isLoading } = useSWR(
+        ['node--article', articleLimit, showFeatured],
+        async () => {
+          const buildListParams = (include) =>
+            new DrupalJsonApiParams()
+              .addSort('created', 'DESC')
+              .addPageLimit(articleLimit)
+              .addInclude(include);
+
+          const buildFeaturedParams = (include) =>
+            new DrupalJsonApiParams()
+              .addFilter('featured', '1')
+              .addSort('created', 'DESC')
+              .addPageLimit(1)
+              .addInclude(include);
+
+          try {
+            if (showFeatured) {
+              const [featuredItems, listItems] = await Promise.all([
+                client.getCollection('node--article', {
+                  queryString: buildFeaturedParams(['media', 'media.media_image', 'tags']).getQueryString(),
+                }),
+                client.getCollection('node--article', {
+                  queryString: buildListParams(['media', 'media.media_image', 'tags']).getQueryString(),
+                }),
+              ]);
+              return { featuredItem: featuredItems[0] ?? null, listItems };
+            }
+            const listItems = await client.getCollection('node--article', {
+              queryString: buildListParams(['tags']).getQueryString(),
+            });
+            return { featuredItem: null, listItems };
+          } catch {
+            // media relationship may not exist on this site; retry without it
+            if (showFeatured) {
+              const [featuredItems, listItems] = await Promise.all([
+                client.getCollection('node--article', {
+                  queryString: buildFeaturedParams(['tags']).getQueryString(),
+                }),
+                client.getCollection('node--article', {
+                  queryString: buildListParams(['tags']).getQueryString(),
+                }),
+              ]);
+              return { featuredItem: featuredItems[0] ?? null, listItems };
+            }
+            const listItems = await client.getCollection('node--article', {
+              queryString: buildListParams(['tags']).getQueryString(),
+            });
+            return { featuredItem: null, listItems };
+          }
+        },
+      );
+
+      if (isLoading) {
+        return showFeatured ? <FeaturedSkeleton /> : <CompactSkeleton />;
+      }
+
+      // On error or empty — fall back to static demo articles so the component
+      // renders usefully in Workbench / when the API is unreachable.
+      const usingFallback = error || !data || data.listItems.length === 0;
+      const listArticles = usingFallback
+        ? FALLBACK_ARTICLES
+        : data.listItems.map(normalizeArticle);
+
+      if (!showFeatured) {
+        return (
+          <CompactLayout
+            items={listArticles}
+            viewAllLink={viewAllLink}
+            viewAllLabel={viewAllLabel}
+          />
+        );
+      }
+
+      // Use the dedicated featured query result; fall back to the newest article
+      const featuredFromApi = !usingFallback && data.featuredItem ? normalizeArticle(data.featuredItem) : null;
+      const featured = featuredFromApi ?? listArticles.find((a) => a.featured) ?? listArticles[0];
+      // Exclude the featured article from the list column
+      const rest = listArticles.filter((a) => a.id !== featured.id);
+
+      return (
+        <FeaturedLayout
+          featured={featured}
+          rest={rest}
+          ctaText={ctaText}
+          viewAllLink={viewAllLink}
+          viewAllLabel={viewAllLabel}
+        />
+      );
+    };
+
+    export default UswdsNewsFeed;
+  compiled: |
+    function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+        try {
+            var info = gen[key](arg);
+            var value = info.value;
+        } catch (error) {
+            reject(error);
+            return;
+        }
+        if (info.done) {
+            resolve(value);
+        } else {
+            Promise.resolve(value).then(_next, _throw);
+        }
+    }
+    function _async_to_generator(fn) {
+        return function() {
+            var self = this, args = arguments;
+            return new Promise(function(resolve, reject) {
+                var gen = fn.apply(self, args);
+                function _next(value) {
+                    asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+                }
+                function _throw(err) {
+                    asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+                }
+                _next(undefined);
+            });
+        };
+    }
+    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
+    import useSWR from 'swr';
+    const client = new JsonApiClient();
+    // ─── fallback data (used when API is unreachable, e.g. local Workbench) ───────
+    const FALLBACK_ARTICLES = [
+        {
+            id: 'fallback-1',
+            title: 'Secretary Hawthorne announces $14B expansion of Lifelong Learning Accounts',
+            created: '2026-04-28T00:00:00Z',
+            body: {
+                summary: 'The expansion raises the federal match from 1:1 to 2:1 for households earning under $75,000, covering over 4 million new participants in fiscal year 2027.'
+            },
+            path: {
+                alias: '/newsroom/lifelong-learning-expansion'
+            },
+            featured: true,
+            newsType: 'Press Release',
+            imageUrl: null,
+            imageAlt: ''
+        },
+        {
+            id: 'fallback-2',
+            title: 'New report: Flourish Family Benefit reduces child poverty rate by 18% in pilot states',
+            created: '2026-03-12T00:00:00Z',
+            body: {
+                summary: 'Independent evaluation confirms significant improvements in food security, school attendance, and parental employment across all five pilot states.'
+            },
+            path: {
+                alias: '/research/ffb-impact-report-2025'
+            },
+            featured: false,
+            newsType: 'Research Report',
+            imageUrl: null,
+            imageAlt: ''
+        },
+        {
+            id: 'fallback-3',
+            title: 'Open enrollment for Community Connection Corps begins February 1',
+            created: '2026-01-20T00:00:00Z',
+            body: {
+                summary: 'Applications accepted on a rolling basis. Placements available in all 50 states and territories through the end of the fiscal year.'
+            },
+            path: {
+                alias: '/newsroom/connection-corps-enrollment'
+            },
+            featured: false,
+            newsType: 'Announcement',
+            imageUrl: null,
+            imageAlt: ''
+        },
+        {
+            id: 'fallback-4',
+            title: 'Dignity Floor Income program exceeds 500,000 household milestone',
+            created: '2025-12-03T00:00:00Z',
+            body: {
+                summary: 'Monthly direct payments now reach over 500,000 households nationwide, with application processing times averaging under five business days.'
+            },
+            path: {
+                alias: '/newsroom/dignity-floor-milestone'
+            },
+            featured: false,
+            newsType: 'News',
+            imageUrl: null,
+            imageAlt: ''
+        },
+        {
+            id: 'fallback-5',
+            title: 'Department publishes 2025 Annual Wellbeing Index',
+            created: '2025-11-15T00:00:00Z',
+            body: {
+                summary: 'The index tracks 24 indicators across economic security, housing, health, and education. Overall wellbeing scores rose 7 points year-over-year.'
+            },
+            path: {
+                alias: '/research/wellbeing-index-2025'
+            },
+            featured: false,
+            newsType: 'Research Report',
+            imageUrl: null,
+            imageAlt: ''
+        }
+    ];
+    // ─── helpers ──────────────────────────────────────────────────────────────────
+    const formatDate = (iso)=>{
+        if (!iso) return '';
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZone: 'UTC'
+        }).format(new Date(iso));
+    };
+    const formatShortDate = (iso)=>{
+        if (!iso) return {
+            month: '',
+            day: ''
+        };
+        const d = new Date(iso);
+        return {
+            month: new Intl.DateTimeFormat('en-US', {
+                month: 'short',
+                timeZone: 'UTC'
+            }).format(d),
+            day: new Intl.DateTimeFormat('en-US', {
+                day: 'numeric',
+                timeZone: 'UTC'
+            }).format(d)
+        };
+    };
+    // Resolve a field that may exist with or without the field_ prefix
+    const resolveField = (item, name)=>{
+        var _ref, _item_;
+        return (_ref = (_item_ = item[`field_${name}`]) !== null && _item_ !== void 0 ? _item_ : item[name]) !== null && _ref !== void 0 ? _ref : null;
+    };
+    const normalizeArticle = (item)=>{
+        var _ref, _ref1, _ref2;
+        var _tags_, _media_media_image_uri, _media_media_image, _media_media_image_resourceIdObjMeta, _media_media_image1;
+        const tags = resolveField(item, 'tags');
+        const media = resolveField(item, 'media');
+        const featured = resolveField(item, 'featured');
+        return {
+            id: item.id,
+            title: item.title,
+            created: item.created,
+            body: item.body,
+            path: item.path,
+            featured: featured === true,
+            newsType: (_ref = tags === null || tags === void 0 ? void 0 : (_tags_ = tags[0]) === null || _tags_ === void 0 ? void 0 : _tags_.name) !== null && _ref !== void 0 ? _ref : null,
+            imageUrl: (_ref1 = media === null || media === void 0 ? void 0 : (_media_media_image = media.media_image) === null || _media_media_image === void 0 ? void 0 : (_media_media_image_uri = _media_media_image.uri) === null || _media_media_image_uri === void 0 ? void 0 : _media_media_image_uri.url) !== null && _ref1 !== void 0 ? _ref1 : null,
+            imageAlt: (_ref2 = media === null || media === void 0 ? void 0 : (_media_media_image1 = media.media_image) === null || _media_media_image1 === void 0 ? void 0 : (_media_media_image_resourceIdObjMeta = _media_media_image1.resourceIdObjMeta) === null || _media_media_image_resourceIdObjMeta === void 0 ? void 0 : _media_media_image_resourceIdObjMeta.alt) !== null && _ref2 !== void 0 ? _ref2 : ''
+        };
+    };
+    const TAG_STYLE = {
+        'Press Release': 'bg-(--color-uswds-primary) text-white',
+        New: 'bg-(--color-uswds-info-lightest) text-(--color-uswds-info-dark)',
+        Updated: 'bg-(--color-uswds-base-lighter) text-(--color-uswds-base-ink)',
+        Urgent: 'bg-(--color-uswds-error-lightest) text-(--color-uswds-error-dark)',
+        Report: 'bg-(--color-uswds-success-lightest) text-(--color-uswds-success-dark)',
+        'Research Report': 'bg-(--color-uswds-success-lightest) text-(--color-uswds-success-dark)',
+        News: 'bg-(--color-uswds-primary-lighter) text-(--color-uswds-primary-darker)'
+    };
+    const TypeTag = ({ type })=>{
+        var _TAG_STYLE_type;
+        if (!type) return null;
+        return /*#__PURE__*/ _jsx("span", {
+            className: cn('inline-block rounded-sm px-2 py-0.5 text-[11px] font-bold tracking-[.8px] uppercase', (_TAG_STYLE_type = TAG_STYLE[type]) !== null && _TAG_STYLE_type !== void 0 ? _TAG_STYLE_type : 'bg-(--color-uswds-base-lighter) text-(--color-uswds-base-ink)'),
+            children: type
+        });
+    };
+    const ArrowIcon = ()=>/*#__PURE__*/ _jsx("svg", {
+            viewBox: "0 0 24 24",
+            className: "h-4 w-4 shrink-0",
+            "aria-hidden": "true",
+            children: /*#__PURE__*/ _jsx("path", {
+                d: "M9 6l6 6-6 6",
+                stroke: "currentColor",
+                strokeWidth: "2.5",
+                fill: "none"
+            })
+        });
+    // ─── skeleton loaders ──────────────────────────────────────────────────────────
+    const FeaturedSkeleton = ()=>/*#__PURE__*/ _jsxs("div", {
+            className: "grid animate-pulse grid-cols-1 gap-8 font-sans md:grid-cols-[1.4fr_1fr]",
+            children: [
+                /*#__PURE__*/ _jsxs("div", {
+                    className: "overflow-hidden rounded-sm border border-(--color-uswds-base-lighter)",
+                    children: [
+                        /*#__PURE__*/ _jsx("div", {
+                            className: "h-72 bg-(--color-uswds-base-lighter)"
+                        }),
+                        /*#__PURE__*/ _jsxs("div", {
+                            className: "p-7 space-y-3",
+                            children: [
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-3 w-32 rounded bg-(--color-uswds-base-lighter)"
+                                }),
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-6 w-3/4 rounded bg-(--color-uswds-base-lighter)"
+                                }),
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-4 w-full rounded bg-(--color-uswds-base-lighter)"
+                                }),
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-4 w-2/3 rounded bg-(--color-uswds-base-lighter)"
+                                })
+                            ]
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ _jsx("div", {
+                    className: "space-y-4 pt-2",
+                    children: [
+                        1,
+                        2,
+                        3,
+                        4
+                    ].map((i)=>/*#__PURE__*/ _jsxs("div", {
+                            className: "space-y-2 border-t border-(--color-uswds-base-lighter) pt-4",
+                            children: [
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-4 w-full rounded bg-(--color-uswds-base-lighter)"
+                                }),
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-3 w-24 rounded bg-(--color-uswds-base-lighter)"
+                                })
+                            ]
+                        }, i))
+                })
+            ]
+        });
+    const CompactSkeleton = ()=>/*#__PURE__*/ _jsx("div", {
+            className: "animate-pulse space-y-0 font-sans",
+            children: [
+                1,
+                2,
+                3
+            ].map((i)=>/*#__PURE__*/ _jsxs("div", {
+                    className: "flex gap-5 border-t border-(--color-uswds-base-lighter) py-5 first:border-t-0",
+                    children: [
+                        /*#__PURE__*/ _jsx("div", {
+                            className: "h-14 w-12 shrink-0 rounded-sm bg-(--color-uswds-base-lighter)"
+                        }),
+                        /*#__PURE__*/ _jsxs("div", {
+                            className: "flex-1 space-y-2 pt-1",
+                            children: [
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-4 w-full rounded bg-(--color-uswds-base-lighter)"
+                                }),
+                                /*#__PURE__*/ _jsx("div", {
+                                    className: "h-3 w-24 rounded bg-(--color-uswds-base-lighter)"
+                                })
+                            ]
+                        })
+                    ]
+                }, i))
+        });
+    // ─── featured layout (homepage) ───────────────────────────────────────────────
+    const FeaturedLayout = ({ featured, rest, ctaText, viewAllLink, viewAllLabel })=>{
+        var _featured_body;
+        const featuredPath = '#'; // TODO: link to article detail page once routes are defined
+        return /*#__PURE__*/ _jsxs("div", {
+            className: "grid grid-cols-1 gap-8 font-sans md:grid-cols-[1.4fr_1fr]",
+            children: [
+                /*#__PURE__*/ _jsxs("article", {
+                    className: "flex flex-col overflow-hidden rounded-sm border border-(--color-uswds-base-lighter) bg-white",
+                    children: [
+                        /*#__PURE__*/ _jsxs("div", {
+                            className: "relative h-72 shrink-0 overflow-hidden",
+                            children: [
+                                (featured === null || featured === void 0 ? void 0 : featured.imageUrl) ? /*#__PURE__*/ _jsx("img", {
+                                    src: featured.imageUrl,
+                                    alt: featured.imageAlt || '',
+                                    className: "h-full w-full object-cover"
+                                }) : /*#__PURE__*/ _jsx("div", {
+                                    className: "h-full w-full",
+                                    style: {
+                                        background: 'linear-gradient(135deg, rgba(22,46,81,.85), rgba(0,94,162,.5)), radial-gradient(circle at 35% 65%, rgba(222,198,154,.55), transparent 45%), linear-gradient(180deg, var(--color-uswds-primary-dark), var(--color-uswds-primary-darker))'
+                                    },
+                                    "aria-hidden": "true"
+                                }),
+                                /*#__PURE__*/ _jsx("span", {
+                                    className: "absolute bottom-4 left-6 rounded-sm bg-black/45 px-2.5 py-1.5 text-xs font-bold tracking-[1.5px] text-white uppercase",
+                                    children: "Featured Story"
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ _jsxs("div", {
+                            className: "flex flex-1 flex-col p-7",
+                            children: [
+                                /*#__PURE__*/ _jsxs("div", {
+                                    className: "mb-2 flex items-center gap-2",
+                                    children: [
+                                        /*#__PURE__*/ _jsx("p", {
+                                            className: "text-[13px] font-normal tracking-[.8px] text-(--color-uswds-base-dark) uppercase",
+                                            children: formatDate(featured === null || featured === void 0 ? void 0 : featured.created)
+                                        }),
+                                        (featured === null || featured === void 0 ? void 0 : featured.newsType) && /*#__PURE__*/ _jsx(TypeTag, {
+                                            type: featured.newsType
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsx("h3", {
+                                    className: "mb-3 font-serif text-[26px] leading-snug font-bold text-(--color-uswds-primary-darker)",
+                                    children: featured === null || featured === void 0 ? void 0 : featured.title
+                                }),
+                                (featured === null || featured === void 0 ? void 0 : (_featured_body = featured.body) === null || _featured_body === void 0 ? void 0 : _featured_body.summary) && /*#__PURE__*/ _jsx("p", {
+                                    className: "mb-4 flex-1 text-[15px] leading-relaxed text-(--color-uswds-base-dark)",
+                                    children: featured.body.summary
+                                }),
+                                /*#__PURE__*/ _jsxs("a", {
+                                    href: featuredPath,
+                                    className: "inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline",
+                                    children: [
+                                        ctaText,
+                                        /*#__PURE__*/ _jsx(ArrowIcon, {})
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ _jsxs("div", {
+                    className: "flex flex-col",
+                    children: [
+                        /*#__PURE__*/ _jsx("ul", {
+                            className: "m-0 list-none p-0",
+                            children: rest.slice(0, 4).map((item)=>/*#__PURE__*/ _jsxs("li", {
+                                    className: "border-t border-(--color-uswds-base-lighter) py-4 first:border-t-0",
+                                    children: [
+                                        /*#__PURE__*/ _jsx("a", {
+                                            href: "#",
+                                            className: "block text-[16px] leading-snug font-bold text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline",
+                                            children: item.title
+                                        }),
+                                        /*#__PURE__*/ _jsxs("div", {
+                                            className: "mt-1.5 flex items-center gap-2",
+                                            children: [
+                                                /*#__PURE__*/ _jsx("p", {
+                                                    className: "text-[13px] text-(--color-uswds-base-dark)",
+                                                    children: formatDate(item.created)
+                                                }),
+                                                item.newsType && /*#__PURE__*/ _jsx(TypeTag, {
+                                                    type: item.newsType
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }, item.id))
+                        }),
+                        viewAllLink && /*#__PURE__*/ _jsxs("a", {
+                            href: viewAllLink,
+                            className: "mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline",
+                            children: [
+                                viewAllLabel,
+                                /*#__PURE__*/ _jsx(ArrowIcon, {})
+                            ]
+                        })
+                    ]
+                })
+            ]
+        });
+    };
+    // ─── compact layout (about page) ──────────────────────────────────────────────
+    const CompactLayout = ({ items, viewAllLink, viewAllLabel })=>/*#__PURE__*/ _jsxs("div", {
+            className: "font-sans",
+            children: [
+                /*#__PURE__*/ _jsx("ul", {
+                    className: "m-0 list-none p-0",
+                    children: items.map((item)=>{
+                        const { month, day } = formatShortDate(item.created);
+                        return /*#__PURE__*/ _jsxs("li", {
+                            className: "flex gap-5 border-t border-(--color-uswds-base-lighter) py-5 first:border-t-0",
+                            children: [
+                                /*#__PURE__*/ _jsxs("div", {
+                                    className: "flex w-12 shrink-0 flex-col items-center rounded-sm bg-(--color-uswds-primary-darker) px-1 py-2 text-center text-white",
+                                    children: [
+                                        /*#__PURE__*/ _jsx("span", {
+                                            className: "text-[11px] font-bold uppercase leading-none",
+                                            children: month
+                                        }),
+                                        /*#__PURE__*/ _jsx("span", {
+                                            className: "mt-0.5 font-serif text-[22px] leading-none font-bold",
+                                            children: day
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxs("div", {
+                                    className: "flex flex-col justify-center",
+                                    children: [
+                                        /*#__PURE__*/ _jsx("a", {
+                                            href: "#",
+                                            className: "text-[15px] leading-snug font-bold text-(--color-uswds-primary) underline hover:text-(--color-uswds-primary-dark) hover:no-underline",
+                                            children: item.title
+                                        }),
+                                        /*#__PURE__*/ _jsxs("div", {
+                                            className: "mt-1.5 flex items-center gap-2",
+                                            children: [
+                                                /*#__PURE__*/ _jsx("span", {
+                                                    className: "text-[13px] text-(--color-uswds-base-dark)",
+                                                    children: formatDate(item.created)
+                                                }),
+                                                item.newsType && /*#__PURE__*/ _jsx(TypeTag, {
+                                                    type: item.newsType
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                })
+                            ]
+                        }, item.id);
+                    })
+                }),
+                viewAllLink && /*#__PURE__*/ _jsxs("a", {
+                    href: viewAllLink,
+                    className: "mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-(--color-uswds-primary) no-underline hover:underline",
+                    children: [
+                        viewAllLabel,
+                        /*#__PURE__*/ _jsx(ArrowIcon, {})
+                    ]
+                })
+            ]
+        });
+    // ─── main component ───────────────────────────────────────────────────────────
+    const UswdsNewsFeed = ({ articleLimit = 5, showFeatured = true, ctaText = 'Read full release', viewAllLink = '/newsroom', viewAllLabel = 'View all news →' })=>{
+        var _ref;
+        const { data, error, isLoading } = useSWR([
+            'node--article',
+            articleLimit,
+            showFeatured
+        ], ()=>_async_to_generator(function*() {
+                const buildListParams = (include)=>new DrupalJsonApiParams().addSort('created', 'DESC').addPageLimit(articleLimit).addInclude(include);
+                const buildFeaturedParams = (include)=>new DrupalJsonApiParams().addFilter('featured', '1').addSort('created', 'DESC').addPageLimit(1).addInclude(include);
+                try {
+                    if (showFeatured) {
+                        var _featuredItems_;
+                        const [featuredItems, listItems] = yield Promise.all([
+                            client.getCollection('node--article', {
+                                queryString: buildFeaturedParams([
+                                    'media',
+                                    'media.media_image',
+                                    'tags'
+                                ]).getQueryString()
+                            }),
+                            client.getCollection('node--article', {
+                                queryString: buildListParams([
+                                    'media',
+                                    'media.media_image',
+                                    'tags'
+                                ]).getQueryString()
+                            })
+                        ]);
+                        return {
+                            featuredItem: (_featuredItems_ = featuredItems[0]) !== null && _featuredItems_ !== void 0 ? _featuredItems_ : null,
+                            listItems
+                        };
+                    }
+                    const listItems = yield client.getCollection('node--article', {
+                        queryString: buildListParams([
+                            'tags'
+                        ]).getQueryString()
+                    });
+                    return {
+                        featuredItem: null,
+                        listItems
+                    };
+                } catch (unused) {
+                    // media relationship may not exist on this site; retry without it
+                    if (showFeatured) {
+                        var _featuredItems_1;
+                        const [featuredItems, listItems] = yield Promise.all([
+                            client.getCollection('node--article', {
+                                queryString: buildFeaturedParams([
+                                    'tags'
+                                ]).getQueryString()
+                            }),
+                            client.getCollection('node--article', {
+                                queryString: buildListParams([
+                                    'tags'
+                                ]).getQueryString()
+                            })
+                        ]);
+                        return {
+                            featuredItem: (_featuredItems_1 = featuredItems[0]) !== null && _featuredItems_1 !== void 0 ? _featuredItems_1 : null,
+                            listItems
+                        };
+                    }
+                    const listItems = yield client.getCollection('node--article', {
+                        queryString: buildListParams([
+                            'tags'
+                        ]).getQueryString()
+                    });
+                    return {
+                        featuredItem: null,
+                        listItems
+                    };
+                }
+            })());
+        if (isLoading) {
+            return showFeatured ? /*#__PURE__*/ _jsx(FeaturedSkeleton, {}) : /*#__PURE__*/ _jsx(CompactSkeleton, {});
+        }
+        // On error or empty — fall back to static demo articles so the component
+        // renders usefully in Workbench / when the API is unreachable.
+        const usingFallback = error || !data || data.listItems.length === 0;
+        const listArticles = usingFallback ? FALLBACK_ARTICLES : data.listItems.map(normalizeArticle);
+        if (!showFeatured) {
+            return /*#__PURE__*/ _jsx(CompactLayout, {
+                items: listArticles,
+                viewAllLink: viewAllLink,
+                viewAllLabel: viewAllLabel
+            });
+        }
+        // Use the dedicated featured query result; fall back to the newest article
+        const featuredFromApi = !usingFallback && data.featuredItem ? normalizeArticle(data.featuredItem) : null;
+        const featured = (_ref = featuredFromApi !== null && featuredFromApi !== void 0 ? featuredFromApi : listArticles.find((a)=>a.featured)) !== null && _ref !== void 0 ? _ref : listArticles[0];
+        // Exclude the featured article from the list column
+        const rest = listArticles.filter((a)=>a.id !== featured.id);
+        return /*#__PURE__*/ _jsx(FeaturedLayout, {
+            featured: featured,
+            rest: rest,
+            ctaText: ctaText,
+            viewAllLink: viewAllLink,
+            viewAllLabel: viewAllLabel
+        });
+    };
+    export default UswdsNewsFeed;
+css:
+  original: ''
+  compiled: |
+    /*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+dataDependencies:
+  drupalSettings:
+    - v0.baseUrl
+    - v0.jsonapiSettings

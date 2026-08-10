@@ -1,0 +1,23 @@
+uuid: 6e3b6154-44e3-4929-ab5b-1dad812e192f
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_process_list
+_core:
+  default_config_hash: iGG1v98YqiCWSKfA9I3OLsrpIWAXLrGFdHSuZ39DvhY
+label: '(Eud-Kit) USWDS Process List'
+id: js.uswds_process_list
+source: js
+source_local_id: uswds_process_list
+provider: null
+active_version: 95702e45488525d1
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions: {  }
+    fallback_metadata:
+      slot_definitions:
+        items:
+          title: Items
+          description: 'One or more uswds_process_list_item components'

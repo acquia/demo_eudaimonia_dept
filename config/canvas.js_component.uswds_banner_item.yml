@@ -1,0 +1,116 @@
+uuid: 579d5343-f85e-4c8d-93ae-d7bc9435890f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 9BXnbi1YpnAb1vS1ANwisv88ZaqvKYKgxLwseYN2ud4
+machineName: uswds_banner_item
+name: '(Eud-Kit) USWDS Banner Item'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'Official websites use .gov'
+  body:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Body
+    examples:
+      - 'A <strong>.gov</strong> website belongs to an official government organization in the United States.'
+  icon:
+    type: object
+    $ref: 'json-schema-definitions://canvas.module/image'
+    title: Icon
+slots: {  }
+js:
+  original: |
+    import { cn, FormattedText, Image } from 'drupal-canvas';
+
+    const UswdsBannerItem = ({
+      heading = '',
+      body = '',
+      background = 'light', // injected by uswds_banner via cloneElement
+      icon,
+    }) => {
+      const isDark = background === 'dark';
+
+      return (
+        <div className="flex gap-2">
+          {icon?.src && (
+            <div className="h-10 w-10 shrink-0">
+              <Image
+                src={icon.src}
+                alt={icon.alt || ''}
+                width={icon.width || 40}
+                height={icon.height || 40}
+                className="h-full w-full object-contain"
+              />
+            </div>
+          )}
+          <div
+            className={cn(
+              'flex flex-col gap-1',
+              isDark ? 'text-white' : 'text-(--color-uswds-base-ink)',
+            )}
+          >
+            {heading && (
+              <p className="m-0 text-sm leading-snug font-bold">{heading}</p>
+            )}
+            {body && (
+              <FormattedText className="m-0 text-sm leading-relaxed">
+                {body}
+              </FormattedText>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    export default UswdsBannerItem;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { Image, FormattedText, cn } from "drupal-canvas";
+    const UswdsBannerItem = ({
+      heading = "",
+      body = "",
+      background = "light",
+      // injected by uswds_banner via cloneElement
+      icon
+    }) => {
+      const isDark = background === "dark";
+      return /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
+        (icon == null ? void 0 : icon.src) && /* @__PURE__ */ jsx("div", { className: "h-10 w-10 shrink-0", children: /* @__PURE__ */ jsx(
+          Image,
+          {
+            src: icon.src,
+            alt: icon.alt || "",
+            width: icon.width || 40,
+            height: icon.height || 40,
+            className: "h-full w-full object-contain"
+          }
+        ) }),
+        /* @__PURE__ */ jsxs(
+          "div",
+          {
+            className: cn(
+              "flex flex-col gap-1",
+              isDark ? "text-white" : "text-(--color-uswds-base-ink)"
+            ),
+            children: [
+              heading && /* @__PURE__ */ jsx("p", { className: "m-0 text-sm leading-snug font-bold", children: heading }),
+              body && /* @__PURE__ */ jsx(FormattedText, { className: "m-0 text-sm leading-relaxed", children: body })
+            ]
+          }
+        )
+      ] });
+    };
+    export {
+      UswdsBannerItem as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

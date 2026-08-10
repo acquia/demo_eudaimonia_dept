@@ -1,0 +1,245 @@
+uuid: b3fd9bec-d597-4883-bd87-e16b362230fa
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: F2gyNPKFphcdhmD4NrWpUeiyXtH9xXeajX7yEpHmOMk
+machineName: uswds_memorable_date
+name: '(Eud-Kit) USWDS Memorable Date'
+required: {  }
+props:
+  label:
+    type: string
+    title: Label
+    examples:
+      - 'Date of birth'
+  name:
+    type: string
+    title: Name
+    examples:
+      - dob
+  hint:
+    type: string
+    title: Hint
+    examples:
+      - 'For example, April 28 1986'
+  error:
+    type: string
+    title: Error
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const inputStyles =
+      'usa-input h-10 border border-(--color-uswds-base-ink) bg-white px-2 py-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base-ink) focus:outline focus:outline-[length:4px] focus:outline-(--uswds-focus-color) focus:outline-offset-0';
+
+    const UswdsMemorableDate = ({
+      label = '',
+      name = '',
+      hint = '',
+      error = '',
+      className = '',
+    }) => {
+      return (
+        <fieldset className={cn('usa-memorable-date m-0 border-0 p-0 font-sans', className)}>
+          {(label || hint) && (
+            <legend className="mb-(--spacing-uswds-1) text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-base-ink)">
+              {label}
+              {hint && (
+                <span className="block text-[length:--font-size-uswds-sm] font-normal text-(--color-uswds-base)">
+                  {hint}
+                </span>
+              )}
+            </legend>
+          )}
+          {error && (
+            <span className="mb-(--spacing-uswds-1) block text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-error-dark)">
+              {error}
+            </span>
+          )}
+          <div className="flex items-center gap-4 pt-(--spacing-uswds-1)">
+            {/* Month */}
+            <div className="flex w-60 flex-col gap-(--spacing-uswds-1)">
+              <label
+                htmlFor={`${name}-month`}
+                className="usa-label text-[length:--font-size-uswds-sm] leading-normal font-normal text-(--color-uswds-base-ink)"
+              >
+                Month
+              </label>
+              <select
+                id={`${name}-month`}
+                name={`${name}-month`}
+                className={cn(inputStyles, 'w-full appearance-none')}
+              >
+                <option value="">-Select-</option>
+                {months.map((m, i) => (
+                  <option key={m} value={i + 1}>
+                    {m}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Day */}
+            <div className="flex w-12 flex-col gap-(--spacing-uswds-1)">
+              <label
+                htmlFor={`${name}-day`}
+                className="usa-label text-[length:--font-size-uswds-sm] leading-normal font-normal text-(--color-uswds-base-ink)"
+              >
+                Day
+              </label>
+              <input
+                id={`${name}-day`}
+                type="number"
+                name={`${name}-day`}
+                min="1"
+                max="31"
+                className={cn(inputStyles, 'w-full')}
+              />
+            </div>
+
+            {/* Year */}
+            <div className="flex w-[72px] flex-col gap-(--spacing-uswds-1)">
+              <label
+                htmlFor={`${name}-year`}
+                className="usa-label text-[length:--font-size-uswds-sm] leading-normal font-normal text-(--color-uswds-base-ink)"
+              >
+                Year
+              </label>
+              <input
+                id={`${name}-year`}
+                type="number"
+                name={`${name}-year`}
+                min="1900"
+                max="2100"
+                className={cn(inputStyles, 'w-full')}
+              />
+            </div>
+          </div>
+        </fieldset>
+      );
+    };
+
+    export default UswdsMemorableDate;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    const inputStyles = "usa-input h-10 border border-(--color-uswds-base-ink) bg-white px-2 py-2 text-[length:--font-size-uswds-sm] text-(--color-uswds-base-ink) focus:outline focus:outline-[length:4px] focus:outline-(--uswds-focus-color) focus:outline-offset-0";
+    const UswdsMemorableDate = ({
+      label = "",
+      name = "",
+      hint = "",
+      error = "",
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsxs("fieldset", { className: cn("usa-memorable-date m-0 border-0 p-0 font-sans", className), children: [
+        (label || hint) && /* @__PURE__ */ jsxs("legend", { className: "mb-(--spacing-uswds-1) text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-base-ink)", children: [
+          label,
+          hint && /* @__PURE__ */ jsx("span", { className: "block text-[length:--font-size-uswds-sm] font-normal text-(--color-uswds-base)", children: hint })
+        ] }),
+        error && /* @__PURE__ */ jsx("span", { className: "mb-(--spacing-uswds-1) block text-[length:--font-size-uswds-sm] leading-normal font-bold text-(--color-uswds-error-dark)", children: error }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 pt-(--spacing-uswds-1)", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex w-60 flex-col gap-(--spacing-uswds-1)", children: [
+            /* @__PURE__ */ jsx(
+              "label",
+              {
+                htmlFor: `${name}-month`,
+                className: "usa-label text-[length:--font-size-uswds-sm] leading-normal font-normal text-(--color-uswds-base-ink)",
+                children: "Month"
+              }
+            ),
+            /* @__PURE__ */ jsxs(
+              "select",
+              {
+                id: `${name}-month`,
+                name: `${name}-month`,
+                className: cn(inputStyles, "w-full appearance-none"),
+                children: [
+                  /* @__PURE__ */ jsx("option", { value: "", children: "-Select-" }),
+                  months.map((m, i) => /* @__PURE__ */ jsx("option", { value: i + 1, children: m }, m))
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "flex w-12 flex-col gap-(--spacing-uswds-1)", children: [
+            /* @__PURE__ */ jsx(
+              "label",
+              {
+                htmlFor: `${name}-day`,
+                className: "usa-label text-[length:--font-size-uswds-sm] leading-normal font-normal text-(--color-uswds-base-ink)",
+                children: "Day"
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                id: `${name}-day`,
+                type: "number",
+                name: `${name}-day`,
+                min: "1",
+                max: "31",
+                className: cn(inputStyles, "w-full")
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "flex w-[72px] flex-col gap-(--spacing-uswds-1)", children: [
+            /* @__PURE__ */ jsx(
+              "label",
+              {
+                htmlFor: `${name}-year`,
+                className: "usa-label text-[length:--font-size-uswds-sm] leading-normal font-normal text-(--color-uswds-base-ink)",
+                children: "Year"
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "input",
+              {
+                id: `${name}-year`,
+                type: "number",
+                name: `${name}-year`,
+                min: "1900",
+                max: "2100",
+                className: cn(inputStyles, "w-full")
+              }
+            )
+          ] })
+        ] })
+      ] });
+    };
+    export {
+      UswdsMemorableDate as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

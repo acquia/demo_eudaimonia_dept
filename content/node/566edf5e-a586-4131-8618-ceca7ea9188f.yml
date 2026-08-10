@@ -1,0 +1,48 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 566edf5e-a586-4131-8618-ceca7ea9188f
+  bundle: article
+  default_langcode: en
+  depends:
+    302898cc-0761-4f4a-a1ca-8e7de9769e4b: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Phishing scam targeting Flourish applicants — never share your PIN by email'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      alias: /articles/2026/5/phishing-scam-targeting-flourish-applicants-never-share-your-pin-email
+      langcode: en
+  body:
+    -
+      value: 'Eudaimonia will never ask for your PIN, password, or Social Security number via email. If you receive a suspicious message, do not click any links and report it immediately.'
+      format: filtered_html
+      summary: 'Eudaimonia will never ask for your PIN, password, or Social Security number via email. If you receive a suspicious message, do not click any links and report it immediately.'
+  featured:
+    -
+      value: false
+  tags:
+    -
+      entity: 302898cc-0761-4f4a-a1ca-8e7de9769e4b

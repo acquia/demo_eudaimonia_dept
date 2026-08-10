@@ -1,0 +1,21 @@
+uuid: ed1bcde4-c6d4-48ca-b987-5d8498bffb07
+langcode: en
+status: true
+dependencies: {  }
+name: medium_w768
+label: 'Medium (W768)'
+effects:
+  9db6ea90-d044-4968-b525-baa93569c497:
+    uuid: 9db6ea90-d044-4968-b525-baa93569c497
+    id: image_scale
+    weight: 1
+    data:
+      width: 768
+      height: null
+      upscale: true
+  1ce5cc8f-cc26-4360-ac73-5f4574a1d246:
+    uuid: 1ce5cc8f-cc26-4360-ac73-5f4574a1d246
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

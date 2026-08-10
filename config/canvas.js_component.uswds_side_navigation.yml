@@ -1,0 +1,61 @@
+uuid: ec336b12-3607-4788-96bb-68ee7160ae33
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: iC4jxDR3KhP5dC7C4v7FP7VMOPbYJ8_5KrF931ZEeG0
+machineName: uswds_side_navigation
+name: '(Eud-Kit) USWDS Side Navigation'
+required: {  }
+props:
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - Section
+slots:
+  items:
+    title: Items
+    description: 'One or more uswds_side_navigation_item components'
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    /**
+     * UswdsSideNavigation renders hierarchical side navigation.
+     *
+     * The `items` slot accepts UswdsSideNavigationItem components.
+     * Each item should pass: text, href, current, level (1|2|3).
+     */
+    const UswdsSideNavigation = ({ heading = '', items, className = '' }) => {
+      return (
+        <nav
+          aria-label={heading || 'Side navigation'}
+          className={cn('usa-sidenav font-sans', className)}
+        >
+          <ul className="usa-sidenav m-0 list-none p-0">{items}</ul>
+        </nav>
+      );
+    };
+
+    export default UswdsSideNavigation;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const UswdsSideNavigation = ({ heading = "", items, className = "" }) => {
+      return /* @__PURE__ */ jsx(
+        "nav",
+        {
+          "aria-label": heading || "Side navigation",
+          className: cn("usa-sidenav font-sans", className),
+          children: /* @__PURE__ */ jsx("ul", { className: "usa-sidenav m-0 list-none p-0", children: items })
+        }
+      );
+    };
+    export {
+      UswdsSideNavigation as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

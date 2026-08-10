@@ -1,0 +1,30 @@
+uuid: 06b1d518-67d4-4a4e-8265-21aaf52f97b4
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.text
+_core:
+  default_config_hash: KcIlSFAscczFwnmWkTMMeWIt-2zjbk99QLUB1ZsUhJk
+label: Text
+id: js.text
+source: js
+source_local_id: text
+provider: null
+active_version: 591d141f3659b431
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        text:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Hello world'
+          expression: ℹ︎string␟value
+    fallback_metadata:
+      slot_definitions: {  }

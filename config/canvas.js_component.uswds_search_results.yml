@@ -1,0 +1,405 @@
+uuid: e23dabf3-2712-4fae-b11a-8dd0bc067c12
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: YLpd9CGwrlBWJ9aB8Jvcx0LRPHsKOGJ0BnBn9BQew5Y
+machineName: uswds_search_results
+name: '(Eud-Kit) USWDS Search Results'
+required: {  }
+props:
+  headingText:
+    type: string
+    title: 'Heading text'
+    examples:
+      - 'Search results'
+  noResultsText:
+    type: string
+    title: 'No results text'
+    examples:
+      - 'No results found for your search.'
+slots: {  }
+js:
+  original: |
+    import { useState } from 'react';
+    import useSWR from 'swr';
+    import { cn } from 'drupal-canvas';
+
+    const PAGE_SIZE = 10;
+
+    const getQ = () => {
+      try {
+        return (
+          new URLSearchParams(parent.window?.location?.search || '').get('q') || ''
+        );
+      } catch {
+        return '';
+      }
+    };
+
+    const getBaseUrl = () => {
+      try {
+        const settings = parent.window?.drupalSettings?.canvasData?.v0;
+        return (
+          settings?.baseUrl ||
+          parent.window?.location?.origin ||
+          window.location.origin
+        );
+      } catch {
+        return window.location.origin;
+      }
+    };
+
+    const getApiPrefix = () => {
+      try {
+        return (
+          parent.window?.drupalSettings?.canvasData?.v0?.jsonapiSettings
+            ?.apiPrefix || 'api'
+        );
+      } catch {
+        return 'api';
+      }
+    };
+
+    const fetcher = async ([query, offset]) => {
+      const url = `${getBaseUrl()}/${getApiPrefix()}/index--cms_content?filter[fulltext]=${encodeURIComponent(query)}&page[limit]=${PAGE_SIZE}&page[offset]=${offset}`;
+      const res = await fetch(url, { credentials: 'include' });
+      if (!res.ok) throw new Error(`${res.status}`);
+      return res.json();
+    };
+
+    const ChevronLeft = () => (
+      <svg
+        aria-hidden="true"
+        className="mr-1 h-4 w-4"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path
+          d="M10 12L6 8l4-4"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+
+    const ChevronRight = () => (
+      <svg
+        aria-hidden="true"
+        className="ml-1 h-4 w-4"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path
+          d="M6 12l4-4-4-4"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+
+    const UswdsSearchResults = ({
+      headingText = 'Search results',
+      noResultsText = 'No results found for your search.',
+      className = '',
+    }) => {
+      const [offset, setOffset] = useState(0);
+      const q = getQ();
+
+      const { data, error, isLoading } = useSWR(
+        q ? [q, offset] : null,
+        fetcher,
+      );
+
+      if (!q) {
+        return (
+          <p className={cn('font-sans text-(--color-uswds-base)', className)}>
+            Enter a search term above to see results.
+          </p>
+        );
+      }
+
+      if (isLoading) {
+        return (
+          <p className={cn('font-sans text-(--color-uswds-base)', className)}>
+            Loading…
+          </p>
+        );
+      }
+
+      if (error) {
+        return (
+          <p
+            className={cn(
+              'font-sans text-(--color-uswds-secondary-dark)',
+              className,
+            )}
+          >
+            Could not load results. Please try again.
+          </p>
+        );
+      }
+
+      const results = data?.data ?? [];
+      const total = data?.meta?.count ?? results.length;
+      const hasNext = Boolean(data?.links?.next?.href);
+      const hasPrev = Boolean(data?.links?.prev?.href);
+
+      return (
+        <div className={cn('font-sans', className)}>
+          <h2 className="mb-1 text-2xl font-bold text-(--color-uswds-base-ink)">
+            {headingText}
+          </h2>
+          {total > 0 && (
+            <p className="mb-4 text-sm text-(--color-uswds-base)">
+              {total} result{total !== 1 ? 's' : ''} for{' '}
+              <strong>&ldquo;{q}&rdquo;</strong>
+            </p>
+          )}
+
+          {results.length === 0 ? (
+            <p className="text-(--color-uswds-base)">{noResultsText}</p>
+          ) : (
+            <ul className="m-0 list-none divide-y divide-(--color-uswds-base-lighter) p-0">
+              {results.map((item, i) => {
+                const title = item.attributes?.title || item.title || '';
+                const alias =
+                  item.attributes?.path?.alias ||
+                  item.path?.alias ||
+                  item.attributes?.drupal_internal__nid
+                    ? `/node/${item.attributes?.drupal_internal__nid}`
+                    : '#';
+                return (
+                  <li key={i} className="py-3">
+                    <a
+                      href={alias}
+                      className="text-base font-semibold text-(--color-uswds-primary) no-underline hover:underline"
+                    >
+                      {title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+
+          {(hasPrev || hasNext) && (
+            <div className="mt-6 flex gap-2">
+              {hasPrev && (
+                <button
+                  type="button"
+                  onClick={() => setOffset(Math.max(0, offset - PAGE_SIZE))}
+                  className="flex items-center rounded border border-(--color-uswds-base-lighter) bg-white px-3 py-1.5 text-sm text-(--color-uswds-base) hover:bg-(--color-uswds-base-lightest)"
+                >
+                  <ChevronLeft />
+                  Previous
+                </button>
+              )}
+              {hasNext && (
+                <button
+                  type="button"
+                  onClick={() => setOffset(offset + PAGE_SIZE)}
+                  className="flex items-center rounded border border-(--color-uswds-base-lighter) bg-white px-3 py-1.5 text-sm text-(--color-uswds-base) hover:bg-(--color-uswds-base-lightest)"
+                >
+                  Next
+                  <ChevronRight />
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    export default UswdsSearchResults;
+  compiled: |
+    var __async = (__this, __arguments, generator) => {
+      return new Promise((resolve, reject) => {
+        var fulfilled = (value) => {
+          try {
+            step(generator.next(value));
+          } catch (e) {
+            reject(e);
+          }
+        };
+        var rejected = (value) => {
+          try {
+            step(generator.throw(value));
+          } catch (e) {
+            reject(e);
+          }
+        };
+        var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+        step((generator = generator.apply(__this, __arguments)).next());
+      });
+    };
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { useState } from "react";
+    import useSWR from "swr";
+    import { cn } from "drupal-canvas";
+    const PAGE_SIZE = 10;
+    const getQ = () => {
+      var _a, _b;
+      try {
+        return new URLSearchParams(((_b = (_a = parent.window) == null ? void 0 : _a.location) == null ? void 0 : _b.search) || "").get("q") || "";
+      } catch (e) {
+        return "";
+      }
+    };
+    const getBaseUrl = () => {
+      var _a, _b, _c, _d, _e;
+      try {
+        const settings = (_c = (_b = (_a = parent.window) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.canvasData) == null ? void 0 : _c.v0;
+        return (settings == null ? void 0 : settings.baseUrl) || ((_e = (_d = parent.window) == null ? void 0 : _d.location) == null ? void 0 : _e.origin) || window.location.origin;
+      } catch (e) {
+        return window.location.origin;
+      }
+    };
+    const getApiPrefix = () => {
+      var _a, _b, _c, _d, _e;
+      try {
+        return ((_e = (_d = (_c = (_b = (_a = parent.window) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.canvasData) == null ? void 0 : _c.v0) == null ? void 0 : _d.jsonapiSettings) == null ? void 0 : _e.apiPrefix) || "api";
+      } catch (e) {
+        return "api";
+      }
+    };
+    const fetcher = (_0) => __async(null, [_0], function* ([query, offset]) {
+      const url = `${getBaseUrl()}/${getApiPrefix()}/index--cms_content?filter[fulltext]=${encodeURIComponent(query)}&page[limit]=${PAGE_SIZE}&page[offset]=${offset}`;
+      const res = yield fetch(url, { credentials: "include" });
+      if (!res.ok) throw new Error(`${res.status}`);
+      return res.json();
+    });
+    const ChevronLeft = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        className: "mr-1 h-4 w-4",
+        viewBox: "0 0 16 16",
+        fill: "none",
+        children: /* @__PURE__ */ jsx(
+          "path",
+          {
+            d: "M10 12L6 8l4-4",
+            stroke: "currentColor",
+            strokeLinecap: "round",
+            strokeLinejoin: "round"
+          }
+        )
+      }
+    );
+    const ChevronRight = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        className: "ml-1 h-4 w-4",
+        viewBox: "0 0 16 16",
+        fill: "none",
+        children: /* @__PURE__ */ jsx(
+          "path",
+          {
+            d: "M6 12l4-4-4-4",
+            stroke: "currentColor",
+            strokeLinecap: "round",
+            strokeLinejoin: "round"
+          }
+        )
+      }
+    );
+    const UswdsSearchResults = ({
+      headingText = "Search results",
+      noResultsText = "No results found for your search.",
+      className = ""
+    }) => {
+      var _a, _b, _c, _d, _e, _f, _g;
+      const [offset, setOffset] = useState(0);
+      const q = getQ();
+      const { data, error, isLoading } = useSWR(
+        q ? [q, offset] : null,
+        fetcher
+      );
+      if (!q) {
+        return /* @__PURE__ */ jsx("p", { className: cn("font-sans text-(--color-uswds-base)", className), children: "Enter a search term above to see results." });
+      }
+      if (isLoading) {
+        return /* @__PURE__ */ jsx("p", { className: cn("font-sans text-(--color-uswds-base)", className), children: "Loading…" });
+      }
+      if (error) {
+        return /* @__PURE__ */ jsx(
+          "p",
+          {
+            className: cn(
+              "font-sans text-(--color-uswds-secondary-dark)",
+              className
+            ),
+            children: "Could not load results. Please try again."
+          }
+        );
+      }
+      const results = (_a = data == null ? void 0 : data.data) != null ? _a : [];
+      const total = (_c = (_b = data == null ? void 0 : data.meta) == null ? void 0 : _b.count) != null ? _c : results.length;
+      const hasNext = Boolean((_e = (_d = data == null ? void 0 : data.links) == null ? void 0 : _d.next) == null ? void 0 : _e.href);
+      const hasPrev = Boolean((_g = (_f = data == null ? void 0 : data.links) == null ? void 0 : _f.prev) == null ? void 0 : _g.href);
+      return /* @__PURE__ */ jsxs("div", { className: cn("font-sans", className), children: [
+        /* @__PURE__ */ jsx("h2", { className: "mb-1 text-2xl font-bold text-(--color-uswds-base-ink)", children: headingText }),
+        total > 0 && /* @__PURE__ */ jsxs("p", { className: "mb-4 text-sm text-(--color-uswds-base)", children: [
+          total,
+          " result",
+          total !== 1 ? "s" : "",
+          " for",
+          " ",
+          /* @__PURE__ */ jsxs("strong", { children: [
+            "“",
+            q,
+            "”"
+          ] })
+        ] }),
+        results.length === 0 ? /* @__PURE__ */ jsx("p", { className: "text-(--color-uswds-base)", children: noResultsText }) : /* @__PURE__ */ jsx("ul", { className: "m-0 list-none divide-y divide-(--color-uswds-base-lighter) p-0", children: results.map((item, i) => {
+          var _a2, _b2, _c2, _d2, _e2, _f2;
+          const title = ((_a2 = item.attributes) == null ? void 0 : _a2.title) || item.title || "";
+          const alias = ((_c2 = (_b2 = item.attributes) == null ? void 0 : _b2.path) == null ? void 0 : _c2.alias) || ((_d2 = item.path) == null ? void 0 : _d2.alias) || ((_e2 = item.attributes) == null ? void 0 : _e2.drupal_internal__nid) ? `/node/${(_f2 = item.attributes) == null ? void 0 : _f2.drupal_internal__nid}` : "#";
+          return /* @__PURE__ */ jsx("li", { className: "py-3", children: /* @__PURE__ */ jsx(
+            "a",
+            {
+              href: alias,
+              className: "text-base font-semibold text-(--color-uswds-primary) no-underline hover:underline",
+              children: title
+            }
+          ) }, i);
+        }) }),
+        (hasPrev || hasNext) && /* @__PURE__ */ jsxs("div", { className: "mt-6 flex gap-2", children: [
+          hasPrev && /* @__PURE__ */ jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: () => setOffset(Math.max(0, offset - PAGE_SIZE)),
+              className: "flex items-center rounded border border-(--color-uswds-base-lighter) bg-white px-3 py-1.5 text-sm text-(--color-uswds-base) hover:bg-(--color-uswds-base-lightest)",
+              children: [
+                /* @__PURE__ */ jsx(ChevronLeft, {}),
+                "Previous"
+              ]
+            }
+          ),
+          hasNext && /* @__PURE__ */ jsxs(
+            "button",
+            {
+              type: "button",
+              onClick: () => setOffset(offset + PAGE_SIZE),
+              className: "flex items-center rounded border border-(--color-uswds-base-lighter) bg-white px-3 py-1.5 text-sm text-(--color-uswds-base) hover:bg-(--color-uswds-base-lightest)",
+              children: [
+                "Next",
+                /* @__PURE__ */ jsx(ChevronRight, {})
+              ]
+            }
+          )
+        ] })
+      ] });
+    };
+    export {
+      UswdsSearchResults as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }
