@@ -66,11 +66,6 @@ sub-recipe directory.
 - Content is English (`en`). If your site's default language isn't `en`, the demo content lives under
   the `/en/…` path prefix (set `en` as the default language for plain URLs).
 
-## What's intentionally excluded
-
-See [docs/EXCLUSIONS.md](docs/EXCLUSIONS.md) for the full ledger (Acquia DAM, MCP tools, and two
-alpha/beta-only modules were left out to keep installs clean on standard-stability sites).
-
 ## License
 
 GPL-2.0-or-later.
