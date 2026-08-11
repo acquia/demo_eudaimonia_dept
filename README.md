@@ -22,39 +22,43 @@ It depends only on Drupal core and contributed modules/themes.
 
 ## Structure
 
-This is a `drupal-module` (`acquia/department_of_eudaimonia`) that ships:
+This is a **`drupal-recipe`** package (`acquia/department_of_eudaimonia`) — a main recipe that composes
+modular sub-recipes:
 
 ```
-department_of_eudaimonia.info.yml
-src/Plugin/ConfigAction/     SetCanvasFileReferences, SetComponentFolders, AddModerationEntityTypes
-recipes/
-  department_of_eudaimonia/  main Site recipe (composes the sub-recipes below)
-  eud_common  eud_media  eud_api  eud_canvas
-  eud_ai  eud_ai_content  eud_ai_chatbot  eud_canvas_ai
-  eud_person  eud_article  eud_program
-  eud_icons  eud_uswds
+department_of_eudaimonia/recipe.yml   main Site recipe (composes the sub-recipes below)
+eud_common  eud_media  eud_api  eud_canvas
+eud_ai  eud_ai_content  eud_ai_chatbot  eud_canvas_ai
+eud_person  eud_article  eud_program
+eud_icons  eud_uswds
 ```
 
-The three config-action plugins do things a config-only recipe cannot: wire the banner's media icons
-into a config page-region (`setCanvasFileReferences`), organise components into named folders despite
-Canvas's auto-foldering (`setComponentFolders`), and moderate the bundle-less `canvas_page` entity
-(`addModerationEntityTypes`).
+It depends on a small companion module,
+[`acquia/department_of_eudaimonia_helper`](https://packagist.org/packages/acquia/department_of_eudaimonia_helper),
+pulled in automatically by Composer. That module provides three config-action plugins that do things a
+config-only recipe cannot: wire the banner's media icons into a config page-region
+(`setCanvasFileReferences`), organise components into named folders despite Canvas's auto-foldering
+(`setComponentFolders`), and moderate the bundle-less `canvas_page` entity (`addModerationEntityTypes`).
+The recipe enables the module and calls these actions.
 
 ## Usage
 
 ```bash
 composer require acquia/department_of_eudaimonia
-drush recipe web/modules/contrib/department_of_eudaimonia/recipes/department_of_eudaimonia
+drush recipe recipes/department_of_eudaimonia/department_of_eudaimonia
 drush cache:rebuild
 ```
 
+`composer require` installs both this recipe (to `recipes/department_of_eudaimonia/`) and the helper
+module (to `modules/contrib/`). Run the commands from the **project root** (where `recipes/` lives).
+
 **DDEV:** `ddev drush` runs from the docroot, so pass the absolute container path:
 ```bash
-ddev drush recipe /var/www/html/web/modules/contrib/department_of_eudaimonia/recipes/department_of_eudaimonia
+ddev drush recipe /var/www/html/recipes/department_of_eudaimonia/department_of_eudaimonia
 ```
 
-You can also apply individual sub-recipes (e.g. just the components) by pointing `drush recipe` at that
-sub-recipe directory.
+You can also apply individual sub-recipes by pointing `drush recipe` at a sub-recipe directory, e.g.
+`recipes/department_of_eudaimonia/eud_uswds`.
 
 ## Post-install setup
 
