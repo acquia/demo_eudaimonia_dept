@@ -1,0 +1,14 @@
+name: 'Eudaimonia API'
+type: Recipe
+description: 'JSON:API layer (JSON:API Extras resource overrides, consumers, OAuth scopes) used by Drupal Canvas.'
+recipes:
+  - eud_common
+  - eud_media
+install:
+  - consumers
+  - jsonapi
+  - jsonapi_extras
+  - jsonapi_menu_items
+  - jsonapi_query_builder
+config:
+  strict: false

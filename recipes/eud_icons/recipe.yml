@@ -1,0 +1,5 @@
+name: 'Eudaimonia USWDS Icons'
+type: Recipe
+description: 'Banner icon files and media (US flag, .gov, HTTPS) for the USWDS header. Must be applied before the USWDS page-region file references are set, so the media exist.'
+config:
+  strict: false

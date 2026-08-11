@@ -1,0 +1,336 @@
+uuid: 78429cc9-a01a-4e02-bf1f-81d1a05000f1
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_search
+_core:
+  default_config_hash: rN9lo-SeCsWlfpvkQPNQpfhgS6va2i6kpm_35PO_JUY
+machineName: uswds_header
+name: '(Eud-Kit) USWDS Header'
+required: {  }
+props:
+  topBgColor:
+    type: string
+    enum:
+      - white
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lightest
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lightest: 'Base Lightest'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: 'Top Bg Color'
+    examples:
+      - white
+  navBgColor:
+    type: string
+    enum:
+      - white
+      - primary-lightest
+      - primary-lighter
+      - primary
+      - primary-dark
+      - primary-darker
+      - base-lightest
+      - base-lighter
+      - base-dark
+      - base-darkest
+    'meta:enum':
+      white: White
+      primary-lightest: 'Primary Lightest'
+      primary-lighter: 'Primary Lighter'
+      primary: Primary
+      primary-dark: 'Primary Dark'
+      primary-darker: 'Primary Darker'
+      base-lightest: 'Base Lightest'
+      base-lighter: 'Base Lighter'
+      base-dark: 'Base Dark'
+      base-darkest: 'Base Darkest'
+    title: 'Nav Bg Color'
+    examples:
+      - primary-darker
+  navTextColor:
+    type: string
+    enum:
+      - light
+      - dark
+      - primary
+      - secondary
+    'meta:enum':
+      light: Light
+      dark: Dark
+      primary: Primary
+      secondary: Secondary
+    title: 'Nav Text Color'
+    examples:
+      - light
+  search:
+    type: boolean
+    title: Search
+    examples:
+      - false
+slots:
+  logo:
+    title: Logo
+  languageSelector:
+    title: 'Language Selector'
+  navigation:
+    title: Navigation
+js:
+  original: |-
+    import { useState } from 'react';
+    import UswdsSearch from '@/components/uswds_search';
+    import { cn } from 'drupal-canvas';
+
+    const resolveBgColor = (token) => {
+      if (!token) return undefined;
+      if (token === 'white') return 'white';
+      return `var(--color-uswds-${token})`;
+    };
+
+    const TEXT_COLOR_MAP = {
+      light: 'white',
+      dark: 'var(--color-uswds-base-ink)',
+      primary: 'var(--color-uswds-primary-darker)',
+      secondary: 'var(--color-eud-gold)',
+    };
+
+    const resolveTextColor = (token) => TEXT_COLOR_MAP[token] ?? undefined;
+
+    const UswdsHeader = ({
+      topBgColor = '',
+      navBgColor = '',
+      navTextColor = '',
+      logo,
+      languageSelector,
+      navigation,
+      search = false,
+      className = '',
+    }) => {
+      const [menuOpen, setMenuOpen] = useState(false);
+
+      return (
+        <header className={cn('usa-header font-sans', className)}>
+          {/* Row 1: logo + language + search */}
+          <div
+            style={{ backgroundColor: resolveBgColor(topBgColor) }}
+            className={cn(!topBgColor && 'bg-white')}
+          >
+            <div className="mx-auto max-w-[1240px] px-4 md:px-8">
+              <div className="flex items-center justify-between py-4">
+                <div>{logo}</div>
+
+                <div className="flex items-center gap-4">
+                  {languageSelector && (
+                    <div className="hidden md:block">{languageSelector}</div>
+                  )}
+                  {search && (
+                    <div className="hidden md:block">
+                      <UswdsSearch placeholder="Search Eudaimonia" />
+                    </div>
+                  )}
+
+                  {/* Mobile toggle — only shown when there's a navigation */}
+                  {navigation && (
+                    <button
+                      type="button"
+                      className="usa-menu-btn flex h-12 w-12 items-center justify-center text-(--color-uswds-base-ink) focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) md:hidden"
+                      aria-expanded={menuOpen}
+                      aria-controls="header-nav"
+                      onClick={() => setMenuOpen(!menuOpen)}
+                      aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                    >
+                      {menuOpen ? (
+                        <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+                          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                        </svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current" aria-hidden="true">
+                          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                        </svg>
+                      )}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Row 2: navigation bar — omitted entirely when no navigation slot */}
+          {navigation && (
+            <div
+              id="header-nav"
+              style={{
+                backgroundColor: resolveBgColor(navBgColor),
+                color: resolveTextColor(navTextColor),
+              }}
+              className={cn(
+                'usa-nav border-t-4 border-(--color-eud-gold)',
+                !navBgColor && 'bg-(--color-uswds-primary-darker)',
+                !menuOpen && 'hidden md:block',
+              )}
+            >
+              <div className="mx-auto max-w-[1240px] px-4 md:px-8">
+                <div className="flex flex-col md:flex-row md:items-center">
+                  {navigation}
+                </div>
+
+                {/* Mobile drawer extras */}
+                {menuOpen && (
+                  <>
+                    {languageSelector && (
+                      <div className="border-t border-(--color-uswds-primary-dark) py-4 md:hidden">
+                        {languageSelector}
+                      </div>
+                    )}
+                    {search && (
+                      <div className="border-t border-(--color-uswds-primary-dark) py-4 md:hidden">
+                        <UswdsSearch size="small" />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </header>
+      );
+    };
+
+    export default UswdsHeader;
+  compiled: |
+    import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+    import { useState } from 'react';
+    import UswdsSearch from '@/components/uswds_search';
+    import { cn } from 'drupal-canvas';
+    const resolveBgColor = (token)=>{
+        if (!token) return undefined;
+        if (token === 'white') return 'white';
+        return `var(--color-uswds-${token})`;
+    };
+    const TEXT_COLOR_MAP = {
+        light: 'white',
+        dark: 'var(--color-uswds-base-ink)',
+        primary: 'var(--color-uswds-primary-darker)',
+        secondary: 'var(--color-eud-gold)'
+    };
+    const resolveTextColor = (token)=>{
+        var _TEXT_COLOR_MAP_token;
+        return (_TEXT_COLOR_MAP_token = TEXT_COLOR_MAP[token]) !== null && _TEXT_COLOR_MAP_token !== void 0 ? _TEXT_COLOR_MAP_token : undefined;
+    };
+    const UswdsHeader = ({ topBgColor = '', navBgColor = '', navTextColor = '', logo, languageSelector, navigation, search = false, className = '' })=>{
+        const [menuOpen, setMenuOpen] = useState(false);
+        return /*#__PURE__*/ _jsxs("header", {
+            className: cn('usa-header font-sans', className),
+            children: [
+                /*#__PURE__*/ _jsx("div", {
+                    style: {
+                        backgroundColor: resolveBgColor(topBgColor)
+                    },
+                    className: cn(!topBgColor && 'bg-white'),
+                    children: /*#__PURE__*/ _jsx("div", {
+                        className: "mx-auto max-w-[1240px] px-4 md:px-8",
+                        children: /*#__PURE__*/ _jsxs("div", {
+                            className: "flex items-center justify-between py-4",
+                            children: [
+                                /*#__PURE__*/ _jsx("div", {
+                                    children: logo
+                                }),
+                                /*#__PURE__*/ _jsxs("div", {
+                                    className: "flex items-center gap-4",
+                                    children: [
+                                        languageSelector && /*#__PURE__*/ _jsx("div", {
+                                            className: "hidden md:block",
+                                            children: languageSelector
+                                        }),
+                                        search && /*#__PURE__*/ _jsx("div", {
+                                            className: "hidden md:block",
+                                            children: /*#__PURE__*/ _jsx(UswdsSearch, {
+                                                placeholder: "Search Eudaimonia"
+                                            })
+                                        }),
+                                        navigation && /*#__PURE__*/ _jsx("button", {
+                                            type: "button",
+                                            className: "usa-menu-btn flex h-12 w-12 items-center justify-center text-(--color-uswds-base-ink) focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) md:hidden",
+                                            "aria-expanded": menuOpen,
+                                            "aria-controls": "header-nav",
+                                            onClick: ()=>setMenuOpen(!menuOpen),
+                                            "aria-label": menuOpen ? 'Close menu' : 'Open menu',
+                                            children: menuOpen ? /*#__PURE__*/ _jsx("svg", {
+                                                viewBox: "0 0 24 24",
+                                                className: "h-6 w-6 fill-current",
+                                                "aria-hidden": "true",
+                                                children: /*#__PURE__*/ _jsx("path", {
+                                                    d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                                })
+                                            }) : /*#__PURE__*/ _jsx("svg", {
+                                                viewBox: "0 0 24 24",
+                                                className: "h-6 w-6 fill-current",
+                                                "aria-hidden": "true",
+                                                children: /*#__PURE__*/ _jsx("path", {
+                                                    d: "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+                                                })
+                                            })
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    })
+                }),
+                navigation && /*#__PURE__*/ _jsx("div", {
+                    id: "header-nav",
+                    style: {
+                        backgroundColor: resolveBgColor(navBgColor),
+                        color: resolveTextColor(navTextColor)
+                    },
+                    className: cn('usa-nav border-t-4 border-(--color-eud-gold)', !navBgColor && 'bg-(--color-uswds-primary-darker)', !menuOpen && 'hidden md:block'),
+                    children: /*#__PURE__*/ _jsxs("div", {
+                        className: "mx-auto max-w-[1240px] px-4 md:px-8",
+                        children: [
+                            /*#__PURE__*/ _jsx("div", {
+                                className: "flex flex-col md:flex-row md:items-center",
+                                children: navigation
+                            }),
+                            menuOpen && /*#__PURE__*/ _jsxs(_Fragment, {
+                                children: [
+                                    languageSelector && /*#__PURE__*/ _jsx("div", {
+                                        className: "border-t border-(--color-uswds-primary-dark) py-4 md:hidden",
+                                        children: languageSelector
+                                    }),
+                                    search && /*#__PURE__*/ _jsx("div", {
+                                        className: "border-t border-(--color-uswds-primary-dark) py-4 md:hidden",
+                                        children: /*#__PURE__*/ _jsx(UswdsSearch, {
+                                            size: "small"
+                                        })
+                                    })
+                                ]
+                            })
+                        ]
+                    })
+                })
+            ]
+        });
+    };
+    export default UswdsHeader;
+css:
+  original: ''
+  compiled: |
+    /*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+dataDependencies: {  }

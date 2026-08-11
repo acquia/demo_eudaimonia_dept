@@ -1,0 +1,28 @@
+name: 'Eudaimonia Media'
+type: Recipe
+description: 'Media types (image, video, document, remote video), image styles and view/form displays for the Department of Eudaimonia site template.'
+install:
+  - media
+  - media_library
+  - focal_point
+  - field_group
+  - file
+  - tagify
+config:
+  strict: false
+  import:
+    file:
+      - views.view.files
+    media:
+      - core.entity_view_mode.media.full
+      - system.action.media_delete_action
+      - system.action.media_publish_action
+      - system.action.media_save_action
+      - system.action.media_unpublish_action
+      - views.view.media
+    media_library:
+      - core.entity_form_mode.media.media_library
+      - core.entity_view_mode.media.media_library
+      - image.style.media_library
+      - media_library.settings
+      - views.view.media_library

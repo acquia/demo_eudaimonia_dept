@@ -1,0 +1,7 @@
+name: 'Department of Eudaimonia'
+type: module
+description: 'Helper module and recipes for the Department of Eudaimonia site template — a U.S. government demo featuring a USWDS (U.S. Web Design System) Canvas JS code component library.'
+package: 'Department of Eudaimonia'
+core_version_requirement: ^11.4
+dependencies:
+  - canvas:canvas

@@ -1,0 +1,165 @@
+name: 'Department of Eudaimonia'
+type: Site
+description: 'Site template for a U.S. government department, featuring a library of USWDS (U.S. Web Design System) Canvas JS code components, article/program/person content types, media, AI authoring, and editorial workflow.'
+recipes:
+  - core/recipes/administrator_role
+  - eud_common
+  - eud_media
+  - eud_api
+  - eud_canvas
+  - eud_ai
+  - eud_person
+  - eud_article
+  - eud_program
+  - eud_ai_content
+  - eud_ai_chatbot
+  - eud_canvas_ai
+  - eud_icons
+  - eud_uswds
+install:
+  - navigation
+  - navigation_extra_tools
+config:
+  strict: false
+  import:
+    claro:
+      - block.block.claro_breadcrumbs
+      - block.block.claro_content
+      - block.block.claro_local_actions
+      - block.block.claro_messages
+      - block.block.claro_page_title
+      - block.block.claro_primary_local_tasks
+      - block.block.claro_secondary_local_tasks
+    gin:
+      - block.block.gin_breadcrumbs
+      - block.block.gin_content
+      - block.block.gin_local_actions
+      - block.block.gin_messages
+      - block.block.gin_page_title
+      - block.block.gin_primary_local_tasks
+      - block.block.gin_secondary_local_tasks
+    navigation:
+      - navigation.block_layout
+      - navigation.settings
+      - system.menu.content
+      - system.menu.navigation-user-links
+  actions:
+    system.site:
+      simple_config_update:
+        name: 'Department of Eudaimonia'
+        mail: 'no-reply@example.com'
+        page:
+          front: '/eud-home'
+    system.theme:
+      simple_config_update:
+        admin: gin
+        default: canvas_stark
+    core.menu.static_menu_link_overrides:
+      simpleConfigUpdate:
+        definitions:
+          standard__front_page:
+            enabled: false
+            menu_name: main
+            parent: ''
+            weight: 0
+            expanded: false
+    canvas.page_region.canvas_stark.header:
+      setCanvasFileReferences:
+        89b6c750-66e1-4a56-9602-913bbca845df:
+          headerIcon: 'aecb5692-68cc-46c3-bcde-a4e1468173aa'
+        21c94ce6-909e-4614-b9d6-f78db0bb7b7d:
+          icon: '0baf5e6c-0fde-458f-8a15-78935f1731e6'
+        bf683ed6-0f4b-4722-9020-6f8b7a296509:
+          icon: '94da3aaa-626a-4de6-86f7-de057649b537'
+      setComponentFolders:
+        'Content and Display':
+          - js.text
+          - js.uswds_news_feature
+          - js.uswds_news_feed
+          - js.uswds_process_list
+          - js.uswds_process_list_item
+          - js.uswds_program_list
+          - js.uswds_search_results
+          - js.uswds_step_indicator
+          - js.uswds_summary_box
+          - js.uswds_tab
+          - js.uswds_tab_item
+          - js.uswds_text
+          - js.uswds_video
+        'Data and Tables':
+          - js.uswds_stat_bar
+          - js.uswds_stat_item
+          - js.uswds_table
+          - js.uswds_table_row
+        'Feedback and Notifications':
+          - js.uswds_alert
+          - js.uswds_banner
+          - js.uswds_banner_item
+          - js.uswds_modal
+          - js.uswds_site_alert
+          - js.uswds_tag
+          - js.uswds_tooltip
+        'Forms and Inputs':
+          - js.uswds_button
+          - js.uswds_button_group
+          - js.uswds_character_count
+          - js.uswds_checkbox
+          - js.uswds_combo_box
+          - js.uswds_date_picker
+          - js.uswds_date_range_picker
+          - js.uswds_file_input
+          - js.uswds_input_group
+          - js.uswds_input_prefix_suffix
+          - js.uswds_label
+          - js.uswds_memorable_date
+          - js.uswds_radio
+          - js.uswds_range_slider
+          - js.uswds_search
+          - js.uswds_select
+          - js.uswds_text_area
+          - js.uswds_text_input
+          - js.uswds_time_picker
+        'Internationalization':
+          - js.uswds_language_selector
+          - js.uswds_language_selector_item
+          - js.uswds_language_switcher_block
+          - js.uswds_language_switcher_list
+        'Layout and Structure':
+          - js.uswds_accordion
+          - js.uswds_accordion_item
+          - js.uswds_blockquote
+          - js.uswds_card
+          - js.uswds_card_group
+          - js.uswds_card_media
+          - js.uswds_collection
+          - js.uswds_collection_item
+          - js.uswds_collection_meta_item
+          - js.uswds_content_split
+          - js.uswds_divider
+          - js.uswds_footer
+          - js.uswds_grid
+          - js.uswds_header
+          - js.uswds_hero
+          - js.uswds_icon
+          - js.uswds_icon_image
+          - js.uswds_icon_list
+          - js.uswds_icon_list_item
+          - js.uswds_logo
+          - js.uswds_page_hero
+          - js.uswds_person_card
+          - js.uswds_section
+          - js.uswds_spacer
+        'Site and Page Navigation':
+          - js.uswds_breadcrumb
+          - js.uswds_breadcrumb_item
+          - js.uswds_in_page_navigation
+          - js.uswds_nav
+          - js.uswds_pagination
+          - js.uswds_quick_access
+          - js.uswds_quick_access_item
+          - js.uswds_side_navigation
+          - js.uswds_side_navigation_item
+extra:
+  drupal_cms_installer:
+    finish_url: '/'
+    creator: 'Acquia Demo Team'

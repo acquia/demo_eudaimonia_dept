@@ -1,0 +1,23 @@
+name: 'Eudaimonia Canvas'
+type: Recipe
+description: 'Drupal Canvas + OAuth setup (editors, text formats, canvas pages view, consumer) for the Department of Eudaimonia site template.'
+recipes:
+  - eud_common
+  - eud_api
+install:
+  - canvas
+  - canvas_oauth
+  - canvas_stark
+  - consumers
+  # Helper module providing this template's config-action plugins
+  # (setCanvasFileReferences, setComponentFolders, addModerationEntityTypes).
+  - department_of_eudaimonia
+config:
+  strict: false
+  import:
+    canvas:
+      - editor.editor.canvas_html_block
+      - editor.editor.canvas_html_inline
+      - filter.format.canvas_html_block
+      - filter.format.canvas_html_inline
+      - views.view.canvas_pages

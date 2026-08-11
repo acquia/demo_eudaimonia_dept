@@ -1,0 +1,9 @@
+name: 'Eudaimonia Program'
+type: Recipe
+description: 'Program content type + demo programs for the Department of Eudaimonia site template.'
+recipes:
+  - eud_common
+install:
+  - node
+config:
+  strict: false
