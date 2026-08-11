@@ -1,0 +1,220 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: caa5ebfd-13f3-4f5c-b29a-57576ac8d37c
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'USWDS Demo — Site Chrome'
+  description:
+    -
+      value: 'Visual demo of USWDS site-chrome components: header, navigation, and footer'
+  components:
+    -
+      uuid: 586a51fb-6e46-4323-98d6-9d56993dae17
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_header — Site Header (with logo, language selector, main nav)'
+        background: gray
+        paddingTop: md
+        paddingBottom: none
+        contentWidth: full
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 586a51fb-6e46-4323-98d6-9d56993dae17
+      slot: content
+      uuid: 9bcc73d1-5b82-4956-8933-f365cbab3e98
+      component_id: js.uswds_header
+      inputs:
+        topBgColor: white
+        navBgColor: primary-darker
+        navTextColor: light
+        search: false
+    -
+      parent_uuid: 9bcc73d1-5b82-4956-8933-f365cbab3e98
+      slot: logo
+      uuid: 15cace09-f075-418b-9246-a44ebd3558b4
+      component_id: js.uswds_logo
+      inputs:
+        variant: dark
+        linkUrl:
+          uri: 'internal:/'
+          options: {  }
+    -
+      parent_uuid: 9bcc73d1-5b82-4956-8933-f365cbab3e98
+      slot: languageSelector
+      uuid: 465dd7c1-7086-4eba-b27c-84ebb51c4d35
+      component_id: js.uswds_language_selector
+      inputs:
+        buttonType: primary
+        showIcon: true
+    -
+      parent_uuid: 465dd7c1-7086-4eba-b27c-84ebb51c4d35
+      slot: items
+      uuid: c8dec356-d689-49b2-ad0e-b22306b1fc78
+      component_id: js.uswds_language_selector_item
+      inputs:
+        nativeName: Español
+        label: (Spanish)
+        url:
+          uri: 'internal:/es'
+          options: {  }
+        languageCode: es
+    -
+      parent_uuid: 465dd7c1-7086-4eba-b27c-84ebb51c4d35
+      slot: items
+      uuid: d5e22a75-cd55-47e3-ac86-e4eaeaeef2c6
+      component_id: js.uswds_language_selector_item
+      inputs:
+        nativeName: 'Tiếng Việt'
+        label: (Vietnamese)
+        url:
+          uri: 'internal:/vi'
+          options: {  }
+        languageCode: vi
+    -
+      parent_uuid: 9bcc73d1-5b82-4956-8933-f365cbab3e98
+      slot: navigation
+      uuid: 2f69631c-3774-405e-af59-98e0e1584151
+      component_id: js.uswds_nav
+      inputs:
+        menuName: main
+        menuType: main
+        bgColor: primary-darker
+        textColor: light
+    -
+      uuid: d1ac625b-85db-4c5c-9903-e69ab7d85e39
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_nav — Main Navigation (horizontal, standalone)'
+        background: white
+        paddingTop: md
+        paddingBottom: none
+        contentWidth: full
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: d1ac625b-85db-4c5c-9903-e69ab7d85e39
+      slot: content
+      uuid: 44f265e2-f2be-4ad7-92b6-e7a981f787ad
+      component_id: js.uswds_nav
+      inputs:
+        menuName: main
+        menuType: main
+        bgColor: primary-darker
+        textColor: light
+    -
+      uuid: 7d34d220-e0d9-44d4-a476-edcd91acdf5a
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_nav — Footer Navigation (stacked list, standalone)'
+        background: gray
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 7d34d220-e0d9-44d4-a476-edcd91acdf5a
+      slot: content
+      uuid: af2072f7-b5ab-45bd-90e4-cf92b5a473b2
+      component_id: js.uswds_nav
+      inputs:
+        menuName: footer
+        menuType: footer
+        bgColor: primary-darker
+        textColor: light
+    -
+      uuid: e6e50b87-63d7-4f6f-a667-6a223be45b35
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_nav — Footer-Secondary Navigation (small horizontal, standalone)'
+        background: white
+        paddingTop: md
+        paddingBottom: md
+        contentWidth: wide
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: e6e50b87-63d7-4f6f-a667-6a223be45b35
+      slot: content
+      uuid: 2eda458a-e3fe-4aea-b54c-26f0224fd389
+      component_id: js.uswds_nav
+      inputs:
+        menuName: footer-secondary
+        menuType: footer-secondary
+        bgColor: primary-dark
+        textColor: light
+    -
+      uuid: d4361185-85e9-4c0a-90b3-218d0462e4c9
+      component_id: js.uswds_section
+      inputs:
+        heading: 'uswds_footer — Site Footer (with logo, primary nav, secondary nav)'
+        background: gray
+        paddingTop: none
+        paddingBottom: none
+        contentWidth: full
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: d4361185-85e9-4c0a-90b3-218d0462e4c9
+      slot: content
+      uuid: a55ab1dc-9fcf-451a-94af-a5ab3c202e42
+      component_id: js.uswds_footer
+      inputs:
+        topRowBackgroundColor: primary-darker
+        bottomRowBackgroundColor: primary-dark
+    -
+      parent_uuid: a55ab1dc-9fcf-451a-94af-a5ab3c202e42
+      slot: logo
+      uuid: d3bd2b9e-6274-4204-85e7-b147ce64f1b4
+      component_id: js.uswds_logo
+      inputs:
+        variant: light
+        linkUrl:
+          uri: 'internal:/'
+          options: {  }
+    -
+      parent_uuid: a55ab1dc-9fcf-451a-94af-a5ab3c202e42
+      slot: top_nav
+      uuid: 0d18f9a3-70ef-42e5-a394-edae9291d7a9
+      component_id: js.uswds_nav
+      inputs:
+        menuName: footer
+        menuType: footer
+        bgColor: primary-darker
+        textColor: light
+    -
+      parent_uuid: a55ab1dc-9fcf-451a-94af-a5ab3c202e42
+      slot: bottom_nav
+      uuid: f0fb8a5a-7b99-4592-bb03-69ea1185d532
+      component_id: js.uswds_nav
+      inputs:
+        menuName: footer-secondary
+        menuType: footer-secondary
+        bgColor: primary-dark
+        textColor: light
+  path:
+    -
+      alias: /demo-06-site-chrome
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
+  moderation_state:
+    -
+      value: published

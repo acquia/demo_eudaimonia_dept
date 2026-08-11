@@ -1,0 +1,11 @@
+name: 'Eudaimonia AI'
+type: Recipe
+description: 'AI core + OpenAI provider for the Department of Eudaimonia site template. Requires an OpenAI API key to be configured after install.'
+recipes:
+  - eud_common
+  - eud_media
+install:
+  - ai
+  - ai_provider_openai
+config:
+  strict: false

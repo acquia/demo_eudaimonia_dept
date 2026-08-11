@@ -1,0 +1,50 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.article.read_time
+id: node.article.read_time.default
+label: 'Read time Default'
+rule: llm_string
+input_mode: base
+weight: 100
+worker_type: field_widget_actions
+entity_type: node
+bundle: article
+field_name: read_time
+edit_mode: false
+base_field: body
+prompt: |-
+  Based on the context text, calculate the estimated reading time for an average adult. Assume an average reading speed of 250 words per minute.
+
+  Constraints:
+  - Format the output exactly as the number followed by the word "minutes" (for example: "6 minutes").
+  - If the estimated time is 1 minute or less, output exactly "1 minute".
+  - Output ONLY the formatted time. Do not include any other words, explanations, introductory text, or quotation marks.
+
+  Context:
+  {{ context }}
+token: ''
+plugin_config:
+  automator_enabled: 1
+  automator_rule: llm_string
+  automator_mode: base
+  automator_base_field: body
+  automator_prompt: |-
+    Based on the context text, calculate the estimated reading time for an average adult. Assume an average reading speed of 250 words per minute.
+
+    Constraints:
+    - Format the output exactly as the number followed by the word "minutes" (for example: "6 minutes").
+    - If the estimated time is 1 minute or less, output exactly "1 minute".
+    - Output ONLY the formatted time. Do not include any other words, explanations, introductory text, or quotation marks.
+
+    Context:
+    {{ context }}
+  automator_token: ''
+  automator_edit_mode: 0
+  automator_label: 'Read time Default'
+  automator_weight: '100'
+  automator_worker_type: field_widget_actions
+  automator_ai_provider: default_json
+  automator_joiner: ''
+  automator_joiner_other: ''

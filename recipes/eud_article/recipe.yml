@@ -1,0 +1,14 @@
+name: 'Eudaimonia Article'
+type: Recipe
+description: 'Article content type + demo articles for the Department of Eudaimonia site template.'
+recipes:
+  - eud_common
+  - eud_person
+install:
+  - node
+config:
+  strict: false
+  actions:
+    workflows.workflow.editorial:
+      addNodeTypes:
+        - article

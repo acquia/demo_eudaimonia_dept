@@ -1,0 +1,85 @@
+name: 'Eudaimonia Common'
+type: Recipe
+description: 'Common base configuration (editorial workflow, languages, pathauto, redirects, taxonomy) for the Department of Eudaimonia site template.'
+recipes:
+  - core/recipes/administrator_role
+install:
+  - block
+  - ckeditor5
+  - config
+  - content_moderation
+  - dblog
+  - diff
+  - dynamic_page_cache
+  - field_ui
+  - file
+  - filter
+  - language
+  - linkit
+  - media
+  - media_library
+  - menu_link_content
+  - menu_ui
+  - metatag
+  - node
+  - options
+  - page_cache
+  - pathauto
+  - redirect
+  - scheduler
+  - simple_sitemap
+  - taxonomy
+  - text
+  - token
+  - views
+  - views_ui
+  - workflows
+  # Admin theme (used site-wide; some blocks are placed into it).
+  - gin_login
+  - claro
+  - gin
+config:
+  strict: false
+  import:
+    content_moderation:
+      - views.view.moderated_content
+    dblog:
+      - views.view.watchdog
+    language:
+      - language.entity.und
+      - language.entity.zxx
+      - language.entity.en
+    node:
+      - core.entity_view_mode.node.full
+      - system.action.node_delete_action
+      - system.action.node_publish_action
+      - system.action.node_save_action
+      - system.action.node_unpublish_action
+      - views.view.content
+    pathauto:
+      - system.action.pathauto_update_alias_node
+      - system.action.pathauto_update_alias_user
+    redirect:
+      - redirect.settings
+      - system.action.redirect_delete_action
+      - views.view.redirect
+    taxonomy:
+      - system.action.taxonomy_term_publish_action
+      - system.action.taxonomy_term_unpublish_action
+      - taxonomy.settings
+      - views.view.taxonomy_term
+    user:
+      - system.action.user_block_user_action
+      - system.action.user_cancel_user_action
+      - system.action.user_unblock_user_action
+      - views.view.user_admin_people
+  actions:
+    file.settings:
+      simple_config_update:
+        filename_sanitization:
+          transliterate: true
+          replace_whitespace: true
+          replace_non_alphanumeric: true
+          deduplicate_separators: true
+          lowercase: true
+          replacement_character: '-'

@@ -1,0 +1,15 @@
+name: 'Eudaimonia AI Chatbot'
+type: Recipe
+description: 'AI chatbot / Drupal agent assistant for the Department of Eudaimonia site template.'
+recipes:
+  - eud_ai
+install:
+  - ai_agents
+  - ai_agents_extra
+  - ai_assistant_api
+  - ai_chatbot
+config:
+  strict: false
+  import:
+    ai_agents: '*'
+    ai_agents_extra: '*'

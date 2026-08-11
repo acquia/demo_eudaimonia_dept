@@ -1,0 +1,15 @@
+name: 'Eudaimonia Person'
+type: Recipe
+description: 'Person content type (author profiles) for the Department of Eudaimonia site template.'
+recipes:
+  - eud_common
+  - eud_media
+install:
+  - node
+  - scheduler_content_moderation_integration
+config:
+  strict: false
+  actions:
+    workflows.workflow.editorial:
+      addNodeTypes:
+        - person

@@ -1,0 +1,105 @@
+name: 'Eudaimonia AI Content'
+type: Recipe
+description: 'AI content authoring — CKEditor AI, content suggestions, image alt text, and "Generate" buttons on the Article form.'
+recipes:
+  - eud_ai
+  - eud_article
+install:
+  - ai_automators
+  - ai_ckeditor
+  - ai_content_suggestions
+  - ai_image_alt_text
+  - field_widget_actions
+config:
+  strict: false
+  actions:
+    core.entity_form_display.node.article.default:
+      setComponents:
+        - name: body
+          options:
+            type: text_textarea_with_summary
+            weight: 6
+            region: content
+            settings:
+              rows: 9
+              summary_rows: 3
+              placeholder: ''
+              show_summary: false
+            third_party_settings:
+              field_widget_actions:
+                f3be72bc-bb01-4742-8133-bfd0009cc87b:
+                  plugin_id: summary_textarea_with_summary
+                  enabled: true
+                  button_label: 'Generate Summary'
+                  weight: 1
+                  settings:
+                    automator_id: node.article.body.default
+                  remove: 'Remove Action'
+        - name: read_time
+          options:
+            type: string_textfield
+            weight: 14
+            region: content
+            settings:
+              size: 60
+              placeholder: ''
+            third_party_settings:
+              field_widget_actions:
+                3cae4238-ba6b-45c3-95a7-5233c4d264b3:
+                  plugin_id: automator_text
+                  enabled: true
+                  button_label: 'Generate Read time'
+                  weight: 0
+                  settings:
+                    automator_id: node.article.read_time.default
+        - name: title
+          options:
+            type: string_textfield
+            weight: 4
+            region: content
+            settings:
+              size: 60
+              placeholder: ''
+            third_party_settings:
+              field_widget_actions:
+                7b02041b-1fee-40b5-b4fd-6df08e6fc49d:
+                  plugin_id: prompt_content_suggestion
+                  enabled: true
+                  button_label: 'Generate Title'
+                  weight: 0
+                  settings:
+                    model: ''
+                    prompt: 'Suggest 5 titles for the [node:body]'
+                    display_on_focus: false
+                  remove: 'Remove Action'
+        - name: tags
+          options:
+            type: tagify_entity_reference_autocomplete_widget
+            weight: 15
+            region: content
+            settings:
+              match_operator: CONTAINS
+              match_limit: 20
+              placeholder: 'Add tags'
+              suggestions_dropdown: 1
+              show_entity_id: 0
+              show_info_label: 0
+              info_label: ''
+              parent_selection: 1
+            third_party_settings:
+              field_widget_actions:
+                6962f975-e2f6-4f80-9eaf-4728091d023c:
+                  plugin_id: automator_autocomplete_tags_on_taxonomy
+                  enabled: true
+                  button_label: 'Generate Tags'
+                  weight: 0
+                  settings:
+                    automator_id: node.article.tags.default
+  import:
+    ai_ckeditor: '*'
+    ai_content_suggestions:
+      - ai.ai_prompt_type.suggest_tags
+      - ai.ai_prompt_type.suggest_vocabulary
+      - ai.ai_prompt.suggest_tags__suggest_tags_default
+      - ai.ai_prompt.suggest_vocabulary__suggest_vocabulary_default
+    ai_image_alt_text: '*'

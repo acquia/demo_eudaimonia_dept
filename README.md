@@ -1,67 +1,75 @@
 # Department of Eudaimonia
 
-A Drupal 11 **Site recipe** that sets up a U.S. government department site template. Its centerpiece
-is a library of **USWDS (U.S. Web Design System) Canvas JS code components** — banners, headers,
-footers, accordions, cards, forms, alerts, process lists, and more — ready to compose pages in
-[Drupal Canvas](https://www.drupal.org/project/canvas). Pages render on Canvas's own
-`canvas_stark` theme, so the components' USWDS styling is not overridden by an opinionated site theme.
+A Drupal 11 **site template**, delivered as a module that bundles a set of modular **recipes** plus a
+few small helper plugins. Its centerpiece is a library of **USWDS (U.S. Web Design System) Canvas JS
+code components** — banners, headers, footers, accordions, cards, forms, alerts, process lists, and
+more — ready to compose pages in [Drupal Canvas](https://www.drupal.org/project/canvas). Pages render
+on Canvas's own `canvas_stark` theme so the components' USWDS styling isn't overridden.
 
-The recipe depends only on Drupal core and contributed modules from drupal.org (no custom theme —
-`canvas_stark` ships with `drupal/canvas`).
+It depends only on Drupal core and contributed modules/themes.
 
 ## What it installs
 
-- **Drupal Canvas** with the full USWDS "Eud-Kit" component library, plus pre-built header and
-  footer page regions (targeting the `canvas_stark` theme).
-- **Content types:** Article, Program, Person.
-- **Media** (image, video, document, remote video) with focal point, media library, and image styles.
-- **Editorial workflow** (content moderation) for Articles, Persons, and Canvas Pages, with Scheduler
-  integration.
-- **JSON:API** layer (jsonapi, jsonapi_extras, consumers) used by Canvas.
-- **SEO/authoring** helpers: pathauto, redirect, metatag, simple_sitemap, linkit, diff, tokens.
+- **Drupal Canvas** + the full USWDS "Eud-Kit" component library, organised into category folders,
+  with a pre-built header/footer (banner, `.gov`/HTTPS notice, nav, language switcher).
+- **Content types:** Article, Program, Person, with demo content.
+- **Media** (image, video, document, remote video) + focal point, media library, image styles.
+- **Editorial workflow** (content moderation) for Articles, Persons and Canvas Pages, + Scheduler.
+- **JSON:API** layer (jsonapi, jsonapi_extras, consumers, OAuth) used by Canvas / the Canvas CLI.
+- **AI authoring:** AI core + OpenAI provider, AI CKEditor, content suggestions, image alt-text,
+  agents/chatbot, and "Generate" buttons on the Article form.
 - **Themes:** Canvas Stark (default, front-end) and Gin (admin).
-- Demo content: a home page (`/eud-home`), example articles, programs, taxonomy, and menus.
 
-## Requirements
+## Structure
 
-- Drupal core `^11.4`.
-- The contributed projects listed in `composer.json` (pulled in automatically when you require this
-  recipe via Composer).
+This is a `drupal-module` (`acquia/department_of_eudaimonia`) that ships:
+
+```
+department_of_eudaimonia.info.yml
+src/Plugin/ConfigAction/     SetCanvasFileReferences, SetComponentFolders, AddModerationEntityTypes
+recipes/
+  department_of_eudaimonia/  main Site recipe (composes the sub-recipes below)
+  eud_common  eud_media  eud_api  eud_canvas
+  eud_ai  eud_ai_content  eud_ai_chatbot  eud_canvas_ai
+  eud_person  eud_article  eud_program
+  eud_icons  eud_uswds
+```
+
+The three config-action plugins do things a config-only recipe cannot: wire the banner's media icons
+into a config page-region (`setCanvasFileReferences`), organise components into named folders despite
+Canvas's auto-foldering (`setComponentFolders`), and moderate the bundle-less `canvas_page` entity
+(`addModerationEntityTypes`).
 
 ## Usage
 
-From a Composer-managed Drupal site, run these from the **project root** (the folder
-containing `composer.json` and the `recipes/` directory — a sibling of the docroot):
-
 ```bash
 composer require acquia/department_of_eudaimonia
-drush recipe recipes/department_of_eudaimonia
+drush recipe web/modules/contrib/department_of_eudaimonia/recipes/department_of_eudaimonia
 drush cache:rebuild
 ```
 
-Composer installs the recipe to `recipes/department_of_eudaimonia/` (standard
-`type: drupal-recipe` location, set by your project template's `installer-paths`).
-
-**DDEV note:** `ddev drush` runs inside the container with its working directory at the
-docroot (`web/`), so a relative `recipes/…` path won't resolve. Pass the absolute
-container path instead:
-
+**DDEV:** `ddev drush` runs from the docroot, so pass the absolute container path:
 ```bash
-ddev drush recipe /var/www/html/recipes/department_of_eudaimonia
+ddev drush recipe /var/www/html/web/modules/contrib/department_of_eudaimonia/recipes/department_of_eudaimonia
 ```
 
-## Notes
+You can also apply individual sub-recipes (e.g. just the components) by pointing `drush recipe` at that
+sub-recipe directory.
 
-- The default front-end theme is **`canvas_stark`** (ships with `drupal/canvas`). It is intentionally
-  unstyled so the USWDS components render as designed; an opinionated theme (e.g. Olivero) would
-  override their styling. The header/footer USWDS page regions target `canvas_stark`. If you switch to
-  another front-end theme, rebuild the header/footer in the Canvas UI from the included components.
-- The USWDS banner's small decorative icons (US flag, `.gov`/HTTPS lock) are not pre-populated. In a
-  config-only recipe these image props (media entity references) cannot be resolved at config-apply
-  time, so add them once in the Canvas UI after install (edit the header region banner → pick the
-  imported icon media). Everything else in the banner/header/footer works out of the box.
-- This recipe intentionally excludes AI, Acquia DAM, and MCP integrations so it stays lightweight and
-  dependency-clean for general use.
+## Post-install setup
+
+- **AI features** need an **OpenAI API key** configured for `ai_provider_openai` (Configuration →
+  AI → Providers) before the "Generate" buttons and chatbot do anything. Install works without it.
+- **Canvas CLI / OAuth API:** the shipped `default_client` consumer has **no secret** (none is shipped
+  for security). Generate one at `/admin/config/services/consumer`, and generate the OAuth keys with
+  `drush simple-oauth:generate-keys` (or the Simple OAuth settings page).
+- Content is English (`en`). If your site's default language isn't `en`, the demo content lives under
+  the `/en/…` path prefix (set `en` as the default language for plain URLs).
+
+## What's intentionally excluded
+
+See [docs/EXCLUSIONS.md](docs/EXCLUSIONS.md) for the full ledger (Acquia DAM, MCP tools, and two
+alpha/beta-only modules were left out to keep installs clean on standard-stability sites).
 
 ## License
 

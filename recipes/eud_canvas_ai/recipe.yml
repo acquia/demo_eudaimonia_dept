@@ -1,0 +1,16 @@
+name: 'Eudaimonia Canvas AI'
+type: Recipe
+description: 'AI agents + Canvas AI integration for the Department of Eudaimonia site template.'
+recipes:
+  - eud_ai
+  - eud_canvas
+install:
+  - ai_agents
+  - ai_agents_explorer
+  - canvas_ai
+  - modeler_api
+config:
+  strict: false
+  import:
+    ai_agents: '*'
+    canvas_ai: '*'

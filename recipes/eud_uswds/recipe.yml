@@ -1,0 +1,16 @@
+name: 'Eudaimonia USWDS'
+type: Recipe
+description: 'USWDS (U.S. Web Design System) Canvas JS code component library, header/footer page regions, and demo content (pages, menus, taxonomy).'
+recipes:
+  - eud_common
+  - eud_canvas
+config:
+  strict: false
+  actions:
+    # canvas_page is a bundle-less entity, so core's addNodeTypes cannot moderate
+    # it; the bundled module's action adds it to the editorial workflow before
+    # this recipe's canvas_page content (which carries a moderation_state) imports.
+    workflows.workflow.editorial:
+      addModerationEntityTypes:
+        canvas_page:
+          - canvas_page

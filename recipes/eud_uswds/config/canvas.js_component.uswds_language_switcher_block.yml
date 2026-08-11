@@ -1,0 +1,317 @@
+uuid: 7fb59bc2-4026-4a99-8b0b-a45c2e27b251
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: ejDoqlD0mkMGgA4svjkFdCdmUnoAxaCZlgszw4lb7Jo
+machineName: uswds_language_switcher_block
+name: '(Eud-Kit) USWDS Language Switcher Block'
+required: {  }
+props:
+  buttonLabel:
+    type: string
+    title: 'Button label'
+    examples:
+      - Languages
+  buttonStyle:
+    type: string
+    enum:
+      - primary
+      - link
+    'meta:enum':
+      primary: 'Primary button'
+      link: 'Inline link'
+    title: 'Button style'
+    examples:
+      - primary
+  showGlobeIcon:
+    type: boolean
+    title: 'Show globe icon'
+    examples:
+      - false
+slots:
+  languageSwitcherBlock:
+    title: 'Language switcher block'
+js:
+  original: |-
+    import { useEffect, useRef, useState } from 'react';
+    import { createPortal } from 'react-dom';
+    import { cn } from 'drupal-canvas';
+
+    const LANGUAGE_ICON_PATH =
+      '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 0 1 5.08 16zm2.95-8H5.08a7.987 7.987 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>';
+
+    const UswdsLanguageSwitcherBlock = ({
+      buttonLabel = 'Languages',
+      buttonStyle = 'primary',
+      showGlobeIcon = false,
+      languageSwitcherBlock,
+      className = '',
+    }) => {
+      const [open, setOpen] = useState(false);
+      const [pos, setPos] = useState({ top: 0, left: 0, width: 240 });
+      const btnRef = useRef(null);
+      const dropdownRef = useRef(null);
+      const isLink = buttonStyle === 'link';
+
+      const updatePos = () => {
+        if (!btnRef.current) return;
+        const r = btnRef.current.getBoundingClientRect();
+        const margin = 8;
+        // Cap width to the viewport so the dropdown never gets wider than the screen.
+        const width = Math.min(240, window.innerWidth - margin * 2);
+        // Right-align to the button, then clamp so neither edge leaves the viewport.
+        const left = Math.min(
+          Math.max(r.right - width, margin),
+          window.innerWidth - margin - width,
+        );
+        setPos({
+          top: r.bottom + window.scrollY + 2,
+          left,
+          width,
+        });
+      };
+
+      const handleToggle = () => {
+        if (!open) {
+          updatePos();
+        }
+        setOpen((o) => !o);
+      };
+
+      // Keep the fixed dropdown anchored to the button while open — without this
+      // it stays pinned to the viewport and detaches as the page scrolls.
+      useEffect(() => {
+        if (!open) return;
+        const reposition = () => updatePos();
+        window.addEventListener('scroll', reposition, true);
+        window.addEventListener('resize', reposition);
+        return () => {
+          window.removeEventListener('scroll', reposition, true);
+          window.removeEventListener('resize', reposition);
+        };
+      }, [open]);
+
+      useEffect(() => {
+        if (!open) return;
+        const close = (e) => {
+          if (
+            btnRef.current &&
+            !btnRef.current.contains(e.target) &&
+            dropdownRef.current &&
+            !dropdownRef.current.contains(e.target)
+          ) {
+            setOpen(false);
+          }
+        };
+        document.addEventListener('mousedown', close);
+        return () => document.removeEventListener('mousedown', close);
+      }, [open]);
+
+      return (
+        <nav
+          aria-label="Language selector"
+          className={cn('usa-language-selector relative w-fit font-sans', className)}
+        >
+          <button
+            ref={btnRef}
+            type="button"
+            onClick={handleToggle}
+            aria-expanded={open}
+            aria-haspopup="listbox"
+            className={cn(
+              'text-[length:--font-size-uswds-sm] leading-[0.95] focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)',
+              isLink
+                ? 'font-normal text-(--color-uswds-primary) underline decoration-solid [text-decoration-skip-ink:none] hover:text-(--color-uswds-primary-dark)'
+                : 'flex items-center gap-2 rounded bg-(--color-uswds-primary) px-(--spacing-uswds-205) py-(--spacing-uswds-105) font-bold text-white hover:bg-(--color-uswds-primary-dark)',
+            )}
+          >
+            {!isLink && showGlobeIcon && (
+              <svg
+                viewBox="0 0 24 24"
+                className="h-3.5 w-3.5 shrink-0 fill-current"
+                aria-hidden="true"
+                focusable="false"
+                dangerouslySetInnerHTML={{ __html: LANGUAGE_ICON_PATH }}
+              />
+            )}
+            {buttonLabel}
+            {!isLink && (
+              <svg
+                viewBox="0 0 10 6"
+                fill="currentColor"
+                className={cn(
+                  'h-[10px] w-[10px] shrink-0 transition-transform',
+                  open && 'rotate-180',
+                )}
+                aria-hidden="true"
+              >
+                <path d="M0 0l5 6 5-6z" />
+              </svg>
+            )}
+          </button>
+
+          {open &&
+            languageSwitcherBlock &&
+            typeof document !== 'undefined' &&
+            createPortal(
+              <div
+                ref={dropdownRef}
+                role="listbox"
+                aria-label="Select language"
+                onClick={() => setOpen(false)}
+                style={{
+                  position: 'fixed',
+                  top: pos.top - window.scrollY,
+                  left: pos.left,
+                  width: pos.width,
+                  zIndex: 9999,
+                }}
+                className={cn(
+                  'overflow-hidden bg-(--color-uswds-primary-darker)',
+                  'shadow-[0_4px_12px_rgba(0,0,0,.2)]',
+                  '[&_ul]:m-0 [&_ul]:list-none [&_ul]:p-0',
+                  '[&_li]:border-t [&_li]:border-white/10 [&_li:first-child]:border-t-0',
+                  // Links and the current-language span share the same layout so
+                  // every item lines up (the current item renders as a <span>).
+                  '[&_a]:block [&_a]:px-(--spacing-uswds-205) [&_a]:py-3 [&_a]:text-sm [&_a]:text-white [&_a]:no-underline',
+                  '[&_span]:block [&_span]:px-(--spacing-uswds-205) [&_span]:py-3 [&_span]:text-sm [&_span]:text-white',
+                  '[&_a:hover]:bg-white/10 [&_a:active]:bg-white/25',
+                  // Current language is emitted as [aria-current], not li.is-active.
+                  '[&_[aria-current]]:bg-white/15 [&_[aria-current]]:font-bold',
+                  // Availability note ("Not available in your language…").
+                  '[&_p]:m-0 [&_p]:px-(--spacing-uswds-205) [&_p]:py-2 [&_p]:text-xs [&_p]:text-white/70',
+                )}
+              >
+                {languageSwitcherBlock}
+              </div>,
+              document.body,
+            )}
+        </nav>
+      );
+    };
+
+    export default UswdsLanguageSwitcherBlock;
+  compiled: |
+    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+    import { useEffect, useRef, useState } from 'react';
+    import { createPortal } from 'react-dom';
+    import { cn } from 'drupal-canvas';
+    const LANGUAGE_ICON_PATH = '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 0 1 5.08 16zm2.95-8H5.08a7.987 7.987 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>';
+    const UswdsLanguageSwitcherBlock = ({ buttonLabel = 'Languages', buttonStyle = 'primary', showGlobeIcon = false, languageSwitcherBlock, className = '' })=>{
+        const [open, setOpen] = useState(false);
+        const [pos, setPos] = useState({
+            top: 0,
+            left: 0,
+            width: 240
+        });
+        const btnRef = useRef(null);
+        const dropdownRef = useRef(null);
+        const isLink = buttonStyle === 'link';
+        const updatePos = ()=>{
+            if (!btnRef.current) return;
+            const r = btnRef.current.getBoundingClientRect();
+            const margin = 8;
+            // Cap width to the viewport so the dropdown never gets wider than the screen.
+            const width = Math.min(240, window.innerWidth - margin * 2);
+            // Right-align to the button, then clamp so neither edge leaves the viewport.
+            const left = Math.min(Math.max(r.right - width, margin), window.innerWidth - margin - width);
+            setPos({
+                top: r.bottom + window.scrollY + 2,
+                left,
+                width
+            });
+        };
+        const handleToggle = ()=>{
+            if (!open) {
+                updatePos();
+            }
+            setOpen((o)=>!o);
+        };
+        // Keep the fixed dropdown anchored to the button while open — without this
+        // it stays pinned to the viewport and detaches as the page scrolls.
+        useEffect(()=>{
+            if (!open) return;
+            const reposition = ()=>updatePos();
+            window.addEventListener('scroll', reposition, true);
+            window.addEventListener('resize', reposition);
+            return ()=>{
+                window.removeEventListener('scroll', reposition, true);
+                window.removeEventListener('resize', reposition);
+            };
+        }, [
+            open
+        ]);
+        useEffect(()=>{
+            if (!open) return;
+            const close = (e)=>{
+                if (btnRef.current && !btnRef.current.contains(e.target) && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                    setOpen(false);
+                }
+            };
+            document.addEventListener('mousedown', close);
+            return ()=>document.removeEventListener('mousedown', close);
+        }, [
+            open
+        ]);
+        return /*#__PURE__*/ _jsxs("nav", {
+            "aria-label": "Language selector",
+            className: cn('usa-language-selector relative w-fit font-sans', className),
+            children: [
+                /*#__PURE__*/ _jsxs("button", {
+                    ref: btnRef,
+                    type: "button",
+                    onClick: handleToggle,
+                    "aria-expanded": open,
+                    "aria-haspopup": "listbox",
+                    className: cn('text-[length:--font-size-uswds-sm] leading-[0.95] focus-visible:outline-2 focus-visible:outline-offset-(--uswds-focus-offset) focus-visible:outline-(--uswds-focus-color)', isLink ? 'font-normal text-(--color-uswds-primary) underline decoration-solid [text-decoration-skip-ink:none] hover:text-(--color-uswds-primary-dark)' : 'flex items-center gap-2 rounded bg-(--color-uswds-primary) px-(--spacing-uswds-205) py-(--spacing-uswds-105) font-bold text-white hover:bg-(--color-uswds-primary-dark)'),
+                    children: [
+                        !isLink && showGlobeIcon && /*#__PURE__*/ _jsx("svg", {
+                            viewBox: "0 0 24 24",
+                            className: "h-3.5 w-3.5 shrink-0 fill-current",
+                            "aria-hidden": "true",
+                            focusable: "false",
+                            dangerouslySetInnerHTML: {
+                                __html: LANGUAGE_ICON_PATH
+                            }
+                        }),
+                        buttonLabel,
+                        !isLink && /*#__PURE__*/ _jsx("svg", {
+                            viewBox: "0 0 10 6",
+                            fill: "currentColor",
+                            className: cn('h-[10px] w-[10px] shrink-0 transition-transform', open && 'rotate-180'),
+                            "aria-hidden": "true",
+                            children: /*#__PURE__*/ _jsx("path", {
+                                d: "M0 0l5 6 5-6z"
+                            })
+                        })
+                    ]
+                }),
+                open && languageSwitcherBlock && typeof document !== 'undefined' && /*#__PURE__*/ createPortal(/*#__PURE__*/ _jsx("div", {
+                    ref: dropdownRef,
+                    role: "listbox",
+                    "aria-label": "Select language",
+                    onClick: ()=>setOpen(false),
+                    style: {
+                        position: 'fixed',
+                        top: pos.top - window.scrollY,
+                        left: pos.left,
+                        width: pos.width,
+                        zIndex: 9999
+                    },
+                    className: cn('overflow-hidden bg-(--color-uswds-primary-darker)', 'shadow-[0_4px_12px_rgba(0,0,0,.2)]', '[&_ul]:m-0 [&_ul]:list-none [&_ul]:p-0', '[&_li]:border-t [&_li]:border-white/10 [&_li:first-child]:border-t-0', // Links and the current-language span share the same layout so
+                    // every item lines up (the current item renders as a <span>).
+                    '[&_a]:block [&_a]:px-(--spacing-uswds-205) [&_a]:py-3 [&_a]:text-sm [&_a]:text-white [&_a]:no-underline', '[&_span]:block [&_span]:px-(--spacing-uswds-205) [&_span]:py-3 [&_span]:text-sm [&_span]:text-white', '[&_a:hover]:bg-white/10 [&_a:active]:bg-white/25', // Current language is emitted as [aria-current], not li.is-active.
+                    '[&_[aria-current]]:bg-white/15 [&_[aria-current]]:font-bold', // Availability note ("Not available in your language…").
+                    '[&_p]:m-0 [&_p]:px-(--spacing-uswds-205) [&_p]:py-2 [&_p]:text-xs [&_p]:text-white/70'),
+                    children: languageSwitcherBlock
+                }), document.body)
+            ]
+        });
+    };
+    export default UswdsLanguageSwitcherBlock;
+css:
+  original: ''
+  compiled: |
+    /*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+dataDependencies: {  }
