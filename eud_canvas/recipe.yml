@@ -11,7 +11,7 @@ install:
   - consumers
   # Helper module providing this template's config-action plugins
   # (setCanvasFileReferences, setComponentFolders, addModerationEntityTypes).
-  - department_of_eudaimonia
+  - department_of_eudaimonia_helper
 config:
   strict: false
   import:
