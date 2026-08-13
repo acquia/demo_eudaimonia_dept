@@ -1,0 +1,9 @@
+access:
+  allowed_scopes:
+    - read
+    - write
+    - admin
+  default_scopes:
+    - read
+    - write
+    - admin

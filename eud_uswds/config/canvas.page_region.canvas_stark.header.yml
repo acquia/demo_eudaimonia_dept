@@ -23,7 +23,7 @@ component_tree:
   '0:89b6c750-66e1-4a56-9602-913bbca845df':
     uuid: 89b6c750-66e1-4a56-9602-913bbca845df
     component_id: js.uswds_banner
-    component_version: 4ef0fa58b520a29d
+    component_version: 71df4c182b78699c
     inputs:
       background: light
       headerText: 'An official website of the Department of Eudaimonia'
@@ -34,7 +34,7 @@ component_tree:
     slot: details
     uuid: 21c94ce6-909e-4614-b9d6-f78db0bb7b7d
     component_id: js.uswds_banner_item
-    component_version: 6e9ef92a8484b37d
+    component_version: a135689b1900d791
     inputs:
       heading: 'Official websites use .gov'
       body:
@@ -45,7 +45,7 @@ component_tree:
     slot: details
     uuid: bf683ed6-0f4b-4722-9020-6f8b7a296509
     component_id: js.uswds_banner_item
-    component_version: 6e9ef92a8484b37d
+    component_version: a135689b1900d791
     inputs:
       heading: 'Secure .gov websites use HTTPS'
       body:
@@ -82,7 +82,7 @@ component_tree:
     slot: logo
     uuid: 2deed64e-2b23-4441-a069-ffde4dcb8c07
     component_id: js.uswds_logo
-    component_version: a8e73137d69fae86
+    component_version: 68ddf323de219409
     inputs:
       variant: dark
       linkUrl:

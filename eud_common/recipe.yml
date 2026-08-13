@@ -11,6 +11,7 @@ install:
   - dblog
   - diff
   - dynamic_page_cache
+  - entity_clone
   - field_ui
   - file
   - filter

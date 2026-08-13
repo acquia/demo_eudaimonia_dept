@@ -4,6 +4,7 @@ description: 'USWDS (U.S. Web Design System) Canvas JS code component library, h
 recipes:
   - eud_common
   - eud_canvas
+  - eud_acquia_dam
 config:
   strict: false
   actions:

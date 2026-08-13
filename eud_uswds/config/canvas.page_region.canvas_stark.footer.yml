@@ -27,7 +27,7 @@ component_tree:
     slot: logo
     uuid: 2892a5fb-6157-4874-b7fd-b1ce98b7e9a9
     component_id: js.uswds_logo
-    component_version: a8e73137d69fae86
+    component_version: 68ddf323de219409
     inputs:
       variant: light
       linkUrl:
@@ -49,7 +49,7 @@ component_tree:
     slot: cta
     uuid: c77d36ba-1575-4784-bdde-774c5779d289
     component_id: js.uswds_button
-    component_version: 78b0c46c0f8ff5cb
+    component_version: 4d568fc4ca337e80
     inputs:
       text: 'Sign up for updates'
       link:
