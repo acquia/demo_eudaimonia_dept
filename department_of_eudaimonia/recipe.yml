@@ -14,6 +14,8 @@ recipes:
   - eud_ai_content
   - eud_ai_chatbot
   - eud_canvas_ai
+  - eud_mcp
+  - eud_acquia_dam
   - eud_icons
   - eud_uswds
 install:

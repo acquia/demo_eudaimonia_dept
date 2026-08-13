@@ -6,8 +6,10 @@ dependencies:
     - canvas.js_component.uswds_logo
     - field.field.media.image.media_image
     - image.style.canvas_parametrized_width
+    - media.type.acquia_dam_image_asset
     - media.type.image
   module:
+    - acquia_dam
     - file
     - link
     - media
@@ -20,7 +22,7 @@ id: js.uswds_logo
 source: js
 source_local_id: uswds_logo
 provider: null
-active_version: a8e73137d69fae86
+active_version: 68ddf323de219409
 versioned_properties:
   active:
     settings:
@@ -46,9 +48,10 @@ versioned_properties:
             handler_settings:
               target_bundles:
                 image: image
+                acquia_dam_image_asset: acquia_dam_image_asset
           field_widget: media_library_widget
           default_value: {  }
-          expression: 'ℹ︎entity_reference␟entity␜␜entity:media:image␝media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}'
+          expression: 'ℹ︎entity_reference␟entity␜[␜entity:media:acquia_dam_image_asset␝acquia_dam_image_item␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}][␜entity:media:image␝media_image␞␟{src↠src_with_alternate_widths,alt↠alt,width↠width,height↠height}]'
         linkUrl:
           required: false
           field_type: link

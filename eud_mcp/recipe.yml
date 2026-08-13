@@ -1,0 +1,16 @@
+name: 'Eudaimonia MCP Tools'
+type: Recipe
+description: 'MCP (Model Context Protocol) tools exposing Drupal content/structure to AI agents over a remote HTTP connection.'
+install:
+  - mcp_tools
+  - mcp_tools_remote
+  - mcp_tools_content
+  - mcp_tools_structure
+  - mcp_tools_config
+  - mcp_tools_media
+  - mcp_tools_users
+  - mcp_tools_views
+  - mcp_tools_cache
+  - mcp_tools_menus
+config:
+  strict: false

@@ -1,0 +1,11 @@
+name: 'Eudaimonia Acquia DAM'
+type: Recipe
+description: 'Acquia DAM media integration (image asset media type + mappings). Requires Acquia DAM credentials to be configured after install.'
+recipes:
+  - eud_common
+  - eud_media
+install:
+  - acquia_dam
+  - key
+config:
+  strict: false
