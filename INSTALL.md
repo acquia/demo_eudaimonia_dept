@@ -120,9 +120,6 @@ ddev drush recipe /var/www/html/recipes/department_of_eudaimonia/department_of_e
 ddev drush cr
 ```
 
-You can also apply just one sub-recipe (e.g. only the USWDS components):
-`drush recipe recipes/department_of_eudaimonia/eud_uswds`.
-
 ## 5. Post-install setup
 
 - **AI authoring** — set an **OpenAI API key**: Configuration → AI → Providers → OpenAI. The Article

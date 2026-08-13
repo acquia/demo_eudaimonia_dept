@@ -1,0 +1,8 @@
+name: 'Eudaimonia Categories'
+type: Recipe
+description: 'Categories taxonomy terms for the Department of Eudaimonia site template. Applied before program content so the program → categories references resolve.'
+recipes:
+  # Ships the categories vocabulary these terms belong to.
+  - eud_common
+config:
+  strict: false

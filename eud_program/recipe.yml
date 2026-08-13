@@ -3,6 +3,8 @@ type: Recipe
 description: 'Program content type + demo programs for the Department of Eudaimonia site template.'
 recipes:
   - eud_common
+  # Ships the categories terms these programs reference (must apply first).
+  - eud_category
 install:
   - node
 config:
