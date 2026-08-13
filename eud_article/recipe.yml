@@ -4,6 +4,10 @@ description: 'Article content type + demo articles for the Department of Eudaimo
 recipes:
   - eud_common
   - eud_person
+  # Ships the image media type used by this recipe's demo article media.
+  - eud_media
+  # Ships the tags terms these articles reference (must apply first).
+  - eud_tags
 install:
   - node
 config:

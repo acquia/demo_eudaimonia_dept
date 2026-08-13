@@ -1,0 +1,8 @@
+name: 'Eudaimonia Tags'
+type: Recipe
+description: 'Tags taxonomy terms for the Department of Eudaimonia site template. Applied before article content so the article → tags references resolve.'
+recipes:
+  # Ships the tags vocabulary these terms belong to.
+  - eud_common
+config:
+  strict: false

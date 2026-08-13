@@ -9,6 +9,8 @@ recipes:
   - eud_canvas
   - eud_ai
   - eud_person
+  - eud_tags
+  - eud_category
   - eud_article
   - eud_program
   - eud_ai_content
