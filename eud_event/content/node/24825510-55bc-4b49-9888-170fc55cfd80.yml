@@ -1,0 +1,100 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 24825510-55bc-4b49-9888-170fc55cfd80
+  bundle: event
+  default_langcode: en
+  depends:
+    4b7c2f65-f7ac-432d-a6e3-f0f4666258f4: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 0
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Neighborhood Investment Fund Grant Clinic'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Hands-on help for civic groups, libraries, and small businesses preparing a FY27 grant application. Staff review draft budgets on the spot.'
+      format: filtered_html
+      summary: ''
+  field_categories:
+    -
+      entity: 4b7c2f65-f7ac-432d-a6e3-f0f4666258f4
+  field_event_accessibility:
+    -
+      value: 'Live CART captioning and ASL interpretation are provided on request. For materials in an alternate format or any other accommodation, submit a request at least five business days ahead so we can arrange it in time.'
+      format: filtered_html
+  field_event_agenda:
+    -
+      value: '<ul><li><strong>9:00 am — Welcome &amp; program overview.</strong> What the fund supports.</li><li><strong>9:30 am — Application walkthrough.</strong> Section by section, with examples.</li><li><strong>10:30 am — Budget clinic.</strong> Bring a draft; staff review it with you.</li><li><strong>11:30 am — One-on-one questions.</strong> Sign up on arrival.</li></ul>'
+      format: filtered_html
+  field_event_contact:
+    -
+      value: events@dept.eud.ai
+  field_event_cost:
+    -
+      value: Free
+  field_event_end:
+    -
+      value: '2026-06-04T12:00:00'
+  field_event_format:
+    -
+      value: in_person
+  field_event_host:
+    -
+      value: 'Community Directorate'
+  field_event_language:
+    -
+      value: English
+  field_event_learn:
+    -
+      value: '<ul><li>Whether your organization or project is eligible for FY27 funding</li><li>How to scope a competitive, community-space grant application</li><li>How to build a realistic budget staff can review on the spot</li><li>Timelines, required documents, and common reasons applications are returned</li></ul>'
+      format: filtered_html
+  field_event_location:
+    -
+      value: 'Detroit Public Library, Main Branch'
+  field_event_recording:
+    -
+      value: 'Not recorded — in-person event'
+  field_event_registration_status:
+    -
+      value: open
+  field_event_seats_left:
+    -
+      value: 12
+  field_event_seats_total:
+    -
+      value: 60
+  field_event_start:
+    -
+      value: '2026-06-04T09:00:00'
+  field_event_summary:
+    -
+      value: 'Hands-on help for civic groups, libraries, and small businesses preparing a FY27 grant application, with on-the-spot draft budget review.'
+  field_event_who:
+    -
+      value: 'Civic groups, libraries, small businesses, and neighborhood associations preparing a FY27 application. First-time applicants are especially encouraged.'
+      format: filtered_html

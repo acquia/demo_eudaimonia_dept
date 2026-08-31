@@ -1,0 +1,444 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_event_row
+      - canvas.js_component.uswds_pagination
+machineName: uswds_event_list
+name: '(Eud-Kit) USWDS Event List'
+required: {  }
+props:
+  eventLimit:
+    type: integer
+    title: 'Event Limit'
+    examples:
+      - 20
+  perPage:
+    type: integer
+    title: 'Per Page'
+    examples:
+      - 6
+  ariaLabel:
+    type: string
+    title: 'Aria Label'
+    examples:
+      - 'Upcoming events'
+slots: {  }
+js:
+  original: |
+    import UswdsEventRow from '@/components/uswds_event_row';
+    import UswdsPagination from '@/components/uswds_pagination';
+    import { JsonApiClient } from 'drupal-canvas';
+    import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
+    import { useEffect, useState } from 'react';
+    import useSWR from 'swr';
+
+    // USWDS Event List — dynamic index of Department events.
+    // Fetches node--event (sorted by start date, categories included) and renders
+    // one uswds_event_row per event. Ships with representative fallback data so it
+    // renders in Workbench and before a Drupal menu/content is wired up.
+    //
+    // The result count line ("Showing X–Y of N upcoming events") and the pagination
+    // control both derive from the fetched result set and page client-side
+    // (`perPage` rows per page), so the page spec no longer needs static count or
+    // pagination elements.
+
+    const client = new JsonApiClient();
+
+    const FALLBACK = [
+      {
+        id: 'e1',
+        title: 'Flourish Family Benefit: Open Enrollment Workshop',
+        field_event_summary:
+          'A step-by-step walkthrough of the 2026 application, followed by a live Q&A with program officers. No prior knowledge needed.',
+        field_event_start: '2026-05-14T19:30:00+05:30',
+        field_event_end: '2026-05-14T21:00:00+05:30',
+        field_event_format: 'online',
+        field_event_location: 'Webinar — joining link emailed on registration',
+        field_event_host: 'Office of Public Engagement',
+        field_event_registration_status: 'open',
+        field_event_seats_left: 412,
+        field_event_registration_url: {
+          uri: 'https://events.eudaimonia.demo/flourish-open-enrollment',
+        },
+        field_categories: [{ name: 'Dignity' }],
+        path: { alias: null },
+        drupal_internal__nid: 13,
+      },
+      {
+        id: 'e2',
+        title: 'Career Re-entry Job Fair — Asheville',
+        field_event_summary:
+          'Meet 40+ employers hiring now, get on-the-spot resume review, and connect with apprenticeship sponsors.',
+        field_event_start: '2026-05-21T15:30:00+05:30',
+        field_event_end: '2026-05-21T19:30:00+05:30',
+        field_event_format: 'in_person',
+        field_event_location: 'Asheville Civic Center, 87 Haywood St',
+        field_event_host: 'Work & Income Directorate',
+        field_event_registration_status: 'open',
+        field_event_seats_left: 38,
+        field_event_registration_url: {
+          uri: 'https://events.eudaimonia.demo/career-re-entry-asheville',
+        },
+        field_categories: [{ name: 'Work' }],
+        path: { alias: null },
+        drupal_internal__nid: 14,
+      },
+      {
+        id: 'e3',
+        title: 'Lifelong Learning Account: How the 2:1 Match Works',
+        field_event_summary:
+          'A short briefing on how the government matches your training savings, and how to open an account in minutes.',
+        field_event_start: '2026-05-28T17:30:00+05:30',
+        field_event_end: '2026-05-28T18:30:00+05:30',
+        field_event_format: 'online',
+        field_event_location: 'Webinar — joining link emailed on registration',
+        field_event_host: 'Learning Directorate',
+        field_event_registration_status: 'unlimited',
+        field_event_seats_left: null,
+        field_event_registration_url: {
+          uri: 'https://events.eudaimonia.demo/lifelong-learning-match',
+        },
+        field_categories: [{ name: 'Learning' }],
+        path: { alias: null },
+        drupal_internal__nid: 15,
+      },
+      {
+        id: 'e4',
+        title: 'FY25 Annual Wellbeing Index — Public Briefing',
+        field_event_summary:
+          "The Office of Research & Data presents the year's national wellbeing findings, followed by press and public Q&A.",
+        field_event_start: '2026-06-18T16:30:00+05:30',
+        field_event_end: '2026-06-18T18:00:00+05:30',
+        field_event_format: 'hybrid',
+        field_event_location: 'Eudaimonia HQ, Room 200 & livestream',
+        field_event_host: 'Office of Research & Data',
+        field_event_registration_status: 'closed',
+        field_event_seats_left: 0,
+        field_event_registration_url: null,
+        field_categories: [{ name: 'Health' }],
+        path: { alias: null },
+        drupal_internal__nid: 18,
+      },
+    ];
+
+    // A category relationship can arrive as [{name}] or {name}; normalize to a name.
+    const resolveCategory = (item) => {
+      const raw = item.field_categories ?? item.categories ?? null;
+      if (!raw) return '';
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      if (!first || typeof first !== 'object') return '';
+      return first.name ?? first.value ?? '';
+    };
+
+    // A link field can arrive as {uri, resolvable_uri} or {url}; a plain string is
+    // also tolerated. Prefer resolvable_uri so Drupal routes like <front> and
+    // internal:/… resolve to a real path (e.g. "/") instead of a raw "route:<front>".
+    const resolveUrl = (link) => {
+      if (!link) return '';
+      if (typeof link === 'string') return link;
+      return link.resolvable_uri ?? link.uri ?? link.url ?? '';
+    };
+
+    // Prefer a real Drupal path alias for the detail link; fall back to the node route.
+    const resolveNodePath = (item) => {
+      const alias = item.path?.alias;
+      if (alias) return alias;
+      if (item.drupal_internal__nid) return `/node/${item.drupal_internal__nid}`;
+      return '';
+    };
+
+    const UswdsEventList = ({
+      eventLimit = 20,
+      perPage = 6,
+      ariaLabel = 'Upcoming events',
+    }) => {
+      const [page, setPage] = useState(1);
+
+      const { data, error, isLoading } = useSWR(
+        ['node--event', eventLimit],
+        ([type, limit]) =>
+          client.getCollection(type, {
+            queryString: new DrupalJsonApiParams()
+              .addSort('field_event_start', 'ASC')
+              .addInclude(['field_categories'])
+              .addPageLimit(limit)
+              .getQueryString(),
+          }),
+      );
+
+      const events =
+        !error && Array.isArray(data) && data.length > 0 ? data : FALLBACK;
+
+      const size = perPage > 0 ? perPage : events.length || 1;
+      const total = events.length;
+      const totalPages = Math.max(1, Math.ceil(total / size));
+
+      // Keep the current page in range if the result set shrinks (e.g. after a
+      // fetch resolves to fewer items than the fallback).
+      useEffect(() => {
+        if (page > totalPages) setPage(totalPages);
+      }, [page, totalPages]);
+
+      const currentPage = Math.min(page, totalPages);
+
+      if (isLoading) {
+        return (
+          <p className="py-8 font-sans text-(--color-uswds-base-dark)">
+            Loading events…
+          </p>
+        );
+      }
+
+      if (!events.length) {
+        return (
+          <p className="py-8 font-sans text-(--color-uswds-base-dark)">
+            There are no upcoming events right now. Please check back soon.
+          </p>
+        );
+      }
+
+      const startIndex = (currentPage - 1) * size;
+      const endIndex = Math.min(startIndex + size, total);
+      const pageEvents = events.slice(startIndex, endIndex);
+
+      return (
+        <div className="font-sans">
+          <p className="mb-1 text-sm text-(--color-uswds-base)">
+            <strong>
+              Showing {startIndex + 1}–{endIndex} of {total}
+            </strong>{' '}
+            upcoming events
+          </p>
+
+          <ul className="m-0 list-none p-0" aria-label={ariaLabel}>
+            {pageEvents.map((event) => {
+              const seats = event.field_event_seats_left;
+              return (
+                <UswdsEventRow
+                  key={event.id}
+                  title={event.title}
+                  titleLink={resolveNodePath(event)}
+                  summary={event.field_event_summary || ''}
+                  startDate={event.field_event_start || ''}
+                  endDate={event.field_event_end || ''}
+                  format={event.field_event_format || 'online'}
+                  category={resolveCategory(event)}
+                  location={event.field_event_location || ''}
+                  host={event.field_event_host || ''}
+                  registrationUrl={resolveUrl(event.field_event_registration_url)}
+                  registrationStatus={
+                    event.field_event_registration_status || 'open'
+                  }
+                  seatsLeft={typeof seats === 'number' ? seats : null}
+                  recordingNote={
+                    event.field_event_registration_status === 'closed'
+                      ? 'Recording will be posted'
+                      : ''
+                  }
+                />
+              );
+            })}
+          </ul>
+
+          {totalPages > 1 && (
+            <div className="mt-6">
+              <UswdsPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPage={(p) => setPage(Math.min(Math.max(1, p), totalPages))}
+              />
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    export default UswdsEventList;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import UswdsEventRow from "@/components/uswds_event_row";
+    import UswdsPagination from "@/components/uswds_pagination";
+    import { JsonApiClient } from "drupal-canvas";
+    import { DrupalJsonApiParams } from "drupal-jsonapi-params";
+    import { useState, useEffect } from "react";
+    import useSWR from "swr";
+    const client = new JsonApiClient();
+    const FALLBACK = [
+      {
+        id: "e1",
+        title: "Flourish Family Benefit: Open Enrollment Workshop",
+        field_event_summary: "A step-by-step walkthrough of the 2026 application, followed by a live Q&A with program officers. No prior knowledge needed.",
+        field_event_start: "2026-05-14T19:30:00+05:30",
+        field_event_end: "2026-05-14T21:00:00+05:30",
+        field_event_format: "online",
+        field_event_location: "Webinar — joining link emailed on registration",
+        field_event_host: "Office of Public Engagement",
+        field_event_registration_status: "open",
+        field_event_seats_left: 412,
+        field_event_registration_url: {
+          uri: "https://events.eudaimonia.demo/flourish-open-enrollment"
+        },
+        field_categories: [{ name: "Dignity" }],
+        path: { alias: null },
+        drupal_internal__nid: 13
+      },
+      {
+        id: "e2",
+        title: "Career Re-entry Job Fair — Asheville",
+        field_event_summary: "Meet 40+ employers hiring now, get on-the-spot resume review, and connect with apprenticeship sponsors.",
+        field_event_start: "2026-05-21T15:30:00+05:30",
+        field_event_end: "2026-05-21T19:30:00+05:30",
+        field_event_format: "in_person",
+        field_event_location: "Asheville Civic Center, 87 Haywood St",
+        field_event_host: "Work & Income Directorate",
+        field_event_registration_status: "open",
+        field_event_seats_left: 38,
+        field_event_registration_url: {
+          uri: "https://events.eudaimonia.demo/career-re-entry-asheville"
+        },
+        field_categories: [{ name: "Work" }],
+        path: { alias: null },
+        drupal_internal__nid: 14
+      },
+      {
+        id: "e3",
+        title: "Lifelong Learning Account: How the 2:1 Match Works",
+        field_event_summary: "A short briefing on how the government matches your training savings, and how to open an account in minutes.",
+        field_event_start: "2026-05-28T17:30:00+05:30",
+        field_event_end: "2026-05-28T18:30:00+05:30",
+        field_event_format: "online",
+        field_event_location: "Webinar — joining link emailed on registration",
+        field_event_host: "Learning Directorate",
+        field_event_registration_status: "unlimited",
+        field_event_seats_left: null,
+        field_event_registration_url: {
+          uri: "https://events.eudaimonia.demo/lifelong-learning-match"
+        },
+        field_categories: [{ name: "Learning" }],
+        path: { alias: null },
+        drupal_internal__nid: 15
+      },
+      {
+        id: "e4",
+        title: "FY25 Annual Wellbeing Index — Public Briefing",
+        field_event_summary: "The Office of Research & Data presents the year's national wellbeing findings, followed by press and public Q&A.",
+        field_event_start: "2026-06-18T16:30:00+05:30",
+        field_event_end: "2026-06-18T18:00:00+05:30",
+        field_event_format: "hybrid",
+        field_event_location: "Eudaimonia HQ, Room 200 & livestream",
+        field_event_host: "Office of Research & Data",
+        field_event_registration_status: "closed",
+        field_event_seats_left: 0,
+        field_event_registration_url: null,
+        field_categories: [{ name: "Health" }],
+        path: { alias: null },
+        drupal_internal__nid: 18
+      }
+    ];
+    const resolveCategory = (item) => {
+      var _a, _b, _c, _d;
+      const raw = (_b = (_a = item.field_categories) != null ? _a : item.categories) != null ? _b : null;
+      if (!raw) return "";
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      if (!first || typeof first !== "object") return "";
+      return (_d = (_c = first.name) != null ? _c : first.value) != null ? _d : "";
+    };
+    const resolveUrl = (link) => {
+      var _a, _b, _c;
+      if (!link) return "";
+      if (typeof link === "string") return link;
+      return (_c = (_b = (_a = link.resolvable_uri) != null ? _a : link.uri) != null ? _b : link.url) != null ? _c : "";
+    };
+    const resolveNodePath = (item) => {
+      var _a;
+      const alias = (_a = item.path) == null ? void 0 : _a.alias;
+      if (alias) return alias;
+      if (item.drupal_internal__nid) return `/node/${item.drupal_internal__nid}`;
+      return "";
+    };
+    const UswdsEventList = ({
+      eventLimit = 20,
+      perPage = 6,
+      ariaLabel = "Upcoming events"
+    }) => {
+      const [page, setPage] = useState(1);
+      const { data, error, isLoading } = useSWR(
+        ["node--event", eventLimit],
+        ([type, limit]) => client.getCollection(type, {
+          queryString: new DrupalJsonApiParams().addSort("field_event_start", "ASC").addInclude(["field_categories"]).addPageLimit(limit).getQueryString()
+        })
+      );
+      const events = !error && Array.isArray(data) && data.length > 0 ? data : FALLBACK;
+      const size = perPage > 0 ? perPage : events.length || 1;
+      const total = events.length;
+      const totalPages = Math.max(1, Math.ceil(total / size));
+      useEffect(() => {
+        if (page > totalPages) setPage(totalPages);
+      }, [page, totalPages]);
+      const currentPage = Math.min(page, totalPages);
+      if (isLoading) {
+        return /* @__PURE__ */ jsx("p", { className: "py-8 font-sans text-(--color-uswds-base-dark)", children: "Loading events…" });
+      }
+      if (!events.length) {
+        return /* @__PURE__ */ jsx("p", { className: "py-8 font-sans text-(--color-uswds-base-dark)", children: "There are no upcoming events right now. Please check back soon." });
+      }
+      const startIndex = (currentPage - 1) * size;
+      const endIndex = Math.min(startIndex + size, total);
+      const pageEvents = events.slice(startIndex, endIndex);
+      return /* @__PURE__ */ jsxs("div", { className: "font-sans", children: [
+        /* @__PURE__ */ jsxs("p", { className: "mb-1 text-sm text-(--color-uswds-base)", children: [
+          /* @__PURE__ */ jsxs("strong", { children: [
+            "Showing ",
+            startIndex + 1,
+            "–",
+            endIndex,
+            " of ",
+            total
+          ] }),
+          " ",
+          "upcoming events"
+        ] }),
+        /* @__PURE__ */ jsx("ul", { className: "m-0 list-none p-0", "aria-label": ariaLabel, children: pageEvents.map((event) => {
+          const seats = event.field_event_seats_left;
+          return /* @__PURE__ */ jsx(
+            UswdsEventRow,
+            {
+              title: event.title,
+              titleLink: resolveNodePath(event),
+              summary: event.field_event_summary || "",
+              startDate: event.field_event_start || "",
+              endDate: event.field_event_end || "",
+              format: event.field_event_format || "online",
+              category: resolveCategory(event),
+              location: event.field_event_location || "",
+              host: event.field_event_host || "",
+              registrationUrl: resolveUrl(event.field_event_registration_url),
+              registrationStatus: event.field_event_registration_status || "open",
+              seatsLeft: typeof seats === "number" ? seats : null,
+              recordingNote: event.field_event_registration_status === "closed" ? "Recording will be posted" : ""
+            },
+            event.id
+          );
+        }) }),
+        totalPages > 1 && /* @__PURE__ */ jsx("div", { className: "mt-6", children: /* @__PURE__ */ jsx(
+          UswdsPagination,
+          {
+            currentPage,
+            totalPages,
+            onPage: (p) => setPage(Math.min(Math.max(1, p), totalPages))
+          }
+        ) })
+      ] });
+    };
+    export {
+      UswdsEventList as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies:
+  drupalSettings:
+    - v0.baseUrl
+    - v0.jsonapiSettings

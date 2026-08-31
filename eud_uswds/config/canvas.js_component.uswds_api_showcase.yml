@@ -1,0 +1,473 @@
+langcode: en
+status: true
+dependencies: {  }
+machineName: uswds_api_showcase
+name: '(Eud-Kit) USWDS API Showcase'
+required: {  }
+props:
+  eyebrow:
+    type: string
+    title: Eyebrow
+    examples:
+      - 'API-first content'
+  heading:
+    type: string
+    title: Heading
+    examples:
+      - 'One dataset, many channels'
+  description:
+    type: string
+    title: Description
+    examples:
+      - 'These cards and the structured data beside them are the same Event nodes from Drupal. The website is just one consumer — the same JSON:API response can feed a mobile app, a kiosk, a chatbot, or a partner site, with no re-authoring.'
+  limit:
+    type: integer
+    title: Limit
+    examples:
+      - 5
+slots: {  }
+js:
+  original: |
+    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
+    import useSWR from 'swr';
+
+    // USWDS API Showcase — a talk-track demo that proves Drupal content is
+    // API-first. It fetches a list of Events through JSON:API and shows the SAME
+    // content two ways, side by side: rendered cards (one channel) and the
+    // structured data Canvas consumes (another channel), with the request labeled
+    // above.
+
+    const client = new JsonApiClient();
+
+    // Only the fields we render / display, to keep the JSON readable.
+    const FIELDS = [
+      'title',
+      'field_event_summary',
+      'field_event_start',
+      'field_event_end',
+      'field_event_format',
+      'field_event_location',
+      'field_event_host',
+      'field_event_cost',
+      'field_event_registration_status',
+      'field_event_seats_left',
+      'field_event_seats_total',
+      'field_categories',
+    ];
+
+    const buildQueryString = (limit) =>
+      new DrupalJsonApiParams()
+        .addSort('field_event_start', 'ASC')
+        .addInclude(['field_categories'])
+        .addFields('node--event', FIELDS)
+        .addFields('taxonomy_term--categories', ['name'])
+        .addPageLimit(limit)
+        .getQueryString();
+
+    // Representative fallback list (only shown if the live site is unreachable).
+    const FALLBACK = [
+      {
+        type: 'node--event',
+        id: '00000000-0000-0000-0000-000000000001',
+        title: 'Flourish Family Benefit: Open Enrollment Workshop',
+        field_event_summary:
+          'A step-by-step walkthrough of the 2026 application, followed by a live Q&A with program officers.',
+        field_event_start: '2026-05-14T14:00:00',
+        field_event_end: '2026-05-14T15:30:00',
+        field_event_format: 'online',
+        field_event_location: 'Webinar — joining link emailed on registration',
+        field_event_host: 'Office of Public Engagement',
+        field_event_cost: 'Free',
+        field_event_registration_status: 'open',
+        field_event_seats_left: 412,
+        field_event_seats_total: 1000,
+        field_categories: [{ type: 'taxonomy_term--categories', name: 'Dignity' }],
+      },
+      {
+        type: 'node--event',
+        id: '00000000-0000-0000-0000-000000000002',
+        title: 'Career Re-entry Job Fair — Asheville',
+        field_event_summary:
+          'Meet 60+ employers hiring through the Career Re-entry Grants program.',
+        field_event_start: '2026-05-21T10:00:00',
+        field_event_end: '2026-05-21T16:00:00',
+        field_event_format: 'in_person',
+        field_event_location: 'Asheville Civic Center, 87 Haywood St',
+        field_event_host: 'Work & Income Directorate',
+        field_event_cost: 'Free',
+        field_event_registration_status: 'open',
+        field_event_seats_left: 38,
+        field_event_seats_total: 400,
+        field_categories: [{ type: 'taxonomy_term--categories', name: 'Work' }],
+      },
+      {
+        type: 'node--event',
+        id: '00000000-0000-0000-0000-000000000003',
+        title: 'Lifelong Learning Account: How the 2:1 Match Works',
+        field_event_summary:
+          'An info session on the expanded federal match — who qualifies and how to open an account.',
+        field_event_start: '2026-05-28T12:00:00',
+        field_event_end: '2026-05-28T13:00:00',
+        field_event_format: 'online',
+        field_event_location: 'Webinar — joining link emailed on registration',
+        field_event_host: 'Learning Directorate',
+        field_event_cost: 'Free',
+        field_event_registration_status: 'unlimited',
+        field_event_seats_left: null,
+        field_event_seats_total: null,
+        field_categories: [{ type: 'taxonomy_term--categories', name: 'Learning' }],
+      },
+    ];
+
+    const FORMAT_LABELS = {
+      online: 'Online',
+      in_person: 'In person',
+      hybrid: 'Hybrid',
+    };
+
+    const categoryName = (item) => {
+      const raw = item?.field_categories;
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      return first?.name ?? '';
+    };
+
+    // Show the same structured object Canvas consumes, trimmed to the fields above.
+    const pickForDisplay = (item) => {
+      const out = {};
+      out.type = item.type ?? 'node--event';
+      out.id = item.id;
+      for (const f of FIELDS) {
+        if (f === 'field_categories') {
+          const raw = item.field_categories;
+          const arr = Array.isArray(raw) ? raw : raw ? [raw] : [];
+          out.field_categories = arr.map((c) => ({
+            type: c?.type ?? 'taxonomy_term--categories',
+            name: c?.name ?? c?.value ?? null,
+          }));
+        } else {
+          out[f] = item[f] ?? null;
+        }
+      }
+      return out;
+    };
+
+    const RenderedCard = ({ item }) => (
+      <div className="flex flex-col gap-3 rounded border border-(--color-uswds-base-lighter) bg-white p-5">
+        <span className="inline-flex w-fit items-center rounded-sm bg-(--color-uswds-accent-cool-lighter) px-2 py-0.5 text-[12px] font-bold tracking-[0.5px] text-(--color-uswds-primary-darker) uppercase">
+          {FORMAT_LABELS[item.field_event_format] ?? item.field_event_format}
+        </span>
+        <h3 className="m-0 font-serif text-[20px] leading-tight font-bold text-(--color-uswds-primary-darker)">
+          {item.title}
+        </h3>
+        <p className="m-0 text-[15px] leading-relaxed text-(--color-uswds-base-dark)">
+          {item.field_event_summary}
+        </p>
+        <dl className="m-0 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[14px]">
+          <dt className="font-bold text-(--color-uswds-base-dark)">Host</dt>
+          <dd className="m-0 text-(--color-uswds-base-ink)">
+            {item.field_event_host}
+          </dd>
+          <dt className="font-bold text-(--color-uswds-base-dark)">Location</dt>
+          <dd className="m-0 text-(--color-uswds-base-ink)">
+            {item.field_event_location}
+          </dd>
+          <dt className="font-bold text-(--color-uswds-base-dark)">Cost</dt>
+          <dd className="m-0 text-(--color-uswds-base-ink)">
+            {item.field_event_cost}
+          </dd>
+          {categoryName(item) && (
+            <>
+              <dt className="font-bold text-(--color-uswds-base-dark)">Category</dt>
+              <dd className="m-0 text-(--color-uswds-base-ink)">
+                {categoryName(item)}
+              </dd>
+            </>
+          )}
+        </dl>
+      </div>
+    );
+
+    const UswdsApiShowcase = ({
+      eyebrow = 'API-first content',
+      heading = 'One dataset, many channels',
+      description = 'These cards and the structured data beside them are the same Event nodes from Drupal. The website is just one consumer — the same JSON:API response can feed a mobile app, a kiosk, a chatbot, or a partner site, with no re-authoring.',
+      limit = 5,
+      className = '',
+    }) => {
+      const count = Math.max(1, Number(limit) || 5);
+      const queryString = buildQueryString(count);
+      const requestUrl = `/api/node/event?${queryString}`;
+
+      const { data, error, isLoading } = useSWR(
+        ['api-showcase', 'node--event', queryString],
+        ([, type, qs]) => client.getCollection(type, { queryString: qs }),
+      );
+
+      const live =
+        !error && Array.isArray(data) && data.length > 0
+          ? data.slice(0, count)
+          : null;
+      const items = live ?? FALLBACK.slice(0, count);
+      const displayObject = items.map(pickForDisplay);
+
+      return (
+        <section
+          className={cn(
+            'usa-api-showcase rounded-lg border border-(--color-uswds-base-lighter) bg-(--color-uswds-base-lightest) p-6 font-sans md:p-8',
+            className,
+          )}
+        >
+          <div className="mb-6 max-w-[70ch]">
+            <p className="m-0 text-[13px] font-bold tracking-[1px] text-(--color-uswds-primary) uppercase">
+              {eyebrow}
+            </p>
+            <h2 className="mt-1 mb-2 font-serif text-[26px] leading-tight font-bold text-(--color-uswds-primary-darker)">
+              {heading}
+            </h2>
+            <p className="m-0 text-[15px] leading-relaxed text-(--color-uswds-base-dark)">
+              {description}
+            </p>
+          </div>
+
+          {/* Request URL label */}
+          <div className="mb-4">
+            <span className="mr-2 inline-block rounded-sm bg-(--color-uswds-success) px-2 py-0.5 text-[11px] font-bold tracking-[0.5px] text-white uppercase">
+              GET
+            </span>
+            <code className="rounded bg-(--color-uswds-base-darkest) px-2 py-1 text-[13px] break-all text-(--color-uswds-base-lightest)">
+              {requestUrl}
+            </code>
+            {!live && !isLoading && (
+              <span className="ml-2 text-[13px] text-(--color-uswds-base-dark)">
+                (showing sample data — live site not reachable)
+              </span>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {/* Rendered channel */}
+            <div className="min-w-0">
+              <p className="mb-2 text-[12px] font-bold tracking-[1px] text-(--color-uswds-base-dark) uppercase">
+                Rendered on this website ({items.length})
+              </p>
+              {isLoading ? (
+                <p className="text-(--color-uswds-base-dark)">Loading…</p>
+              ) : (
+                <div className="flex max-h-[560px] flex-col gap-4 overflow-auto pr-1">
+                  {items.map((item, i) => (
+                    <RenderedCard key={item.id ?? i} item={item} />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Structured channel */}
+            <div className="min-w-0">
+              <p className="mb-2 text-[12px] font-bold tracking-[1px] text-(--color-uswds-base-dark) uppercase">
+                Structured JSON:API response ({displayObject.length})
+              </p>
+              <pre className="m-0 max-h-[560px] overflow-auto rounded border border-(--color-uswds-base-darker) bg-(--color-uswds-base-darkest) p-4 text-[12.5px] leading-relaxed text-(--color-uswds-base-lightest)">
+                <code>{JSON.stringify(displayObject, null, 2)}</code>
+              </pre>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    export default UswdsApiShowcase;
+  compiled: |
+    import { jsxs, jsx, Fragment } from "react/jsx-runtime";
+    import { JsonApiClient, cn } from "drupal-canvas";
+    import { DrupalJsonApiParams } from "drupal-jsonapi-params";
+    import useSWR from "swr";
+    const client = new JsonApiClient();
+    const FIELDS = [
+      "title",
+      "field_event_summary",
+      "field_event_start",
+      "field_event_end",
+      "field_event_format",
+      "field_event_location",
+      "field_event_host",
+      "field_event_cost",
+      "field_event_registration_status",
+      "field_event_seats_left",
+      "field_event_seats_total",
+      "field_categories"
+    ];
+    const buildQueryString = (limit) => new DrupalJsonApiParams().addSort("field_event_start", "ASC").addInclude(["field_categories"]).addFields("node--event", FIELDS).addFields("taxonomy_term--categories", ["name"]).addPageLimit(limit).getQueryString();
+    const FALLBACK = [
+      {
+        type: "node--event",
+        id: "00000000-0000-0000-0000-000000000001",
+        title: "Flourish Family Benefit: Open Enrollment Workshop",
+        field_event_summary: "A step-by-step walkthrough of the 2026 application, followed by a live Q&A with program officers.",
+        field_event_start: "2026-05-14T14:00:00",
+        field_event_end: "2026-05-14T15:30:00",
+        field_event_format: "online",
+        field_event_location: "Webinar — joining link emailed on registration",
+        field_event_host: "Office of Public Engagement",
+        field_event_cost: "Free",
+        field_event_registration_status: "open",
+        field_event_seats_left: 412,
+        field_event_seats_total: 1e3,
+        field_categories: [{ type: "taxonomy_term--categories", name: "Dignity" }]
+      },
+      {
+        type: "node--event",
+        id: "00000000-0000-0000-0000-000000000002",
+        title: "Career Re-entry Job Fair — Asheville",
+        field_event_summary: "Meet 60+ employers hiring through the Career Re-entry Grants program.",
+        field_event_start: "2026-05-21T10:00:00",
+        field_event_end: "2026-05-21T16:00:00",
+        field_event_format: "in_person",
+        field_event_location: "Asheville Civic Center, 87 Haywood St",
+        field_event_host: "Work & Income Directorate",
+        field_event_cost: "Free",
+        field_event_registration_status: "open",
+        field_event_seats_left: 38,
+        field_event_seats_total: 400,
+        field_categories: [{ type: "taxonomy_term--categories", name: "Work" }]
+      },
+      {
+        type: "node--event",
+        id: "00000000-0000-0000-0000-000000000003",
+        title: "Lifelong Learning Account: How the 2:1 Match Works",
+        field_event_summary: "An info session on the expanded federal match — who qualifies and how to open an account.",
+        field_event_start: "2026-05-28T12:00:00",
+        field_event_end: "2026-05-28T13:00:00",
+        field_event_format: "online",
+        field_event_location: "Webinar — joining link emailed on registration",
+        field_event_host: "Learning Directorate",
+        field_event_cost: "Free",
+        field_event_registration_status: "unlimited",
+        field_event_seats_left: null,
+        field_event_seats_total: null,
+        field_categories: [{ type: "taxonomy_term--categories", name: "Learning" }]
+      }
+    ];
+    const FORMAT_LABELS = {
+      online: "Online",
+      in_person: "In person",
+      hybrid: "Hybrid"
+    };
+    const categoryName = (item) => {
+      var _a;
+      const raw = item == null ? void 0 : item.field_categories;
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      return (_a = first == null ? void 0 : first.name) != null ? _a : "";
+    };
+    const pickForDisplay = (item) => {
+      var _a, _b;
+      const out = {};
+      out.type = (_a = item.type) != null ? _a : "node--event";
+      out.id = item.id;
+      for (const f of FIELDS) {
+        if (f === "field_categories") {
+          const raw = item.field_categories;
+          const arr = Array.isArray(raw) ? raw : raw ? [raw] : [];
+          out.field_categories = arr.map((c) => {
+            var _a2, _b2, _c;
+            return {
+              type: (_a2 = c == null ? void 0 : c.type) != null ? _a2 : "taxonomy_term--categories",
+              name: (_c = (_b2 = c == null ? void 0 : c.name) != null ? _b2 : c == null ? void 0 : c.value) != null ? _c : null
+            };
+          });
+        } else {
+          out[f] = (_b = item[f]) != null ? _b : null;
+        }
+      }
+      return out;
+    };
+    const RenderedCard = ({ item }) => {
+      var _a;
+      return /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 rounded border border-(--color-uswds-base-lighter) bg-white p-5", children: [
+        /* @__PURE__ */ jsx("span", { className: "inline-flex w-fit items-center rounded-sm bg-(--color-uswds-accent-cool-lighter) px-2 py-0.5 text-[12px] font-bold tracking-[0.5px] text-(--color-uswds-primary-darker) uppercase", children: (_a = FORMAT_LABELS[item.field_event_format]) != null ? _a : item.field_event_format }),
+        /* @__PURE__ */ jsx("h3", { className: "m-0 font-serif text-[20px] leading-tight font-bold text-(--color-uswds-primary-darker)", children: item.title }),
+        /* @__PURE__ */ jsx("p", { className: "m-0 text-[15px] leading-relaxed text-(--color-uswds-base-dark)", children: item.field_event_summary }),
+        /* @__PURE__ */ jsxs("dl", { className: "m-0 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[14px]", children: [
+          /* @__PURE__ */ jsx("dt", { className: "font-bold text-(--color-uswds-base-dark)", children: "Host" }),
+          /* @__PURE__ */ jsx("dd", { className: "m-0 text-(--color-uswds-base-ink)", children: item.field_event_host }),
+          /* @__PURE__ */ jsx("dt", { className: "font-bold text-(--color-uswds-base-dark)", children: "Location" }),
+          /* @__PURE__ */ jsx("dd", { className: "m-0 text-(--color-uswds-base-ink)", children: item.field_event_location }),
+          /* @__PURE__ */ jsx("dt", { className: "font-bold text-(--color-uswds-base-dark)", children: "Cost" }),
+          /* @__PURE__ */ jsx("dd", { className: "m-0 text-(--color-uswds-base-ink)", children: item.field_event_cost }),
+          categoryName(item) && /* @__PURE__ */ jsxs(Fragment, { children: [
+            /* @__PURE__ */ jsx("dt", { className: "font-bold text-(--color-uswds-base-dark)", children: "Category" }),
+            /* @__PURE__ */ jsx("dd", { className: "m-0 text-(--color-uswds-base-ink)", children: categoryName(item) })
+          ] })
+        ] })
+      ] });
+    };
+    const UswdsApiShowcase = ({
+      eyebrow = "API-first content",
+      heading = "One dataset, many channels",
+      description = "These cards and the structured data beside them are the same Event nodes from Drupal. The website is just one consumer — the same JSON:API response can feed a mobile app, a kiosk, a chatbot, or a partner site, with no re-authoring.",
+      limit = 5,
+      className = ""
+    }) => {
+      const count = Math.max(1, Number(limit) || 5);
+      const queryString = buildQueryString(count);
+      const requestUrl = `/api/node/event?${queryString}`;
+      const { data, error, isLoading } = useSWR(
+        ["api-showcase", "node--event", queryString],
+        ([, type, qs]) => client.getCollection(type, { queryString: qs })
+      );
+      const live = !error && Array.isArray(data) && data.length > 0 ? data.slice(0, count) : null;
+      const items = live != null ? live : FALLBACK.slice(0, count);
+      const displayObject = items.map(pickForDisplay);
+      return /* @__PURE__ */ jsxs(
+        "section",
+        {
+          className: cn(
+            "usa-api-showcase rounded-lg border border-(--color-uswds-base-lighter) bg-(--color-uswds-base-lightest) p-6 font-sans md:p-8",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "mb-6 max-w-[70ch]", children: [
+              /* @__PURE__ */ jsx("p", { className: "m-0 text-[13px] font-bold tracking-[1px] text-(--color-uswds-primary) uppercase", children: eyebrow }),
+              /* @__PURE__ */ jsx("h2", { className: "mt-1 mb-2 font-serif text-[26px] leading-tight font-bold text-(--color-uswds-primary-darker)", children: heading }),
+              /* @__PURE__ */ jsx("p", { className: "m-0 text-[15px] leading-relaxed text-(--color-uswds-base-dark)", children: description })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "mb-4", children: [
+              /* @__PURE__ */ jsx("span", { className: "mr-2 inline-block rounded-sm bg-(--color-uswds-success) px-2 py-0.5 text-[11px] font-bold tracking-[0.5px] text-white uppercase", children: "GET" }),
+              /* @__PURE__ */ jsx("code", { className: "rounded bg-(--color-uswds-base-darkest) px-2 py-1 text-[13px] break-all text-(--color-uswds-base-lightest)", children: requestUrl }),
+              !live && !isLoading && /* @__PURE__ */ jsx("span", { className: "ml-2 text-[13px] text-(--color-uswds-base-dark)", children: "(showing sample data — live site not reachable)" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-6 lg:grid-cols-2", children: [
+              /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+                /* @__PURE__ */ jsxs("p", { className: "mb-2 text-[12px] font-bold tracking-[1px] text-(--color-uswds-base-dark) uppercase", children: [
+                  "Rendered on this website (",
+                  items.length,
+                  ")"
+                ] }),
+                isLoading ? /* @__PURE__ */ jsx("p", { className: "text-(--color-uswds-base-dark)", children: "Loading…" }) : /* @__PURE__ */ jsx("div", { className: "flex max-h-[560px] flex-col gap-4 overflow-auto pr-1", children: items.map((item, i) => {
+                  var _a;
+                  return /* @__PURE__ */ jsx(RenderedCard, { item }, (_a = item.id) != null ? _a : i);
+                }) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+                /* @__PURE__ */ jsxs("p", { className: "mb-2 text-[12px] font-bold tracking-[1px] text-(--color-uswds-base-dark) uppercase", children: [
+                  "Structured JSON:API response (",
+                  displayObject.length,
+                  ")"
+                ] }),
+                /* @__PURE__ */ jsx("pre", { className: "m-0 max-h-[560px] overflow-auto rounded border border-(--color-uswds-base-darker) bg-(--color-uswds-base-darkest) p-4 text-[12.5px] leading-relaxed text-(--color-uswds-base-lightest)", children: /* @__PURE__ */ jsx("code", { children: JSON.stringify(displayObject, null, 2) }) })
+              ] })
+            ] })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsApiShowcase as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies:
+  drupalSettings:
+    - v0.baseUrl
+    - v0.jsonapiSettings

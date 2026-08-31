@@ -1,0 +1,100 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: c47bd06c-2633-417c-b5f8-a4a12a706de3
+  bundle: event
+  default_langcode: en
+  depends:
+    d834929f-606f-4b17-a5c0-2fd7a6262fe9: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 0
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Public Arts Stipend: Application Q&A'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Program officers answer questions about the two-year stipend, portfolio requirements, and this year’s community-impact criteria.'
+      format: filtered_html
+      summary: ''
+  field_categories:
+    -
+      entity: d834929f-606f-4b17-a5c0-2fd7a6262fe9
+  field_event_accessibility:
+    -
+      value: 'Live CART captioning and ASL interpretation are provided on request. For materials in an alternate format or any other accommodation, submit a request at least five business days ahead so we can arrange it in time.'
+      format: filtered_html
+  field_event_agenda:
+    -
+      value: '<ul><li><strong>3:00 pm — Overview.</strong> Who the stipend is for and what it funds.</li><li><strong>3:15 pm — Portfolio &amp; criteria.</strong> What reviewers look for, with examples.</li><li><strong>3:35 pm — Community-impact section.</strong> How to describe your project’s reach.</li><li><strong>3:50 pm — Q&amp;A.</strong> Program officers answer questions live.</li></ul>'
+      format: filtered_html
+  field_event_contact:
+    -
+      value: events@dept.eud.ai
+  field_event_cost:
+    -
+      value: Free
+  field_event_end:
+    -
+      value: '2026-06-11T16:00:00'
+  field_event_format:
+    -
+      value: online
+  field_event_host:
+    -
+      value: 'Creativity Directorate'
+  field_event_language:
+    -
+      value: English
+  field_event_learn:
+    -
+      value: '<ul><li>How the two-year stipend is structured and paid</li><li>What the portfolio requirements are and how work is reviewed</li><li>This year’s community-impact criteria and how it is scored</li><li>Key dates, and how to ask for feedback on a draft application</li></ul>'
+      format: filtered_html
+  field_event_location:
+    -
+      value: 'Webinar — joining link emailed on registration'
+  field_event_recording:
+    -
+      value: 'Posted within 5 business days'
+  field_event_registration_status:
+    -
+      value: open
+  field_event_seats_left:
+    -
+      value: 286
+  field_event_seats_total:
+    -
+      value: 500
+  field_event_start:
+    -
+      value: '2026-06-11T15:00:00'
+  field_event_summary:
+    -
+      value: 'Program officers answer questions about the two-year stipend, portfolio requirements, and this year’s community-impact criteria.'
+  field_event_who:
+    -
+      value: 'Practicing artists, collectives, and community arts organizations considering an application. Prior applicants and mentors are welcome.'
+      format: filtered_html

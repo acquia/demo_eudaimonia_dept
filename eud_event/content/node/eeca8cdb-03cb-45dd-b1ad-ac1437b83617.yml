@@ -1,0 +1,100 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: eeca8cdb-03cb-45dd-b1ad-ac1437b83617
+  bundle: event
+  default_langcode: en
+  depends:
+    2ba6c29f-823a-4509-9e9b-be3a922e9903: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 0
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Flourish Family Benefit: Open Enrollment Workshop'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Open enrollment for the Flourish Family Benefit closes on May 31, 2026. This workshop is designed for anyone who has not applied before, or who applied last year and has had a change in household, income, or caregiving situation. A program officer walks through the full application on screen, section by section, pausing at the places where applicants most often get stuck.'
+      format: filtered_html
+      summary: ''
+  field_categories:
+    -
+      entity: 2ba6c29f-823a-4509-9e9b-be3a922e9903
+  field_event_accessibility:
+    -
+      value: 'Live CART captioning and ASL interpretation are provided. For materials in an alternate format, or any other accommodation, submit a request by May 7 so we can arrange it in time.'
+      format: filtered_html
+  field_event_agenda:
+    -
+      value: '<ul><li><strong>2:00 pm — Welcome and overview.</strong> What the Flourish Family Benefit covers and who it is for.</li><li><strong>2:10 pm — Eligibility walkthrough.</strong> Income limits, household composition, and the regional adjustment, with worked examples.</li><li><strong>2:35 pm — Live application demo.</strong> Screen-share of the full application, including the caregiver attestation.</li><li><strong>3:00 pm — Open Q&A.</strong> Program officers answer questions submitted in chat. No question is too basic.</li><li><strong>3:25 pm — Where to get help.</strong> Service centers, phone support, and free in-person assistance near you.</li></ul>'
+      format: filtered_html
+  field_event_contact:
+    -
+      value: 'events@dept.eud.ai or 1-800-EUD-INFO, weekdays 7 am – 9 pm ET'
+  field_event_cost:
+    -
+      value: Free
+  field_event_end:
+    -
+      value: '2026-05-14T15:30:00'
+  field_event_format:
+    -
+      value: online
+  field_event_host:
+    -
+      value: 'Office of Public Engagement'
+  field_event_language:
+    -
+      value: 'English, with live Spanish interpretation'
+  field_event_learn:
+    -
+      value: '<ul><li>Whether your household qualifies, and how the income limit is adjusted for your region</li><li>Which documents to gather before you start, and which ones we verify automatically</li><li>How to complete Form EUD-217 if you are a caregiver for an older relative</li><li>What happens after you submit — timelines, notices, and how to track your application</li><li>How to appeal a decision, and where to get free legal help</li></ul>'
+      format: filtered_html
+  field_event_location:
+    -
+      value: 'Webinar — joining link emailed on registration'
+  field_event_recording:
+    -
+      value: 'Posted within 5 business days; registrants get a direct link'
+  field_event_registration_status:
+    -
+      value: open
+  field_event_seats_left:
+    -
+      value: 412
+  field_event_seats_total:
+    -
+      value: 1000
+  field_event_start:
+    -
+      value: '2026-05-14T14:00:00'
+  field_event_summary:
+    -
+      value: 'A step-by-step walkthrough of the 2026 application, followed by a live Q&A with program officers. No prior knowledge needed.'
+  field_event_who:
+    -
+      value: 'Parents and kinship caregivers, adults caring for older relatives, and anyone who was found ineligible in a previous year. Caseworkers, librarians, and community organizations who help others apply are also welcome — the session is open to the public.'
+      format: filtered_html

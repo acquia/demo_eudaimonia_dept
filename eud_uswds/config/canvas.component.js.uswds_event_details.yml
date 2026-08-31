@@ -1,0 +1,101 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_event_details
+active_version: 392fc04d4d651d28
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        startDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '2026-05-14T19:30:00+05:30'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        endDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '2026-05-14T21:00:00+05:30'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        format:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Online
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        cost:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Free
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        host:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Office of Public Engagement'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        language:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'English, with live Spanish interpretation'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        recording:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Posted within 5 business days; registrants get a direct link'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: '(Eud-Kit) USWDS Event Details'
+id: js.uswds_event_details
+provider: null
+source: js
+source_local_id: uswds_event_details

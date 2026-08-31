@@ -13,6 +13,7 @@ recipes:
   - eud_category
   - eud_article
   - eud_program
+  - eud_event
   - eud_ai_content
   - eud_ai_chatbot
   - eud_canvas_ai

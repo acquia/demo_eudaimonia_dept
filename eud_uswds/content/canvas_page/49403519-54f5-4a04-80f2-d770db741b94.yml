@@ -1,0 +1,99 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 49403519-54f5-4a04-80f2-d770db741b94
+  default_langcode: en
+default:
+  moderation_state:
+    -
+      value: published
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Department of Eudaimonia — Events'
+  description:
+    -
+      value: 'EUD demo events listing page'
+  components:
+    -
+      uuid: 02bd566d-0ad5-4a16-b694-f970869d4c75
+      component_id: js.uswds_page_hero
+      inputs:
+        heading: 'Events and public sessions'
+        leadParagraph: 'Workshops, grant clinics, job fairs, and briefings — most are free, and every session offers live captioning and ASL interpretation on request.'
+    -
+      parent_uuid: 02bd566d-0ad5-4a16-b694-f970869d4c75
+      slot: breadcrumb
+      uuid: dded3aaf-b384-4d9c-a19e-2a7bdc4ddc15
+      component_id: js.uswds_breadcrumb
+      inputs:
+        wrap: false
+        context: on-dark
+    -
+      parent_uuid: dded3aaf-b384-4d9c-a19e-2a7bdc4ddc15
+      slot: items
+      uuid: 0fcf18d8-da49-4ef9-8e27-c6d415c581fe
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        href:
+          uri: 'internal:/eud-home'
+          options: {  }
+        text: Home
+        isLast: false
+        context: on-dark
+        showSeparator: false
+    -
+      parent_uuid: dded3aaf-b384-4d9c-a19e-2a7bdc4ddc15
+      slot: items
+      uuid: 809edd82-1d8b-41b4-945b-d4b250d7d94b
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: Events
+        isLast: true
+        context: on-dark
+        showSeparator: true
+    -
+      uuid: 1f7d5de0-0c54-4885-9459-629525b5e0b5
+      component_id: js.uswds_section
+      inputs:
+        background: white
+        contentWidth: wide
+        paddingTop: md
+        paddingBottom: md
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: 1f7d5de0-0c54-4885-9459-629525b5e0b5
+      slot: content
+      uuid: 5d46a0ed-626c-46d0-bc91-3c7e7cc9cdef
+      component_id: js.uswds_event_list
+      inputs:
+        eventLimit: 20
+        perPage: 6
+        ariaLabel: 'Upcoming events'
+    -
+      uuid: 07065e44-3d2c-4354-aec8-27ec3848190c
+      component_id: js.uswds_site_alert
+      inputs:
+        variant: info
+        width: boxed
+        slim: false
+        heading: 'Request an accommodation'
+        body:
+          value: '<p>Need CART captioning, ASL, materials in an alternate format, or another accommodation? <a href="/events/accommodation-request"><strong>Submit a request</strong></a> at least seven days before the session so we can arrange it in time.</p>'
+          format: canvas_html_block
+  path:
+    -
+      alias: /eud-events
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'

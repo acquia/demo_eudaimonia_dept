@@ -1,0 +1,183 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_event_row
+  module:
+    - link
+    - options
+active_version: d99ac483e64c9934
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        title:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Flourish Family Benefit: Open Enrollment Workshop'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        titleLink:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /events/flourish-open-enrollment
+              options: {  }
+          expression: ℹ︎link␟url
+          derived_schema_metadata:
+            string_shape:
+              format: uri-reference
+        summary:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'A step-by-step walkthrough of the 2026 application, followed by a live Q&A with program officers. No prior knowledge needed.'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        startDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '2026-05-14T19:30:00+05:30'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        endDate:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '2026-05-14T21:00:00+05:30'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        format:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: online
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+        category:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Dignity
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        location:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Webinar — joining link emailed on registration'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        host:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Office of Public Engagement'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        registrationUrl:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: 'https://events.eudaimonia.demo/flourish-open-enrollment'
+              options: {  }
+          expression: ℹ︎link␟url
+          derived_schema_metadata:
+            string_shape:
+              format: uri-reference
+        registrationStatus:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: open
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+        seatsLeft:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 412
+          expression: ℹ︎integer␟value
+          derived_schema_metadata: {  }
+        recordingNote:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Recording will be posted'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: '(Eud-Kit) USWDS Event Row'
+id: js.uswds_event_row
+provider: null
+source: js
+source_local_id: uswds_event_row

@@ -1,0 +1,100 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: ebe77d66-3c34-47d0-9e22-25ea24c147ee
+  bundle: event
+  default_langcode: en
+  depends:
+    4e56e5e0-c8db-4daa-9a0b-4a2269af5e62: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 0
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'FY25 Annual Wellbeing Index — Public Briefing'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'The research team presents this year’s findings, including the 4.2-point rise in life satisfaction, followed by an open press and public Q&A.'
+      format: filtered_html
+      summary: ''
+  field_categories:
+    -
+      entity: 4e56e5e0-c8db-4daa-9a0b-4a2269af5e62
+  field_event_accessibility:
+    -
+      value: 'Live CART captioning and ASL interpretation are provided on request. For materials in an alternate format or any other accommodation, submit a request at least five business days ahead so we can arrange it in time.'
+      format: filtered_html
+  field_event_agenda:
+    -
+      value: '<ul><li><strong>11:00 am — Welcome.</strong> Context for this year’s index.</li><li><strong>11:10 am — Findings presentation.</strong> The research team walks through results.</li><li><strong>11:45 am — Methodology &amp; data access.</strong> How to use the open dataset.</li><li><strong>12:00 pm — Press &amp; public Q&amp;A.</strong> Open questions.</li></ul>'
+      format: filtered_html
+  field_event_contact:
+    -
+      value: events@dept.eud.ai
+  field_event_cost:
+    -
+      value: Free
+  field_event_end:
+    -
+      value: '2026-06-18T12:30:00'
+  field_event_format:
+    -
+      value: hybrid
+  field_event_host:
+    -
+      value: 'Office of Research & Data'
+  field_event_language:
+    -
+      value: English
+  field_event_learn:
+    -
+      value: '<ul><li>The headline findings, including the 4.2-point rise in life satisfaction</li><li>Which regions and populations saw the largest gains</li><li>How the index is measured and what changed this year</li><li>Where to access the full dataset and methodology</li></ul>'
+      format: filtered_html
+  field_event_location:
+    -
+      value: 'Eudaimonia HQ, Room 200 & livestream'
+  field_event_recording:
+    -
+      value: 'Recording will be posted'
+  field_event_registration_status:
+    -
+      value: closed
+  field_event_seats_left:
+    -
+      value: 0
+  field_event_seats_total:
+    -
+      value: 200
+  field_event_start:
+    -
+      value: '2026-06-18T11:00:00'
+  field_event_summary:
+    -
+      value: 'The research team presents this year’s findings, including the 4.2-point rise in life satisfaction, followed by an open press and public Q&A.'
+  field_event_who:
+    -
+      value: 'Researchers, journalists, policymakers, community organizations, and members of the public interested in wellbeing data. Open to all.'
+      format: filtered_html

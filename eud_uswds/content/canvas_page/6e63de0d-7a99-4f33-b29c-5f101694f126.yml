@@ -1,0 +1,111 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 6e63de0d-7a99-4f33-b29c-5f101694f126
+  default_langcode: en
+default:
+  moderation_state:
+    -
+      value: published
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Department of Eudaimonia — API Demo'
+  description:
+    -
+      value: 'EUD demo — API-first / multi-channel content showcase'
+  components:
+    -
+      uuid: 290d338b-f261-4d70-9b46-6bb9df5e2885
+      component_id: js.uswds_page_hero
+      inputs:
+        heading: 'Content as a service'
+        leadParagraph: 'Every piece of content in this site is structured data first and a web page second. This page shows the same Event exposed as a rendered card and as a live JSON:API response.'
+    -
+      parent_uuid: 290d338b-f261-4d70-9b46-6bb9df5e2885
+      slot: breadcrumb
+      uuid: b16767b1-4b76-4c18-a1ad-ecd0fe55770a
+      component_id: js.uswds_breadcrumb
+      inputs:
+        wrap: false
+        context: on-dark
+    -
+      parent_uuid: b16767b1-4b76-4c18-a1ad-ecd0fe55770a
+      slot: items
+      uuid: c12b4048-abcc-4e66-9105-692baa61ee17
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        href:
+          uri: 'internal:/eud-home'
+          options: {  }
+        text: Home
+        isLast: false
+        context: on-dark
+        showSeparator: false
+    -
+      parent_uuid: b16767b1-4b76-4c18-a1ad-ecd0fe55770a
+      slot: items
+      uuid: 3057788f-525e-4ab2-aa6e-a3a0cbf8e157
+      component_id: js.uswds_breadcrumb_item
+      inputs:
+        text: 'API demo'
+        isLast: true
+        context: on-dark
+        showSeparator: true
+    -
+      uuid: b0cb43dd-071e-44d8-a390-06fa5bb4217f
+      component_id: js.uswds_section
+      inputs:
+        eyebrow: 'Why this matters'
+        heading: 'Author once, deliver everywhere'
+        description: 'Editors manage events in Drupal. Because the content is decoupled from presentation, the same records power this website, a future mobile app, digital signage, a voice assistant, and partner integrations — without copying or re-keying anything.'
+        background: white
+        contentWidth: wide
+        paddingTop: lg
+        paddingBottom: md
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: b0cb43dd-071e-44d8-a390-06fa5bb4217f
+      slot: content
+      uuid: 6a83d658-a893-4b8f-b75e-7a37280ebc87
+      component_id: js.uswds_api_showcase
+      inputs:
+        eyebrow: 'API-first content'
+        heading: 'One Event, many channels'
+        description: 'The card on the left and the JSON on the right are the same Event node, fetched live over JSON:API. The website is just one consumer of this structured content.'
+    -
+      uuid: a51d2ea5-4f5d-46d2-8877-79aef7973208
+      component_id: js.uswds_section
+      inputs:
+        background: gray
+        contentWidth: narrow
+        paddingTop: md
+        paddingBottom: lg
+        marginTop: none
+        marginBottom: none
+    -
+      parent_uuid: a51d2ea5-4f5d-46d2-8877-79aef7973208
+      slot: content
+      uuid: c66a38b1-0d98-4f78-97b9-24a1e65acff1
+      component_id: js.uswds_summary_box
+      inputs:
+        heading: 'For developers'
+        body:
+          value: '<p>Try the endpoint yourself: <code>/api/node/event?include=field_categories&sort=field_event_start</code>. Every field shown across this site — titles, dates, formats, seats, categories — is available as structured JSON, filterable and sortable, ready for any channel.</p>'
+          format: canvas_html_block
+  path:
+    -
+      alias: /api-demo
+      langcode: en
+  revision_translation_affected:
+    -
+      value: true
+  metatags:
+    -
+      value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'

@@ -1,0 +1,113 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_tag
+machineName: uswds_event_meta_tags
+name: '(Eud-Kit) USWDS Event Meta Tags'
+required: {  }
+props:
+  format:
+    type: string
+    title: Format
+    examples:
+      - Online
+  category:
+    type: array
+    items:
+      type: string
+    title: Category
+    examples:
+      -
+        - Dignity
+  status:
+    type: string
+    title: Status
+    examples:
+      - Open
+slots: {  }
+js:
+  original: |
+    import UswdsTag from '@/components/uswds_tag';
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Event Meta Tags — the three badges shown in the event hero:
+    // Format, Category, and Registration status.
+    //
+    // Format and status arrive as plain scalar strings (the human-readable label of
+    // a Drupal list field). Category is bound to the node's `field_categories`
+    // entity reference, which is MULTI-VALUE — a content-template expression resolves
+    // it to an array of names, not a single string. To keep the hero from throwing
+    // on an array value, this component accepts `category` as a string OR an array
+    // (of strings or `{name}` term objects) and coerces it to the first category
+    // name. This keeps all three badges rendering without a per-instance fetch.
+
+    const resolveCategory = (value: unknown): string => {
+      if (!value) return '';
+      const first = Array.isArray(value) ? value[0] : value;
+      if (first == null) return '';
+      if (typeof first === 'string') return first;
+      if (typeof first === 'object') {
+        const obj = first as Record<string, unknown>;
+        return (obj.name as string) ?? (obj.value as string) ?? '';
+      }
+      return String(first);
+    };
+
+    const UswdsEventMetaTags = ({
+      format = '',
+      category = '',
+      status = '',
+      className = '',
+    }) => {
+      const categoryName = resolveCategory(category);
+
+      return (
+        <span className={cn('inline-flex flex-wrap items-center gap-2', className)}>
+          {format && <UswdsTag text={format} variant="cool" size="big" />}
+          {categoryName && (
+            <UswdsTag text={categoryName} variant="neutral" size="big" />
+          )}
+          {status && <UswdsTag text={status} variant="informative" size="big" />}
+        </span>
+      );
+    };
+
+    export default UswdsEventMetaTags;
+  compiled: |
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import UswdsTag from "@/components/uswds_tag";
+    import { cn } from "drupal-canvas";
+    const resolveCategory = (value) => {
+      var _a, _b;
+      if (!value) return "";
+      const first = Array.isArray(value) ? value[0] : value;
+      if (first == null) return "";
+      if (typeof first === "string") return first;
+      if (typeof first === "object") {
+        const obj = first;
+        return (_b = (_a = obj.name) != null ? _a : obj.value) != null ? _b : "";
+      }
+      return String(first);
+    };
+    const UswdsEventMetaTags = ({
+      format = "",
+      category = "",
+      status = "",
+      className = ""
+    }) => {
+      const categoryName = resolveCategory(category);
+      return /* @__PURE__ */ jsxs("span", { className: cn("inline-flex flex-wrap items-center gap-2", className), children: [
+        format && /* @__PURE__ */ jsx(UswdsTag, { text: format, variant: "cool", size: "big" }),
+        categoryName && /* @__PURE__ */ jsx(UswdsTag, { text: categoryName, variant: "neutral", size: "big" }),
+        status && /* @__PURE__ */ jsx(UswdsTag, { text: status, variant: "informative", size: "big" })
+      ] });
+    };
+    export {
+      UswdsEventMetaTags as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -9,3 +9,7 @@ install:
   - node
 config:
   strict: false
+  actions:
+    workflows.workflow.editorial:
+      addNodeTypes:
+        - program

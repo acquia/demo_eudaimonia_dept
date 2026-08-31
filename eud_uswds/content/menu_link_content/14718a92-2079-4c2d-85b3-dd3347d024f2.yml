@@ -26,10 +26,10 @@ default:
       value: false
   rediscover:
     -
-      value: true
+      value: false
   weight:
     -
-      value: 2
+      value: 3
   expanded:
     -
       value: false
