@@ -1,0 +1,21 @@
+name: 'Eudaimonia Event'
+type: Recipe
+description: 'Event content type, fields, and demo events (workshops, clinics, briefings) for the Department of Eudaimonia site template.'
+recipes:
+  - eud_common
+  # Ships the image media type used by the event image field.
+  - eud_media
+  # Ships the category terms these events reference (must apply first).
+  - eud_category
+install:
+  - node
+  - datetime
+  - link
+  - options
+  - text
+config:
+  strict: false
+  actions:
+    workflows.workflow.editorial:
+      addNodeTypes:
+        - event

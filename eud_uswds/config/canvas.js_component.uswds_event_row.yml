@@ -1,0 +1,563 @@
+langcode: en
+status: true
+dependencies: {  }
+machineName: uswds_event_row
+name: '(Eud-Kit) USWDS Event Row'
+required: {  }
+props:
+  title:
+    type: string
+    title: Title
+    examples:
+      - 'Flourish Family Benefit: Open Enrollment Workshop'
+  titleLink:
+    type: string
+    format: uri-reference
+    title: 'Title Link'
+    examples:
+      - /events/flourish-open-enrollment
+  summary:
+    type: string
+    title: Summary
+    examples:
+      - 'A step-by-step walkthrough of the 2026 application, followed by a live Q&A with program officers. No prior knowledge needed.'
+  startDate:
+    type: string
+    title: 'Start Date'
+    examples:
+      - '2026-05-14T19:30:00+05:30'
+  endDate:
+    type: string
+    title: 'End Date'
+    examples:
+      - '2026-05-14T21:00:00+05:30'
+  format:
+    type: string
+    enum:
+      - online
+      - in_person
+      - hybrid
+    'meta:enum':
+      online: Online
+      in_person: 'In person'
+      hybrid: Hybrid
+    title: Format
+    examples:
+      - online
+  category:
+    type: string
+    title: Category
+    examples:
+      - Dignity
+  location:
+    type: string
+    title: Location
+    examples:
+      - 'Webinar — joining link emailed on registration'
+  host:
+    type: string
+    title: Host
+    examples:
+      - 'Office of Public Engagement'
+  registrationUrl:
+    type: string
+    format: uri-reference
+    title: 'Registration URL'
+    examples:
+      - 'https://events.eudaimonia.demo/flourish-open-enrollment'
+  registrationStatus:
+    type: string
+    enum:
+      - open
+      - closed
+      - unlimited
+    'meta:enum':
+      open: Open
+      closed: Closed
+      unlimited: Unlimited
+    title: 'Registration Status'
+    examples:
+      - open
+  seatsLeft:
+    type: integer
+    title: 'Seats Left'
+    examples:
+      - 412
+  recordingNote:
+    type: string
+    title: 'Recording Note'
+    examples:
+      - 'Recording will be posted'
+slots: {  }
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Event Row — one event in the government events index.
+    // Left: navy date chip (month abbrev + day). Center: title link, meta line
+    // (date/time range, location, host with icons), summary, format + category
+    // badges. Right: Register button + seats status, or a closed state.
+    //
+    // Presentational: every value arrives as a prop, so the row renders from static
+    // mock props in Workbench AND from data the dynamic list (uswds_event_list)
+    // maps out of JSON:API.
+
+    const MONTHS = [
+      'JAN',
+      'FEB',
+      'MAR',
+      'APR',
+      'MAY',
+      'JUN',
+      'JUL',
+      'AUG',
+      'SEP',
+      'OCT',
+      'NOV',
+      'DEC',
+    ];
+    const MONTHS_LONG = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    // Parse the wall-clock parts straight out of the ISO string so the authored
+    // date/time is shown faithfully, without a browser-timezone shift.
+    const parseIso = (iso) => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(iso || '');
+      if (!m) return null;
+      return {
+        year: +m[1],
+        month: +m[2] - 1,
+        day: +m[3],
+        hour: +m[4],
+        minute: +m[5],
+      };
+    };
+
+    const formatTime = (p) => {
+      if (!p) return '';
+      const period = p.hour >= 12 ? 'p.m.' : 'a.m.';
+      let h = p.hour % 12;
+      if (h === 0) h = 12;
+      const mm = p.minute.toString().padStart(2, '0');
+      return p.minute === 0 ? `${h} ${period}` : `${h}:${mm} ${period}`;
+    };
+
+    const formatDateTimeRange = (startIso, endIso) => {
+      const s = parseIso(startIso);
+      if (!s) return '';
+      const dateLabel = `${MONTHS_LONG[s.month]} ${s.day}, ${s.year}`;
+      const e = parseIso(endIso);
+      if (!e) return `${dateLabel} · ${formatTime(s)}`;
+      const sameDay = s.year === e.year && s.month === e.month && s.day === e.day;
+      if (sameDay) {
+        return `${dateLabel} · ${formatTime(s)} – ${formatTime(e)}`;
+      }
+      return `${dateLabel} – ${MONTHS_LONG[e.month]} ${e.day}, ${e.year}`;
+    };
+
+    const FORMAT_LABELS = {
+      online: 'Online',
+      in_person: 'In person',
+      hybrid: 'Hybrid',
+    };
+
+    const formatBadgeVariants = cva(
+      'inline-flex items-center rounded-sm px-2 py-0.5 text-[12px] font-bold tracking-[0.5px] uppercase',
+      {
+        variants: {
+          format: {
+            online:
+              'bg-(--color-uswds-accent-cool-lighter) text-(--color-uswds-primary-darker)',
+            in_person:
+              'bg-(--color-uswds-primary-lighter) text-(--color-uswds-primary-darker)',
+            hybrid:
+              'bg-(--color-uswds-warning-lighter) text-(--color-uswds-base-ink)',
+          },
+        },
+        defaultVariants: { format: 'online' },
+      },
+    );
+
+    // Small inline USWDS-style icons for the meta line.
+    const IconCalendar = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="mt-0.5 h-4 w-4 shrink-0 text-(--color-uswds-base)"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
+      </svg>
+    );
+    const IconLocation = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="mt-0.5 h-4 w-4 shrink-0 text-(--color-uswds-base)"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" />
+      </svg>
+    );
+    const IconHost = () => (
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        className="mt-0.5 h-4 w-4 shrink-0 text-(--color-uswds-base)"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+      </svg>
+    );
+
+    const MetaItem = ({ icon, children }) =>
+      children ? (
+        <span className="flex items-start gap-1.5 text-[14px] leading-snug text-(--color-uswds-base-dark)">
+          {icon}
+          <span>{children}</span>
+        </span>
+      ) : null;
+
+    const UswdsEventRow = ({
+      title = '',
+      titleLink = '',
+      summary = '',
+      startDate = '',
+      endDate = '',
+      format = 'online',
+      category = '',
+      location = '',
+      host = '',
+      registrationUrl = '',
+      registrationStatus = 'open',
+      seatsLeft = null,
+      recordingNote = '',
+      className = '',
+    }) => {
+      const start = parseIso(startDate);
+      const isClosed = registrationStatus === 'closed';
+      const isUnlimited = registrationStatus === 'unlimited';
+
+      const focusStyles =
+        'focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)';
+
+      return (
+        <li
+          className={cn(
+            'usa-event-row flex flex-col gap-5 border-t border-(--color-uswds-base-lighter) py-6 font-sans first:border-t-0 md:flex-row',
+            className,
+          )}
+        >
+          {/* Date chip */}
+          <div className="flex shrink-0 md:w-[72px]">
+            <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded bg-(--color-uswds-primary-darker) text-white">
+              <span className="text-[13px] font-bold tracking-[1px] uppercase">
+                {start ? MONTHS[start.month] : '—'}
+              </span>
+              <span className="font-serif text-[28px] leading-none font-bold">
+                {start ? start.day : ''}
+              </span>
+            </div>
+          </div>
+
+          {/* Center content */}
+          <div className="flex min-w-0 flex-1 flex-col gap-2">
+            <h3 className="m-0 font-serif text-[22px] leading-tight font-bold">
+              {titleLink ? (
+                <a
+                  href={titleLink}
+                  className={cn(
+                    'text-(--color-uswds-primary) no-underline hover:underline',
+                    focusStyles,
+                  )}
+                >
+                  {title}
+                </a>
+              ) : (
+                <span className="text-(--color-uswds-primary-darker)">{title}</span>
+              )}
+            </h3>
+
+            <div className="flex flex-wrap gap-x-5 gap-y-1">
+              <MetaItem icon={<IconCalendar />}>
+                {formatDateTimeRange(startDate, endDate)}
+              </MetaItem>
+              <MetaItem icon={<IconLocation />}>{location}</MetaItem>
+              <MetaItem icon={<IconHost />}>{host}</MetaItem>
+            </div>
+
+            {summary && (
+              <p className="m-0 max-w-[62ch] text-[15px] leading-relaxed text-(--color-uswds-base-dark)">
+                {summary}
+              </p>
+            )}
+
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <span className={formatBadgeVariants({ format })}>
+                {FORMAT_LABELS[format] ?? format}
+              </span>
+              {category && (
+                <span className="inline-flex items-center rounded-sm bg-(--color-uswds-base-lighter) px-2 py-0.5 text-[12px] font-bold tracking-[0.5px] text-(--color-uswds-base-dark) uppercase">
+                  {category}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Register / status */}
+          <div className="flex shrink-0 flex-col items-start gap-2 md:w-[190px] md:items-end md:text-right">
+            {isClosed ? (
+              <>
+                <span className="inline-flex items-center rounded-full bg-(--color-uswds-base-lighter) px-3 py-1 text-[13px] font-bold text-(--color-uswds-base-dark)">
+                  Registration closed
+                </span>
+                {recordingNote && (
+                  <span className="text-[13px] leading-snug text-(--color-uswds-base)">
+                    {recordingNote}
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                <a
+                  href={registrationUrl || '#'}
+                  className={cn(
+                    'inline-flex items-center justify-center rounded bg-(--color-uswds-primary) px-4 py-2 text-[15px] font-bold text-white no-underline transition-colors hover:bg-(--color-uswds-primary-dark)',
+                    focusStyles,
+                  )}
+                >
+                  Register
+                </a>
+                <span className="text-[13px] leading-snug text-(--color-uswds-base-dark)">
+                  {isUnlimited
+                    ? 'Unlimited seats'
+                    : seatsLeft != null
+                      ? `${seatsLeft.toLocaleString()} seats left`
+                      : ''}
+                </span>
+              </>
+            )}
+          </div>
+        </li>
+      );
+    };
+
+    export default UswdsEventRow;
+  compiled: |
+    import { jsxs, jsx, Fragment } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
+    const MONTHS = [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC"
+    ];
+    const MONTHS_LONG = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    const parseIso = (iso) => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(iso || "");
+      if (!m) return null;
+      return {
+        year: +m[1],
+        month: +m[2] - 1,
+        day: +m[3],
+        hour: +m[4],
+        minute: +m[5]
+      };
+    };
+    const formatTime = (p) => {
+      if (!p) return "";
+      const period = p.hour >= 12 ? "p.m." : "a.m.";
+      let h = p.hour % 12;
+      if (h === 0) h = 12;
+      const mm = p.minute.toString().padStart(2, "0");
+      return p.minute === 0 ? `${h} ${period}` : `${h}:${mm} ${period}`;
+    };
+    const formatDateTimeRange = (startIso, endIso) => {
+      const s = parseIso(startIso);
+      if (!s) return "";
+      const dateLabel = `${MONTHS_LONG[s.month]} ${s.day}, ${s.year}`;
+      const e = parseIso(endIso);
+      if (!e) return `${dateLabel} · ${formatTime(s)}`;
+      const sameDay = s.year === e.year && s.month === e.month && s.day === e.day;
+      if (sameDay) {
+        return `${dateLabel} · ${formatTime(s)} – ${formatTime(e)}`;
+      }
+      return `${dateLabel} – ${MONTHS_LONG[e.month]} ${e.day}, ${e.year}`;
+    };
+    const FORMAT_LABELS = {
+      online: "Online",
+      in_person: "In person",
+      hybrid: "Hybrid"
+    };
+    const formatBadgeVariants = cva(
+      "inline-flex items-center rounded-sm px-2 py-0.5 text-[12px] font-bold tracking-[0.5px] uppercase",
+      {
+        variants: {
+          format: {
+            online: "bg-(--color-uswds-accent-cool-lighter) text-(--color-uswds-primary-darker)",
+            in_person: "bg-(--color-uswds-primary-lighter) text-(--color-uswds-primary-darker)",
+            hybrid: "bg-(--color-uswds-warning-lighter) text-(--color-uswds-base-ink)"
+          }
+        },
+        defaultVariants: { format: "online" }
+      }
+    );
+    const IconCalendar = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "mt-0.5 h-4 w-4 shrink-0 text-(--color-uswds-base)",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" })
+      }
+    );
+    const IconLocation = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "mt-0.5 h-4 w-4 shrink-0 text-(--color-uswds-base)",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" })
+      }
+    );
+    const IconHost = () => /* @__PURE__ */ jsx(
+      "svg",
+      {
+        "aria-hidden": "true",
+        focusable: "false",
+        className: "mt-0.5 h-4 w-4 shrink-0 text-(--color-uswds-base)",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        children: /* @__PURE__ */ jsx("path", { d: "M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" })
+      }
+    );
+    const MetaItem = ({ icon, children }) => children ? /* @__PURE__ */ jsxs("span", { className: "flex items-start gap-1.5 text-[14px] leading-snug text-(--color-uswds-base-dark)", children: [
+      icon,
+      /* @__PURE__ */ jsx("span", { children })
+    ] }) : null;
+    const UswdsEventRow = ({
+      title = "",
+      titleLink = "",
+      summary = "",
+      startDate = "",
+      endDate = "",
+      format = "online",
+      category = "",
+      location = "",
+      host = "",
+      registrationUrl = "",
+      registrationStatus = "open",
+      seatsLeft = null,
+      recordingNote = "",
+      className = ""
+    }) => {
+      var _a;
+      const start = parseIso(startDate);
+      const isClosed = registrationStatus === "closed";
+      const isUnlimited = registrationStatus === "unlimited";
+      const focusStyles = "focus-visible:outline-2 focus-visible:outline-(--uswds-focus-color) focus-visible:outline-offset-(--uswds-focus-offset)";
+      return /* @__PURE__ */ jsxs(
+        "li",
+        {
+          className: cn(
+            "usa-event-row flex flex-col gap-5 border-t border-(--color-uswds-base-lighter) py-6 font-sans first:border-t-0 md:flex-row",
+            className
+          ),
+          children: [
+            /* @__PURE__ */ jsx("div", { className: "flex shrink-0 md:w-[72px]", children: /* @__PURE__ */ jsxs("div", { className: "flex h-[72px] w-[72px] flex-col items-center justify-center rounded bg-(--color-uswds-primary-darker) text-white", children: [
+              /* @__PURE__ */ jsx("span", { className: "text-[13px] font-bold tracking-[1px] uppercase", children: start ? MONTHS[start.month] : "—" }),
+              /* @__PURE__ */ jsx("span", { className: "font-serif text-[28px] leading-none font-bold", children: start ? start.day : "" })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 flex-1 flex-col gap-2", children: [
+              /* @__PURE__ */ jsx("h3", { className: "m-0 font-serif text-[22px] leading-tight font-bold", children: titleLink ? /* @__PURE__ */ jsx(
+                "a",
+                {
+                  href: titleLink,
+                  className: cn(
+                    "text-(--color-uswds-primary) no-underline hover:underline",
+                    focusStyles
+                  ),
+                  children: title
+                }
+              ) : /* @__PURE__ */ jsx("span", { className: "text-(--color-uswds-primary-darker)", children: title }) }),
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-x-5 gap-y-1", children: [
+                /* @__PURE__ */ jsx(MetaItem, { icon: /* @__PURE__ */ jsx(IconCalendar, {}), children: formatDateTimeRange(startDate, endDate) }),
+                /* @__PURE__ */ jsx(MetaItem, { icon: /* @__PURE__ */ jsx(IconLocation, {}), children: location }),
+                /* @__PURE__ */ jsx(MetaItem, { icon: /* @__PURE__ */ jsx(IconHost, {}), children: host })
+              ] }),
+              summary && /* @__PURE__ */ jsx("p", { className: "m-0 max-w-[62ch] text-[15px] leading-relaxed text-(--color-uswds-base-dark)", children: summary }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-1 flex flex-wrap items-center gap-2", children: [
+                /* @__PURE__ */ jsx("span", { className: formatBadgeVariants({ format }), children: (_a = FORMAT_LABELS[format]) != null ? _a : format }),
+                category && /* @__PURE__ */ jsx("span", { className: "inline-flex items-center rounded-sm bg-(--color-uswds-base-lighter) px-2 py-0.5 text-[12px] font-bold tracking-[0.5px] text-(--color-uswds-base-dark) uppercase", children: category })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "flex shrink-0 flex-col items-start gap-2 md:w-[190px] md:items-end md:text-right", children: isClosed ? /* @__PURE__ */ jsxs(Fragment, { children: [
+              /* @__PURE__ */ jsx("span", { className: "inline-flex items-center rounded-full bg-(--color-uswds-base-lighter) px-3 py-1 text-[13px] font-bold text-(--color-uswds-base-dark)", children: "Registration closed" }),
+              recordingNote && /* @__PURE__ */ jsx("span", { className: "text-[13px] leading-snug text-(--color-uswds-base)", children: recordingNote })
+            ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
+              /* @__PURE__ */ jsx(
+                "a",
+                {
+                  href: registrationUrl || "#",
+                  className: cn(
+                    "inline-flex items-center justify-center rounded bg-(--color-uswds-primary) px-4 py-2 text-[15px] font-bold text-white no-underline transition-colors hover:bg-(--color-uswds-primary-dark)",
+                    focusStyles
+                  ),
+                  children: "Register"
+                }
+              ),
+              /* @__PURE__ */ jsx("span", { className: "text-[13px] leading-snug text-(--color-uswds-base-dark)", children: isUnlimited ? "Unlimited seats" : seatsLeft != null ? `${seatsLeft.toLocaleString()} seats left` : "" })
+            ] }) })
+          ]
+        }
+      );
+    };
+    export {
+      UswdsEventRow as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

@@ -5,6 +5,9 @@ recipes:
   - eud_common
   - eud_canvas
   - eud_acquia_dam
+  # Event CT + fields must exist before the event detail content template
+  # (canvas.content_template.node.event.full) and the event Canvas pages import.
+  - eud_event
 config:
   strict: false
   actions:

@@ -1,0 +1,126 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_event_registration_card
+  module:
+    - link
+    - options
+active_version: f47022139fef4d67
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        cost:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Free
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        registrationStatus:
+          required: false
+          field_type: list_string
+          field_storage_settings:
+            allowed_values_function: canvas_load_allowed_values_for_component_prop
+          field_instance_settings: {  }
+          field_widget: options_select
+          default_value:
+            -
+              value: open
+          expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
+        registrationCloses:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: '2026-05-14T19:30:00+05:30'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        registrationUrl:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: 'https://events.eudaimonia.demo/flourish-open-enrollment'
+              options: {  }
+          expression: ℹ︎link␟url
+          derived_schema_metadata:
+            string_shape:
+              format: uri-reference
+        seatsLeft:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 412
+          expression: ℹ︎integer␟value
+          derived_schema_metadata: {  }
+        seatsTotal:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 1000
+          expression: ℹ︎integer␟value
+          derived_schema_metadata: {  }
+        addToCalendarUrl:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /events/flourish-open-enrollment/calendar.ics
+              options: {  }
+          expression: ℹ︎link␟url
+          derived_schema_metadata:
+            string_shape:
+              format: uri-reference
+        shareUrl:
+          required: false
+          field_type: link
+          field_storage_settings: {  }
+          field_instance_settings:
+            title: 0
+            link_type: 17
+          field_widget: link_default
+          default_value:
+            -
+              uri: /events/flourish-open-enrollment
+              options: {  }
+          expression: ℹ︎link␟url
+          derived_schema_metadata:
+            string_shape:
+              format: uri-reference
+    fallback_metadata:
+      slot_definitions: {  }
+label: '(Eud-Kit) USWDS Event Registration Card'
+id: js.uswds_event_registration_card
+provider: null
+source: js
+source_local_id: uswds_event_registration_card

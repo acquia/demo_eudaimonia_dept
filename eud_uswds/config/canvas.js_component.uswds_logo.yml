@@ -1,9 +1,6 @@
-uuid: 9d97b341-0130-4232-9782-5cf8c6ef0890
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 2Vn0TSVrdD2vtWi8m4OhdfMbAAghwC67xUeSwb5sUr8
 machineName: uswds_logo
 name: '(Eud-Kit) USWDS Logo'
 required: {  }
@@ -31,7 +28,7 @@ props:
       - /
 slots: {  }
 js:
-  original: |-
+  original: |
     import { cn } from 'drupal-canvas';
 
     const emblem = (
@@ -58,7 +55,7 @@ js:
         viewBox="0 0 380 72"
         role="img"
         aria-label="Department of Eudaimonia"
-        className="h-[60px] w-auto"
+        className="h-10 w-auto md:h-[60px]"
       >
         {emblem}
         <text x="84" y="26" fontFamily="'Public Sans',system-ui,sans-serif" fontWeight="400" fontSize="11" fill="#71767A" letterSpacing="0.08em">DEPARTMENT OF</text>
@@ -73,7 +70,7 @@ js:
         viewBox="0 0 380 72"
         role="img"
         aria-label="Department of Eudaimonia"
-        className="h-[60px] w-auto"
+        className="h-10 w-auto md:h-[60px]"
       >
         {emblem}
         <text x="84" y="26" fontFamily="'Public Sans',system-ui,sans-serif" fontWeight="400" fontSize="11" fill="rgba(255,255,255,0.5)" letterSpacing="0.08em">DEPARTMENT OF</text>
@@ -99,7 +96,7 @@ js:
               alt={logoImage.alt || ''}
               width={logoImage.width}
               height={logoImage.height}
-              className="block h-auto w-auto"
+              className="block h-10 w-auto max-w-full md:h-[60px]"
             />
           ) : variant === 'light' ? (
             <LightLogo />
@@ -112,144 +109,80 @@ js:
 
     export default UswdsLogo;
   compiled: |
-    import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-    import { cn } from 'drupal-canvas';
-    const emblem = /*#__PURE__*/ _jsxs(_Fragment, {
+    import { jsx, jsxs, Fragment } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const emblem = /* @__PURE__ */ jsxs(Fragment, { children: [
+      /* @__PURE__ */ jsx("circle", { cx: "36", cy: "36", r: "34", fill: "#162E51" }),
+      /* @__PURE__ */ jsx("circle", { cx: "36", cy: "36", r: "28", fill: "none", stroke: "#DEC69A", strokeWidth: "1.2" }),
+      /* @__PURE__ */ jsx("circle", { cx: "36", cy: "36", r: "20", fill: "none", stroke: "#DEC69A", strokeWidth: "0.5", strokeDasharray: "2 2.5" }),
+      /* @__PURE__ */ jsx(
+        "path",
+        {
+          opacity: "0.9",
+          fill: "#DEC69A",
+          d: "M36,16.5l1.7,11l5.8-7l-3.7,10l11.7-4l-9,9.5l9,9.5l-11.7-4l3.7,10l-5.8-7l-1.7,11l-1.7-11l-5.8,7l3.7-10l-11.7,4l9-9.5l-9-9.5l11.7,4l-3.7-10l5.8,7Z"
+        }
+      ),
+      /* @__PURE__ */ jsx(
+        "path",
+        {
+          opacity: "0.1",
+          fill: "#26A3DD",
+          d: "M97.089,30.48c1.685,0.018,3.303,0.665,4.536,1.814c0.477-1.225,1.121-2.379,1.915-3.427c-1.839-1.445-4.112-2.226-6.451-2.218c-2.807,0-5.499,1.115-7.484,3.1c-1.985,1.985-3.1,4.677-3.1,7.484c0,2.807,1.115,5.499,3.1,7.484c1.985,1.985,4.677,3.1,7.484,3.1c2.339,0.009,4.612-0.773,6.451-2.217c-0.794-1.048-1.438-2.202-1.915-3.427c-0.807,0.753-1.786,1.296-2.852,1.582c-1.066,0.286-2.185,0.307-3.261,0.061c-1.076-0.246-2.075-0.753-2.909-1.474c-0.835-0.722-1.48-1.637-1.879-2.666c-0.399-1.029-0.54-2.14-0.41-3.236c0.13-1.096,0.526-2.143,1.154-3.051c0.628-0.907,1.469-1.647,2.449-2.154C94.896,30.728,95.985,30.469,97.089,30.48z M75.216,22.82c-0.324-0.003-0.642,0.091-0.911,0.271c-0.27,0.18-0.479,0.437-0.601,0.737L63.221,47.011h4.133l1.512-3.326h12.7l1.512,3.326h4.133L76.728,23.828c-0.109-0.309-0.315-0.575-0.588-0.756C75.867,22.89,75.543,22.801,75.216,22.82z M70.579,39.955l4.637-10.281l4.637,10.281H70.579z M150.914,47.011h3.931V27.053h-3.931V47.011z M125.312,37.234c0.002-2.738-1.057-5.371-2.956-7.345c-1.898-1.974-4.488-3.135-7.224-3.239c-0.202,0-0.302,0.101-0.202,0.202c0.688,1.556,1.722,2.935,3.024,4.032c2.217,1.714,3.528,3.729,3.528,6.249c0,0.874-0.172,1.739-0.506,2.546c-0.334,0.807-0.824,1.541-1.442,2.158c-0.618,0.618-1.351,1.108-2.158,1.442c-0.807,0.334-1.672,0.506-2.546,0.506c-0.874,0-1.739-0.172-2.546-0.506c-0.807-0.334-1.541-0.824-2.158-1.442c-0.618-0.618-1.108-1.351-1.442-2.158c-0.334-0.807-0.506-1.672-0.506-2.546c0-2.52,1.31-4.536,3.427-6.249c1.312-1.086,2.349-2.468,3.024-4.032c0.101-0.202,0.101-0.302-0.101-0.302c-2.772,0.053-5.412,1.191-7.354,3.17c-1.941,1.979-3.029,4.641-3.028,7.413c0.079,2.727,1.218,5.317,3.175,7.218c1.957,1.901,4.579,2.964,7.308,2.963c2.58,0.068,5.106-0.75,7.156-2.318l1.915,1.915h5.846l-5.342-5.04C124.92,40.429,125.3,38.844,125.312,37.234z M173.996,27.053v3.024l-0.806-0.706c-0.759-0.896-1.699-1.62-2.759-2.124c-1.061-0.504-2.216-0.776-3.39-0.799c-1.264-0.025-2.518,0.234-3.669,0.757c-1.151,0.523-2.17,1.298-2.983,2.267c-1.823,2.05-2.796,4.717-2.721,7.459c-0.096,2.806,0.877,5.544,2.721,7.661c0.808,0.898,1.792,1.622,2.89,2.127c1.098,0.505,2.287,0.779,3.496,0.808c1.208,0.028,2.409-0.191,3.529-0.643c1.121-0.453,2.137-1.129,2.987-1.989l0.705-0.706v2.722h3.931V27.053H173.996z M172.484,42.173c-0.572,0.662-1.286,1.186-2.089,1.535c-0.802,0.349-1.673,0.513-2.547,0.481c-0.851,0.004-1.692-0.184-2.46-0.55c-0.768-0.367-1.443-0.902-1.975-1.566c-1.171-1.452-1.779-3.277-1.714-5.141c-0.044-1.817,0.604-3.583,1.815-4.939c0.526-0.664,1.203-1.192,1.974-1.543c0.771-0.351,1.614-0.513,2.461-0.473c0.874-0.032,1.745,0.132,2.547,0.481c0.803,0.349,1.517,0.874,2.089,1.535c1.155,1.421,1.763,3.209,1.714,5.04C174.385,38.916,173.734,40.76,172.484,42.173z M143.153,37.032c0,4.133-2.117,6.753-5.443,6.753s-5.544-2.621-5.544-6.753v-9.979h-3.931v9.979c0,6.149,3.931,10.584,9.374,10.584c5.443,0,9.576-4.435,9.576-10.584v-9.979h-4.032V37.032z"
+        }
+      )
+    ] });
+    const DarkLogo = () => /* @__PURE__ */ jsxs(
+      "svg",
+      {
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 380 72",
+        role: "img",
+        "aria-label": "Department of Eudaimonia",
+        className: "h-10 w-auto md:h-[60px]",
         children: [
-            /*#__PURE__*/ _jsx("circle", {
-                cx: "36",
-                cy: "36",
-                r: "34",
-                fill: "#162E51"
-            }),
-            /*#__PURE__*/ _jsx("circle", {
-                cx: "36",
-                cy: "36",
-                r: "28",
-                fill: "none",
-                stroke: "#DEC69A",
-                strokeWidth: "1.2"
-            }),
-            /*#__PURE__*/ _jsx("circle", {
-                cx: "36",
-                cy: "36",
-                r: "20",
-                fill: "none",
-                stroke: "#DEC69A",
-                strokeWidth: "0.5",
-                strokeDasharray: "2 2.5"
-            }),
-            /*#__PURE__*/ _jsx("path", {
-                opacity: "0.9",
-                fill: "#DEC69A",
-                d: "M36,16.5l1.7,11l5.8-7l-3.7,10l11.7-4l-9,9.5l9,9.5l-11.7-4l3.7,10l-5.8-7l-1.7,11l-1.7-11l-5.8,7l3.7-10l-11.7,4l9-9.5l-9-9.5l11.7,4l-3.7-10l5.8,7Z"
-            }),
-            /*#__PURE__*/ _jsx("path", {
-                opacity: "0.1",
-                fill: "#26A3DD",
-                d: "M97.089,30.48c1.685,0.018,3.303,0.665,4.536,1.814c0.477-1.225,1.121-2.379,1.915-3.427c-1.839-1.445-4.112-2.226-6.451-2.218c-2.807,0-5.499,1.115-7.484,3.1c-1.985,1.985-3.1,4.677-3.1,7.484c0,2.807,1.115,5.499,3.1,7.484c1.985,1.985,4.677,3.1,7.484,3.1c2.339,0.009,4.612-0.773,6.451-2.217c-0.794-1.048-1.438-2.202-1.915-3.427c-0.807,0.753-1.786,1.296-2.852,1.582c-1.066,0.286-2.185,0.307-3.261,0.061c-1.076-0.246-2.075-0.753-2.909-1.474c-0.835-0.722-1.48-1.637-1.879-2.666c-0.399-1.029-0.54-2.14-0.41-3.236c0.13-1.096,0.526-2.143,1.154-3.051c0.628-0.907,1.469-1.647,2.449-2.154C94.896,30.728,95.985,30.469,97.089,30.48z M75.216,22.82c-0.324-0.003-0.642,0.091-0.911,0.271c-0.27,0.18-0.479,0.437-0.601,0.737L63.221,47.011h4.133l1.512-3.326h12.7l1.512,3.326h4.133L76.728,23.828c-0.109-0.309-0.315-0.575-0.588-0.756C75.867,22.89,75.543,22.801,75.216,22.82z M70.579,39.955l4.637-10.281l4.637,10.281H70.579z M150.914,47.011h3.931V27.053h-3.931V47.011z M125.312,37.234c0.002-2.738-1.057-5.371-2.956-7.345c-1.898-1.974-4.488-3.135-7.224-3.239c-0.202,0-0.302,0.101-0.202,0.202c0.688,1.556,1.722,2.935,3.024,4.032c2.217,1.714,3.528,3.729,3.528,6.249c0,0.874-0.172,1.739-0.506,2.546c-0.334,0.807-0.824,1.541-1.442,2.158c-0.618,0.618-1.351,1.108-2.158,1.442c-0.807,0.334-1.672,0.506-2.546,0.506c-0.874,0-1.739-0.172-2.546-0.506c-0.807-0.334-1.541-0.824-2.158-1.442c-0.618-0.618-1.108-1.351-1.442-2.158c-0.334-0.807-0.506-1.672-0.506-2.546c0-2.52,1.31-4.536,3.427-6.249c1.312-1.086,2.349-2.468,3.024-4.032c0.101-0.202,0.101-0.302-0.101-0.302c-2.772,0.053-5.412,1.191-7.354,3.17c-1.941,1.979-3.029,4.641-3.028,7.413c0.079,2.727,1.218,5.317,3.175,7.218c1.957,1.901,4.579,2.964,7.308,2.963c2.58,0.068,5.106-0.75,7.156-2.318l1.915,1.915h5.846l-5.342-5.04C124.92,40.429,125.3,38.844,125.312,37.234z M173.996,27.053v3.024l-0.806-0.706c-0.759-0.896-1.699-1.62-2.759-2.124c-1.061-0.504-2.216-0.776-3.39-0.799c-1.264-0.025-2.518,0.234-3.669,0.757c-1.151,0.523-2.17,1.298-2.983,2.267c-1.823,2.05-2.796,4.717-2.721,7.459c-0.096,2.806,0.877,5.544,2.721,7.661c0.808,0.898,1.792,1.622,2.89,2.127c1.098,0.505,2.287,0.779,3.496,0.808c1.208,0.028,2.409-0.191,3.529-0.643c1.121-0.453,2.137-1.129,2.987-1.989l0.705-0.706v2.722h3.931V27.053H173.996z M172.484,42.173c-0.572,0.662-1.286,1.186-2.089,1.535c-0.802,0.349-1.673,0.513-2.547,0.481c-0.851,0.004-1.692-0.184-2.46-0.55c-0.768-0.367-1.443-0.902-1.975-1.566c-1.171-1.452-1.779-3.277-1.714-5.141c-0.044-1.817,0.604-3.583,1.815-4.939c0.526-0.664,1.203-1.192,1.974-1.543c0.771-0.351,1.614-0.513,2.461-0.473c0.874-0.032,1.745,0.132,2.547,0.481c0.803,0.349,1.517,0.874,2.089,1.535c1.155,1.421,1.763,3.209,1.714,5.04C174.385,38.916,173.734,40.76,172.484,42.173z M143.153,37.032c0,4.133-2.117,6.753-5.443,6.753s-5.544-2.621-5.544-6.753v-9.979h-3.931v9.979c0,6.149,3.931,10.584,9.374,10.584c5.443,0,9.576-4.435,9.576-10.584v-9.979h-4.032V37.032z"
-            })
+          emblem,
+          /* @__PURE__ */ jsx("text", { x: "84", y: "26", fontFamily: "'Public Sans',system-ui,sans-serif", fontWeight: "400", fontSize: "11", fill: "#71767A", letterSpacing: "0.08em", children: "DEPARTMENT OF" }),
+          /* @__PURE__ */ jsx("text", { x: "82", y: "52", fontFamily: "'Merriweather',Georgia,serif", fontWeight: "700", fontSize: "26", fill: "#162E51", children: "Eudaimonia" }),
+          /* @__PURE__ */ jsx("text", { x: "84", y: "66", fontFamily: "'Public Sans',system-ui,sans-serif", fontWeight: "400", fontSize: "11", fill: "#A9AEB1", letterSpacing: "0.02em", fontStyle: "italic", children: "Flourishing for All" })
         ]
-    });
-    const DarkLogo = ()=>/*#__PURE__*/ _jsxs("svg", {
-            xmlns: "http://www.w3.org/2000/svg",
-            viewBox: "0 0 380 72",
-            role: "img",
-            "aria-label": "Department of Eudaimonia",
-            className: "h-[60px] w-auto",
-            children: [
-                emblem,
-                /*#__PURE__*/ _jsx("text", {
-                    x: "84",
-                    y: "26",
-                    fontFamily: "'Public Sans',system-ui,sans-serif",
-                    fontWeight: "400",
-                    fontSize: "11",
-                    fill: "#71767A",
-                    letterSpacing: "0.08em",
-                    children: "DEPARTMENT OF"
-                }),
-                /*#__PURE__*/ _jsx("text", {
-                    x: "82",
-                    y: "52",
-                    fontFamily: "'Merriweather',Georgia,serif",
-                    fontWeight: "700",
-                    fontSize: "26",
-                    fill: "#162E51",
-                    children: "Eudaimonia"
-                }),
-                /*#__PURE__*/ _jsx("text", {
-                    x: "84",
-                    y: "66",
-                    fontFamily: "'Public Sans',system-ui,sans-serif",
-                    fontWeight: "400",
-                    fontSize: "11",
-                    fill: "#A9AEB1",
-                    letterSpacing: "0.02em",
-                    fontStyle: "italic",
-                    children: "Flourishing for All"
-                })
-            ]
-        });
-    const LightLogo = ()=>/*#__PURE__*/ _jsxs("svg", {
-            xmlns: "http://www.w3.org/2000/svg",
-            viewBox: "0 0 380 72",
-            role: "img",
-            "aria-label": "Department of Eudaimonia",
-            className: "h-[60px] w-auto",
-            children: [
-                emblem,
-                /*#__PURE__*/ _jsx("text", {
-                    x: "84",
-                    y: "26",
-                    fontFamily: "'Public Sans',system-ui,sans-serif",
-                    fontWeight: "400",
-                    fontSize: "11",
-                    fill: "rgba(255,255,255,0.5)",
-                    letterSpacing: "0.08em",
-                    children: "DEPARTMENT OF"
-                }),
-                /*#__PURE__*/ _jsx("text", {
-                    x: "82",
-                    y: "52",
-                    fontFamily: "'Merriweather',Georgia,serif",
-                    fontWeight: "700",
-                    fontSize: "26",
-                    fill: "#FFFFFF",
-                    children: "Eudaimonia"
-                }),
-                /*#__PURE__*/ _jsx("text", {
-                    x: "84",
-                    y: "66",
-                    fontFamily: "'Public Sans',system-ui,sans-serif",
-                    fontWeight: "400",
-                    fontSize: "11",
-                    fill: "rgba(255,255,255,0.4)",
-                    letterSpacing: "0.02em",
-                    fontStyle: "italic",
-                    children: "Flourishing for All"
-                })
-            ]
-        });
-    const UswdsLogo = ({ logoImage, variant = 'dark', linkUrl = '/', className = '' })=>{
-        var _parent_window_drupalSettings_path, _parent_window_drupalSettings, _parent_window;
-        const currentLang = typeof parent !== 'undefined' ? (_parent_window = parent.window) === null || _parent_window === void 0 ? void 0 : (_parent_window_drupalSettings = _parent_window.drupalSettings) === null || _parent_window_drupalSettings === void 0 ? void 0 : (_parent_window_drupalSettings_path = _parent_window_drupalSettings.path) === null || _parent_window_drupalSettings_path === void 0 ? void 0 : _parent_window_drupalSettings_path.currentLanguage : undefined;
-        const href = currentLang && currentLang !== 'en' ? `/${currentLang}${linkUrl === '/' ? '' : linkUrl}` : linkUrl;
-        return /*#__PURE__*/ _jsx("a", {
-            href: href,
-            className: cn('usa-logo inline-flex shrink-0 items-center', className),
-            children: (logoImage === null || logoImage === void 0 ? void 0 : logoImage.src) ? /*#__PURE__*/ _jsx("img", {
-                src: logoImage.src,
-                alt: logoImage.alt || '',
-                width: logoImage.width,
-                height: logoImage.height,
-                className: "block h-auto w-auto"
-            }) : variant === 'light' ? /*#__PURE__*/ _jsx(LightLogo, {}) : /*#__PURE__*/ _jsx(DarkLogo, {})
-        });
+      }
+    );
+    const LightLogo = () => /* @__PURE__ */ jsxs(
+      "svg",
+      {
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 380 72",
+        role: "img",
+        "aria-label": "Department of Eudaimonia",
+        className: "h-10 w-auto md:h-[60px]",
+        children: [
+          emblem,
+          /* @__PURE__ */ jsx("text", { x: "84", y: "26", fontFamily: "'Public Sans',system-ui,sans-serif", fontWeight: "400", fontSize: "11", fill: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", children: "DEPARTMENT OF" }),
+          /* @__PURE__ */ jsx("text", { x: "82", y: "52", fontFamily: "'Merriweather',Georgia,serif", fontWeight: "700", fontSize: "26", fill: "#FFFFFF", children: "Eudaimonia" }),
+          /* @__PURE__ */ jsx("text", { x: "84", y: "66", fontFamily: "'Public Sans',system-ui,sans-serif", fontWeight: "400", fontSize: "11", fill: "rgba(255,255,255,0.4)", letterSpacing: "0.02em", fontStyle: "italic", children: "Flourishing for All" })
+        ]
+      }
+    );
+    const UswdsLogo = ({ logoImage, variant = "dark", linkUrl = "/", className = "" }) => {
+      var _a, _b, _c;
+      const currentLang = typeof parent !== "undefined" ? (_c = (_b = (_a = parent.window) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.path) == null ? void 0 : _c.currentLanguage : void 0;
+      const href = currentLang && currentLang !== "en" ? `/${currentLang}${linkUrl === "/" ? "" : linkUrl}` : linkUrl;
+      return /* @__PURE__ */ jsx("a", { href, className: cn("usa-logo inline-flex shrink-0 items-center", className), children: (logoImage == null ? void 0 : logoImage.src) ? /* @__PURE__ */ jsx(
+        "img",
+        {
+          src: logoImage.src,
+          alt: logoImage.alt || "",
+          width: logoImage.width,
+          height: logoImage.height,
+          className: "block h-10 w-auto max-w-full md:h-[60px]"
+        }
+      ) : variant === "light" ? /* @__PURE__ */ jsx(LightLogo, {}) : /* @__PURE__ */ jsx(DarkLogo, {}) });
     };
-    export default UswdsLogo;
+    export {
+      UswdsLogo as default
+    };
 css:
   original: ''
-  compiled: |
-    /*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */
+  compiled: ''
 dataDependencies: {  }

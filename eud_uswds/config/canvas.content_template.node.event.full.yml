@@ -1,0 +1,357 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.js.uswds_breadcrumb
+    - canvas.component.js.uswds_breadcrumb_item
+    - canvas.component.js.uswds_content_split
+    - canvas.component.js.uswds_event_details
+    - canvas.component.js.uswds_event_meta_tags
+    - canvas.component.js.uswds_event_registration_card
+    - canvas.component.js.uswds_page_hero
+    - canvas.component.js.uswds_related_events
+    - canvas.component.js.uswds_section
+    - canvas.component.js.uswds_site_alert
+    - canvas.component.js.uswds_summary_box
+    - canvas.component.js.uswds_text
+    - core.entity_view_mode.node.full
+    - field.field.node.event.body
+    - field.field.node.event.field_categories
+    - field.field.node.event.field_event_accessibility
+    - field.field.node.event.field_event_agenda
+    - field.field.node.event.field_event_contact
+    - field.field.node.event.field_event_cost
+    - field.field.node.event.field_event_end
+    - field.field.node.event.field_event_format
+    - field.field.node.event.field_event_host
+    - field.field.node.event.field_event_language
+    - field.field.node.event.field_event_learn
+    - field.field.node.event.field_event_recording
+    - field.field.node.event.field_event_registration_status
+    - field.field.node.event.field_event_registration_url
+    - field.field.node.event.field_event_seats_left
+    - field.field.node.event.field_event_seats_total
+    - field.field.node.event.field_event_start
+    - field.field.node.event.field_event_summary
+    - field.field.node.event.field_event_who
+    - node.type.event
+    - taxonomy.vocabulary.categories
+  module:
+    - link
+    - node
+    - options
+    - taxonomy
+id: node.event.full
+content_entity_type_id: node
+content_entity_type_bundle: event
+content_entity_type_view_mode: full
+component_tree:
+  '0:76dad8e1-d23f-4e46-a472-5c4352ff4c13':
+    uuid: 76dad8e1-d23f-4e46-a472-5c4352ff4c13
+    component_id: js.uswds_page_hero
+    component_version: 4b9333b0af9f3872
+    inputs:
+      heading:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝title␞␟value'
+      leadParagraph:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_summary␞␟value'
+  '0:breadcrumb:0:fb9cabfe-f924-4822-9fda-aa776956d45d':
+    parent_uuid: 76dad8e1-d23f-4e46-a472-5c4352ff4c13
+    slot: breadcrumb
+    uuid: fb9cabfe-f924-4822-9fda-aa776956d45d
+    component_id: js.uswds_breadcrumb
+    component_version: 9d8a5c4a423a4dc5
+    inputs:
+      context: on-dark
+      wrap: false
+  '0:breadcrumb:0:items:0:ca6a0870-4fd7-4fbe-8e41-298d4b526313':
+    parent_uuid: fb9cabfe-f924-4822-9fda-aa776956d45d
+    slot: items
+    uuid: ca6a0870-4fd7-4fbe-8e41-298d4b526313
+    component_id: js.uswds_breadcrumb_item
+    component_version: 6b39120187c14c15
+    inputs:
+      text: Home
+      href:
+        uri: 'internal:/eud-home'
+        options: {  }
+      context: on-dark
+      isLast: false
+      showSeparator: false
+  '0:breadcrumb:0:items:1:1bd60222-2ccb-4603-a270-fb2097fe66d1':
+    parent_uuid: fb9cabfe-f924-4822-9fda-aa776956d45d
+    slot: items
+    uuid: 1bd60222-2ccb-4603-a270-fb2097fe66d1
+    component_id: js.uswds_breadcrumb_item
+    component_version: 6b39120187c14c15
+    inputs:
+      text: Events
+      href:
+        uri: 'internal:/eud-events'
+        options: {  }
+      context: on-dark
+      isLast: false
+      showSeparator: true
+  '0:breadcrumb:0:items:2:5d12670f-743d-4aba-91a7-8fd6508cf7f9':
+    parent_uuid: fb9cabfe-f924-4822-9fda-aa776956d45d
+    slot: items
+    uuid: 5d12670f-743d-4aba-91a7-8fd6508cf7f9
+    component_id: js.uswds_breadcrumb_item
+    component_version: 6b39120187c14c15
+    inputs:
+      text:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝title␞␟value'
+      context: on-dark
+      isLast: true
+      showSeparator: true
+  '0:tags:0:20bd7110-e134-4f93-84dc-2d0789cb41db':
+    parent_uuid: 76dad8e1-d23f-4e46-a472-5c4352ff4c13
+    slot: tags
+    uuid: 20bd7110-e134-4f93-84dc-2d0789cb41db
+    component_id: js.uswds_event_meta_tags
+    component_version: b013fba9f975ea08
+    inputs:
+      format:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_format␞␟label'
+      category:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_categories␞␟entity␜␜entity:taxonomy_term␝name␞␟value'
+      status:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_registration_status␞␟label'
+  '1:6f07e782-d00b-43d7-b3b0-78cb84ada906':
+    uuid: 6f07e782-d00b-43d7-b3b0-78cb84ada906
+    component_id: js.uswds_section
+    component_version: 5443d9cfebdce039
+    inputs:
+      background: white
+      contentWidth: wide
+      paddingTop: lg
+      paddingBottom: lg
+      marginTop: none
+      marginBottom: none
+  '1:content:0:084c68af-117a-48ea-bec4-12638b3b2753':
+    parent_uuid: 6f07e782-d00b-43d7-b3b0-78cb84ada906
+    slot: content
+    uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    component_id: js.uswds_content_split
+    component_version: 0f9eaf89fa41edab
+    inputs:
+      columnRatio: wide-left
+  '1:content:0:left:0:12091c9f-814d-4f16-a4f7-7524dc001cac':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: left
+    uuid: 12091c9f-814d-4f16-a4f7-7524dc001cac
+    component_id: js.uswds_event_details
+    component_version: 392fc04d4d651d28
+    inputs:
+      startDate:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_start␞␟value'
+      endDate:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_end␞␟value'
+      format:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_format␞␟label'
+      cost:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_cost␞␟value'
+      host:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_host␞␟value'
+      language:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_language␞␟value'
+      recording:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_recording␞␟value'
+  '1:content:0:left:1:468f0697-1e30-4c62-a870-9eca9a413db1':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: left
+    uuid: 468f0697-1e30-4c62-a870-9eca9a413db1
+    component_id: js.uswds_section
+    component_version: 5443d9cfebdce039
+    inputs:
+      heading: 'About this event'
+      background: white
+      contentWidth: full
+      paddingTop: sm
+      paddingBottom: none
+      marginTop: md
+      marginBottom: none
+  '1:content:0:left:1:content:0:b6d6d177-a6bf-4f13-ac0f-b9dff5f58719':
+    parent_uuid: 468f0697-1e30-4c62-a870-9eca9a413db1
+    slot: content
+    uuid: b6d6d177-a6bf-4f13-ac0f-b9dff5f58719
+    component_id: js.uswds_text
+    component_version: a2fba9394eccddba
+    inputs:
+      text:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝body␞␟processed'
+      fontSize: md
+      textColor: default
+      maxWidth: none
+  '1:content:0:left:2:4f191189-a7ed-4cf4-8680-0299f37919e4':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: left
+    uuid: 4f191189-a7ed-4cf4-8680-0299f37919e4
+    component_id: js.uswds_summary_box
+    component_version: cf65e53d05ff9a85
+    inputs:
+      heading: 'What you will learn'
+      body:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_learn␞␟processed'
+  '1:content:0:left:3:78d4cbea-f9e4-4e87-ac5c-4c432b8057b3':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: left
+    uuid: 78d4cbea-f9e4-4e87-ac5c-4c432b8057b3
+    component_id: js.uswds_section
+    component_version: 5443d9cfebdce039
+    inputs:
+      heading: Agenda
+      background: white
+      contentWidth: full
+      paddingTop: sm
+      paddingBottom: none
+      marginTop: md
+      marginBottom: none
+  '1:content:0:left:3:content:0:e8868dbf-a56d-4dae-a0c3-24b4992f13b3':
+    parent_uuid: 78d4cbea-f9e4-4e87-ac5c-4c432b8057b3
+    slot: content
+    uuid: e8868dbf-a56d-4dae-a0c3-24b4992f13b3
+    component_id: js.uswds_text
+    component_version: a2fba9394eccddba
+    inputs:
+      text:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_agenda␞␟processed'
+      fontSize: md
+      textColor: default
+      maxWidth: none
+  '1:content:0:left:4:0dba76ad-2654-448e-b971-0c48bdb8354b':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: left
+    uuid: 0dba76ad-2654-448e-b971-0c48bdb8354b
+    component_id: js.uswds_section
+    component_version: 5443d9cfebdce039
+    inputs:
+      heading: 'Who should attend'
+      background: white
+      contentWidth: full
+      paddingTop: sm
+      paddingBottom: none
+      marginTop: md
+      marginBottom: none
+  '1:content:0:left:4:content:0:74677759-3063-48ee-88ff-50553d86c584':
+    parent_uuid: 0dba76ad-2654-448e-b971-0c48bdb8354b
+    slot: content
+    uuid: 74677759-3063-48ee-88ff-50553d86c584
+    component_id: js.uswds_text
+    component_version: a2fba9394eccddba
+    inputs:
+      text:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_who␞␟processed'
+      fontSize: md
+      textColor: default
+      maxWidth: none
+  '1:content:0:left:5:c0cd23d6-f1df-4bab-8b92-512a26c34635':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: left
+    uuid: c0cd23d6-f1df-4bab-8b92-512a26c34635
+    component_id: js.uswds_site_alert
+    component_version: 3563ef2a7f2c6093
+    inputs:
+      variant: info
+      heading: Accessibility
+      body:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_accessibility␞␟processed'
+      slim: false
+      width: full
+  '1:content:0:left:6:6eded1c5-780f-4eaa-b233-5b4d3c487fc1':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: left
+    uuid: 6eded1c5-780f-4eaa-b233-5b4d3c487fc1
+    component_id: js.uswds_section
+    component_version: 5443d9cfebdce039
+    inputs:
+      heading: 'Questions before the event'
+      background: white
+      contentWidth: full
+      paddingTop: sm
+      paddingBottom: none
+      marginTop: md
+      marginBottom: none
+  '1:content:0:left:6:content:0:99400724-38ac-4036-ae3f-d93e9c05aff2':
+    parent_uuid: 6eded1c5-780f-4eaa-b233-5b4d3c487fc1
+    slot: content
+    uuid: 99400724-38ac-4036-ae3f-d93e9c05aff2
+    component_id: js.uswds_text
+    component_version: a2fba9394eccddba
+    inputs:
+      text:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_contact␞␟value'
+      fontSize: md
+      textColor: muted
+      maxWidth: none
+  '1:content:0:right:0:82d4bb0f-bf2a-44c7-bdea-2cff01e9d330':
+    parent_uuid: 084c68af-117a-48ea-bec4-12638b3b2753
+    slot: right
+    uuid: 82d4bb0f-bf2a-44c7-bdea-2cff01e9d330
+    component_id: js.uswds_event_registration_card
+    component_version: f47022139fef4d67
+    inputs:
+      cost:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_cost␞␟value'
+      registrationStatus:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_registration_status␞␟value'
+      registrationCloses:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_start␞␟value'
+      registrationUrl:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_registration_url␞␟uri'
+      seatsLeft:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_seats_left␞␟value'
+      seatsTotal:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_event_seats_total␞␟value'
+  '2:content:0:cef4a6b6-7e7d-4d4a-8b3e-12d951165b1c':
+    parent_uuid: f65d371e-48f5-49ff-9e49-4fb42af1e3bb
+    slot: content
+    uuid: cef4a6b6-7e7d-4d4a-8b3e-12d951165b1c
+    component_id: js.uswds_related_events
+    component_version: 1e80ea31a0182d7f
+    inputs:
+      currentId:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝uuid␞␟value'
+      category:
+        sourceType: entity-field
+        expression: 'ℹ︎␜entity:node:event␝field_categories␞␟entity␜␜entity:taxonomy_term␝name␞␟value'
+  '2:f65d371e-48f5-49ff-9e49-4fb42af1e3bb':
+    uuid: f65d371e-48f5-49ff-9e49-4fb42af1e3bb
+    component_id: js.uswds_section
+    component_version: 5443d9cfebdce039
+    inputs:
+      eyebrow: 'More events'
+      heading: 'You may also be interested in'
+      background: gray
+      contentWidth: wide
+      paddingTop: lg
+      paddingBottom: lg
+      marginTop: none
+      marginBottom: none
+exposed_slots: {  }

@@ -23,6 +23,11 @@ type_settings:
       weight: 0
       published: true
       default_revision: true
+    review:
+      label: Review
+      weight: -3
+      published: false
+      default_revision: false
   transitions:
     archive:
       label: Archive
@@ -46,15 +51,24 @@ type_settings:
       label: 'Create New Draft'
       from:
         - draft
+        - review
         - published
       to: draft
       weight: 0
+    submit_for_review:
+      label: 'Submit for review'
+      from:
+        - draft
+        - published
+      to: review
+      weight: 1
     publish:
       label: Publish
       from:
         - draft
+        - review
         - published
       to: published
-      weight: 1
+      weight: 2
   entity_types: {  }
   default_moderation_state: draft

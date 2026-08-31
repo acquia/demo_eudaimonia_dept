@@ -1,4 +1,3 @@
-uuid: f58d394c-0839-445d-8b8a-c128ea429d5a
 langcode: en
 status: true
 dependencies:
@@ -6,13 +5,6 @@ dependencies:
     - canvas.js_component.uswds_nav
   module:
     - options
-_core:
-  default_config_hash: qa_b7sVwSl-WC5dDKKm6qcrKZnFOAihc99Lcb-cWOVg
-label: '(Eud-Kit) USWDS Nav'
-id: js.uswds_nav
-source: js
-source_local_id: uswds_nav
-provider: null
 active_version: 6b066aeac8cfed15
 versioned_properties:
   active:
@@ -28,6 +20,8 @@ versioned_properties:
             -
               value: main
           expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
         menuType:
           required: false
           field_type: list_string
@@ -39,6 +33,7 @@ versioned_properties:
             -
               value: main
           expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
         bgColor:
           required: false
           field_type: list_string
@@ -50,6 +45,7 @@ versioned_properties:
             -
               value: primary-darker
           expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
         textColor:
           required: false
           field_type: list_string
@@ -61,5 +57,11 @@ versioned_properties:
             -
               value: light
           expression: ℹ︎list_string␟value
+          derived_schema_metadata: {  }
     fallback_metadata:
       slot_definitions: {  }
+label: '(Eud-Kit) USWDS Nav'
+id: js.uswds_nav
+provider: null
+source: js
+source_local_id: uswds_nav

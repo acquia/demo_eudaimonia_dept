@@ -1,0 +1,265 @@
+langcode: en
+status: true
+dependencies: {  }
+machineName: uswds_event_details
+name: '(Eud-Kit) USWDS Event Details'
+required: {  }
+props:
+  startDate:
+    type: string
+    title: 'Start Date'
+    examples:
+      - '2026-05-14T19:30:00+05:30'
+  endDate:
+    type: string
+    title: 'End Date'
+    examples:
+      - '2026-05-14T21:00:00+05:30'
+  format:
+    type: string
+    title: Format
+    examples:
+      - Online
+  cost:
+    type: string
+    title: Cost
+    examples:
+      - Free
+  host:
+    type: string
+    title: Host
+    examples:
+      - 'Office of Public Engagement'
+  language:
+    type: string
+    title: Language
+    examples:
+      - 'English, with live Spanish interpretation'
+  recording:
+    type: string
+    title: Recording
+    examples:
+      - 'Posted within 5 business days; registrants get a direct link'
+slots: {  }
+js:
+  original: |
+    import { cn } from 'drupal-canvas';
+
+    // USWDS Event Details — the "Event details" table shown on an event page.
+    //
+    // Takes flat scalar props (all strings) and renders the label/value table
+    // internally, so it works from a content template where every value is bound via
+    // a top-level entity-field expression. Dates and times are parsed from the raw
+    // wall-clock parts of the ISO strings (no timezone shift) and formatted for
+    // display: Date -> "Thursday, May 14, 2026", Time -> "7:30 – 9:00 p.m.".
+
+    const MONTHS_LONG = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const WEEKDAYS = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
+
+    // Parse the wall-clock parts straight out of the ISO string so the authored
+    // date/time is shown faithfully, without a browser-timezone shift.
+    const parseIso = (iso) => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(iso || '');
+      if (!m) return null;
+      return {
+        year: +m[1],
+        month: +m[2] - 1,
+        day: +m[3],
+        hour: +m[4],
+        minute: +m[5],
+      };
+    };
+
+    const formatFullDate = (iso) => {
+      const p = parseIso(iso);
+      if (!p) return '';
+      // Compute the weekday from the wall-clock date using a UTC anchor so the
+      // browser timezone never nudges it to the previous/next day.
+      const dow = new Date(Date.UTC(p.year, p.month, p.day)).getUTCDay();
+      return `${WEEKDAYS[dow]}, ${MONTHS_LONG[p.month]} ${p.day}, ${p.year}`;
+    };
+
+    const formatTime = (p) => {
+      if (!p) return '';
+      const period = p.hour >= 12 ? 'p.m.' : 'a.m.';
+      let h = p.hour % 12;
+      if (h === 0) h = 12;
+      const mm = p.minute.toString().padStart(2, '0');
+      return p.minute === 0 ? `${h} ${period}` : `${h}:${mm} ${period}`;
+    };
+
+    const formatTimeRange = (startIso, endIso) => {
+      const s = parseIso(startIso);
+      if (!s) return '';
+      const e = parseIso(endIso);
+      if (!e) return formatTime(s);
+      return `${formatTime(s)} – ${formatTime(e)}`;
+    };
+
+    const DetailRow = ({ label, value }) =>
+      value ? (
+        <tr className="border-b border-(--color-uswds-base-lighter)">
+          <th
+            scope="row"
+            className="w-[38%] px-4 py-3 text-left align-top text-sm font-bold text-(--color-uswds-base-ink)"
+          >
+            {label}
+          </th>
+          <td className="px-4 py-3 align-top text-sm text-(--color-uswds-base-ink)">
+            {value}
+          </td>
+        </tr>
+      ) : null;
+
+    const UswdsEventDetails = ({
+      startDate = '',
+      endDate = '',
+      format = '',
+      cost = '',
+      host = '',
+      language = '',
+      recording = '',
+      className = '',
+    }) => {
+      return (
+        <div className={cn('w-full overflow-x-auto font-sans', className)}>
+          <table className="usa-table w-full border-collapse text-sm text-(--color-uswds-base-ink) [&>tbody>tr:nth-child(even)]:bg-(--color-uswds-base-lightest)">
+            <caption className="caption-top pb-2 text-left text-sm font-bold text-(--color-uswds-base-ink)">
+              Event details
+            </caption>
+            <tbody>
+              <DetailRow label="Date" value={formatFullDate(startDate)} />
+              <DetailRow label="Time" value={formatTimeRange(startDate, endDate)} />
+              <DetailRow label="Format" value={format} />
+              <DetailRow label="Cost" value={cost} />
+              <DetailRow label="Host" value={host} />
+              <DetailRow label="Language" value={language} />
+              <DetailRow label="Recording" value={recording} />
+            </tbody>
+          </table>
+        </div>
+      );
+    };
+
+    export default UswdsEventDetails;
+  compiled: |
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    const MONTHS_LONG = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    const WEEKDAYS = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+    const parseIso = (iso) => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(iso || "");
+      if (!m) return null;
+      return {
+        year: +m[1],
+        month: +m[2] - 1,
+        day: +m[3],
+        hour: +m[4],
+        minute: +m[5]
+      };
+    };
+    const formatFullDate = (iso) => {
+      const p = parseIso(iso);
+      if (!p) return "";
+      const dow = new Date(Date.UTC(p.year, p.month, p.day)).getUTCDay();
+      return `${WEEKDAYS[dow]}, ${MONTHS_LONG[p.month]} ${p.day}, ${p.year}`;
+    };
+    const formatTime = (p) => {
+      if (!p) return "";
+      const period = p.hour >= 12 ? "p.m." : "a.m.";
+      let h = p.hour % 12;
+      if (h === 0) h = 12;
+      const mm = p.minute.toString().padStart(2, "0");
+      return p.minute === 0 ? `${h} ${period}` : `${h}:${mm} ${period}`;
+    };
+    const formatTimeRange = (startIso, endIso) => {
+      const s = parseIso(startIso);
+      if (!s) return "";
+      const e = parseIso(endIso);
+      if (!e) return formatTime(s);
+      return `${formatTime(s)} – ${formatTime(e)}`;
+    };
+    const DetailRow = ({ label, value }) => value ? /* @__PURE__ */ jsxs("tr", { className: "border-b border-(--color-uswds-base-lighter)", children: [
+      /* @__PURE__ */ jsx(
+        "th",
+        {
+          scope: "row",
+          className: "w-[38%] px-4 py-3 text-left align-top text-sm font-bold text-(--color-uswds-base-ink)",
+          children: label
+        }
+      ),
+      /* @__PURE__ */ jsx("td", { className: "px-4 py-3 align-top text-sm text-(--color-uswds-base-ink)", children: value })
+    ] }) : null;
+    const UswdsEventDetails = ({
+      startDate = "",
+      endDate = "",
+      format = "",
+      cost = "",
+      host = "",
+      language = "",
+      recording = "",
+      className = ""
+    }) => {
+      return /* @__PURE__ */ jsx("div", { className: cn("w-full overflow-x-auto font-sans", className), children: /* @__PURE__ */ jsxs("table", { className: "usa-table w-full border-collapse text-sm text-(--color-uswds-base-ink) [&>tbody>tr:nth-child(even)]:bg-(--color-uswds-base-lightest)", children: [
+        /* @__PURE__ */ jsx("caption", { className: "caption-top pb-2 text-left text-sm font-bold text-(--color-uswds-base-ink)", children: "Event details" }),
+        /* @__PURE__ */ jsxs("tbody", { children: [
+          /* @__PURE__ */ jsx(DetailRow, { label: "Date", value: formatFullDate(startDate) }),
+          /* @__PURE__ */ jsx(DetailRow, { label: "Time", value: formatTimeRange(startDate, endDate) }),
+          /* @__PURE__ */ jsx(DetailRow, { label: "Format", value: format }),
+          /* @__PURE__ */ jsx(DetailRow, { label: "Cost", value: cost }),
+          /* @__PURE__ */ jsx(DetailRow, { label: "Host", value: host }),
+          /* @__PURE__ */ jsx(DetailRow, { label: "Language", value: language }),
+          /* @__PURE__ */ jsx(DetailRow, { label: "Recording", value: recording })
+        ] })
+      ] }) });
+    };
+    export {
+      UswdsEventDetails as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies: {  }

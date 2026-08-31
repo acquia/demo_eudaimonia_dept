@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: program_alias_pattern
+label: 'Program Alias Pattern'
+type: 'canonical_entities:node'
+pattern: 'programs/[node:title]'
+selection_criteria:
+  b8e4d0c3-9f25-4c7b-a1d3-2e6f8a94c5b2:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: b8e4d0c3-9f25-4c7b-a1d3-2e6f8a94c5b2
+    context_mapping:
+      node: node
+    bundles:
+      program: program
+selection_logic: and
+weight: -5
+relationships: {  }

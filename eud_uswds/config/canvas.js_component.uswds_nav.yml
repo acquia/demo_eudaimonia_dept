@@ -1,9 +1,6 @@
-uuid: 0d53d0b0-0467-4760-bfac-d088893875ab
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: lTUC4SzkWeaORZ8OyXVw5pIKhqVal7044Fpv3BmW4oE
 machineName: uswds_nav
 name: '(Eud-Kit) USWDS Nav'
 required: {  }
@@ -72,6 +69,7 @@ slots: {  }
 js:
   original: |
     import { cn, JsonApiClient, sortMenu } from 'drupal-canvas';
+    import { useState } from 'react';
     import useSWR from 'swr';
 
     const resolveBgColor = (token) => {
@@ -121,6 +119,13 @@ js:
         ],
       },
       {
+        id: 'events',
+        title: 'Events',
+        url: '/eud-events',
+        _hasSubmenu: false,
+        _children: [],
+      },
+      {
         id: 'about',
         title: 'About',
         url: '/about',
@@ -162,8 +167,15 @@ js:
       </svg>
     );
 
-    const NavDropdown = ({ items }) => (
-      <ul className="usa-nav__submenu absolute top-full left-0 z-50 hidden min-w-[240px] border border-t-[3px] border-(--color-uswds-base-lighter) border-t-(--color-eud-gold) bg-white shadow-md group-hover:block">
+    const NavDropdown = ({ items, open }) => (
+      <ul
+        className={cn(
+          'usa-nav__submenu absolute top-full left-0 z-50 min-w-[240px] border border-t-[3px] border-(--color-uswds-base-lighter) border-t-(--color-eud-gold) bg-white shadow-md',
+          // Click/tap toggle (works on touch); desktop also opens on hover.
+          open ? 'block' : 'hidden',
+          'md:group-hover:block',
+        )}
+      >
         {items.map(({ id, title, url }) => (
           <li
             key={id}
@@ -188,6 +200,8 @@ js:
     }) => {
       const resolvedBgColor = resolveBgColor(bgColor);
       const resolvedTextColor = resolveTextColor(textColor);
+      // Which submenu is open (click/tap toggle — needed for touch devices).
+      const [openId, setOpenId] = useState(null);
       const { data, error, isLoading } = useSWR(
         menuName ? ['menu_items', menuName] : null,
         ([type, id]) => client.getResource(type, id),
@@ -260,6 +274,10 @@ js:
                     type="button"
                     className={cn('usa-nav__link', sharedCls, 'w-full cursor-pointer border-0 bg-transparent md:w-auto')}
                     style={{ color: resolvedTextColor }}
+                    aria-expanded={openId === item.id}
+                    onClick={() =>
+                      setOpenId((cur) => (cur === item.id ? null : item.id))
+                    }
                   >
                     {item.title}
                     <CaretIcon />
@@ -275,7 +293,7 @@ js:
                   </a>
                 )}
                 {item._hasSubmenu && item._children?.length > 0 && (
-                  <NavDropdown items={item._children} />
+                  <NavDropdown items={item._children} open={openId === item.id} />
                 )}
               </li>
             );
@@ -288,6 +306,7 @@ js:
   compiled: |
     import { jsx, jsxs } from "react/jsx-runtime";
     import { JsonApiClient, sortMenu, cn } from "drupal-canvas";
+    import { useState } from "react";
     import useSWR from "swr";
     const resolveBgColor = (token) => {
       if (!token) return void 0;
@@ -336,6 +355,13 @@ js:
         ]
       },
       {
+        id: "events",
+        title: "Events",
+        url: "/eud-events",
+        _hasSubmenu: false,
+        _children: []
+      },
+      {
         id: "about",
         title: "About",
         url: "/about",
@@ -374,21 +400,32 @@ js:
         children: /* @__PURE__ */ jsx("path", { d: "M0 0l5 6 5-6z" })
       }
     );
-    const NavDropdown = ({ items }) => /* @__PURE__ */ jsx("ul", { className: "usa-nav__submenu absolute top-full left-0 z-50 hidden min-w-[240px] border border-t-[3px] border-(--color-uswds-base-lighter) border-t-(--color-eud-gold) bg-white shadow-md group-hover:block", children: items.map(({ id, title, url }) => /* @__PURE__ */ jsx(
-      "li",
+    const NavDropdown = ({ items, open }) => /* @__PURE__ */ jsx(
+      "ul",
       {
-        className: "usa-nav__submenu-item border-b border-(--color-uswds-base-lighter) last:border-b-0",
-        children: /* @__PURE__ */ jsx(
-          "a",
+        className: cn(
+          "usa-nav__submenu absolute top-full left-0 z-50 min-w-[240px] border border-t-[3px] border-(--color-uswds-base-lighter) border-t-(--color-eud-gold) bg-white shadow-md",
+          // Click/tap toggle (works on touch); desktop also opens on hover.
+          open ? "block" : "hidden",
+          "md:group-hover:block"
+        ),
+        children: items.map(({ id, title, url }) => /* @__PURE__ */ jsx(
+          "li",
           {
-            href: url,
-            className: "block px-5 py-[11px] text-sm font-medium text-(--color-uswds-primary) no-underline hover:bg-(--color-uswds-primary-lighter) hover:text-(--color-uswds-primary-darker)",
-            children: title
-          }
-        )
-      },
-      id
-    )) });
+            className: "usa-nav__submenu-item border-b border-(--color-uswds-base-lighter) last:border-b-0",
+            children: /* @__PURE__ */ jsx(
+              "a",
+              {
+                href: url,
+                className: "block px-5 py-[11px] text-sm font-medium text-(--color-uswds-primary) no-underline hover:bg-(--color-uswds-primary-lighter) hover:text-(--color-uswds-primary-darker)",
+                children: title
+              }
+            )
+          },
+          id
+        ))
+      }
+    );
     const UswdsNav = ({
       menuName = "main",
       menuType = "main",
@@ -398,6 +435,7 @@ js:
       var _a, _b;
       const resolvedBgColor = resolveBgColor(bgColor);
       const resolvedTextColor = resolveTextColor(textColor);
+      const [openId, setOpenId] = useState(null);
       const { data, error, isLoading } = useSWR(
         menuName ? ["menu_items", menuName] : null,
         ([type, id]) => client.getResource(type, id)
@@ -452,6 +490,8 @@ js:
                       type: "button",
                       className: cn("usa-nav__link", sharedCls, "w-full cursor-pointer border-0 bg-transparent md:w-auto"),
                       style: { color: resolvedTextColor },
+                      "aria-expanded": openId === item.id,
+                      onClick: () => setOpenId((cur) => cur === item.id ? null : item.id),
                       children: [
                         item.title,
                         /* @__PURE__ */ jsx(CaretIcon, {})
@@ -467,7 +507,7 @@ js:
                       children: item.title
                     }
                   ),
-                  item._hasSubmenu && ((_a2 = item._children) == null ? void 0 : _a2.length) > 0 && /* @__PURE__ */ jsx(NavDropdown, { items: item._children })
+                  item._hasSubmenu && ((_a2 = item._children) == null ? void 0 : _a2.length) > 0 && /* @__PURE__ */ jsx(NavDropdown, { items: item._children, open: openId === item.id })
                 ]
               },
               item.id

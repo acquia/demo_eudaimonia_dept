@@ -1,0 +1,100 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 2276b9b6-ef7e-4b73-b01a-6360523914e4
+  bundle: event
+  default_langcode: en
+  depends:
+    996cf345-58d7-4f36-bde6-78ab0c8d0c1d: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 0
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Career Re-entry Job Fair — Asheville'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'Meet 60+ employers hiring through the Career Re-entry Grants program. On-site résumé review, interview coaching, and same-day conditional offers. Bring several copies of your résumé and a photo ID.'
+      format: filtered_html
+      summary: ''
+  field_categories:
+    -
+      entity: 996cf345-58d7-4f36-bde6-78ab0c8d0c1d
+  field_event_accessibility:
+    -
+      value: 'Live CART captioning and ASL interpretation are provided on request. For materials in an alternate format or any other accommodation, submit a request at least five business days ahead so we can arrange it in time.'
+      format: filtered_html
+  field_event_agenda:
+    -
+      value: '<ul><li><strong>10:00 am — Doors open &amp; check-in.</strong> Pick up a floor map and employer directory.</li><li><strong>10:30 am — Résumé lab opens.</strong> Drop in any time for a 15-minute review.</li><li><strong>12:00 pm — Interview coaching sessions.</strong> Practice with a career counselor.</li><li><strong>2:00 pm — Employer spotlights.</strong> Short talks from the largest hiring partners.</li><li><strong>4:00 pm — Close.</strong> Follow-up appointments booked on request.</li></ul>'
+      format: filtered_html
+  field_event_contact:
+    -
+      value: events@dept.eud.ai
+  field_event_cost:
+    -
+      value: Free
+  field_event_end:
+    -
+      value: '2026-05-21T16:00:00'
+  field_event_format:
+    -
+      value: in_person
+  field_event_host:
+    -
+      value: 'Work & Income Directorate'
+  field_event_language:
+    -
+      value: English
+  field_event_learn:
+    -
+      value: '<ul><li>Which employers are hiring on the day and the roles they are filling</li><li>How the Career Re-entry Grant can cover tools, transport, and childcare while you start</li><li>How to get your résumé reviewed and improved on site, for free</li><li>What to bring for a same-day conditional offer</li></ul>'
+      format: filtered_html
+  field_event_location:
+    -
+      value: 'Asheville Civic Center, 87 Haywood St'
+  field_event_recording:
+    -
+      value: 'Not recorded — in-person event'
+  field_event_registration_status:
+    -
+      value: open
+  field_event_seats_left:
+    -
+      value: 38
+  field_event_seats_total:
+    -
+      value: 400
+  field_event_start:
+    -
+      value: '2026-05-21T10:00:00'
+  field_event_summary:
+    -
+      value: 'Meet 60+ employers hiring through the Career Re-entry Grants program, with on-site résumé review and interview coaching.'
+  field_event_who:
+    -
+      value: 'Job seekers returning to work after a gap, career changers, and anyone eligible for the Career Re-entry Grants program. Community organizations and workforce partners are welcome.'
+      format: filtered_html

@@ -1,0 +1,94 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 294c895b-e9c8-4ff8-8767-afeb679ec578
+  bundle: event
+  default_langcode: en
+  depends:
+    689400ae-d815-455c-ad16-588f9b0ffaac: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 0
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Lifelong Learning Account: How the 2:1 Match Works'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  moderation_state:
+    -
+      value: published
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: 'An info session on the expanded federal match — who qualifies, which providers are accredited, and how to open an account in under ten minutes.'
+      format: filtered_html
+      summary: ''
+  field_categories:
+    -
+      entity: 689400ae-d815-455c-ad16-588f9b0ffaac
+  field_event_accessibility:
+    -
+      value: 'Live CART captioning and ASL interpretation are provided on request. For materials in an alternate format or any other accommodation, submit a request at least five business days ahead so we can arrange it in time.'
+      format: filtered_html
+  field_event_agenda:
+    -
+      value: '<ul><li><strong>12:00 pm — Overview.</strong> What the account is and how the match works.</li><li><strong>12:15 pm — Eligibility &amp; accredited providers.</strong> With worked examples.</li><li><strong>12:35 pm — Live account walkthrough.</strong> Opening and funding an account on screen.</li><li><strong>12:50 pm — Q&amp;A.</strong> Program officers answer questions in chat.</li></ul>'
+      format: filtered_html
+  field_event_contact:
+    -
+      value: events@dept.eud.ai
+  field_event_cost:
+    -
+      value: Free
+  field_event_end:
+    -
+      value: '2026-05-28T13:00:00'
+  field_event_format:
+    -
+      value: online
+  field_event_host:
+    -
+      value: 'Learning Directorate'
+  field_event_language:
+    -
+      value: English
+  field_event_learn:
+    -
+      value: '<ul><li>Who qualifies for the expanded 2:1 federal match and the annual limits</li><li>Which training providers and credentials are accredited</li><li>How to open a Lifelong Learning Account in under ten minutes</li><li>How withdrawals, receipts, and reimbursements work</li></ul>'
+      format: filtered_html
+  field_event_location:
+    -
+      value: 'Webinar — joining link emailed on registration'
+  field_event_recording:
+    -
+      value: 'Posted within 5 business days'
+  field_event_registration_status:
+    -
+      value: unlimited
+  field_event_start:
+    -
+      value: '2026-05-28T12:00:00'
+  field_event_summary:
+    -
+      value: 'An info session on the expanded federal match — who qualifies, which providers are accredited, and how to open an account in under ten minutes.'
+  field_event_who:
+    -
+      value: 'Workers planning to upskill or reskill, students, and anyone considering accredited training. Employers and advisors who guide others are welcome.'
+      format: filtered_html

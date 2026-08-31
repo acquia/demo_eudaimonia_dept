@@ -1,0 +1,59 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_related_events
+active_version: 1e80ea31a0182d7f
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        currentId:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: eeca8cdb-03cb-45dd-b1ad-ac1437b83617
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        category:
+          required: false
+          field_type: string
+          cardinality: -1
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: Dignity
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+  701d06d7d93b2213:
+    settings:
+      prop_field_definitions:
+        currentId:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: eeca8cdb-03cb-45dd-b1ad-ac1437b83617
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: '(Eud-Kit) USWDS Related Events'
+id: js.uswds_related_events
+provider: null
+source: js
+source_local_id: uswds_related_events

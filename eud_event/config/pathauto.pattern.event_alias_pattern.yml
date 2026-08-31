@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: event_alias_pattern
+label: 'Event Alias Pattern'
+type: 'canonical_entities:node'
+pattern: 'events/[node:title]'
+selection_criteria:
+  a7f3c9d2-8e14-4b6a-9c02-1f5d7e83b4a1:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: a7f3c9d2-8e14-4b6a-9c02-1f5d7e83b4a1
+    context_mapping:
+      node: node
+    bundles:
+      event: event
+selection_logic: and
+weight: -5
+relationships: {  }

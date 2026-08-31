@@ -1,0 +1,286 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.uswds_card
+machineName: uswds_related_events
+name: '(Eud-Kit) USWDS Related Events'
+required: {  }
+props:
+  currentId:
+    type: string
+    title: 'Current Id'
+    examples:
+      - eeca8cdb-03cb-45dd-b1ad-ac1437b83617
+  category:
+    type: array
+    items:
+      type: string
+    title: Category
+    examples:
+      -
+        - Dignity
+slots: {  }
+js:
+  original: |
+    import UswdsCard from '@/components/uswds_card';
+    import { JsonApiClient } from 'drupal-canvas';
+    import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
+    import useSWR from 'swr';
+
+    // USWDS Related Events — "You may also be interested in".
+    // Fetches other events from JSON:API (sorted by start date, categories
+    // included), excludes the current event via `currentId`, and renders up to three
+    // event cards. Ships representative fallback data so it renders in Workbench and
+    // before Drupal content is wired up.
+
+    const client = new JsonApiClient();
+
+    const MAX_CARDS = 3;
+    // Fetch a wide set so we can prefer same-category events, then backfill.
+    const FETCH_LIMIT = 24;
+
+    // Normalize a category prop/relationship ([{name}] | {name} | "Name") to a name.
+    const categoryNameOf = (raw) => {
+      if (!raw) return '';
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      if (typeof first === 'string') return first;
+      if (first && typeof first === 'object') return first.name ?? first.value ?? '';
+      return '';
+    };
+
+    const FALLBACK = [
+      {
+        id: 'r1',
+        drupal_internal__nid: 14,
+        title: 'Career Re-entry Job Fair — Asheville',
+        field_event_summary:
+          'Meet 40+ employers hiring now, with on-the-spot resume review and apprenticeship sponsors.',
+        field_categories: [{ name: 'Work' }],
+        path: { alias: null },
+      },
+      {
+        id: 'r2',
+        drupal_internal__nid: 15,
+        title: 'Lifelong Learning Account: How the 2:1 Match Works',
+        field_event_summary:
+          'A short briefing on how the government matches your training savings.',
+        field_categories: [{ name: 'Learning' }],
+        path: { alias: null },
+      },
+      {
+        id: 'r3',
+        drupal_internal__nid: 18,
+        title: 'Neighborhood Investment Fund Grant Clinic',
+        field_event_summary:
+          'One-on-one help preparing a competitive application for community-space grants.',
+        field_categories: [{ name: 'Community' }],
+        path: { alias: null },
+      },
+    ];
+
+    // A category relationship can arrive as [{name}] or {name}; normalize to a name.
+    const resolveCategory = (item) => {
+      const raw = item.field_categories ?? item.categories ?? null;
+      if (!raw) return '';
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      if (!first || typeof first !== 'object') return '';
+      return first.name ?? first.value ?? '';
+    };
+
+    // Prefer a real Drupal path alias for the detail link; fall back to the node route.
+    const resolveNodePath = (item) => {
+      const alias = item.path?.alias;
+      if (alias) return alias;
+      if (item.drupal_internal__nid) return `/node/${item.drupal_internal__nid}`;
+      return '/eud-events';
+    };
+
+    // Match the current event against whatever the bound expression yields (uuid or
+    // internal nid), so the current event is reliably excluded.
+    const isCurrent = (item, currentId) => {
+      if (!currentId) return false;
+      const id = String(currentId);
+      return id === item.id || id === String(item.drupal_internal__nid ?? '');
+    };
+
+    const UswdsRelatedEvents = ({ currentId = '', category = [], className = '' }) => {
+      const { data, error, isLoading } = useSWR(
+        ['node--event', 'related'],
+        ([type]) =>
+          client.getCollection(type, {
+            queryString: new DrupalJsonApiParams()
+              .addSort('field_event_start', 'ASC')
+              .addInclude(['field_categories'])
+              .addPageLimit(FETCH_LIMIT + 1)
+              .getQueryString(),
+          }),
+      );
+
+      const source =
+        !error && !isLoading && Array.isArray(data) && data.length > 0
+          ? data
+          : FALLBACK;
+
+      // Everything except the current event.
+      const others = source.filter((item) => !isCurrent(item, currentId));
+
+      // Prefer events in the same category as the current one, then backfill with
+      // the soonest other events so the section never shows fewer than it can.
+      const currentCategory = categoryNameOf(category).toLowerCase();
+      const sameCategory = currentCategory
+        ? others.filter(
+            (item) => resolveCategory(item).toLowerCase() === currentCategory,
+          )
+        : [];
+      const backfill = others.filter((item) => !sameCategory.includes(item));
+      const events = [...sameCategory, ...backfill].slice(0, MAX_CARDS);
+
+      if (isLoading) {
+        return (
+          <p className="py-4 font-sans text-(--color-uswds-base-dark)">
+            Loading related events…
+          </p>
+        );
+      }
+
+      if (!events.length) return null;
+
+      return (
+        <div
+          className={
+            'grid grid-cols-1 gap-6 font-sans md:grid-cols-2 lg:grid-cols-3 ' +
+            className
+          }
+        >
+          {events.map((event) => (
+            <UswdsCard
+              key={event.id}
+              tag={resolveCategory(event)}
+              heading={event.title}
+              headingLevel="h3"
+              body={`<p>${event.field_event_summary || ''}</p>`}
+              ctaText="View event"
+              ctaLink={resolveNodePath(event)}
+              layout="default"
+            />
+          ))}
+        </div>
+      );
+    };
+
+    export default UswdsRelatedEvents;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import UswdsCard from "@/components/uswds_card";
+    import { JsonApiClient } from "drupal-canvas";
+    import { DrupalJsonApiParams } from "drupal-jsonapi-params";
+    import useSWR from "swr";
+    const client = new JsonApiClient();
+    const MAX_CARDS = 3;
+    const FETCH_LIMIT = 24;
+    const categoryNameOf = (raw) => {
+      var _a, _b;
+      if (!raw) return "";
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      if (typeof first === "string") return first;
+      if (first && typeof first === "object") return (_b = (_a = first.name) != null ? _a : first.value) != null ? _b : "";
+      return "";
+    };
+    const FALLBACK = [
+      {
+        id: "r1",
+        drupal_internal__nid: 14,
+        title: "Career Re-entry Job Fair — Asheville",
+        field_event_summary: "Meet 40+ employers hiring now, with on-the-spot resume review and apprenticeship sponsors.",
+        field_categories: [{ name: "Work" }],
+        path: { alias: null }
+      },
+      {
+        id: "r2",
+        drupal_internal__nid: 15,
+        title: "Lifelong Learning Account: How the 2:1 Match Works",
+        field_event_summary: "A short briefing on how the government matches your training savings.",
+        field_categories: [{ name: "Learning" }],
+        path: { alias: null }
+      },
+      {
+        id: "r3",
+        drupal_internal__nid: 18,
+        title: "Neighborhood Investment Fund Grant Clinic",
+        field_event_summary: "One-on-one help preparing a competitive application for community-space grants.",
+        field_categories: [{ name: "Community" }],
+        path: { alias: null }
+      }
+    ];
+    const resolveCategory = (item) => {
+      var _a, _b, _c, _d;
+      const raw = (_b = (_a = item.field_categories) != null ? _a : item.categories) != null ? _b : null;
+      if (!raw) return "";
+      const first = Array.isArray(raw) ? raw[0] : raw;
+      if (!first || typeof first !== "object") return "";
+      return (_d = (_c = first.name) != null ? _c : first.value) != null ? _d : "";
+    };
+    const resolveNodePath = (item) => {
+      var _a;
+      const alias = (_a = item.path) == null ? void 0 : _a.alias;
+      if (alias) return alias;
+      if (item.drupal_internal__nid) return `/node/${item.drupal_internal__nid}`;
+      return "/eud-events";
+    };
+    const isCurrent = (item, currentId) => {
+      var _a;
+      if (!currentId) return false;
+      const id = String(currentId);
+      return id === item.id || id === String((_a = item.drupal_internal__nid) != null ? _a : "");
+    };
+    const UswdsRelatedEvents = ({ currentId = "", category = [], className = "" }) => {
+      const { data, error, isLoading } = useSWR(
+        ["node--event", "related"],
+        ([type]) => client.getCollection(type, {
+          queryString: new DrupalJsonApiParams().addSort("field_event_start", "ASC").addInclude(["field_categories"]).addPageLimit(FETCH_LIMIT + 1).getQueryString()
+        })
+      );
+      const source = !error && !isLoading && Array.isArray(data) && data.length > 0 ? data : FALLBACK;
+      const others = source.filter((item) => !isCurrent(item, currentId));
+      const currentCategory = categoryNameOf(category).toLowerCase();
+      const sameCategory = currentCategory ? others.filter(
+        (item) => resolveCategory(item).toLowerCase() === currentCategory
+      ) : [];
+      const backfill = others.filter((item) => !sameCategory.includes(item));
+      const events = [...sameCategory, ...backfill].slice(0, MAX_CARDS);
+      if (isLoading) {
+        return /* @__PURE__ */ jsx("p", { className: "py-4 font-sans text-(--color-uswds-base-dark)", children: "Loading related events…" });
+      }
+      if (!events.length) return null;
+      return /* @__PURE__ */ jsx(
+        "div",
+        {
+          className: "grid grid-cols-1 gap-6 font-sans md:grid-cols-2 lg:grid-cols-3 " + className,
+          children: events.map((event) => /* @__PURE__ */ jsx(
+            UswdsCard,
+            {
+              tag: resolveCategory(event),
+              heading: event.title,
+              headingLevel: "h3",
+              body: `<p>${event.field_event_summary || ""}</p>`,
+              ctaText: "View event",
+              ctaLink: resolveNodePath(event),
+              layout: "default"
+            },
+            event.id
+          ))
+        }
+      );
+    };
+    export {
+      UswdsRelatedEvents as default
+    };
+css:
+  original: ''
+  compiled: ''
+dataDependencies:
+  drupalSettings:
+    - v0.baseUrl
+    - v0.jsonapiSettings

@@ -1,0 +1,79 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.js_component.uswds_event_list
+active_version: f6b463bc09cfd3d7
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        eventLimit:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 20
+          expression: ℹ︎integer␟value
+          derived_schema_metadata: {  }
+        perPage:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 6
+          expression: ℹ︎integer␟value
+          derived_schema_metadata: {  }
+        ariaLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Upcoming events'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+  757c3c25d691b6ed:
+    settings:
+      prop_field_definitions:
+        eventLimit:
+          required: false
+          field_type: integer
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: number
+          default_value:
+            -
+              value: 20
+          expression: ℹ︎integer␟value
+          derived_schema_metadata: {  }
+        ariaLabel:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value:
+            -
+              value: 'Upcoming events'
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: '(Eud-Kit) USWDS Event List'
+id: js.uswds_event_list
+provider: null
+source: js
+source_local_id: uswds_event_list
