@@ -34,7 +34,7 @@ default:
     -
       parent_uuid: f8c4c87f-b17b-4caf-a781-2eab02415cab
       slot: content
-      uuid: a548b48d-58a8-4077-aa04-da9405a6f418
+      uuid: 7eb28af5-b823-49da-802d-4bac90e8f517
       component_id: js.uswds_text
       inputs:
         text:
