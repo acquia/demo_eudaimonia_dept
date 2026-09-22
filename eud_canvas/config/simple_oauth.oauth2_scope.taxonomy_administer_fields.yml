@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: taxonomy_administer_fields
+name: 'taxonomy:administer_fields'
+description: 'Administer taxonomy term fields'
+grant_types:
+  client_credentials:
+    status: true
+    description: 'Administer taxonomy term fields'
+  refresh_token:
+    status: true
+    description: 'Administer taxonomy term fields'
+  authorization_code:
+    status: true
+    description: 'Administer taxonomy term fields'
+umbrella: false
+parent: null
+granularity_id: permission
+granularity_configuration:
+  permission: 'administer taxonomy_term fields'

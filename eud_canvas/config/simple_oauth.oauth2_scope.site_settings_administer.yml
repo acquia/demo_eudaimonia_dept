@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: site_settings_administer
+name: 'site_settings:administer'
+description: 'Administer site settings'
+grant_types:
+  client_credentials:
+    status: true
+    description: 'Administer site settings'
+  refresh_token:
+    status: true
+    description: 'Administer site settings'
+  authorization_code:
+    status: true
+    description: 'Administer site settings'
+umbrella: false
+parent: null
+granularity_id: permission
+granularity_configuration:
+  permission: 'administer site settings'

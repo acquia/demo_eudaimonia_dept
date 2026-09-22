@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: content_type_administer_fields
+name: 'content_type:administer_fields'
+description: 'Administer content fields'
+grant_types:
+  client_credentials:
+    status: true
+    description: 'Administer content fields'
+  refresh_token:
+    status: true
+    description: 'Administer content fields'
+  authorization_code:
+    status: true
+    description: 'Administer content fields'
+umbrella: false
+parent: null
+granularity_id: permission
+granularity_configuration:
+  permission: 'administer node fields'

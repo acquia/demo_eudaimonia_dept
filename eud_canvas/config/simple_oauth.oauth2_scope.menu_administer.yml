@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: menu_administer
+name: 'menu:administer'
+description: 'Administer menus'
+grant_types:
+  client_credentials:
+    status: true
+    description: 'Administer menus'
+  refresh_token:
+    status: true
+    description: 'Administer menus'
+  authorization_code:
+    status: true
+    description: 'Administer menus'
+umbrella: false
+parent: null
+granularity_id: permission
+granularity_configuration:
+  permission: 'administer menu'
