@@ -1,6 +1,6 @@
 name: 'Eudaimonia USWDS'
 type: Recipe
-description: 'USWDS (U.S. Web Design System) Canvas JS code component library, header/footer page regions, and demo content (pages, menus, taxonomy).'
+description: 'USWDS (U.S. Web Design System) Canvas JS code component library, page template, and demo content (pages, menus, taxonomy).'
 recipes:
   - eud_common
   - eud_canvas
@@ -11,6 +11,13 @@ recipes:
 config:
   strict: false
   actions:
+    # The page template this recipe ships (config/canvas.page_variant.theme_canvas_stark.yml).
+    # demo_cms builds sites from recipes, not `config:import`, so this cannot be a
+    # shipped canvas.settings.yml - RecipeConfigInstaller skips config that already
+    # exists, and eud_canvas has installed canvas by the time this runs.
+    canvas.settings:
+      simple_config_update:
+        default_page_variant: theme_canvas_stark
     # canvas_page is a bundle-less entity, so core's addNodeTypes cannot moderate
     # it; the bundled module's action adds it to the editorial workflow before
     # this recipe's canvas_page content (which carries a moderation_state) imports.
