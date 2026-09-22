@@ -1,0 +1,186 @@
+langcode: en
+status: true
+dependencies:
+  config:
+  - canvas.component.js.uswds_banner
+  - canvas.component.js.uswds_banner_item
+  - canvas.component.js.uswds_button
+  - canvas.component.js.uswds_footer
+  - canvas.component.js.uswds_header
+  - canvas.component.js.uswds_language_switcher_block
+  - canvas.component.js.uswds_language_switcher_list
+  - canvas.component.js.uswds_logo
+  - canvas.component.js.uswds_nav
+  - canvas.component.marker.page_content
+  - field.field.media.image.media_image
+  - filter.format.canvas_html_block
+  - image.style.canvas_parametrized_width
+  - media.type.acquia_dam_image_asset
+  - media.type.image
+  content:
+  - file:file:0039a0dd-44d1-4a0b-992c-aabace5f4cad
+  - file:file:881d1204-b3b8-4ba8-bb92-8f5a276a2b24
+  - file:file:98267b0f-67d1-4dba-a8b1-60355b4190d6
+  - media:image:0baf5e6c-0fde-458f-8a15-78935f1731e6
+  - media:image:94da3aaa-626a-4de6-86f7-de057649b537
+  - media:image:aecb5692-68cc-46c3-bcde-a4e1468173aa
+  module:
+  - acquia_dam
+  - file
+  - link
+  - media
+  - options
+  - text
+id: theme_canvas_stark
+label: Canvas Stark theme
+description: 
+component_tree:
+  89b6c750-66e1-4a56-9602-913bbca845df:
+    uuid: 89b6c750-66e1-4a56-9602-913bbca845df
+    component_id: js.uswds_banner
+    component_version: 71df4c182b78699c
+    inputs:
+      background: light
+      headerText: An official website of the Department of Eudaimonia
+      triggerText: Here’s how you know
+      expanded: false
+      headerIcon:
+        target_id: '4'
+  21c94ce6-909e-4614-b9d6-f78db0bb7b7d:
+    parent_uuid: 89b6c750-66e1-4a56-9602-913bbca845df
+    slot: details
+    uuid: 21c94ce6-909e-4614-b9d6-f78db0bb7b7d
+    component_id: js.uswds_banner_item
+    component_version: a135689b1900d791
+    inputs:
+      heading: Official websites use .gov
+      body:
+        value: "<p>This website belongs to the U.S. Department of Eudaimonia, an official
+          government organization. It is built and maintained in accordance with the
+          <strong>U.S. Web Design System</strong> standards.</p>"
+        format: canvas_html_block
+      icon:
+        target_id: '2'
+  bf683ed6-0f4b-4722-9020-6f8b7a296509:
+    parent_uuid: 89b6c750-66e1-4a56-9602-913bbca845df
+    slot: details
+    uuid: bf683ed6-0f4b-4722-9020-6f8b7a296509
+    component_id: js.uswds_banner_item
+    component_version: a135689b1900d791
+    inputs:
+      heading: Secure .gov websites use HTTPS
+      body:
+        value: "<p>A <strong>lock</strong> or <strong>https://</strong> means you’ve
+          safely connected to a .gov website. This site follows accessibility, security,
+          and plain-language standards set by the U.S. Web Design System.</p>"
+        format: canvas_html_block
+      icon:
+        target_id: '3'
+  3a93cf5a-3c2f-4b7d-99e2-3dbc21ebefb0:
+    uuid: 3a93cf5a-3c2f-4b7d-99e2-3dbc21ebefb0
+    component_id: js.uswds_header
+    component_version: 9a5e0ebe18f49e6e
+    inputs:
+      topBgColor: white
+      navBgColor: primary-darker
+      navTextColor: light
+      search: true
+  9669ba9f-a5c6-4307-8421-1b1b5e14a4d6:
+    parent_uuid: 3a93cf5a-3c2f-4b7d-99e2-3dbc21ebefb0
+    slot: languageSelector
+    uuid: 9669ba9f-a5c6-4307-8421-1b1b5e14a4d6
+    component_id: js.uswds_language_switcher_block
+    component_version: a9e5f01a319008c4
+    inputs:
+      buttonLabel: Languages
+      buttonStyle: primary
+      showGlobeIcon: false
+  29c59400-7886-4435-9eef-093fbc27f626:
+    parent_uuid: 9669ba9f-a5c6-4307-8421-1b1b5e14a4d6
+    slot: languageSwitcherBlock
+    uuid: 29c59400-7886-4435-9eef-093fbc27f626
+    component_id: js.uswds_language_switcher_list
+    component_version: 8fe3be948e0194e1
+    inputs: {}
+  2deed64e-2b23-4441-a069-ffde4dcb8c07:
+    parent_uuid: 3a93cf5a-3c2f-4b7d-99e2-3dbc21ebefb0
+    slot: logo
+    uuid: 2deed64e-2b23-4441-a069-ffde4dcb8c07
+    component_id: js.uswds_logo
+    component_version: 68ddf323de219409
+    inputs:
+      variant: dark
+      linkUrl:
+        uri: internal:/
+        options: {}
+  c512586d-6c2a-40bc-b754-aeadfef81a7f:
+    parent_uuid: 3a93cf5a-3c2f-4b7d-99e2-3dbc21ebefb0
+    slot: navigation
+    uuid: c512586d-6c2a-40bc-b754-aeadfef81a7f
+    component_id: js.uswds_nav
+    component_version: 6b066aeac8cfed15
+    inputs:
+      menuName: main
+      menuType: main
+      bgColor: primary-darker
+      textColor: light
+  b1714db7-5741-4ea8-bec0-ab84761215a1:
+    uuid: b1714db7-5741-4ea8-bec0-ab84761215a1
+    component_id: marker.page_content
+    component_version: 3b12c0b99a6caecc
+    inputs: {}
+  f31135cc-16a6-49f5-9417-61c8bf3c1bc1:
+    uuid: f31135cc-16a6-49f5-9417-61c8bf3c1bc1
+    component_id: js.uswds_footer
+    component_version: 9d4dc82dd224d323
+    inputs:
+      topRowBackgroundColor: primary-darker
+      bottomRowBackgroundColor: primary-dark
+  2892a5fb-6157-4874-b7fd-b1ce98b7e9a9:
+    parent_uuid: f31135cc-16a6-49f5-9417-61c8bf3c1bc1
+    slot: logo
+    uuid: 2892a5fb-6157-4874-b7fd-b1ce98b7e9a9
+    component_id: js.uswds_logo
+    component_version: 68ddf323de219409
+    inputs:
+      variant: light
+      linkUrl:
+        uri: internal:/
+        options: {}
+  69420922-7f43-423e-b724-9de9329cbae2:
+    parent_uuid: f31135cc-16a6-49f5-9417-61c8bf3c1bc1
+    slot: top_nav
+    uuid: 69420922-7f43-423e-b724-9de9329cbae2
+    component_id: js.uswds_nav
+    component_version: 6b066aeac8cfed15
+    inputs:
+      menuName: footer
+      menuType: footer-secondary
+      bgColor: primary-darker
+      textColor: light
+  c77d36ba-1575-4784-bdde-774c5779d289:
+    parent_uuid: f31135cc-16a6-49f5-9417-61c8bf3c1bc1
+    slot: cta
+    uuid: c77d36ba-1575-4784-bdde-774c5779d289
+    component_id: js.uswds_button
+    component_version: 4d568fc4ca337e80
+    inputs:
+      text: Sign up for updates
+      link:
+        uri: internal:/
+        options: {}
+      variant: accent
+      size: default
+      disabled: false
+      showArrowIcon: false
+  5465753b-4c5b-46dd-a342-fad433603e51:
+    parent_uuid: f31135cc-16a6-49f5-9417-61c8bf3c1bc1
+    slot: bottom_nav
+    uuid: 5465753b-4c5b-46dd-a342-fad433603e51
+    component_id: js.uswds_nav
+    component_version: 6b066aeac8cfed15
+    inputs:
+      menuName: footer-secondary
+      menuType: footer-secondary
+      bgColor: primary-darker
+      textColor: light

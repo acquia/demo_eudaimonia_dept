@@ -68,7 +68,7 @@ config:
             parent: ''
             weight: 0
             expanded: false
-    canvas.page_region.canvas_stark.header:
+    canvas.page_variant.theme_canvas_stark:
       setCanvasFileReferences:
         89b6c750-66e1-4a56-9602-913bbca845df:
           headerIcon: 'aecb5692-68cc-46c3-bcde-a4e1468173aa'
