@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: content_administer
+name: 'content:administer'
+description: 'Administer content'
+grant_types:
+  client_credentials:
+    status: true
+    description: 'Administer content'
+  refresh_token:
+    status: true
+    description: 'Administer content'
+  authorization_code:
+    status: true
+    description: 'Administer content'
+umbrella: false
+parent: null
+granularity_id: permission
+granularity_configuration:
+  permission: 'administer nodes'

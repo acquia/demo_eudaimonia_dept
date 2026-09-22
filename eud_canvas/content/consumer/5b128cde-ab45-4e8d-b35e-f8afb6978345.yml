@@ -49,6 +49,30 @@ default:
       scope_id: canvas_page_read
     -
       scope_id: canvas_page_region
+    -
+      scope_id: canvas_page_variant
+    -
+      scope_id: canvas_media_document_create
+    -
+      scope_id: content_administer
+    -
+      scope_id: content_type_administer
+    -
+      scope_id: content_type_administer_fields
+    -
+      scope_id: media_administer
+    -
+      scope_id: media_type_administer
+    -
+      scope_id: menu_administer
+    -
+      scope_id: page_template_administer
+    -
+      scope_id: site_settings_administer
+    -
+      scope_id: taxonomy_administer
+    -
+      scope_id: taxonomy_administer_fields
   access_token_expiration:
     -
       value: 300

@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: media_type_administer
+name: 'media_type:administer'
+description: 'Administer media types'
+grant_types:
+  client_credentials:
+    status: true
+    description: 'Administer media types'
+  refresh_token:
+    status: true
+    description: 'Administer media types'
+  authorization_code:
+    status: true
+    description: 'Administer media types'
+umbrella: false
+parent: null
+granularity_id: permission
+granularity_configuration:
+  permission: 'administer media types'

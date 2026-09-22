@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: taxonomy_administer
+name: 'taxonomy:administer'
+description: 'Administer taxonomy vocabularies and terms'
+grant_types:
+  client_credentials:
+    status: true
+    description: 'Administer taxonomy vocabularies and terms'
+  refresh_token:
+    status: true
+    description: 'Administer taxonomy vocabularies and terms'
+  authorization_code:
+    status: true
+    description: 'Administer taxonomy vocabularies and terms'
+umbrella: false
+parent: null
+granularity_id: permission
+granularity_configuration:
+  permission: 'administer taxonomy'
