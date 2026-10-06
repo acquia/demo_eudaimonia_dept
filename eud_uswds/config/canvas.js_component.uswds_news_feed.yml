@@ -37,11 +37,11 @@ props:
 slots: {  }
 js:
   original: |-
-    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { cn } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
     import useSWR from 'swr';
 
-    const client = new JsonApiClient();
 
     // ─── fallback data (used when API is unreachable, e.g. local Workbench) ───────
 
@@ -365,6 +365,7 @@ js:
       viewAllLink = '/newsroom',
       viewAllLabel = 'View all news →',
     }) => {
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ['node--article', articleLimit, showFeatured],
         async () => {
@@ -488,10 +489,10 @@ js:
         };
     }
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { cn } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
     import useSWR from 'swr';
-    const client = new JsonApiClient();
     // ─── fallback data (used when API is unreachable, e.g. local Workbench) ───────
     const FALLBACK_ARTICLES = [
         {
@@ -893,6 +894,7 @@ js:
     // ─── main component ───────────────────────────────────────────────────────────
     const UswdsNewsFeed = ({ articleLimit = 5, showFeatured = true, ctaText = 'Read full release', viewAllLink = '/newsroom', viewAllLabel = 'View all news →' })=>{
         var _ref;
+        const client = useJsonApiClient();
         const { data, error, isLoading } = useSWR([
             'node--article',
             articleLimit,

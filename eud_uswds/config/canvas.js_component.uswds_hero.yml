@@ -26,7 +26,7 @@ props:
 slots:
   ctas:
     title: 'Call-to-action buttons'
-  quick_access:
+  quickAccess:
     title: 'Quick Access widget (optional)'
 js:
   original: |
@@ -35,18 +35,18 @@ js:
     // USWDS Hero
     // Dark navy section used at the top of agency home pages.
     // Eyebrow (gold, uppercase), large serif heading, leadParagraph paragraph,
-    // CTA buttons (ctas slot), optional Quick Access widget (quick_access slot).
-    // When quick_access is present the layout becomes 2-column.
+    // CTA buttons (ctas slot), optional Quick Access widget (quickAccess slot).
+    // When quickAccess is present the layout becomes 2-column.
 
     const UswdsHero = ({
       eyebrow = '',
       heading = '',
       leadParagraph = '',
       ctas,
-      quick_access,
+      quickAccess,
       className = '',
     }) => {
-      const hasWidget = Boolean(quick_access);
+      const hasWidget = Boolean(quickAccess);
 
       return (
         <div
@@ -98,7 +98,7 @@ js:
 
             {/* Right: Quick Access widget */}
             {hasWidget && (
-              <div className="w-full shrink-0 lg:w-80">{quick_access}</div>
+              <div className="w-full shrink-0 lg:w-80">{quickAccess}</div>
             )}
           </div>
         </div>
@@ -114,10 +114,10 @@ js:
       heading = "",
       leadParagraph = "",
       ctas,
-      quick_access,
+      quickAccess,
       className = ""
     }) => {
-      const hasWidget = Boolean(quick_access);
+      const hasWidget = Boolean(quickAccess);
       return /* @__PURE__ */ jsxs(
         "div",
         {
@@ -156,7 +156,7 @@ js:
                     leadParagraph && /* @__PURE__ */ jsx("p", { className: "mb-8 max-w-2xl text-xl leading-[1.55] text-white/85", children: leadParagraph }),
                     ctas && /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-3", children: ctas })
                   ] }),
-                  hasWidget && /* @__PURE__ */ jsx("div", { className: "w-full shrink-0 lg:w-80", children: quick_access })
+                  hasWidget && /* @__PURE__ */ jsx("div", { className: "w-full shrink-0 lg:w-80", children: quickAccess })
                 ]
               }
             )

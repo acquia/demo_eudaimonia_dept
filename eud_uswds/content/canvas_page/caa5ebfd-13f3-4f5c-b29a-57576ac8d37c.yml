@@ -187,7 +187,7 @@ default:
           options: {  }
     -
       parent_uuid: a55ab1dc-9fcf-451a-94af-a5ab3c202e42
-      slot: top_nav
+      slot: topNav
       uuid: 0d18f9a3-70ef-42e5-a394-edae9291d7a9
       component_id: js.uswds_nav
       inputs:
@@ -197,7 +197,7 @@ default:
         textColor: light
     -
       parent_uuid: a55ab1dc-9fcf-451a-94af-a5ab3c202e42
-      slot: bottom_nav
+      slot: bottomNav
       uuid: f0fb8a5a-7b99-4592-bb03-69ea1185d532
       component_id: js.uswds_nav
       inputs:
@@ -215,6 +215,3 @@ default:
   metatags:
     -
       value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
-  moderation_state:
-    -
-      value: published

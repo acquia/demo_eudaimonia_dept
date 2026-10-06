@@ -25,7 +25,7 @@ slots: {  }
 js:
   original: |
     import UswdsCard from '@/components/uswds_card';
-    import { JsonApiClient } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
     import useSWR from 'swr';
 
@@ -35,7 +35,6 @@ js:
     // event cards. Ships representative fallback data so it renders in Workbench and
     // before Drupal content is wired up.
 
-    const client = new JsonApiClient();
 
     const MAX_CARDS = 3;
     // Fetch a wide set so we can prefer same-category events, then backfill.
@@ -106,6 +105,7 @@ js:
     };
 
     const UswdsRelatedEvents = ({ currentId = '', category = [], className = '' }) => {
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ['node--event', 'related'],
         ([type]) =>
@@ -174,10 +174,9 @@ js:
   compiled: |
     import { jsx } from "react/jsx-runtime";
     import UswdsCard from "@/components/uswds_card";
-    import { JsonApiClient } from "drupal-canvas";
+    import { useJsonApiClient } from "drupal-canvas/react";
     import { DrupalJsonApiParams } from "drupal-jsonapi-params";
     import useSWR from "swr";
-    const client = new JsonApiClient();
     const MAX_CARDS = 3;
     const FETCH_LIMIT = 24;
     const categoryNameOf = (raw) => {
@@ -236,6 +235,7 @@ js:
       return id === item.id || id === String((_a = item.drupal_internal__nid) != null ? _a : "");
     };
     const UswdsRelatedEvents = ({ currentId = "", category = [], className = "" }) => {
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ["node--event", "related"],
         ([type]) => client.getCollection(type, {

@@ -9,10 +9,10 @@ props: {  }
 slots: {  }
 js:
   original: |-
-    import { getPageData } from 'drupal-canvas';
+    import { usePageContext } from 'drupal-canvas/react';
 
     function LanguageSwitcherList() {
-      const { mainEntity } = getPageData();
+      const { mainEntity } = usePageContext() ?? {};
       if (!mainEntity) {
         return null;
       }
@@ -48,9 +48,9 @@ js:
     export default LanguageSwitcherList;
   compiled: |
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import { getPageData } from 'drupal-canvas';
+    import { usePageContext } from 'drupal-canvas/react';
     function LanguageSwitcherList() {
-        const { mainEntity } = getPageData();
+        const { mainEntity } = usePageContext() ?? {};
         if (!mainEntity) {
             return null;
         }

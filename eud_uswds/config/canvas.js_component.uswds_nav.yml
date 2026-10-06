@@ -68,7 +68,8 @@ props:
 slots: {  }
 js:
   original: |
-    import { cn, JsonApiClient, sortMenu } from 'drupal-canvas';
+    import { cn, sortMenu } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { useState } from 'react';
     import useSWR from 'swr';
 
@@ -155,7 +156,6 @@ js:
       },
     ];
 
-    const client = new JsonApiClient();
 
     const CaretIcon = () => (
       <svg
@@ -202,6 +202,7 @@ js:
       const resolvedTextColor = resolveTextColor(textColor);
       // Which submenu is open (click/tap toggle — needed for touch devices).
       const [openId, setOpenId] = useState(null);
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         menuName ? ['menu_items', menuName] : null,
         ([type, id]) => client.getResource(type, id),
@@ -305,7 +306,8 @@ js:
     export default UswdsNav;
   compiled: |
     import { jsx, jsxs } from "react/jsx-runtime";
-    import { JsonApiClient, sortMenu, cn } from "drupal-canvas";
+    import { sortMenu, cn } from "drupal-canvas";
+    import { useJsonApiClient } from "drupal-canvas/react";
     import { useState } from "react";
     import useSWR from "swr";
     const resolveBgColor = (token) => {
@@ -390,7 +392,6 @@ js:
         _children: []
       }
     ];
-    const client = new JsonApiClient();
     const CaretIcon = () => /* @__PURE__ */ jsx(
       "svg",
       {
@@ -436,6 +437,7 @@ js:
       const resolvedBgColor = resolveBgColor(bgColor);
       const resolvedTextColor = resolveTextColor(textColor);
       const [openId, setOpenId] = useState(null);
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         menuName ? ["menu_items", menuName] : null,
         ([type, id]) => client.getResource(type, id)

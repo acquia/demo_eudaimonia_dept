@@ -29,7 +29,7 @@ js:
   original: |
     import UswdsEventRow from '@/components/uswds_event_row';
     import UswdsPagination from '@/components/uswds_pagination';
-    import { JsonApiClient } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
     import { useEffect, useState } from 'react';
     import useSWR from 'swr';
@@ -44,7 +44,6 @@ js:
     // (`perPage` rows per page), so the page spec no longer needs static count or
     // pagination elements.
 
-    const client = new JsonApiClient();
 
     const FALLBACK = [
       {
@@ -156,6 +155,7 @@ js:
     }) => {
       const [page, setPage] = useState(1);
 
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ['node--event', eventLimit],
         ([type, limit]) =>
@@ -260,11 +260,10 @@ js:
     import { jsx, jsxs } from "react/jsx-runtime";
     import UswdsEventRow from "@/components/uswds_event_row";
     import UswdsPagination from "@/components/uswds_pagination";
-    import { JsonApiClient } from "drupal-canvas";
+    import { useJsonApiClient } from "drupal-canvas/react";
     import { DrupalJsonApiParams } from "drupal-jsonapi-params";
     import { useState, useEffect } from "react";
     import useSWR from "swr";
-    const client = new JsonApiClient();
     const FALLBACK = [
       {
         id: "e1",
@@ -364,6 +363,7 @@ js:
       ariaLabel = "Upcoming events"
     }) => {
       const [page, setPage] = useState(1);
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ["node--event", eventLimit],
         ([type, limit]) => client.getCollection(type, {

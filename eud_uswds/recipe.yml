@@ -18,10 +18,3 @@ config:
     canvas.settings:
       simple_config_update:
         default_page_variant: theme_canvas_stark
-    # canvas_page is a bundle-less entity, so core's addNodeTypes cannot moderate
-    # it; the bundled module's action adds it to the editorial workflow before
-    # this recipe's canvas_page content (which carries a moderation_state) imports.
-    workflows.workflow.editorial:
-      addModerationEntityTypes:
-        canvas_page:
-          - canvas_page

@@ -81,7 +81,7 @@ default:
         showArrowIcon: false
     -
       parent_uuid: b3b1b033-9565-4fca-b882-83c52a96f650
-      slot: quick_access
+      slot: quickAccess
       uuid: e1839abf-5fe2-4509-ab58-d3aa173c3194
       component_id: js.uswds_quick_access
       inputs:
@@ -755,6 +755,3 @@ default:
   metatags:
     -
       value: '{"canonical_url":"[canvas_page:url]","description":"[canvas_page:description]","image_src":"[canvas_page:image:entity:field_media_image:entity:url]","title":"[canvas_page:title] | [site:name]"}'
-  moderation_state:
-    -
-      value: published

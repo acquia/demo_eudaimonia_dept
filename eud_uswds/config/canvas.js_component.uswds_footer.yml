@@ -65,11 +65,11 @@ props:
 slots:
   logo:
     title: 'Logo (top row)'
-  top_nav:
+  topNav:
     title: 'Primary Navigation (top row)'
   cta:
     title: 'Call to Action (top row)'
-  bottom_nav:
+  bottomNav:
     title: 'Secondary Navigation (bottom row)'
 js:
   original: |
@@ -85,9 +85,9 @@ js:
       topRowBackgroundColor = 'primary-darker',
       bottomRowBackgroundColor = 'primary-dark',
       logo,
-      top_nav,
+      topNav,
       cta,
-      bottom_nav,
+      bottomNav,
       className = '',
     }) => {
       return (
@@ -96,12 +96,12 @@ js:
           <div className="usa-footer__primary-section" style={{ backgroundColor: resolveColor(topRowBackgroundColor) }}>
             <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6 px-8 py-8">
               {logo && <div className="shrink-0">{logo}</div>}
-              {top_nav && (
+              {topNav && (
                 <nav
                   aria-label="Footer primary navigation"
                   className="usa-footer__nav min-w-[200px] flex-1"
                 >
-                  {top_nav}
+                  {topNav}
                 </nav>
               )}
               {cta && <div className="shrink-0">{cta}</div>}
@@ -111,8 +111,8 @@ js:
           {/* Bottom row: secondary nav */}
           <div className="usa-footer__secondary-section" style={{ backgroundColor: resolveColor(bottomRowBackgroundColor) }}>
             <div className="mx-auto flex max-w-[1240px] flex-wrap items-center px-8 py-6">
-              {bottom_nav && (
-                <nav aria-label="Footer secondary navigation" className="usa-footer__nav">{bottom_nav}</nav>
+              {bottomNav && (
+                <nav aria-label="Footer secondary navigation" className="usa-footer__nav">{bottomNav}</nav>
               )}
             </div>
           </div>
@@ -133,25 +133,25 @@ js:
       topRowBackgroundColor = "primary-darker",
       bottomRowBackgroundColor = "primary-dark",
       logo,
-      top_nav,
+      topNav,
       cta,
-      bottom_nav,
+      bottomNav,
       className = ""
     }) => {
       return /* @__PURE__ */ jsxs("footer", { className: cn("usa-footer font-sans", className), children: [
         /* @__PURE__ */ jsx("div", { className: "usa-footer__primary-section", style: { backgroundColor: resolveColor(topRowBackgroundColor) }, children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6 px-8 py-8", children: [
           logo && /* @__PURE__ */ jsx("div", { className: "shrink-0", children: logo }),
-          top_nav && /* @__PURE__ */ jsx(
+          topNav && /* @__PURE__ */ jsx(
             "nav",
             {
               "aria-label": "Footer primary navigation",
               className: "usa-footer__nav min-w-[200px] flex-1",
-              children: top_nav
+              children: topNav
             }
           ),
           cta && /* @__PURE__ */ jsx("div", { className: "shrink-0", children: cta })
         ] }) }),
-        /* @__PURE__ */ jsx("div", { className: "usa-footer__secondary-section", style: { backgroundColor: resolveColor(bottomRowBackgroundColor) }, children: /* @__PURE__ */ jsx("div", { className: "mx-auto flex max-w-[1240px] flex-wrap items-center px-8 py-6", children: bottom_nav && /* @__PURE__ */ jsx("nav", { "aria-label": "Footer secondary navigation", className: "usa-footer__nav", children: bottom_nav }) }) })
+        /* @__PURE__ */ jsx("div", { className: "usa-footer__secondary-section", style: { backgroundColor: resolveColor(bottomRowBackgroundColor) }, children: /* @__PURE__ */ jsx("div", { className: "mx-auto flex max-w-[1240px] flex-wrap items-center px-8 py-6", children: bottomNav && /* @__PURE__ */ jsx("nav", { "aria-label": "Footer secondary navigation", className: "usa-footer__nav", children: bottomNav }) }) })
       ] });
     };
     export {

@@ -44,9 +44,9 @@ versioned_properties:
       slot_definitions:
         logo:
           title: 'Logo (top row)'
-        top_nav:
+        topNav:
           title: 'Primary Navigation (top row)'
         cta:
           title: 'Call to Action (top row)'
-        bottom_nav:
+        bottomNav:
           title: 'Secondary Navigation (bottom row)'

@@ -19,7 +19,12 @@ default:
       value: true
   is_default:
     -
-      value: false
+      value: true
+  secret:
+    -
+      value: secret
+      existing: ''
+      pre_hashed: false
   grant_types:
     -
       value: client_credentials

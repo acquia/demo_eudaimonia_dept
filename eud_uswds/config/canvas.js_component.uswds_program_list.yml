@@ -21,11 +21,11 @@ props:
 slots: {  }
 js:
   original: |-
-    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { cn } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
     import useSWR from 'swr';
 
-    const client = new JsonApiClient();
 
     const FALLBACK = [
       {
@@ -161,6 +161,7 @@ js:
       programLimit = 10,
       ariaLabel = 'All programs',
     }) => {
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ['node--program', programLimit],
         async () => {
@@ -321,10 +322,10 @@ js:
         };
     }
     import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { cn } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
     import useSWR from 'swr';
-    const client = new JsonApiClient();
     const FALLBACK = [
         {
             id: 'p1',
@@ -459,6 +460,7 @@ js:
         };
     };
     const UswdsProgramList = ({ programLimit = 10, ariaLabel = 'All programs' })=>{
+        const client = useJsonApiClient();
         const { data, error, isLoading } = useSWR([
             'node--program',
             programLimit
