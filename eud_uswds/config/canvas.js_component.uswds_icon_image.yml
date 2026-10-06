@@ -15,7 +15,7 @@ props:
     title: 'Icon Image'
     examples:
       -
-        src: 'https://placehold.co/24x24/005ea2/ffffff?text=♥'
+        src: 'https://placehold.co/24x24/005ea2/ffffff?text=%E2%99%A5'
         alt: ''
         width: 24
         height: 24
