@@ -36,6 +36,23 @@ slots: {  }
 js:
   original: |
     import { cn } from 'drupal-canvas';
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === 'undefined') return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
 
     const IconSearch = ({ className = 'h-6 w-6' }) => (
       <svg
@@ -65,7 +82,7 @@ js:
       // Pre-fill with the current ?q= value when already on the search page
       const q =
         typeof parent !== 'undefined'
-          ? new URLSearchParams(parent.window?.location?.search || '').get('q') ||
+          ? new URLSearchParams(frameWindow()?.location?.search || '').get('q') ||
             ''
           : '';
 
@@ -117,6 +134,24 @@ js:
   compiled: |
     import { jsxs, jsx } from "react/jsx-runtime";
     import { cn } from "drupal-canvas";
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === "undefined") return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
+
     const IconSearch = ({ className = "h-6 w-6" }) => /* @__PURE__ */ jsx(
       "svg",
       {
@@ -139,7 +174,7 @@ js:
       var _a, _b;
       const isLarge = size === "large";
       const isSmall = size === "small";
-      const q = typeof parent !== "undefined" ? new URLSearchParams(((_b = (_a = parent.window) == null ? void 0 : _a.location) == null ? void 0 : _b.search) || "").get("q") || "" : "";
+      const q = typeof parent !== "undefined" ? new URLSearchParams(((_b = (_a = frameWindow()) == null ? void 0 : _a.location) == null ? void 0 : _b.search) || "").get("q") || "" : "";
       return /* @__PURE__ */ jsxs(
         "form",
         {

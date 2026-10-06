@@ -33,11 +33,28 @@ slots: {  }
 js:
   original: |
     import { cn } from 'drupal-canvas';
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === 'undefined') return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
 
     // Detect the active language from the current page URL
     const getCurrentLang = () => {
       try {
-        const match = parent.window.location.pathname.match(/^\/([a-z]{2})(\/|$)/);
+        const match = frameWindow().location.pathname.match(/^\/([a-z]{2})(\/|$)/);
         return match ? match[1] : 'en';
       } catch {
         return 'en';
@@ -48,7 +65,7 @@ js:
     // e.g. on /es/about → languageCode "fr" → /fr/about
     const buildTranslatedUrl = (languageCode) => {
       try {
-        const { pathname, search, hash } = parent.window.location;
+        const { pathname, search, hash } = frameWindow().location;
         const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
         const newPath = langPrefixRe.test(pathname)
           ? pathname.replace(/^\/[a-z]{2}/, `/${languageCode}`)
@@ -62,7 +79,7 @@ js:
     // Build URL for the default (English) language — strips the lang prefix if present.
     const buildDefaultUrl = () => {
       try {
-        const { pathname, search, hash } = parent.window.location;
+        const { pathname, search, hash } = frameWindow().location;
         const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
         const newPath = langPrefixRe.test(pathname)
           ? pathname.replace(/^\/[a-z]{2}/, '') || '/'
@@ -119,9 +136,27 @@ js:
   compiled: |
     import { jsx, jsxs } from "react/jsx-runtime";
     import { cn } from "drupal-canvas";
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === "undefined") return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
+
     const getCurrentLang = () => {
       try {
-        const match = parent.window.location.pathname.match(/^\/([a-z]{2})(\/|$)/);
+        const match = frameWindow().location.pathname.match(/^\/([a-z]{2})(\/|$)/);
         return match ? match[1] : "en";
       } catch (e) {
         return "en";
@@ -129,7 +164,7 @@ js:
     };
     const buildTranslatedUrl = (languageCode) => {
       try {
-        const { pathname, search, hash } = parent.window.location;
+        const { pathname, search, hash } = frameWindow().location;
         const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
         const newPath = langPrefixRe.test(pathname) ? pathname.replace(/^\/[a-z]{2}/, `/${languageCode}`) : `/${languageCode}${pathname === "/" ? "" : pathname}`;
         return newPath + search + hash;
@@ -139,7 +174,7 @@ js:
     };
     const buildDefaultUrl = () => {
       try {
-        const { pathname, search, hash } = parent.window.location;
+        const { pathname, search, hash } = frameWindow().location;
         const langPrefixRe = /^\/[a-z]{2}(\/|$)/;
         const newPath = langPrefixRe.test(pathname) ? pathname.replace(/^\/[a-z]{2}/, "") || "/" : pathname;
         return newPath + search + hash;

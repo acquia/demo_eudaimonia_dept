@@ -72,6 +72,23 @@ js:
     import { useJsonApiClient } from 'drupal-canvas/react';
     import { useState } from 'react';
     import useSWR from 'swr';
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === 'undefined') return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
 
     const resolveBgColor = (token) => {
       if (!token) return undefined;
@@ -214,7 +231,7 @@ js:
       const topLevel = links.filter((l) => !l.parent);
 
       const activePath =
-        (typeof parent !== 'undefined' && parent.window?.location?.pathname) || '/';
+        (typeof parent !== 'undefined' && frameWindow()?.location?.pathname) || '/';
 
       if (menuType === 'footer') {
         return (
@@ -310,6 +327,24 @@ js:
     import { useJsonApiClient } from "drupal-canvas/react";
     import { useState } from "react";
     import useSWR from "swr";
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === "undefined") return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
+
     const resolveBgColor = (token) => {
       if (!token) return void 0;
       if (token === "white") return "white";
@@ -445,7 +480,7 @@ js:
       const rawLinks = !error && !isLoading && data ? Array.from(sortMenu(data)) : null;
       const links = rawLinks && rawLinks.length > 0 ? rawLinks : FALLBACK_LINKS;
       const topLevel = links.filter((l) => !l.parent);
-      const activePath = typeof parent !== "undefined" && ((_b = (_a = parent.window) == null ? void 0 : _a.location) == null ? void 0 : _b.pathname) || "/";
+      const activePath = typeof parent !== "undefined" && ((_b = (_a = frameWindow()) == null ? void 0 : _a.location) == null ? void 0 : _b.pathname) || "/";
       if (menuType === "footer") {
         return /* @__PURE__ */ jsx("ul", { className: "usa-footer__primary-content flex flex-col gap-2 font-sans", children: topLevel.map(({ id, title, url }) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(
           "a",
