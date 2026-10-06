@@ -149,7 +149,7 @@ component_tree:
         options: {}
   69420922-7f43-423e-b724-9de9329cbae2:
     parent_uuid: f31135cc-16a6-49f5-9417-61c8bf3c1bc1
-    slot: top_nav
+    slot: topNav
     uuid: 69420922-7f43-423e-b724-9de9329cbae2
     component_id: js.uswds_nav
     component_version: 6b066aeac8cfed15
@@ -175,7 +175,7 @@ component_tree:
       showArrowIcon: false
   5465753b-4c5b-46dd-a342-fad433603e51:
     parent_uuid: f31135cc-16a6-49f5-9417-61c8bf3c1bc1
-    slot: bottom_nav
+    slot: bottomNav
     uuid: 5465753b-4c5b-46dd-a342-fad433603e51
     component_id: js.uswds_nav
     component_version: 6b066aeac8cfed15

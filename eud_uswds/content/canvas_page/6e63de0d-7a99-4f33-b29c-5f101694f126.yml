@@ -4,9 +4,6 @@ _meta:
   uuid: 6e63de0d-7a99-4f33-b29c-5f101694f126
   default_langcode: en
 default:
-  moderation_state:
-    -
-      value: published
   status:
     -
       value: true

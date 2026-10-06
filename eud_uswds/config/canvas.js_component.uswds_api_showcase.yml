@@ -28,7 +28,8 @@ props:
 slots: {  }
 js:
   original: |
-    import { cn, JsonApiClient } from 'drupal-canvas';
+    import { cn } from 'drupal-canvas';
+    import { useJsonApiClient } from 'drupal-canvas/react';
     import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
     import useSWR from 'swr';
 
@@ -38,7 +39,6 @@ js:
     // structured data Canvas consumes (another channel), with the request labeled
     // above.
 
-    const client = new JsonApiClient();
 
     // Only the fields we render / display, to keep the JSON readable.
     const FIELDS = [
@@ -199,6 +199,7 @@ js:
       const queryString = buildQueryString(count);
       const requestUrl = `/api/node/event?${queryString}`;
 
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ['api-showcase', 'node--event', queryString],
         ([, type, qs]) => client.getCollection(type, { queryString: qs }),
@@ -279,10 +280,10 @@ js:
     export default UswdsApiShowcase;
   compiled: |
     import { jsxs, jsx, Fragment } from "react/jsx-runtime";
-    import { JsonApiClient, cn } from "drupal-canvas";
+    import { cn } from "drupal-canvas";
+    import { useJsonApiClient } from "drupal-canvas/react";
     import { DrupalJsonApiParams } from "drupal-jsonapi-params";
     import useSWR from "swr";
-    const client = new JsonApiClient();
     const FIELDS = [
       "title",
       "field_event_summary",
@@ -411,6 +412,7 @@ js:
       const count = Math.max(1, Number(limit) || 5);
       const queryString = buildQueryString(count);
       const requestUrl = `/api/node/event?${queryString}`;
+      const client = useJsonApiClient();
       const { data, error, isLoading } = useSWR(
         ["api-showcase", "node--event", queryString],
         ([, type, qs]) => client.getCollection(type, { queryString: qs })

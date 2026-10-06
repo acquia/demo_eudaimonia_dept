@@ -50,5 +50,5 @@ versioned_properties:
       slot_definitions:
         ctas:
           title: 'Call-to-action buttons'
-        quick_access:
+        quickAccess:
           title: 'Quick Access widget (optional)'
