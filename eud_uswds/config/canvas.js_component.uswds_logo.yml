@@ -30,6 +30,23 @@ slots: {  }
 js:
   original: |
     import { cn } from 'drupal-canvas';
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === 'undefined') return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
 
     const emblem = (
       <>
@@ -82,7 +99,7 @@ js:
     const UswdsLogo = ({ logoImage, variant = 'dark', linkUrl = '/', className = '' }) => {
       const currentLang =
         typeof parent !== 'undefined'
-          ? parent.window?.drupalSettings?.path?.currentLanguage
+          ? frameWindow()?.drupalSettings?.path?.currentLanguage
           : undefined;
       const href =
         currentLang && currentLang !== 'en'
@@ -111,6 +128,24 @@ js:
   compiled: |
     import { jsx, jsxs, Fragment } from "react/jsx-runtime";
     import { cn } from "drupal-canvas";
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === "undefined") return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
+
     const emblem = /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsx("circle", { cx: "36", cy: "36", r: "34", fill: "#162E51" }),
       /* @__PURE__ */ jsx("circle", { cx: "36", cy: "36", r: "28", fill: "none", stroke: "#DEC69A", strokeWidth: "1.2" }),
@@ -166,7 +201,7 @@ js:
     );
     const UswdsLogo = ({ logoImage, variant = "dark", linkUrl = "/", className = "" }) => {
       var _a, _b, _c;
-      const currentLang = typeof parent !== "undefined" ? (_c = (_b = (_a = parent.window) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.path) == null ? void 0 : _c.currentLanguage : void 0;
+      const currentLang = typeof parent !== "undefined" ? (_c = (_b = (_a = frameWindow()) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.path) == null ? void 0 : _c.currentLanguage : void 0;
       const href = currentLang && currentLang !== "en" ? `/${currentLang}${linkUrl === "/" ? "" : linkUrl}` : linkUrl;
       return /* @__PURE__ */ jsx("a", { href, className: cn("usa-logo inline-flex shrink-0 items-center", className), children: (logoImage == null ? void 0 : logoImage.src) ? /* @__PURE__ */ jsx(
         "img",

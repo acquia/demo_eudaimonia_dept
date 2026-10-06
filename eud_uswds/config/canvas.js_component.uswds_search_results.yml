@@ -24,13 +24,30 @@ js:
     import { useState } from 'react';
     import useSWR from 'swr';
     import { cn } from 'drupal-canvas';
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === 'undefined') return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
 
     const PAGE_SIZE = 10;
 
     const getQ = () => {
       try {
         return (
-          new URLSearchParams(parent.window?.location?.search || '').get('q') || ''
+          new URLSearchParams(frameWindow()?.location?.search || '').get('q') || ''
         );
       } catch {
         return '';
@@ -39,10 +56,10 @@ js:
 
     const getBaseUrl = () => {
       try {
-        const settings = parent.window?.drupalSettings?.canvasData?.v0;
+        const settings = frameWindow()?.drupalSettings?.canvasData?.v0;
         return (
           settings?.baseUrl ||
-          parent.window?.location?.origin ||
+          frameWindow()?.location?.origin ||
           window.location.origin
         );
       } catch {
@@ -53,7 +70,7 @@ js:
     const getApiPrefix = () => {
       try {
         return (
-          parent.window?.drupalSettings?.canvasData?.v0?.jsonapiSettings
+          frameWindow()?.drupalSettings?.canvasData?.v0?.jsonapiSettings
             ?.apiPrefix || 'api'
         );
       } catch {
@@ -239,11 +256,29 @@ js:
     import { useState } from "react";
     import useSWR from "swr";
     import { cn } from "drupal-canvas";
+    // Canvas renders a component inside a same-origin preview iframe, so the real
+    // page context lives on the parent window. A headless frontend is framed
+    // cross-origin (or not framed at all), where reading the parent throws a
+    // SecurityError that optional chaining does NOT catch -- fall back to our own
+    // window there.
+    const frameWindow = () => {
+      if (typeof window === "undefined") return undefined;
+      try {
+        const p = window.parent;
+        if (p && p !== window && p.location.origin === window.location.origin) {
+          return p;
+        }
+      } catch {
+        // Cross-origin parent.
+      }
+      return window;
+    };
+
     const PAGE_SIZE = 10;
     const getQ = () => {
       var _a, _b;
       try {
-        return new URLSearchParams(((_b = (_a = parent.window) == null ? void 0 : _a.location) == null ? void 0 : _b.search) || "").get("q") || "";
+        return new URLSearchParams(((_b = (_a = frameWindow()) == null ? void 0 : _a.location) == null ? void 0 : _b.search) || "").get("q") || "";
       } catch (e) {
         return "";
       }
@@ -251,8 +286,8 @@ js:
     const getBaseUrl = () => {
       var _a, _b, _c, _d, _e;
       try {
-        const settings = (_c = (_b = (_a = parent.window) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.canvasData) == null ? void 0 : _c.v0;
-        return (settings == null ? void 0 : settings.baseUrl) || ((_e = (_d = parent.window) == null ? void 0 : _d.location) == null ? void 0 : _e.origin) || window.location.origin;
+        const settings = (_c = (_b = (_a = frameWindow()) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.canvasData) == null ? void 0 : _c.v0;
+        return (settings == null ? void 0 : settings.baseUrl) || ((_e = (_d = frameWindow()) == null ? void 0 : _d.location) == null ? void 0 : _e.origin) || window.location.origin;
       } catch (e) {
         return window.location.origin;
       }
@@ -260,7 +295,7 @@ js:
     const getApiPrefix = () => {
       var _a, _b, _c, _d, _e;
       try {
-        return ((_e = (_d = (_c = (_b = (_a = parent.window) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.canvasData) == null ? void 0 : _c.v0) == null ? void 0 : _d.jsonapiSettings) == null ? void 0 : _e.apiPrefix) || "api";
+        return ((_e = (_d = (_c = (_b = (_a = frameWindow()) == null ? void 0 : _a.drupalSettings) == null ? void 0 : _b.canvasData) == null ? void 0 : _c.v0) == null ? void 0 : _d.jsonapiSettings) == null ? void 0 : _e.apiPrefix) || "api";
       } catch (e) {
         return "api";
       }
