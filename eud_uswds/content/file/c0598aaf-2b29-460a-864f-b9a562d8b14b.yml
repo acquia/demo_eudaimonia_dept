@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: c0598aaf-2b29-460a-864f-b9a562d8b14b
+  default_langcode: en
+default:
+  uid:
+    -
+      entity: b82f6480-fa3b-4398-8bee-2c43b7443c97
+  filename:
+    -
+      value: publicsans-italic-400.woff2
+  uri:
+    -
+      value: 'public://canvas/assets/publicsans-italic-400.woff2'
+  filemime:
+    -
+      value: font/woff2
+  filesize:
+    -
+      value: 15684
+  status:
+    -
+      value: 1
+  created:
+    -
+      value: 1792041961

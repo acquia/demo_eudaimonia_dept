@@ -1,0 +1,19 @@
+uuid: 84b3ca8c-9438-40bf-ac4e-63fa99a47ae8
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - canvas
+name: Primary
+cssVariable: '--color-primary-500'
+value:
+  colorSpace: srgb
+  components:
+    - 0.16862745098039
+    - 0.49803921568627
+    - 1.0
+  alpha: null
+  hex: '#2b7fff'
+displayFormat: rgb
+weight: 0

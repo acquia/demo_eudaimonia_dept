@@ -1,0 +1,19 @@
+uuid: f8f01388-2705-4dd1-84d6-837018148205
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - canvas
+name: 'Gray Light'
+cssVariable: '--color-gray-300'
+value:
+  colorSpace: srgb
+  components:
+    - 0.7921568627451
+    - 0.83529411764706
+    - 0.88627450980392
+  alpha: null
+  hex: '#cad5e2'
+displayFormat: rgb
+weight: 2

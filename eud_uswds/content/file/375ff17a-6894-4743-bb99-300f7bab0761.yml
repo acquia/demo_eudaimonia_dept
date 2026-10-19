@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 375ff17a-6894-4743-bb99-300f7bab0761
+  default_langcode: en
+default:
+  uid:
+    -
+      entity: b82f6480-fa3b-4398-8bee-2c43b7443c97
+  filename:
+    -
+      value: merriweather-variable.woff2
+  uri:
+    -
+      value: 'public://canvas/assets/merriweather-variable.woff2'
+  filemime:
+    -
+      value: font/woff2
+  filesize:
+    -
+      value: 97608
+  status:
+    -
+      value: 1
+  created:
+    -
+      value: 1792041961

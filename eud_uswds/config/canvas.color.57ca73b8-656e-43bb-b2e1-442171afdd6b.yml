@@ -1,0 +1,19 @@
+uuid: 57ca73b8-656e-43bb-b2e1-442171afdd6b
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - canvas
+name: 'Gray Dark'
+cssVariable: '--color-gray-700'
+value:
+  colorSpace: srgb
+  components:
+    - 0.1921568627451
+    - 0.25490196078431
+    - 0.34509803921569
+  alpha: null
+  hex: '#314158'
+displayFormat: rgb
+weight: 3
