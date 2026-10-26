@@ -1,0 +1,19 @@
+uuid: 72b8f728-ad49-4f99-98c3-6aeacc40cd78
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - canvas
+name: White
+cssVariable: '--color-white'
+value:
+  colorSpace: srgb
+  components:
+    - 1.0
+    - 1.0
+    - 1.0
+  alpha: null
+  hex: '#ffffff'
+displayFormat: rgb
+weight: 4

@@ -1,0 +1,19 @@
+uuid: 28fd2250-f22f-49d2-99c0-9253e3b34f28
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - canvas
+name: Black
+cssVariable: '--color-black'
+value:
+  colorSpace: srgb
+  components:
+    - 0.007843137254902
+    - 0.023529411764706
+    - 0.094117647058824
+  alpha: null
+  hex: '#020618'
+displayFormat: rgb
+weight: 5

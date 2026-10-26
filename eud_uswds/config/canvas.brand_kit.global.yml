@@ -5,7 +5,34 @@ dependencies:
   enforced:
     module:
       - canvas
-_core:
-  default_config_hash: mouedn9FgMV7mVDBrljZK0MeTospROOibj3GsNDIAXY
 id: global
 label: 'Global brand kit'
+fonts:
+  -
+    id: 42ae69c0-b8d1-46d6-8ac8-e32c6d53e5e9
+    family: 'Public Sans'
+    uri: 'public://canvas/assets/publicsans-italic-400.woff2'
+    format: woff2
+    weight: '400'
+    style: italic
+  -
+    id: bfd5f9f7-c49b-470e-aac3-79eab664dd80
+    family: Merriweather
+    uri: 'public://canvas/assets/merriweather-variable.woff2'
+    format: woff2
+    weight: '300 900'
+    style: normal
+  -
+    id: d8656346-a367-45c7-9464-2245701fb4e4
+    family: 'Public Sans'
+    uri: 'public://canvas/assets/publicsans-variable.woff2'
+    format: woff2
+    weight: '100 900'
+    style: normal
+  -
+    id: ded22626-0eb7-4efb-8f0a-2348b731216c
+    family: 'Source Code Pro'
+    uri: 'public://canvas/assets/sourcecodepro-variable.woff2'
+    format: woff2
+    weight: '200 900'
+    style: normal

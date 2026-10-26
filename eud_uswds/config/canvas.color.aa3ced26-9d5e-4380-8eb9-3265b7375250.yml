@@ -1,0 +1,19 @@
+uuid: aa3ced26-9d5e-4380-8eb9-3265b7375250
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - canvas
+name: 'Primary Dark'
+cssVariable: '--color-primary-700'
+value:
+  colorSpace: srgb
+  components:
+    - 0.07843137254902
+    - 0.27843137254902
+    - 0.90196078431373
+  alpha: null
+  hex: '#1447e6'
+displayFormat: rgb
+weight: 1
