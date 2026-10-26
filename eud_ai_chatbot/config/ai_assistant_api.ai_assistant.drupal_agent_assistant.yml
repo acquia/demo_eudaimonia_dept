@@ -16,8 +16,8 @@ specific_error_messages:
   AiQuotaException: ''
   AiSetupFailureException: ''
   AiRequestErrorException: ''
-llm_provider: openai
-llm_model: gpt-4.1
+llm_provider: anthropic
+llm_model: claude-sonnet-4-5
 llm_configuration:
   max_tokens: 4096
   temperature: 1.0

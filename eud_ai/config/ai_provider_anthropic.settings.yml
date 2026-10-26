@@ -1,0 +1,8 @@
+api_key: acquia_gateway_key
+# The Anthropic provider can defer moderation to OpenAI; the OpenAI provider is
+# installed, so leave this on only if an OpenAI key is configured.
+openai_moderation: false
+version: '2023-06-01'
+# Point at the internal Acquia gateway instead of api.anthropic.com by
+# uncommenting this on sites that use the shared gateway token.
+# host: https://gateway-internal.ai.acquia.io

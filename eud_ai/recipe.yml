@@ -1,11 +1,15 @@
 name: 'Eudaimonia AI'
 type: Recipe
-description: 'AI core + OpenAI provider for the Department of Eudaimonia site template. Requires an OpenAI API key to be configured after install.'
+description: 'AI core for the Department of Eudaimonia site template. Installs both the Anthropic and OpenAI providers: chat defaults to Anthropic through the Acquia AI gateway, and OpenAI remains available for the operations Anthropic does not cover (embeddings, moderation, speech and image). Configure a key for whichever provider you use after install.'
 recipes:
   - eud_common
   - eud_media
 install:
   - ai
+  # Both providers are installed so a site can switch between them; the
+  # defaults below pick Anthropic for chat and leave OpenAI serving the
+  # operations it alone supports.
+  - ai_provider_anthropic
   - ai_provider_openai
 config:
   strict: false
